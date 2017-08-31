@@ -34,13 +34,13 @@ public class CuXiaoActivity extends AppCompatActivity implements View.OnClickLis
 
     private void initData() {
         recycler_cuxiao.setLayoutManager(new LinearLayoutManager(this));
-        List<String> list=new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add("");
         list.add("");
         list.add("");
         list.add("");
         list.add("");
-        mCuXiaoAdapter = new CuXiaoAdapter(R.layout.cu_item,list);
+        mCuXiaoAdapter = new CuXiaoAdapter(R.layout.cuxiao_item, list);
         recycler_cuxiao.setAdapter(mCuXiaoAdapter);
     }
 
