@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -52,7 +55,10 @@ public class CuXiaoActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected void convert(BaseViewHolder helper, String item) {
-
+            SpannableString spannableString = new SpannableString("原价:2999");
+            StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
+            spannableString.setSpan(strikethroughSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            helper.setText(R.id.tv_price,spannableString);
         }
     }
 

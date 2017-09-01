@@ -5,7 +5,10 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -27,10 +30,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private ImageView iv_delete;
     private RecyclerView recycler_lishi;
     private RecyclerView recycler_hot;
+    private RecyclerView recycler_result;
     private List<String> historyList = new ArrayList<>();
     private List<String> hotList = new ArrayList<>();
     private RecyclerHistoryAdapter mHistoryAdapter;
     private RecyclerHotAdapter mHotAdapter;
+    private ResultAdapter mResultAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,29 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         iv_delete.setOnClickListener(this);
         recycler_lishi = (RecyclerView) findViewById(R.id.recycler_lishi);
         recycler_hot = (RecyclerView) findViewById(R.id.recycler_hot);
+        recycler_result = (RecyclerView) findViewById(R.id.recycler_result);
         initData();
+        initListener();
+    }
+
+    private void initListener() {
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mResultAdapter = new ResultAdapter(R.layout.item_search_result,historyList);
+                recycler_result.setAdapter(mResultAdapter);
+            }
+        });
     }
 
     private void initData() {
@@ -51,6 +78,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         recycler_lishi.setNestedScrollingEnabled(false);
         recycler_hot.setLayoutManager(new GridLayoutManager(this, 4));
         recycler_hot.setNestedScrollingEnabled(false);
+        recycler_result.setLayoutManager(new LinearLayoutManager(this));
+        recycler_result.setNestedScrollingEnabled(false);
         historyList.add("啦啦啦");
         historyList.add("啦啦啦");
         historyList.add("啦啦啦");
@@ -86,6 +115,18 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     class RecyclerHotAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
         public RecyclerHotAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+            super(layoutResId, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, String item) {
+
+        }
+    }
+
+    class ResultAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+
+        public ResultAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
             super(layoutResId, data);
         }
 
