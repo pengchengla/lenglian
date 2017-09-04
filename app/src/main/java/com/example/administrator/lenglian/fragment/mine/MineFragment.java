@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.mine;
 
 import android.view.View;
 
+import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 
 /**
@@ -11,7 +12,8 @@ import com.example.administrator.lenglian.base.BaseFragment;
 public class MineFragment extends BaseFragment {
     @Override
     protected View initView() {
-        return null;
+         View view=View.inflate(mContext, R.layout.activity_mine,null);
+        return view;
     }
 
     @Override

@@ -1,95 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-    <LinearLayout
-        android:id="@+id/activity_search"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:padding="10dp">
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_search"
+            android:drawableLeft="@drawable/icon_search"
+            android:drawablePadding="10dp"
+            android:hint="请输入产品名称"
+            android:imeOptions="actionSearch"
+            android:minWidth="260dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:text="取消"/>
+    </RelativeLayout>
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-    >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/blue"
-            android:padding="10dp">
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@drawable/bg_search"
-                android:drawableLeft="@drawable/icon_search"
-                android:drawablePadding="10dp"
-                android:hint="请输入产品名称"
-                android:imeOptions="actionSearch"
-                android:minWidth="260dp"
-                android:textSize="14sp"/>
-            <TextView
-                android:id="@+id/tv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:text="取消"/>
-        </RelativeLayout>
+        android:background="@color/white">
         <LinearLayout
+            android:id="@+id/ll_root_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+        >
+            <LinearLayout
+                android:id="@+id/ll_lishiandhot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp">
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="历史搜索"
+                        android:textSize="15sp"/>
+                    <ImageView
+                        android:id="@+id/iv_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/icon_delete"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/huise"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_lishi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"></android.support.v7.widget.RecyclerView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="历史搜索"
+                    android:padding="15dp"
+                    android:text="热门搜索"
                     android:textSize="15sp"/>
-                <ImageView
-                    android:id="@+id/iv_delete"
-                    android:layout_width="wrap_content"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/huise"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_hot"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/icon_delete"/>
-            </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/huise"/>
+                    android:padding="10dp"></android.support.v7.widget.RecyclerView>
+            </LinearLayout>
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_lishi"
+                android:id="@+id/recycler_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"></android.support.v7.widget.RecyclerView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="热门搜索"
-                android:textSize="15sp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/huise"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_hot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"></android.support.v7.widget.RecyclerView>
+                android:padding="10dp"
+                android:visibility="gone"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:padding="10dp"></android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -62,6 +62,8 @@
         </activity>
         <activity android:name=".fragment.home.ChangXiaoActivity">
         </activity>
+        <activity android:name=".fragment.good.GoodDetailActivity">
+        </activity>
     </application>
 
 </manifest>

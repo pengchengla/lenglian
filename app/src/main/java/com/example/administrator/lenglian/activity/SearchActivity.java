@@ -5,9 +5,9 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -36,6 +36,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private RecyclerHistoryAdapter mHistoryAdapter;
     private RecyclerHotAdapter mHotAdapter;
     private ResultAdapter mResultAdapter;
+    private LinearLayout ll_lishiandhot, ll_root_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         recycler_lishi = (RecyclerView) findViewById(R.id.recycler_lishi);
         recycler_hot = (RecyclerView) findViewById(R.id.recycler_hot);
         recycler_result = (RecyclerView) findViewById(R.id.recycler_result);
+        ll_lishiandhot = (LinearLayout) findViewById(R.id.ll_lishiandhot);
+        ll_root_view = (LinearLayout) findViewById(R.id.ll_root_view);
         initData();
         initListener();
     }
@@ -67,8 +70,17 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void afterTextChanged(Editable s) {
-                mResultAdapter = new ResultAdapter(R.layout.item_search_result,historyList);
-                recycler_result.setAdapter(mResultAdapter);
+                if (!TextUtils.isEmpty(et_search.getText().toString())) {
+                    ll_root_view.setBackgroundResource(R.color.huise);
+                    ll_lishiandhot.setVisibility(View.GONE);
+                    recycler_result.setVisibility(View.VISIBLE);
+                    mResultAdapter = new ResultAdapter(R.layout.item_search_result, historyList);
+                    recycler_result.setAdapter(mResultAdapter);
+                } else {
+                    ll_root_view.setBackgroundResource(R.color.white);
+                    ll_lishiandhot.setVisibility(View.VISIBLE);
+                    recycler_result.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -78,7 +90,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         recycler_lishi.setNestedScrollingEnabled(false);
         recycler_hot.setLayoutManager(new GridLayoutManager(this, 4));
         recycler_hot.setNestedScrollingEnabled(false);
-        recycler_result.setLayoutManager(new LinearLayoutManager(this));
+        recycler_result.setLayoutManager(new GridLayoutManager(this, 2));
         recycler_result.setNestedScrollingEnabled(false);
         historyList.add("啦啦啦");
         historyList.add("啦啦啦");

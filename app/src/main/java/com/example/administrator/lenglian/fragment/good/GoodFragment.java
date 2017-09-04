@@ -71,6 +71,13 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         contentList.add("");
         mContentAdapter = new ContentAdapter(R.layout.good_content_item, contentList);
         recycler_content.setAdapter(mContentAdapter);
+        mContentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent=new Intent(mContext,GoodDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     class TitleAdapter extends BaseQuickAdapter<TitleBean, BaseViewHolder> {

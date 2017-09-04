@@ -20,4 +20,23 @@
         <item name="android:layout_width">0dp</item>
     </style>
 
+    <!--主页面房源类型tab的style-->
+    <style name="xiangqing_tab_style">
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@drawable/home_xiangqing_text_selector</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:background">@drawable/home_xiangqing_tab_bg_selector</item>
+    </style>
+
+    <!--tablayout只能通过style来改变文字大小-->
+    <style name="mytablayout">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
