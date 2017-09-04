@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F0F0F2">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawablePadding="6dp"
+            android:padding="10dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/card_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Remove"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:background="#0ff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+
+
+    <RelativeLayout
+        android:id="@+id/card_add"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dip"
+        android:layout_marginRight="25dip"
+        android:padding="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:drawablePadding="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加银行卡"
+            android:layout_centerHorizontal="true"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp_16"
+            android:padding="8dp"
+            android:drawableLeft="@drawable/add_card"
+            />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/collect_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawablePadding="6dp"
+            android:padding="10dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/evaluate"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+     <ListView
+         android:divider="@color/hui"
+         android:dividerHeight="1dp"
+         android:id="@+id/list_evaluate"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"></ListView>
+</LinearLayout>

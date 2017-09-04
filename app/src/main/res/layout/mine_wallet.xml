@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F0F0F2">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawablePadding="6dp"
+            android:padding="8dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallte"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"/>
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/recl_title"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/white"
+        android:layout_below="@+id/include_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+            android:id="@+id/img_yu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/yue2x"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:id="@+id/yue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的余额"
+            android:textSize="16sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/img_yu"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/yue"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.00"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+               />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/wallet_time"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_below="@id/recl_title"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:padding="5dp"
+            android:text="使用时间："
+            android:textSize="16dp"
+            android:textColor="@color/textblack"/>
+
+</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/wallet_dates"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/wallet_time"
+        >
+
+        <TextView
+            android:id="@+id/wallet_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:padding="5dp"
+            android:text="2017-01-01 08:00:00至2017-01-01 08:00:00"
+            android:textSize="16dp"
+            android:textColor="@color/textblack"/>
+        </RelativeLayout>
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/wallet_dates"
+        >
+
+        <TextView
+        android:id="@+id/wallet_cash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:padding="5dp"
+        android:text="我的押金："
+        android:textSize="16dp"
+        android:textColor="@color/textblack"/>
+        <TextView
+            android:id="@+id/cash_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:padding="5dp"
+            android:text="¥5000.00"
+            android:textSize="16dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/textblack"/>
+    </RelativeLayout>
+</LinearLayout>

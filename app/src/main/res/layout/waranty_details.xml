@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hui"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawablePadding="6dp"
+            android:padding="8dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+
+            android:layout_margin="8dp"
+            android:id="@+id/waranty_tupian"
+            android:layout_width="115dp"
+            android:layout_height="90dp"
+            android:src="@drawable/binggui"/>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/waranty_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:layout_marginRight="40dip"
+                android:textColor="@color/textblack"
+                android:text="阿拉阿发发发 阿达阿达啊大大啊大大啊啊啊阿达"/>
+
+          </LinearLayout>
+        </LinearLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textColor="@color/textblack"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="报修人:"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="19dp"/>
+
+            <TextView
+                android:textColor="@color/textblack"
+                android:layout_weight="1"
+                android:id="@+id/waranty_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textColor="@color/textblack"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号码:"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:textColor="@color/textblack"
+                android:layout_weight="1"
+                android:id="@+id/waranty_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1375684952"
+                android:textSize="16sp"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textColor="@color/textblack"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="地址:"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginLeft="41dp"/>
+
+            <TextView
+                android:textColor="@color/textblack"
+                android:layout_weight="1"
+                android:id="@+id/waranty_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="北京海淀苏州街"
+                android:textSize="16sp"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textColor="@color/textblack"
+                android:layout_marginLeft="9dp"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="报修情况："/>
+            <TextView
+                android:textColor="@color/textblack"
+                android:id="@+id/waranty_evolve"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电源不好老是断电"/>
+        </LinearLayout>
+        </LinearLayout>

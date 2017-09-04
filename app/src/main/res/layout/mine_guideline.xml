@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawablePadding="6dp"
+            android:padding="10dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fingerpost"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"></TextView>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_below="@id/title_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:id="@+id/about_ding"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            >
+
+            <TextView
+                android:id="@+id/mine_wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:padding="5dp"
+                android:text="关于订购..."
+                android:textSize="16dp"
+                android:textColor="@color/textblack"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/callback"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:padding="10dp"
+
+
+                />
+        </RelativeLayout>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp">
+
+        <RelativeLayout
+            android:id="@+id/shservice"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:padding="5dp"
+                android:text="售后服务..."
+                android:textSize="16dp"
+                android:textColor="@color/textblack"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/callback"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:padding="10dp"
+
+
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

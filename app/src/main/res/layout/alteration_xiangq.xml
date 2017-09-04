@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/hui">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawablePadding="6dp"
+            android:padding="10dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alterationq"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_margin="8dp"
+            android:id="@+id/iv_tupian"
+            android:layout_width="115dp"
+            android:layout_height="90dp"
+            android:src="@drawable/binggui"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:layout_marginRight="40dip"
+                android:textColor="@color/black"
+                android:text="阿拉阿发发发 阿达阿达sdaaadadadada啊大大啊大大啊啊啊阿达"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/redd"
+                    android:textSize="14dp"
+                    android:padding="6dp"
+                    android:text="¥"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/redd"
+                    android:textSize="16dp"
+                    android:text="1389.00"
+                    android:layout_weight="1"
+                    android:id="@+id/textView" />
+
+               <TextView
+                   android:layout_margin="10dp"
+                   android:text="待取回"
+                   android:textSize="16sp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+         android:background="@color/white"
+         android:layout_marginTop="2dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical">
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal">
+
+             <TextView
+                 android:layout_weight="1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="退还人:"
+                 android:textSize="16sp"
+                 android:padding="10dp"
+                 android:layout_marginTop="10dp"
+                 android:layout_marginLeft="10dp"/>
+
+             <TextView
+             android:layout_weight="1"
+             android:id="@+id/alter_name"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="张三"
+             android:textSize="16sp"
+             android:padding="10dp"
+             android:layout_marginTop="10dp"/>
+         </LinearLayout>
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal">
+
+             <TextView
+                 android:layout_weight="1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="手机号码:"
+                 android:textSize="16sp"
+                 android:padding="10dp"
+                 android:layout_marginLeft="10dp"/>
+
+             <TextView
+                 android:layout_weight="1"
+                 android:id="@+id/alter_phone"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="1375684952"
+                 android:textSize="16sp"
+                 android:padding="10dp"
+               />
+         </LinearLayout>
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal">
+
+             <TextView
+                 android:layout_weight="1"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="地址:"
+                 android:textSize="16sp"
+                 android:padding="10dp"
+                 android:layout_marginLeft="10dp"/>
+
+             <TextView
+                 android:layout_weight="1"
+                 android:id="@+id/alter_address"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="北京海淀苏州街"
+                 android:textSize="16sp"
+                 android:padding="10dp"
+                 />
+         </LinearLayout>
+     </LinearLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退换订单ID:"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/alter_dingdan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20175256"
+                android:textSize="16sp"
+                android:padding="10dp"
+               />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单ID:"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/dingdan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1375684952"
+                android:textSize="16sp"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退换提交时间:"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/alter_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017-01-01 09：30"
+                android:textSize="16sp"
+                android:padding="10dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退换完成时间:"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/alter_timeok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017-01-08 09：30"
+                android:textSize="16sp"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

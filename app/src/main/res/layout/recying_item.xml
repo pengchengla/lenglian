@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_margin="5dp"
+            android:id="@+id/iv_tupian"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:src="@drawable/binggui"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:layout_marginRight="40dip"
+                android:textColor="@color/black"
+                android:text="阿拉阿发发发 阿达阿达啊大大啊大大啊啊啊阿达"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/redd"
+                    android:textSize="14dp"
+                    android:padding="6dp"
+                    android:text="¥"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/redd"
+                    android:textSize="16dp"
+                    android:text="1389.00"
+                    android:layout_weight="1"
+                    android:id="@+id/textView" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:background="#e0e0e0"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_height="1dp"/>
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="确认收货"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:background="@drawable/shape_redline"
+            android:id="@+id/recying_btn"
+            android:textColor="@color/redd"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+</LinearLayout>

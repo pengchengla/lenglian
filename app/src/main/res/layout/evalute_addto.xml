@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawablePadding="6dp"
+            android:padding="8dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zhuijia"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tijiao"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+    <View android:layout_marginTop="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/hui">
+
+    </View>
+
+    <EditText
+        android:id="@+id/edt_mima"
+        android:layout_width="match_parent"
+        android:layout_height="126dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@null"
+        android:hint="追加评论"
+        android:padding="5dp"
+        android:textColorHint="@color/font_black_4"
+        android:textSize="15sp"/>
+
+    <View android:layout_marginTop="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/hui">
+
+    </View>
+</LinearLayout>
