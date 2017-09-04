@@ -6,7 +6,7 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 
 /**
- * Created by Administrator on 2017/8/24.
+ * Created by Administrator on 2017/8/24.s
  */
 
 public class MineFragment extends BaseFragment {
@@ -18,6 +18,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
 
     }
 }
