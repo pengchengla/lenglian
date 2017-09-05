@@ -20,7 +20,9 @@ import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.activity.SearchActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.EventMessage;
+import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
 import com.example.administrator.lenglian.utils.BannerUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 
 import org.greenrobot.eventbus.EventBus;
@@ -85,6 +87,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         return view;
     }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("APP主页"); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("APP主页");
+    }
+
     @Override
     protected void initData() {
         nestView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -119,7 +131,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         recycler_cuxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
         recycler_cuxiao.setNestedScrollingEnabled(false);
         recycler_cuxiao.setAdapter(mCuxiaoAdapter);
-
+        mCuxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(mContext, GoodDetailActivity.class));
+            }
+        });
 
         if (mChangxiaoAdapter == null) {
             mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.home_changxiao_item, picList);
@@ -127,6 +144,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         recycler_changxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
         recycler_changxiao.setNestedScrollingEnabled(false);
         recycler_changxiao.setAdapter(mChangxiaoAdapter);
+        mChangxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(mContext, GoodDetailActivity.class));
+            }
+        });
 
 
         if (mCommentAdapter == null) {
@@ -135,6 +158,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         recycler_comment.setLayoutManager(new LinearLayoutManager(mContext));
         recycler_comment.setNestedScrollingEnabled(false);
         recycler_comment.setAdapter(mCommentAdapter);
+        mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(mContext, GoodDetailActivity.class));
+            }
+        });
     }
 
     @Override
@@ -205,7 +234,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         @Override
         protected void convert(BaseViewHolder helper, String item) {
-
         }
     }
 

@@ -1,7 +1,6 @@
 package com.example.administrator.lenglian.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -11,14 +10,16 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.example.administrator.lenglian.R;
-import com.example.administrator.lenglian.utils.provice.AddressUtils;
+import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.provice.AddressUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class ZiLiaoActivity extends AppCompatActivity implements View.OnClickListener {
+public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView iv_head;
     private EditText edt_name, edt_nicheng, edt_detail_address;
@@ -46,6 +47,21 @@ public class ZiLiaoActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("注册完善资料界面");
+        //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+    }
+
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPageEnd("注册完善资料界面");
+        super.onPause();
+        // （仅有Activity的应用中SDK自动调用，不需要单独写）
+        // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_xingbie:
@@ -67,7 +83,7 @@ public class ZiLiaoActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void showAddressDialog() {
-        new AddressUtils().ShowAddressDialog(this,tv_address);
+        new AddressUtils().ShowAddressDialog(this, tv_address);
     }
 
     private void showBirthdayDialog() {

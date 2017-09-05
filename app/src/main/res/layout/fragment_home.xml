@@ -29,13 +29,14 @@
             android:layout_centerVertical="true"
             android:orientation="vertical">
             <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
             >
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:layout_gravity="center"
                     android:src="@drawable/icon_msg_black"/>
                 <ImageView
                     android:layout_width="10dp"
@@ -75,6 +76,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
+                android:visibility="gone"
                 android:background="@color/huise"></View>
             <com.youth.banner.Banner
                 android:id="@+id/banner"
@@ -323,6 +325,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:visibility="gone"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/arrow_right"/>
             </RelativeLayout>

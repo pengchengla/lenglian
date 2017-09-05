@@ -3,7 +3,6 @@ package com.example.administrator.lenglian.activity;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,11 +11,13 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.base.BaseActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageActivity extends AppCompatActivity implements View.OnClickListener {
+public class MessageActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView tv_back;
     private RecyclerView recycler_msg;
@@ -37,6 +38,21 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         list.add("");
         mMsgAdapter = new MsgAdapter(R.layout.item_msg, list);
         recycler_msg.setAdapter(mMsgAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("消息界面");
+        //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+    }
+
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPageEnd("消息界面");
+        super.onPause();
+        // （仅有Activity的应用中SDK自动调用，不需要单独写）
+        // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
     }
 
     @Override
