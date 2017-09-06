@@ -38,7 +38,6 @@ public class BlankFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String api = getArguments().getString("api");
-
       //  接口
     }
 
