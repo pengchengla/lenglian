@@ -14,7 +14,7 @@
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawableLeft="@drawable/icon_back_white"
             android:drawablePadding="6dp"
             android:padding="10dp"
             android:text="返回"
@@ -68,7 +68,8 @@
         ></ListView>
 
     <RelativeLayout
-
+        android:visibility="gone"
+        android:id="@+id/select_delte"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/collect_check"
             android:layout_weight="1"
             android:layout_alignParentBottom="true"
             android:layout_width="18dp"
@@ -101,6 +103,7 @@
 
         </LinearLayout>
         <Button
+            android:id="@+id/collect_btn"
             android:background="@color/redd"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"

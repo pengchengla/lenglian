@@ -13,12 +13,12 @@
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawableLeft="@drawable/icon_back_white"
             android:drawablePadding="6dp"
             android:padding="10dp"
             android:text="返回"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             />
 
         <TextView
@@ -27,7 +27,7 @@
             android:text="@string/pinjia"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 

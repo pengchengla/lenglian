@@ -13,12 +13,12 @@
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawableLeft="@drawable/icon_back_white"
             android:drawablePadding="6dp"
             android:padding="10dp"
             android:text="返回"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             />
 
         <TextView
@@ -27,7 +27,7 @@
             android:text="@string/person"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
@@ -69,7 +69,9 @@
             />
 
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/person_ming"
         android:layout_marginTop="2dp"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -84,20 +86,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="姓名"
             android:textSize="16dp"
             android:layout_gravity="center"
             android:textColor="@color/textblack"/>
         <TextView
+            android:id="@+id/person_name"
             android:textColor="@color/textblack"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textSize="16dp"
             android:text="张三"
-            android:id="@+id/person_name"
-            android:src="@drawable/icon_weibo"
             android:layout_gravity="center"
              />
         <ImageView
@@ -127,20 +128,20 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="昵称"
             android:textSize="16dp"
             android:layout_gravity="center"
             android:textColor="@color/textblack" />
 
         <TextView
+            android:id="@+id/person_nick"
             android:textColor="@color/textblack"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textSize="16dp"
             android:text="张三"
-            android:src="@drawable/icon_weibo"
             android:layout_gravity="center"
             />
         <ImageView
@@ -170,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="性别"
             android:textSize="16dp"
             android:layout_gravity="center"
@@ -182,9 +183,9 @@
             android:textColor="@color/textblack"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textSize="16dp"
-            android:text="男"
+            android:text="男/女"
             android:src="@drawable/icon_weibo"
             android:layout_gravity="center"
             />
@@ -202,7 +203,7 @@
     <LinearLayout
 
         android:id="@+id/person_birth"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -216,7 +217,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="出生日期"
             android:textSize="16dp"
             android:layout_gravity="center"
@@ -227,7 +228,7 @@
             android:textColor="@color/textblack"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textSize="16dp"
             android:text="  2000年一月一日"
             android:src="@drawable/icon_weibo"
@@ -243,5 +244,67 @@
             android:padding="10dp"
             />
 
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/person_xing"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eff5ff"
+        android:orientation="vertical">
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="5dp"
+            android:textColor="@color/textblack"
+            android:textSize="18sp"
+            android:text="请输入昵称"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+           <EditText
+               android:background="@null"
+               android:layout_margin="10dp"
+
+               android:textSize="16sp"
+               android:id="@+id/person_nicheng"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+         <Button
+             android:layout_margin="5dp"
+             android:layout_marginRight="20dp"
+             android:textColor="@color/white"
+             android:background="@color/font_black_5"
+             android:text="取消"
+             android:id="@+id/btn_pause"
+             android:layout_width="wrap_content"
+             android:layout_height="40dp" />
+            <Button
+                android:layout_margin="5dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/white"
+                android:background="@color/redd"
+                android:text="确定"
+                android:id="@+id/btn_sure"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

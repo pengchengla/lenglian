@@ -41,7 +41,7 @@
         android:layout_marginTop="12dp">
 
         <RelativeLayout
-            android:id="@+id/set_zhanhu"
+            android:id="@+id/set_zhanhao"
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

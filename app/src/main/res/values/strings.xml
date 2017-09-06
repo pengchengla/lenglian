@@ -23,4 +23,8 @@
     <string name="aboutwe">关于我们</string>
     <string name="person">个人信息</string>
     <string name="bevaluate">报修评价</string>
+    <string name="dingdan">我的订单</string>
+    <string name="xufei">续费</string>
+    <string name="oder_detail">订单详情</string>
+    <string name="sure">确认订单</string>
 </resources>

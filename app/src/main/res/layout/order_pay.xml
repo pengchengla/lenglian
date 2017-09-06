@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fanhui_2x"
+            android:drawablePadding="6dp"
+            android:padding="8dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dingdan"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_margin="3dp"
+            android:id="@+id/iv_tupian"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:src="@drawable/binggui"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/orderlist_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:layout_marginRight="40dip"
+                android:textColor="@color/textblack"
+                android:text="阿拉阿发发发 阿达阿达啊大大啊大大啊啊啊阿达"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/redd"
+                    android:textSize="14dp"
+                    android:padding="6dp"
+                    android:text="¥"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/redd"
+                    android:textSize="16dp"
+                    android:text="1389.00"
+                    android:layout_weight="1"
+                    android:id="@+id/textView" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/hui" />
+    <LinearLayout
+        android:gravity="right"
+         android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_marginRight="20dp"
+            android:text="取消订单"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:background="@drawable/selector_bian"
+            android:id="@+id/order_pause"
+            android:textColor="@drawable/textcolers"
+            />
+        <TextView
+              android:enabled="true"
+              android:layout_marginRight="20dp"
+            android:text="去支付"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:background="@drawable/selector_kuangs"
+            android:id="@+id/order_zhifi"
+            android:textColor="@drawable/selector_kuang"
+            />
+</LinearLayout>
+    </LinearLayout>

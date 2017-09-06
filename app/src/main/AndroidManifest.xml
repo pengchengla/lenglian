@@ -64,6 +64,20 @@
         </activity>
         <activity android:name=".fragment.good.GoodDetailActivity">
         </activity>
+        <activity android:name=".fragment.mine.AddcardActivity"></activity>
+        <activity android:name=".fragment.mine.CardActivity"></activity>
+        <activity android:name=".fragment.mine.WarrantyActivity"></activity>
+        <activity android:name=".fragment.mine.WalletActivity"></activity>
+        <activity android:name=".fragment.mine.AddressActivity" />
+        <activity android:name=".fragment.mine.ManualActivity"></activity>
+        <activity android:name=".fragment.mine.EvaluateActivity"></activity>
+        <activity android:name=".fragment.mine.CollectionActivity"></activity>
+        <activity android:name=".fragment.mine.AlterationActivity"></activity>
+        <activity android:name=".fragment.mine.AboutweActivity" />
+        <activity android:name=".fragment.mine.AmendpwdActivity"></activity>
+        <activity android:name=".fragment.mine.SetActivity"></activity>
+        <activity android:name=".fragment.mine.AccountActivity"></activity>
+        <activity android:name=".fragment.mine.PersoninforActivity"></activity>
 
         <!-- 友盟第三方登录及分享start -->
         <meta-data

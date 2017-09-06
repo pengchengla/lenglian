@@ -23,6 +23,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/warranty_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -47,7 +48,7 @@
                      android:textSize="16dp"
                      android:text="1389.00"
                      android:layout_weight="1"
-                     android:id="@+id/textView" />
+                     android:id="@+id/warranty_price" />
 
 
             </LinearLayout>
@@ -75,7 +76,7 @@
             android:gravity="center"
             android:background="@drawable/shape_line"
             android:layout_centerHorizontal="true"
-            android:id="@+id/textView2"
+            android:id="@+id/warranty_pinjia"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
 </LinearLayout>

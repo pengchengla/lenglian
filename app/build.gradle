@@ -36,4 +36,7 @@ dependencies {
     compile 'com.zhy:okhttputils:2.6.2'
     compile 'com.contrarywind:Android-PickerView:3.2.6'
     compile files('libs/gson-2.7.jar')
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.sd6352051.niftydialogeffects:niftydialogeffects:1.0.0@aar'
+
 }

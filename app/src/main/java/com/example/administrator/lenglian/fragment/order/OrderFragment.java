@@ -11,6 +11,7 @@ import com.example.administrator.lenglian.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Administrator on 2017/8/24.
@@ -35,13 +36,34 @@ public class OrderFragment extends BaseFragment {
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         linearLayout.setDividerDrawable(ContextCompat.getDrawable(getActivity(),
                 R.drawable.layout_divider));
-        initData();
+        list = new ArrayList<>();
+        list.add(String.format(Locale.CHINA, "全部订单"));
+        list.add(String.format(Locale.CHINA, "待支付"));
+        list.add(String.format(Locale.CHINA, "待收货"));
+        list.add(String.format(Locale.CHINA, "待评价"));
+
         apiList = new ArrayList<>();
         //放接口
         apiList.add("");
         apiList.add("");
         apiList.add("");
         apiList.add("");
+        for (int i = 0; i < list.size(); i++) {
+            tab.addTab(tab.newTab().setText(list.get(i)));
+        }
+
+        tab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                getChildFragmentManager().beginTransaction().add(R.id.container,BlankFragment.newInstance(apiList.get(tab.getPosition()))).show(BlankFragment.newInstance(apiList.get(tab.getPosition()))).commit();
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
 
     }
 }

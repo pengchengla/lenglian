@@ -5,6 +5,7 @@
     android:background="#F0F0F2">
 
     <ScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
@@ -21,24 +22,45 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true">
-
-                    <ImageView
-                        android:id="@+id/message"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/mesagess"
+                    <LinearLayout
                         android:padding="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        />
-                    <TextView
+                        android:id="@+id/ll_msg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/mesage"
-                        android:textSize="15sp"
-                        android:textColor="@color/white"
-                        android:layout_below="@id/message"
-                        android:padding="8dp" />
+                        android:orientation="vertical">
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            >
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/mesagess"/>
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_gravity="right"
+                                android:src="@drawable/icon_point_red"/>
+                            <TextView
+                                android:id="@+id/tv_msg_number"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_gravity="right"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="8sp"/>
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="消息"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/mine_set"
                         android:layout_width="wrap_content"
@@ -88,6 +110,7 @@
                     android:layout_marginTop="10dp">
 
                     <RelativeLayout
+                        android:id="@+id/one"
                          android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,6 +147,7 @@
                         android:layout_marginRight="15dip"
                         android:layout_height="1dp"/>
                     <RelativeLayout
+                        android:id="@+id/two"
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -160,6 +184,7 @@
                         android:layout_marginRight="15dip"
                         android:layout_height="1dp"></View>
                      <RelativeLayout
+                         android:id="@+id/three"
                          android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -192,6 +217,7 @@
                         android:layout_marginRight="15dip"
                         android:layout_height="1dp"></View>
                     <RelativeLayout
+                        android:id="@+id/four"
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -218,6 +244,7 @@
 
                     </RelativeLayout>
                     <RelativeLayout
+                        android:id="@+id/five"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
                         android:layout_width="match_parent"
@@ -251,6 +278,7 @@
                         android:layout_marginRight="15dip"
                         android:layout_height="1dp"></View>
                     <RelativeLayout
+                        android:id="@+id/six"
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -283,6 +311,7 @@
                         android:layout_marginRight="15dip"
                         android:layout_height="1dp"></View>
                     <RelativeLayout
+                        android:id="@+id/seven"
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -310,6 +339,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/eight"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
                         android:layout_width="match_parent"
@@ -343,6 +373,7 @@
                         android:layout_marginRight="15dip"
                         android:layout_height="1dp"></View>
                     <RelativeLayout
+                        android:id="@+id/nine"
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
