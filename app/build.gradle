@@ -38,5 +38,20 @@ dependencies {
     compile files('libs/gson-2.7.jar')
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.sd6352051.niftydialogeffects:niftydialogeffects:1.0.0@aar'
-
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //友盟分享
+    compile files('libs/SocialSDK_QQ_Simplify.jar')
+    compile files('libs/umeng_social_shareview.jar')
+    compile files('libs/umeng_social_tool.jar')
+    compile files('libs/umeng_social_net.jar')
+    compile files('libs/SocialSDK_WeChat_Simplify.jar')
+    compile files('libs/SocialSDK_Sina_Simplify.jar')
+    compile files('libs/umeng_social_api.jar')
+    compile files('libs/umeng_social_shareboard.jar')
+    compile files('libs/umeng_shareboard_widget.jar')
+    //友盟统计
+    compile files('libs/umeng-analytics-v6.1.2.jar')
+    compile files('libs/utdid4all-1.0.4.jar')
+    //友盟推送
+    compile project(':PushSDK')
 }
