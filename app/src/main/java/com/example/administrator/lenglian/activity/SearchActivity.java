@@ -182,6 +182,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         if (mHistoryList != null && mHistoryList.size() > 0) {
             mHistoryAdapter = new RecyclerHistoryAdapter(R.layout.history_item, mHistoryList);
             recycler_lishi.setAdapter(mHistoryAdapter);
+        }else {
+            iv_delete.setVisibility(View.GONE);
         }
 
         hotList.add("雪糕");
@@ -280,7 +282,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             public void onClick(View v) {
                 mHistoryList.clear();
                 saveHistory();
-                mHistoryAdapter.notifyDataSetChanged();
+                if (mHistoryAdapter != null) {
+                    mHistoryAdapter.notifyDataSetChanged();
+                }
                 dialog.close();
             }
         });

@@ -21,6 +21,7 @@ import com.example.administrator.lenglian.activity.SearchActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
+import com.example.administrator.lenglian.fragment.mine.AlterationActivity;
 import com.example.administrator.lenglian.utils.BannerUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
@@ -188,6 +189,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 EventBus.getDefault().postSticky(eventMessage2);
                 break;
             case R.id.tv_mytui:
+                startActivity(new Intent(mContext, AlterationActivity.class));
                 break;
             case R.id.tv_mycar:
                 Intent intent3 = new Intent(mContext, MyShopCarActivity.class);

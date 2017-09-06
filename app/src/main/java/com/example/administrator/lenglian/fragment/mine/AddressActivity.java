@@ -18,4 +18,6 @@ public class AddressActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_address);
     }
+
+
 }
