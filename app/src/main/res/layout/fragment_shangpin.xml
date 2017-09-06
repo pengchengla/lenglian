@@ -155,7 +155,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        >
+    >
         <LinearLayout
             android:id="@+id/ll_collect"
             android:layout_width="0dp"
@@ -180,6 +180,7 @@
                 android:text="收藏"/>
         </LinearLayout>
         <TextView
+            android:id="@+id/tv_lijizulin"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -191,6 +192,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"/>
         <TextView
+            android:id="@+id/tv_jiaruzulin"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"

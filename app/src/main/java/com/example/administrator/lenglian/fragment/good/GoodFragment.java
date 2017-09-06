@@ -15,6 +15,7 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.SearchActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.TitleBean;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +43,21 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         return view;
     }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("商品总界面"); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("商品总界面");
+    }
+
     @Override
     protected void initData() {
         recycler_content.setLayoutManager(new GridLayoutManager(mContext, 2));
         recycler_title.setLayoutManager(new LinearLayoutManager(mContext));
-        titleList.add(new TitleBean("超市组合柜",true));
+        titleList.add(new TitleBean("超市组合柜", true));
         titleList.add(new TitleBean("豪华展示柜"));
         titleList.add(new TitleBean("豪华岛柜"));
         titleList.add(new TitleBean("双温厨房柜"));
@@ -74,7 +85,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         mContentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent(mContext,GoodDetailActivity.class);
+                Intent intent = new Intent(mContext, GoodDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,9 +101,9 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         protected void convert(final BaseViewHolder helper, TitleBean item) {
             helper.setText(R.id.rb_title, item.getContent());
             helper.setChecked(R.id.rb_title, item.isChecked());
-            if (item.isChecked()){
+            if (item.isChecked()) {
                 helper.getView(R.id.title_left_view).setBackgroundResource(R.color.blue);
-            }else {
+            } else {
                 helper.getView(R.id.title_left_view).setBackgroundResource(R.color.white);
             }
             helper.getView(R.id.rb_title).setOnClickListener(new View.OnClickListener() {

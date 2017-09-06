@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.good;
 
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,17 +9,21 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.utils.BannerUtils;
+import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.view.MyRatingBar;
+import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -31,7 +36,7 @@ import java.util.List;
 public class ShangPinFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerView recycler_canshu, recycler_pingjia, recycler_tuijian;
     private Banner banner;
-    private TextView tv_title, tv_share, tv_price, tv_yuanjia, tv_collect;
+    private TextView tv_title, tv_share, tv_price, tv_yuanjia, tv_collect, tv_lijizulin, tv_jiaruzulin;
     private CanshuAdapter mCanshuAdapter;
     private List<String> picList = new ArrayList<>();
     private PingjiaAdapter mPingjiaAdapter;
@@ -52,9 +57,23 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         tv_share.setOnClickListener(this);
         iv_collect = (ImageView) view.findViewById(R.id.iv_collect);
         tv_collect = (TextView) view.findViewById(R.id.tv_collect);
-        ll_collect= (LinearLayout) view.findViewById(R.id.ll_collect);
+        ll_collect = (LinearLayout) view.findViewById(R.id.ll_collect);
         ll_collect.setOnClickListener(this);
+        tv_lijizulin = (TextView) view.findViewById(R.id.tv_lijizulin);
+        tv_lijizulin.setOnClickListener(this);
+        tv_jiaruzulin = (TextView) view.findViewById(R.id.tv_jiaruzulin);
+        tv_jiaruzulin.setOnClickListener(this);
         return view;
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("商品详情商品页"); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("商品详情商品页");
     }
 
     @Override
@@ -160,6 +179,41 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     isCollected = true;
                 }
                 break;
+            case R.id.tv_lijizulin:
+                showCarDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion, 1);
+                break;
+            case R.id.tv_jiaruzulin:
+                showCarDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion, 2);
+                break;
         }
+    }
+
+    private void showCarDialog(int grary, int animationStyle, final int type) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(mContext);
+        final BaseDialog dialog = builder.setViewId(R.layout.dialog_car)
+                //设置dialogpadding
+                .setPaddingdp(0, 0, 0, 0)
+                //设置显示位置
+                .setGravity(grary)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.getView(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (type == 1) {
+                    startActivity(new Intent(mContext,QueRenOrderActivity.class));
+                } else if (type == 2) {
+                    Toast.makeText(mContext, "已成功加入租赁车", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

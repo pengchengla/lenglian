@@ -1,22 +1,25 @@
 package com.example.administrator.lenglian.fragment.good;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
+import com.example.administrator.lenglian.fragment.home.MyShopCarActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class GoodDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView iv_back, iv_car;
     private TabLayout mTabLayout;
@@ -35,6 +38,21 @@ public class GoodDetailActivity extends AppCompatActivity implements View.OnClic
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         initData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("商品详情界面");
+        //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+    }
+
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPageEnd("商品详情界面");
+        super.onPause();
+        // （仅有Activity的应用中SDK自动调用，不需要单独写）
+        // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
     }
 
     private void initData() {
@@ -82,7 +100,10 @@ public class GoodDetailActivity extends AppCompatActivity implements View.OnClic
                 finish();
                 break;
             case R.id.iv_car:
+                startActivity(new Intent(this, MyShopCarActivity.class));
                 break;
         }
     }
+
+
 }
