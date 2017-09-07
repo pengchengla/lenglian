@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.mine;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,5 +46,11 @@ public class WalletActivity extends BaseActivity {
         wallet_dates = (RelativeLayout) findViewById(R.id.wallet_dates);
         wallet_cash = (TextView) findViewById(R.id.wallet_cash);
         cash_num = (TextView) findViewById(R.id.cash_num);//押金
+        tv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

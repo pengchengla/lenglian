@@ -10,7 +10,7 @@
         android:orientation="horizontal">
         <ImageView
             android:layout_margin="8dp"
-            android:id="@+id/iv_tupian"
+            android:id="@+id/alteration_tupian"
             android:layout_width="115dp"
             android:layout_height="90dp"
             android:src="@drawable/binggui"/>
@@ -21,11 +21,12 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/alteration_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textSize="14sp"
-                android:layout_marginRight="40dip"
+                android:layout_marginRight="20dip"
                 android:textColor="@color/black"
                 android:text="阿拉阿发发发 阿达阿达sdaaadadadada啊大大啊大大啊啊啊阿达"/>
 
@@ -46,7 +47,7 @@
                     android:textSize="16dp"
                     android:text="1389.00"
                     android:layout_weight="1"
-                    android:id="@+id/textView" />
+                    android:id="@+id/alteration_price" />
 
 
             </LinearLayout>

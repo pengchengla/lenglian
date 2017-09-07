@@ -31,7 +31,7 @@
             android:textSize="18sp"/>
     </RelativeLayout>
     <LinearLayout
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="报修人:"
+                android:text="报 修 人:"
                 android:textSize="16sp"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
@@ -164,6 +164,7 @@
                 android:layout_height="wrap_content"
                 android:text="报修情况："/>
             <TextView
+                android:layout_weight="1"
                 android:textColor="@color/textblack"
                 android:id="@+id/waranty_evolve"
                 android:textSize="16sp"

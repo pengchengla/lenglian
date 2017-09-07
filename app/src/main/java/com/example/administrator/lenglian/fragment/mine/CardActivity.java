@@ -36,6 +36,7 @@ public class CardActivity extends BaseActivity implements View.OnClickListener {
         card_remove = (TextView) findViewById(R.id.card_remove);
         card_add = (RelativeLayout) findViewById(R.id.card_add);
         card_add.setOnClickListener(this);
+        tv_back.setOnClickListener(this);
     }
 
     @Override

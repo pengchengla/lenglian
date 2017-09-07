@@ -43,6 +43,7 @@ public class AddcardActivity extends BaseActivity implements View.OnClickListene
         btn_yes = (Button) findViewById(R.id.btn_yes);
 
         btn_yes.setOnClickListener(this);
+        tv_back.setOnClickListener(this);
     }
 
     @Override

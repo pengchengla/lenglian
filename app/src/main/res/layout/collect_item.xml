@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:id="@+id/ll_root_view">
 
     <LinearLayout
         android:background="@color/white"
@@ -10,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/collect_check"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:button="@null"
@@ -20,7 +23,7 @@
             />
         <ImageView
             android:layout_margin="8dp"
-            android:id="@+id/iv_tupian"
+            android:id="@+id/collect_tupian"
             android:layout_width="94dp"
             android:layout_height="90dp"
             android:src="@drawable/binggui"/>
@@ -31,6 +34,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/collect_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -55,7 +59,7 @@
                     android:textSize="16dp"
                     android:text="1389.00"
                     android:layout_weight="1"
-                    android:id="@+id/textView" />
+                    android:id="@+id/collect_price" />
 
 
             </LinearLayout>

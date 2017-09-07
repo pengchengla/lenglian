@@ -1,9 +1,11 @@
 package com.example.administrator.lenglian.fragment.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.good.QueRenOrderActivity;
 import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
@@ -37,6 +40,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout person_sex;
     private TextView person_data;
     private LinearLayout person_birth;
+    private EditText ed;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,8 +78,10 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id. person_ming:
+                showCarDialog( R.style.Alpah_aniamtion,1);
                 break;
             case R.id. person_nickname:
+                showCarDialog( R.style.Alpah_aniamtion,2);
                 break;
             case R.id.person_birth:
                 showBirthdayDialog();
@@ -167,5 +173,41 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 })
 
                 .show();
+    }
+    private void showCarDialog( int animationStyle,final int type) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(this);
+        final BaseDialog dialog = builder.setViewId(R.layout.diag)
+                //设置dialogpadding
+                .setPaddingdp(0, 0, 0, 0)
+                //设置显示位置
+                .setGravity(600)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        ed = (EditText) dialog.getView(R.id.person_nicheng).findViewById(R.id.person_nicheng);
+
+        dialog.getView(R.id.btn_sure).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(type==1){
+                 person_name.setText(ed.getText().toString());}
+                else  if(type==2){
+                    person_nick.setText(ed.getText().toString());
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.getView(R.id.btn_pause).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

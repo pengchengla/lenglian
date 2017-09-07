@@ -33,10 +33,11 @@
 
 </RelativeLayout>
     <ListView
+        android:scrollbars="none"
         android:id="@+id/warranty_list"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="#F0F0F2"
         android:divider="#F0F0F2"
-        android:dividerHeight="4dp"></ListView>
+        android:dividerHeight="15dp"></ListView>
 </LinearLayout>

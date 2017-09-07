@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/collect_title"
@@ -47,12 +48,23 @@
              android:textSize="16sp"
              android:textColor="@color/black"/>
 
-         <RatingBar
-             android:id="@+id/evate_bar"
-             style="?android:attr/ratingBarStyleIndicator"
-             android:layout_marginTop="20dp"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content" />
+         <com.example.administrator.lenglian.view.MyRatingBar
+             android:layout_marginTop="8dp"
+             android:layout_marginLeft="10dp"
+             android:id="@+id/ratingbar"
+             android:layout_width="200dp"
+             android:layout_height="wrap_content"
+             app:starCount="5"
+             app:starEmpty="@drawable/xing_stroke"
+             app:starFill="@drawable/xing_solid"
+             app:starHalf="@drawable/xing_stroke"
+             app:starImageSize="20dp"
+             app:starPadding="10dp"
+             app:starStep="3"
+             app:stepSize="Full"
+            android:layout_gravity="center"
+             >
+         </com.example.administrator.lenglian.view.MyRatingBar>
      </LinearLayout>
       <LinearLayout
           android:layout_width="wrap_content"
@@ -83,11 +95,11 @@
             android:layout_height="wrap_content"
             android:text="晒图:"/>
           <GridView
+              android:verticalSpacing="10dp"
+              android:scrollbars="none"
               android:id="@+id/evate_grade"
-              android:columnWidth="100dp"
-              android:stretchMode="columnWidth"
               android:layout_width="wrap_content"
-              android:layout_height="150dp"
+              android:layout_height="wrap_content"
               android:horizontalSpacing="10dp"
               android:numColumns="3"></GridView>
     <View
@@ -122,6 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
        <Button
+           android:id="@+id/zhuijia"
            android:layout_marginTop="19dp"
            android:layout_gravity="right"
            android:layout_width="wrap_content"

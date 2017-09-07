@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white">
     <ScrollView
@@ -52,7 +53,6 @@
 
 
     <TextView
-      android:layout_weight="1"
       android:text="维修打分："
       android:padding="5dp"
       android:textSize="13sp"
@@ -60,14 +60,22 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:textColor="@color/textblack"/>
-    <RatingBar
-        android:layout_weight="2"
-        android:stepSize="0.5"
-        android:rating="2.5"
-        style="?attr/ratingBarStyleIndicator"
+    <com.example.administrator.lenglian.view.MyRatingBar
+        android:layout_marginLeft="10dp"
+        android:id="@+id/ratingbar"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        app:starCount="5"
+        app:starEmpty="@drawable/xing_stroke"
+        app:starFill="@drawable/xing_solid"
+        app:starHalf="@drawable/xing_stroke"
+        app:starImageSize="20dp"
+        app:starPadding="10dp"
+        app:starStep="3"
+        app:stepSize="Full"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        >
+    </com.example.administrator.lenglian.view.MyRatingBar>
 </LinearLayout>
         <LinearLayout
             android:background="@drawable/shape_line"
@@ -75,14 +83,15 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             >
+
             <EditText
+                android:background="@null"
                 android:id="@+id/warantu_edtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="维修评价  "
                 android:textSize="14sp"
                 android:layout_margin="10dp"/>
-
 
 
         </LinearLayout>
@@ -119,16 +128,21 @@
                   android:layout_height="wrap_content"
                   android:layout_gravity="center"
                   android:textColor="@color/textblack"/>
-              <RatingBar
-                  android:layout_weight="1"
-                  android:stepSize="0.5"
-                  android:rating="2.5"
-                  android:numStars="5"
-                  style="?attr/ratingBarStyleIndicator"
+              <com.example.administrator.lenglian.view.MyRatingBar
+                  android:id="@+id/furatingbar"
+                  android:layout_width="200dp"
+                  android:layout_height="25dp"
+                  app:starCount="5"
                   android:layout_gravity="center"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
-
+                  app:starEmpty="@drawable/xing_stroke"
+                  app:starFill="@drawable/xing_solid"
+                  app:starHalf="@drawable/xing_stroke"
+                  app:starImageSize="20dp"
+                  app:starPadding="10dp"
+                  app:starStep="3"
+                  app:stepSize="Full"
+                  >
+              </com.example.administrator.lenglian.view.MyRatingBar>
 
           </LinearLayout>
     <View
@@ -140,6 +154,7 @@
              android:layout_height="wrap_content"
              android:orientation="vertical">
              <TextView
+                 android:id="@+id/tijiao"
                  android:layout_marginTop="40dp"
                  android:background="@drawable/shape_blueline"
                 android:layout_centerHorizontal="true"

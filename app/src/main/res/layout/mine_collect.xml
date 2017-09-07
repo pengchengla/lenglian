@@ -58,14 +58,12 @@
 
 
     </RelativeLayout>
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_below="@id/collect_title"
-        android:dividerHeight="1dp"
-        android:divider="@color/hui"
         android:id="@+id/list_collect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        ></ListView>
+        ></android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
         android:visibility="gone"

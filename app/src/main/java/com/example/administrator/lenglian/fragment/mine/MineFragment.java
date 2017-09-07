@@ -88,7 +88,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 Intent it2=new Intent(getActivity(),CardActivity.class);
                 startActivity(it2);
                 break;
-            case R.id.four://我的退换
+            case R.id.four://我的退还
                 Intent it3=new Intent(getActivity(),AlterationActivity.class);
                 startActivity(it3);
                 break;
