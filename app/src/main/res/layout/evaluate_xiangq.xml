@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/collect_title"
@@ -94,14 +97,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="晒图:"/>
-          <GridView
+          <com.example.administrator.lenglian.utils.MyGradeview
               android:verticalSpacing="10dp"
               android:scrollbars="none"
               android:id="@+id/evate_grade"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:horizontalSpacing="10dp"
-              android:numColumns="3"></GridView>
+              android:numColumns="3"></com.example.administrator.lenglian.utils.MyGradeview>
     <View
         android:layout_marginTop="10dp"
         android:background="#e0e0e0"
@@ -135,11 +138,12 @@
         android:layout_height="1dp"/>
        <Button
            android:id="@+id/zhuijia"
-           android:layout_marginTop="19dp"
+           android:layout_marginTop="10dp"
            android:layout_gravity="right"
            android:layout_width="wrap_content"
-           android:layout_height="30dp"
+           android:layout_height="35dp"
            android:text="追加评论"
            android:layout_marginRight="35dp"
            android:background="@drawable/shape_line"/>
 </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

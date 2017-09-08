@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/hui">
-
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +12,7 @@
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_back_white"
+            android:drawableLeft="@drawable/fanhui_2x"
             android:drawablePadding="6dp"
             android:padding="8dp"
             android:text="返回"
@@ -24,13 +23,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/alter"
+            android:text="报修单"
             android:padding="10dp"
             android:textColor="@color/white"
             android:layout_centerHorizontal="true"
             android:textSize="18sp"/>
-
-
 
     </RelativeLayout>
     <LinearLayout
@@ -38,7 +35,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp">
+        android:padding="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,27 +43,27 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:padding="5dp"
-            android:text="原始密码:"
+            android:text="收 货 人："
             android:textColor="@color/textblack"/>
         <EditText
-            android:id="@+id/set_initialpwd"
+            android:id="@+id/tuihuan_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dip"
+            android:layout_marginLeft="25dip"
             android:layout_marginRight="10dip"
             android:background="@null"
-            android:hint="请输入6-20位密码"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:padding="5dp"
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="2dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp">
+        android:padding="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,27 +71,29 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:padding="5dp"
-            android:text="登录密码:"
+            android:text="手机号码："
             android:textColor="@color/textblack"/>
         <EditText
-            android:id="@+id/set_loginpwd"
+            android:id="@+id/tuihuan_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dip"
+            android:layout_marginLeft="25dip"
             android:layout_marginRight="10dip"
             android:background="@null"
-            android:hint="请输入6-20位密码"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:padding="5dp"
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/tuiaddress"
+        android:layout_marginTop="2dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp">
+        android:padding="10dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,30 +101,61 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:padding="5dp"
-            android:text="再次输入:"
-            android:textColor="@color/textblack"/>
-        <EditText
-            android:id="@+id/set_replacepwd"
-            android:layout_width="match_parent"
+            android:text="省 市 区："
+            android:textColor="@color/textblack"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:layout_weight="8"
+            android:id="@+id/tuihuan_address"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:background="@null"
-            android:hint="请输入6-20位密码"
-            android:inputType="textPassword"
+            android:layout_marginLeft="15dip"
             android:padding="5dp"
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/callback"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:padding="10dp"
+            />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:padding="10dp">
+        <EditText
+            android:id="@+id/tuihuan_xianq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:hint="详细地址：街道/小区/门牌号等"
+            android:inputType="number"
+            android:padding="30dp"
+            android:textColorHint="@color/font_black_4"
+            android:textSize="15sp"/>
+    </LinearLayout>
+    <TextView
+        android:text="报修情况"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/set_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:background="@drawable/bg_blue"
-        android:padding="10dp"
-        android:text="确认修改"
-        android:textColor="@color/white"
-        android:textSize="18sp"/>
+        android:id="@+id/tunhuan_btn"
+        android:layout_marginTop="20dp"
+        android:text="提交"
+        android:gravity="center"
+        android:textColor="@color/blue"
+        android:layout_gravity="center"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:background="@drawable/shape_blueline"/>
 </LinearLayout>

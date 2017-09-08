@@ -86,7 +86,8 @@
         <activity android:name=".fragment.mine.bean.AlterdetailActivity"></activity>
         <activity android:name=".fragment.mine.EvaluatedetailActivity"></activity>
         <activity android:name=".fragment.mine.AddaddressActivity"></activity>
-        <activity android:name=".fragment.mine.RenewActivity"></activity>
+        <activity android:name=".fragment.order.activity.RenewActivity"></activity>
+        <activity android:name=".fragment.mine.ReturnActivity"></activity>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -170,7 +171,7 @@
 
         <activity android:name=".fragment.good.QueRenOrderActivity">
         </activity>
-        <activity android:name=".fragment.mine.RenewActivity" />
+        <activity android:name=".fragment.order.activity.RenewActivity" />
     </application>
 
 </manifest>

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F2">
+    android:background="@color/hui">
 
     <ScrollView
         android:scrollbars="none"
@@ -38,8 +38,8 @@
                                 android:layout_height="20dp"
                                 android:src="@drawable/mesagess"/>
                             <ImageView
-                                android:layout_width="10dp"
-                                android:layout_height="10dp"
+                                android:layout_width="11dp"
+                                android:layout_height="11dp"
                                 android:layout_gravity="right"
                                 android:src="@drawable/icon_point_red"/>
                             <TextView
@@ -60,24 +60,48 @@
                             android:textColor="@color/white"
                             android:textSize="12sp"/>
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/mine_set"
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/set"
-                        android:textSize="18sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:textColor="@color/white"
-                        />
+                        android:orientation="vertical">
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            >
+                            <ImageView
+                                android:layout_marginTop="1dp"
+                                android:layout_width="19dp"
+                                android:layout_height="19dp"
+                                android:src="@drawable/set"/>
+                            <TextView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_gravity="right"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="8sp"/>
+                        </FrameLayout>
+                        <TextView
+                            android:id="@+id/mine_set"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="设置"
+                            android:padding="1dp"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
                     <ImageView
                         android:id="@+id/mine_head"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/icon_weibo"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="35dp"
                         android:layout_centerHorizontal="true" />
                     <TextView
                         android:id="@+id/mine_phone"
@@ -114,7 +138,7 @@
                          android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp"
+                        android:padding="11dp"
                       >
 
                         <TextView
@@ -151,7 +175,7 @@
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp"
+                        android:padding="10dp"
                         >
 
                         <TextView
@@ -177,18 +201,13 @@
                             />
 
                     </RelativeLayout>
-                    <View
-                        android:background="#e0e0e0"
-                        android:layout_width="match_parent"
-                        android:layout_marginLeft="18dip"
-                        android:layout_marginRight="15dip"
-                        android:layout_height="1dp"></View>
                      <RelativeLayout
+                         android:layout_marginTop="10dp"
                          android:id="@+id/three"
                          android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp">
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                         android:padding="10dp">
 
                      <TextView
                          android:id="@+id/mine_Warranty"
@@ -221,7 +240,7 @@
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:id="@+id/mine_alteration"
@@ -249,7 +268,7 @@
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:id="@+id/mine_collection"
@@ -282,7 +301,7 @@
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:id="@+id/mine_evaluate"
@@ -315,7 +334,7 @@
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:id="@+id/mine_address"
@@ -344,7 +363,7 @@
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:id="@+id/mine_manual"
@@ -377,7 +396,7 @@
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:id="@+id/mine_kefu"
@@ -395,9 +414,9 @@
                             android:layout_centerVertical="true"
                             android:drawableRight="@drawable/callback"
                             android:drawablePadding="10dp"
-                            android:padding="10dp"
+                            android:padding="5dp"
                             android:text="010-12345674"
-                            android:layout_marginRight="15dp"
+                            android:layout_marginRight="20dp"
                             android:layout_alignParentRight="true"
                             android:textSize="16sp"
                             />

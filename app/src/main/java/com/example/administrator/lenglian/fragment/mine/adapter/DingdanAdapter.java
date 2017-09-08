@@ -12,7 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
-import com.example.administrator.lenglian.fragment.mine.RenewActivity;
+import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
+import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
  * author:衣鹏宇(ypu)
  */
 
-public class DingdanAdapter extends BaseAdapter {
+public class DingdanAdapter extends BaseAdapter implements View.OnClickListener {
     private Context context;
     private List<Indexbean> list;
 
@@ -78,10 +79,23 @@ public class DingdanAdapter extends BaseAdapter {
              @Override
              public void onClick(View v) {
                  Intent intent=new Intent(context,RenewActivity.class);
+                 context.startActivity(intent);
              }
          });
+        holder.order_tuihuan.setOnClickListener(this);
+
 
         return convertView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.order_tuihuan:
+                 Intent intent=new Intent(context,ReturnActivity.class);
+                context.startActivity(intent);
+                break;
+        }
     }
 
     class ViewHolder {

@@ -37,7 +37,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:orientation="horizontal"
         >
 
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="头像"
             android:textSize="16dp"
             android:layout_gravity="center"
@@ -56,8 +56,8 @@
             android:id="@+id/person_pho"
             android:src="@drawable/icon_weibo"
             android:layout_gravity="center"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
         <ImageView
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:orientation="horizontal"
         >
 
@@ -118,7 +118,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:orientation="horizontal"
         >
 
@@ -161,7 +161,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:orientation="horizontal"
         >
 
@@ -207,7 +207,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:orientation="horizontal"
         >
 

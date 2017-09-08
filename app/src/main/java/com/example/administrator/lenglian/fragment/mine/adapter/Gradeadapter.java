@@ -58,7 +58,7 @@ public class Gradeadapter extends BaseAdapter {
         else {
             holder= (ViewHolder) convertView.getTag();
         }
-        Toast.makeText(context,list.get(position).getPhoto()+"",Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(context,list.get(position).getPhoto()+"",Toast.LENGTH_SHORT).show();
         holder.image.setImageResource(list.get(position).getPhoto());
         return convertView;
     }
