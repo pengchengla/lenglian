@@ -4,7 +4,6 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -20,12 +19,11 @@ import retrofit2.http.Url;
  *
  */
 
-public interface  ApiService {
+public interface ApiService {
 
 
     @GET
     public Call<String> get1(@Url String url);
-
 
 
     @GET
@@ -34,7 +32,6 @@ public interface  ApiService {
 
     @GET
     public Observable<String> get(@Url String url, @QueryMap Map<String, String> map);
-
 
 
     @FormUrlEncoded

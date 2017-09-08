@@ -5,10 +5,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 
 /**
@@ -65,6 +65,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         mine_kefu.setOnClickListener(this);
         mine_set.setOnClickListener(this);
         mine_head.setOnClickListener(this);
+        ll_msg.setOnClickListener(this);
         return rootView;
     }
 
@@ -118,6 +119,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.mine_head:
                  Intent head=new Intent(getActivity(),PersoninforActivity.class);
                 startActivity(head);
+                break;
+            case R.id.ll_msg://消息
+                 startActivity(new Intent(mContext, MessageActivity.class));
                 break;
         }
     }

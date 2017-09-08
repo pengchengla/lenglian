@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.AddressActivity;
+import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
 
 
 public class QueRenOrderActivity extends BaseActivity implements View.OnClickListener {
@@ -36,7 +37,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.tv_tijiao:
-//                startActivity(new Intent(this,OrderPayActivity.class));
+                startActivity(new Intent(this,OrderPayActivity.class));
                 break;
             case R.id.iv_address:
                 startActivity(new Intent(this, AddressActivity.class));
