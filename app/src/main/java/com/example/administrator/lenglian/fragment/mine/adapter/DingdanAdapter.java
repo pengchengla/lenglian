@@ -12,9 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
 import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.fragment.order.activity.ShopdetailActivity;
 
 import java.util.List;
 
@@ -83,6 +85,8 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
              }
          });
         holder.order_tuihuan.setOnClickListener(this);
+        holder.order_repairs.setOnClickListener(this);
+        holder.order_evaluation.setOnClickListener(this);
 
 
         return convertView;
@@ -94,6 +98,14 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
             case R.id.order_tuihuan:
                  Intent intent=new Intent(context,ReturnActivity.class);
                 context.startActivity(intent);
+                break;
+            case R.id.order_repairs:
+                Intent inten=new Intent(context,BaoxiuActivity.class);
+                context.startActivity(inten);
+                break;
+            case R.id.order_evaluation:
+                Intent inte=new Intent(context,ShopdetailActivity.class);
+                context.startActivity(inte);
                 break;
         }
     }

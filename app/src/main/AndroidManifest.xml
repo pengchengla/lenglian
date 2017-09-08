@@ -88,6 +88,9 @@
         <activity android:name=".fragment.mine.AddaddressActivity"></activity>
         <activity android:name=".fragment.order.activity.RenewActivity"></activity>
         <activity android:name=".fragment.mine.ReturnActivity"></activity>
+        <activity android:name=".fragment.order.activity.BaoxiuActivity"></activity>
+        <activity android:name=".fragment.order.activity.ShopdetailActivity" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".fragment.order.activity.OrderPayActivity"></activity>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"

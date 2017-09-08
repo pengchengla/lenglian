@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#6798e7">
+                <TextView
+                    android:id="@+id/tv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/fanhui_2x"
+                    android:drawablePadding="6dp"
+                    android:padding="8dp"
+                    android:text="返回"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商品评价"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="18sp"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:src="@drawable/binggui"
+                    android:id="@+id/shop_img"
+                    android:layout_margin="5dp"
+                    android:layout_width="90dp"
+                    android:layout_height="85dp" />
+
+
+                <TextView
+                    android:text="商品打分："
+                    android:padding="5dp"
+                    android:textSize="13sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/textblack"/>
+                <com.example.administrator.lenglian.view.MyRatingBar
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/shop_ratingbar"
+                    android:layout_width="200dp"
+                    android:layout_height="25dp"
+                    app:starCount="5"
+                    app:starEmpty="@drawable/xing_stroke"
+                    app:starFill="@drawable/xing_solid"
+                    app:starHalf="@drawable/xing_stroke"
+                    app:starImageSize="20dp"
+                    app:starPadding="10dp"
+                    app:starStep="3"
+                    app:stepSize="Full"
+                    android:layout_gravity="center"
+                    >
+                </com.example.administrator.lenglian.view.MyRatingBar>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/shape_line"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                >
+
+                <EditText
+                    android:background="@null"
+                    android:id="@+id/warantu_edtext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="分享你的租赁心的  "
+                    android:textSize="14sp"
+                    android:layout_margin="10dp"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:src="@drawable/photoshangchuan"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"/>
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最多可上传张五图片"/>
+            </LinearLayout>
+            <View
+                android:background="@color/hui"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"></View>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="配送打分："
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:textSize="13sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/textblack"
+                    android:id="@+id/textView4" />
+
+                <com.example.administrator.lenglian.view.MyRatingBar
+                    android:id="@+id/peisongatingbar"
+                    android:layout_width="200dp"
+                    android:layout_height="25dp"
+                    app:starCount="5"
+                    android:layout_gravity="center"
+                    app:starEmpty="@drawable/xing_stroke"
+                    app:starFill="@drawable/xing_solid"
+                    app:starHalf="@drawable/xing_stroke"
+                    app:starImageSize="20dp"
+                    app:starPadding="10dp"
+                    app:starStep="3"
+                    app:stepSize="Full"
+                    >
+                </com.example.administrator.lenglian.view.MyRatingBar>
+
+            </LinearLayout>
+            <View
+                android:background="@color/hui"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"></View>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="服务打分："
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:textSize="13sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/textblack"/>
+                <com.example.administrator.lenglian.view.MyRatingBar
+                    android:id="@+id/shopfuratingbar"
+                    android:layout_width="200dp"
+                    android:layout_height="25dp"
+                    app:starCount="5"
+                    android:layout_gravity="center"
+                    app:starEmpty="@drawable/xing_stroke"
+                    app:starFill="@drawable/xing_solid"
+                    app:starHalf="@drawable/xing_stroke"
+                    app:starImageSize="20dp"
+                    app:starPadding="10dp"
+                    app:starStep="3"
+                    app:stepSize="Full"
+                    >
+                </com.example.administrator.lenglian.view.MyRatingBar>
+
+            </LinearLayout>
+            <View
+                android:background="@color/hui"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/shop_tijiao"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/shape_blueline"
+                    android:layout_centerHorizontal="true"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:text="提交评论"
+                    android:textColor="#6798e7"
+                    android:layout_width="150dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -28,8 +28,8 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
     private EditText eted_xianq;
     private ImageView edimg_guanli;
     private TextView ad_address;
-    boolean bool=false;
-      int tag=1;
+    boolean bool;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,11 +94,12 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 showAddressDialog();
                 break;
             case R.id. edimg_guanli:
-                 if(tag==1){
+                bool=!bool;
+                 if(bool){
                      edimg_guanli.setImageResource(R.drawable.select_true);
-                     tag=2;
+
                  }
-                else if(tag==2){
+                else {
                      bool=false;
                      edimg_guanli.setImageResource(R.drawable.sleect_false);
                  }

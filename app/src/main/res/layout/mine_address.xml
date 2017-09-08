@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F0F0F2">
+    android:background="@color/white"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,6 +48,8 @@
 
     </RelativeLayout>
     <ListView
+        android:divider="@color/hui"
+        android:dividerHeight="8dp"
         android:id="@+id/list_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></ListView>

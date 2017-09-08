@@ -18,11 +18,12 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.good.QueRenOrderActivity;
+import com.example.administrator.lenglian.fragment.mine.util.NiftyDialogBuilder;
 import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SoftKeyboardTool;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+
 
 import java.util.Calendar;
 import java.util.Date;
@@ -78,7 +79,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.person_pho:
-                showphoto();
+                showphoto(R.style.Alpah_aniamtion,Gravity.CENTER_VERTICAL);
 
                 break;
             case R.id. person_ming:
@@ -155,29 +156,36 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         // 导致选中时间与当前时间不匹配的问题。
     }
       //头像选取
-    private void showphoto(){
-        NiftyDialogBuilder dialogBuilder=NiftyDialogBuilder.getInstance(this);
-        dialogBuilder
-                .withTitle("上传头像")
-                .withMessage("选择你上传的方式")
-                .withButton1Text("拍照")
-                .withButton2Text("相册选取")
-                .withEffect(Effectstype.SlideBottom)
-                .withDuration(700)
-                .setButton1Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "i'm btn1", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setButton2Click(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "i'm btn2", Toast.LENGTH_SHORT).show();
-                    }
-                })
-
-                .show();
+    private void showphoto(int animationStyle,int gr){
+        BaseDialog.Builder builder = new BaseDialog.Builder(this);
+        final BaseDialog dialog = builder.setViewId(R.layout.photo_dialg)
+                //设置dialogpadding
+                .setPaddingdp(40, 40, 40, 40)
+                //设置显示位置
+                .setGravity(gr)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.getView(R.id.photo_xiangce).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //相册选取
+                dialog.dismiss();
+            }
+        });
+        dialog.getView(R.id.photo_cream).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //相机选取
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
     private void showCarDialog( int animationStyle,final int type) {
         BaseDialog.Builder builder = new BaseDialog.Builder(this);
@@ -185,7 +193,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 //设置dialogpadding
                 .setPaddingdp(0, 0, 0, 0)
                 //设置显示位置
-                .setGravity(600)
+                .setGravity(580)
                 //设置动画
                 .setAnimation(animationStyle)
                 //设置dialog的宽高

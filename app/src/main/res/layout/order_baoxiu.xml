@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -23,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="报修单"
+            android:text="保修单"
             android:padding="10dp"
             android:textColor="@color/white"
             android:layout_centerHorizontal="true"
@@ -46,7 +51,7 @@
             android:text="收 货 人："
             android:textColor="@color/textblack"/>
         <EditText
-            android:id="@+id/tuihuan_name"
+            android:id="@+id/baoxiu_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -74,7 +79,7 @@
             android:text="手机号码："
             android:textColor="@color/textblack"/>
         <EditText
-            android:id="@+id/tuihuan_phone"
+            android:id="@+id/baoxiu_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -87,7 +92,7 @@
             android:textSize="15sp"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/tuiaddress"
+        android:id="@+id/baoaddress"
         android:layout_marginTop="2dp"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -107,7 +112,7 @@
 
         <TextView
             android:layout_weight="8"
-            android:id="@+id/tuihuan_address"
+            android:id="@+id/baoxiu_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -144,13 +149,43 @@
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
     </LinearLayout>
-    <TextView
-        android:text="报修情况"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:padding="5dp"
+            android:text="保修情况："
+            android:textColor="@color/textblack"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/shape_line"
+        android:padding="10dp">
+        <EditText
+            android:id="@+id/baoxiu_xianqing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:hint="请简述保修情况"
+            android:inputType="number"
+            android:padding="30dp"
+            android:textColorHint="@color/font_black_4"
+            android:textSize="15sp"/>
+    </LinearLayout>
     <Button
-        android:id="@+id/tunhuan_btn"
-        android:layout_marginTop="20dp"
+        android:id="@+id/baoxiu_btn"
+        android:layout_marginTop="10dp"
         android:text="提交"
         android:gravity="center"
         android:textColor="@color/blue"
@@ -159,3 +194,5 @@
         android:layout_height="45dp"
         android:background="@drawable/shape_blueline"/>
 </LinearLayout>
+</LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
