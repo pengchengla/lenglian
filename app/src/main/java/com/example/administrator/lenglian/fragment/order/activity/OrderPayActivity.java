@@ -34,6 +34,7 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
     private TextView order_pause;
     private TextView order_zhifi;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
