@@ -7,25 +7,28 @@
         android:layout_height="match_parent"
         android:paddingBottom="50dp">
         <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <com.youth.banner.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
-            <RelativeLayout
+                android:layout_height="320dp"/>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
             >
                 <TextView
                     android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="10dp"
+                    android:layout_weight="5"
                     android:ellipsize="end"
-                    android:ems="15"
+                    android:gravity="center_vertical"
                     android:lines="2"
                     android:text="都是撒大家看撒谎大手机客户端哈撒打算看电话卡四大皆空撒"
                     android:textSize="16sp"
@@ -33,23 +36,23 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="50dp"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toRightOf="@id/tv_title"
                     android:background="@color/huise"></View>
                 <TextView
                     android:id="@+id/tv_share"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="10dp"
+                    android:layout_weight="1"
                     android:drawablePadding="5dp"
                     android:drawableTop="@drawable/icon_share"
+                    android:gravity="center"
+                    android:textSize="12sp"
                     android:text="分享"/>
-            </RelativeLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

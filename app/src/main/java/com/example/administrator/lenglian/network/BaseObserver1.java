@@ -47,8 +47,6 @@ public abstract class BaseObserver1<T> implements Observer<String> {
 
     @Override
     public void onNext(@NonNull String s) {
-
-
         try {
             Type genType = getClass().getGenericSuperclass();
             Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
@@ -62,7 +60,6 @@ public abstract class BaseObserver1<T> implements Observer<String> {
             onFailed(JSON_FORMAT_ERROR);
             e.printStackTrace();
         }
-
 
     }
 

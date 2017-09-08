@@ -78,9 +78,11 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-        picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
-        picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
-        picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
+        if (picList.size() == 0) {
+            picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
+            picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
+            picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
+        }
         BannerUtils.startBanner(banner, picList);
         SpannableString spannableString = new SpannableString("原价:￥2999");
         StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
@@ -108,7 +110,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mContext,GoodDetailActivity.class));
+                startActivity(new Intent(mContext, GoodDetailActivity.class));
             }
         });
     }
@@ -144,10 +146,10 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
 
 
             TextView tv_phone = helper.getView(R.id.tv_phone);
-            String phone="15811337458";
+            String phone = "15811337458";
             String phone1 = phone.substring(0, 3);
             String phone2 = phone.substring(7, 11);
-            tv_phone.setText(phone1+"****"+phone2);
+            tv_phone.setText(phone1 + "****" + phone2);
         }
     }
 
@@ -219,7 +221,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onClick(View v) {
                 if (type == 1) {
-                    startActivity(new Intent(mContext,QueRenOrderActivity.class));
+                    startActivity(new Intent(mContext, QueRenOrderActivity.class));
                 } else if (type == 2) {
                     Toast.makeText(mContext, "已成功加入租赁车", Toast.LENGTH_SHORT).show();
                 }

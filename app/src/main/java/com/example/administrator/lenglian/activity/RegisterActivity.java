@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.RegisterBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
@@ -113,11 +114,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("mobile", edt_phone.getText().toString().trim());
         arrayMap.put("password", edt_mima.getText().toString().trim());
-        RetrofitManager.get(MyContants.BASEURL + "s=User/register", arrayMap, new BaseObserver1<String>("") {
+        RetrofitManager.get(MyContants.BASEURL + "s=User/register", arrayMap, new BaseObserver1<RegisterBean>("") {
             @Override
-            public void onSuccess(String result, String tag) {
+            public void onSuccess(RegisterBean result, String tag) {
 
-                Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
 //                Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
 //                startActivity(intent1);
             }

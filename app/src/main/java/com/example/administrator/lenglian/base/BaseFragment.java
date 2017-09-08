@@ -22,7 +22,6 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mContext = getContext();//主要是方便子类调用
         mActivity = getActivity();
-        mActivity = getActivity();//主要是方便子类调用
     }
 
     @Nullable

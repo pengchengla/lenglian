@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private TextView tv_search, tv_msg_number,
-            tv_allgoods, tv_myorder, tv_mytui, tv_mycar;
+            tv_allgoods, tv_myorder, tv_mytui, tv_mycar,tv_text_msg;
     private LinearLayout ll_msg, ll_supermarket, ll_chufang, ll_haixian, ll_xuegao;
     private Banner banner;
     private List<String> picList = new ArrayList<>();
@@ -49,6 +50,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private CommentAdapter mCommentAdapter;
     private NestedScrollView nestView;
     private int mDistanceY;
+    private ImageView iv_msg;
 
     @Override
     protected View initView() {
@@ -60,6 +62,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         ll_msg.setOnClickListener(this);
         banner = (Banner) view.findViewById(R.id.banner);
         tv_allgoods = (TextView) view.findViewById(R.id.tv_allgoods);
+        tv_text_msg = (TextView) view.findViewById(R.id.tv_text_msg);
         tv_allgoods.setOnClickListener(this);
         tv_myorder = (TextView) view.findViewById(R.id.tv_myorder);
         tv_myorder.setOnClickListener(this);
@@ -86,6 +89,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rl_comment.setOnClickListener(this);
         rl_top = (RelativeLayout) view.findViewById(R.id.rl_top);
         nestView = (NestedScrollView) view.findViewById(R.id.nestView);
+        iv_msg= (ImageView) view.findViewById(R.id.iv_msg);
         return view;
     }
 
@@ -114,11 +118,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     float scale = (float) mDistanceY / toolbarHeight;
                     float alpha = scale * 255;
                     rl_top.setBackgroundColor(Color.argb((int) alpha, 103, 152, 231));
+                    tv_text_msg.setTextColor(Color.parseColor("#666666"));
+                    iv_msg.setImageResource(R.drawable.icon_msg_black);
                 } else {
                     //上述虽然判断了滑动距离与toolbar高度相等的情况，但是实际测试时发现，标题栏的背景色
                     //很少能达到完全不透明的情况，所以这里又判断了滑动距离大于toolbar高度的情况，
                     //将标题栏的颜色设置为完全不透明状态
                     rl_top.setBackgroundResource(R.color.colorPrimary);
+                    tv_text_msg.setTextColor(getResources().getColor(R.color.white));
+                    iv_msg.setImageResource(R.drawable.icon_msg_white);
                 }
             }
         });
