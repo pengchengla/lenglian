@@ -3,6 +3,7 @@ package com.example.administrator.lenglian.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,9 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.RegisterBean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SendSmsTimerUtils;
 
@@ -53,7 +57,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 getCode();
                 break;
             case R.id.btn_yes:
-//                register();
+                //                register();
                 Intent intent1 = new Intent(this, ZiLiaoActivity.class);
                 startActivity(intent1);
                 break;
@@ -75,7 +79,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
             return;
         }
-        SendSmsTimerUtils.sendSms(tv_getcode,R.color.white,R.color.text_red);
+        SendSmsTimerUtils.sendSms(tv_getcode, R.color.white, R.color.text_red);
     }
 
     private void register() {
@@ -108,6 +112,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void checkCode() {
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        RetrofitManager.post("", arrayMap, new BaseObserver1<RegisterBean>("") {
+            @Override
+            public void onSuccess(RegisterBean result, String tag) {
 
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
     }
 }
