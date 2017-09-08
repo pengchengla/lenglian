@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
+import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
 
 /**
  * Created by Administrator on 2017/8/24.ss
@@ -103,7 +104,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(it5);
                 break;
             case R.id.seven://我的地址
-                Intent it6=new Intent(getActivity(),AddressActivity.class);
+                Intent it6=new Intent(getActivity(), AddaddressActivity.class);
                 startActivity(it6);
                 break;
             case R.id.eight://用户指南

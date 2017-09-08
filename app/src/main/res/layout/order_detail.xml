@@ -46,16 +46,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
         <TextView
+
             android:layout_margin="5dp"
             android:padding="10dp"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/textblack"
             android:text="待支付"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginLeft="10dp"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textColor="@color/textblack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +64,7 @@
             <TextView
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="10dp"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textColor="@color/textblack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -250,14 +251,14 @@
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                 <TextView
+                    android:layout_marginTop="5dp"
                     android:textColor="@color/textblack"
-                    android:layout_margin="5dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="1dp"
                     android:padding="5dp"
                     android:textSize="16sp"
                     android:text="押金"
@@ -265,22 +266,22 @@
                     android:layout_height="match_parent" />
                     <TextView
                         android:textSize="12sp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:text="产品使用完成并退还以后，押金退还到支付宝账户中"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
                         android:id="@+id/jie_yanjin"
                         android:layout_margin="2dp"
                         android:textColor="@color/textblack"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="¥5000.00"
                         android:textSize="16sp"
@@ -432,6 +433,7 @@
                   android:layout_height="200dp"></android.support.v7.widget.RecyclerView>
 
             <LinearLayout
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="right"
                 android:gravity="right"
