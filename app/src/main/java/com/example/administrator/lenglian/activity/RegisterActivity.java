@@ -3,13 +3,17 @@ package com.example.administrator.lenglian.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SendSmsTimerUtils;
 
 /**
  * Created by Administrator on 2017/8/24.
@@ -46,17 +50,64 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.tv_back:
                 break;
             case R.id.tv_getcode:
+                getCode();
                 break;
             case R.id.btn_yes:
-                Intent intent1=new Intent(this,ZiLiaoActivity.class);
+//                register();
+                Intent intent1 = new Intent(this, ZiLiaoActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.tv_xieyi:
-                Intent intent=new Intent(this,XieYiActivity.class);
+                Intent intent = new Intent(this, XieYiActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_denglu:
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
         }
+    }
+
+    public void getCode() {
+        if (TextUtils.isEmpty(edt_phone.getText().toString())) {
+            Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (!MyUtils.isMobileNO(edt_phone.getText().toString())) {
+            Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        SendSmsTimerUtils.sendSms(tv_getcode);
+    }
+
+    private void register() {
+        if (TextUtils.isEmpty(edt_phone.getText().toString())) {
+            Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!MyUtils.isMobileNO(edt_phone.getText().toString())) {
+            Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(edt_code.getText().toString())) {
+            Toast.makeText(RegisterActivity.this, "请填写验证码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(edt_mima.getText().toString())) {
+            Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (edt_mima.getText().toString().length() < 5 || edt_mima.getText().toString().length() > 20) {
+            Toast.makeText(this, "请输入6-20位密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!edt_mima.getText().toString().equals(edt_mima2.getText().toString())) {
+            Toast.makeText(this, "两次输入的密码不同，请重新输入", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        checkCode();
+    }
+
+    private void checkCode() {
+
     }
 }

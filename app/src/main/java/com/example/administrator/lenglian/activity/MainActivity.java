@@ -51,9 +51,9 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void myEvent(EventMessage eventMessage) {
-        if (eventMessage.getMsg().equals("allgoods")){
+        if (eventMessage.getMsg().equals("allgoods")) {
             rgp.check(R.id.rb_good);
-        }else if (eventMessage.getMsg().equals("order")){
+        } else if (eventMessage.getMsg().equals("order")) {
             rgp.check(R.id.rb_order);
         }
     }

@@ -25,6 +25,11 @@ public class SendSmsTimerUtils extends CountDownTimer {//验证码倒计时的�
         SendSmsTimerUtils mCountDownTimerUtils = new SendSmsTimerUtils(view, 60000, 1000, normalColor, afterColor);
         mCountDownTimerUtils.start();
     }
+    //发送验证码，开始倒计时
+    public static void sendSms(TextView view) {
+        SendSmsTimerUtils mCountDownTimerUtils = new SendSmsTimerUtils(view, 60000, 1000);
+        mCountDownTimerUtils.start();
+    }
 
     /**
      * 第一个参数：TextView控件(需要实现倒计时的TextView)
@@ -43,6 +48,15 @@ public class SendSmsTimerUtils extends CountDownTimer {//验证码倒计时的�
         this.mTextView = textView;
         this.inFuture = inFuture;
         this.downInterval = downInterval;
+    }
+
+    public SendSmsTimerUtils(TextView textView, long millisInFuture, long countDownInterval) {
+        /*
+        注意这个，super的构造器中millisInFuture是总时间，countDownInterval是间隔时间
+        意思就是每隔countDownInterval时间会回调一次方法onTick，然后millisInFuture时间之后会回调onFinish方法。
+         */
+        super(millisInFuture, countDownInterval);
+        this.mTextView = textView;
     }
 
     @Override
