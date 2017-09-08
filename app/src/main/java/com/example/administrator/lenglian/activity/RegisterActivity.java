@@ -75,7 +75,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
             return;
         }
-        SendSmsTimerUtils.sendSms(tv_getcode);
+        SendSmsTimerUtils.sendSms(tv_getcode,R.color.white,R.color.text_red);
     }
 
     private void register() {

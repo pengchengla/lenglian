@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -76,8 +77,10 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                 showAddressDialog();
                 break;
             case R.id.tv_yes:
+                startActivity(new Intent(this,MainActivity.class));
                 break;
             case R.id.tv_tiaoguo:
+                startActivity(new Intent(this,MainActivity.class));
                 break;
         }
     }

@@ -183,7 +183,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         if (mHistoryList != null && mHistoryList.size() > 0) {
             mHistoryAdapter = new RecyclerHistoryAdapter(R.layout.history_item, mHistoryList);
             recycler_lishi.setAdapter(mHistoryAdapter);
-        }else {
+        } else {
             iv_delete.setVisibility(View.GONE);
         }
 

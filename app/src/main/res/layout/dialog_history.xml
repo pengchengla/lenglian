@@ -33,10 +33,11 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@color/huise"
+            android:background="@drawable/bg_yuanjiao_huise"
             android:gravity="center"
             android:padding="8dp"
-            android:text="取消"/>
+            android:text="取消"
+            android:textColor="@color/textblack"/>
         <TextView
             android:id="@+id/tv_yes"
             android:layout_width="0dp"
@@ -44,10 +45,11 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@color/huise"
+            android:background="@drawable/bg_yuanjiao_red"
             android:gravity="center"
             android:padding="8dp"
             android:text="确定"
+            android:textColor="@color/white"
         />
     </LinearLayout>
 </LinearLayout>

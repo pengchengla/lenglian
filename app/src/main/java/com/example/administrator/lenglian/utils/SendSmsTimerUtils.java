@@ -7,6 +7,8 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
+import com.example.administrator.lenglian.MyApplication;
+
 /**
  * Created by lxk on 2017/7/3.
  */
@@ -25,18 +27,12 @@ public class SendSmsTimerUtils extends CountDownTimer {//验证码倒计时的�
         SendSmsTimerUtils mCountDownTimerUtils = new SendSmsTimerUtils(view, 60000, 1000, normalColor, afterColor);
         mCountDownTimerUtils.start();
     }
-    //发送验证码，开始倒计时
-    public static void sendSms(TextView view) {
-        SendSmsTimerUtils mCountDownTimerUtils = new SendSmsTimerUtils(view, 60000, 1000);
-        mCountDownTimerUtils.start();
-    }
-
     /**
      * 第一个参数：TextView控件(需要实现倒计时的TextView)
      * 第二个参数：倒计时总时间，以毫秒为单位；
      * 第三个参数：渐变事件，最低1秒，也就是说设置0-1000都是以一秒渐变，设置1000以上改变渐变时间
-     * 第四个参数：点击textview之前的背景
-     * 第五个参数：点击textview之后的背景
+     * 第四个参数：点击textview之前的字体颜色
+     * 第五个参数：点击textview之后的字体颜色
      */
     public SendSmsTimerUtils(TextView textView, long millisInFuture, long countDownInterval,
                              int inFuture, int downInterval) {
@@ -50,20 +46,11 @@ public class SendSmsTimerUtils extends CountDownTimer {//验证码倒计时的�
         this.downInterval = downInterval;
     }
 
-    public SendSmsTimerUtils(TextView textView, long millisInFuture, long countDownInterval) {
-        /*
-        注意这个，super的构造器中millisInFuture是总时间，countDownInterval是间隔时间
-        意思就是每隔countDownInterval时间会回调一次方法onTick，然后millisInFuture时间之后会回调onFinish方法。
-         */
-        super(millisInFuture, countDownInterval);
-        this.mTextView = textView;
-    }
-
     @Override
     public void onTick(long millisUntilFinished) {
         mTextView.setClickable(false);
         mTextView.setText(millisUntilFinished / 1000 + "秒后可重新发送");
-        mTextView.setBackgroundResource(downInterval);
+        mTextView.setTextColor(MyApplication.getGloableContext().getResources().getColor(downInterval));
 
         SpannableString spannableString = new SpannableString(mTextView.getText().toString());
         ForegroundColorSpan span = new ForegroundColorSpan(Color.RED);
@@ -80,6 +67,6 @@ public class SendSmsTimerUtils extends CountDownTimer {//验证码倒计时的�
     public void onFinish() {
         mTextView.setText("重新获取验证码");
         mTextView.setClickable(true);
-        mTextView.setBackgroundResource(inFuture);
+        mTextView.setTextColor(MyApplication.getGloableContext().getResources().getColor(inFuture));
     }
 }
