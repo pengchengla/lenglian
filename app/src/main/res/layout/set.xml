@@ -18,7 +18,7 @@
             android:padding="10dp"
             android:text="返回"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             />
 
         <TextView
@@ -45,7 +45,7 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="10dp"
             >
 
             <TextView
@@ -81,7 +81,7 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="10dp"
             >
 
             <TextView
@@ -117,7 +117,7 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="10dp"
             >
 
             <TextView
@@ -153,7 +153,7 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="10dp"
             >
 
             <TextView
@@ -182,9 +182,9 @@
         android:id="@+id/btn_exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="35dp"
+        android:layout_margin="30dp"
         android:background="@drawable/shape_radius"
-        android:padding="15dp"
+        android:padding="10dp"
         android:text="退出登录"
         android:textColor="@color/white"
         android:textSize="16sp"/>

@@ -28,7 +28,7 @@
             android:background="@null"
             android:textColor="@color/white"
             android:layout_centerHorizontal="true"
-            android:textSize="17sp"/>
+            android:textSize="18sp"/>
 
 
 

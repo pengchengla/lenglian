@@ -70,6 +70,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
+        tv_msg_number.setText("11");
 
     }
 

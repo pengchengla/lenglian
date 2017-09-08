@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.utils.provice.AddressUtils;
 
 /**
  * date : ${Date}
@@ -26,6 +27,9 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
     private LinearLayout eted_city;
     private EditText eted_xianq;
     private ImageView edimg_guanli;
+    private TextView ad_address;
+    boolean bool=false;
+      int tag=1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +46,11 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
         eted_city = (LinearLayout) findViewById(R.id.eted_city);
         eted_xianq = (EditText) findViewById(R.id.eted_xianq);
         edimg_guanli = (ImageView) findViewById(R.id.edimg_guanli);
+        ad_address = (TextView) findViewById(R.id.add_address);
         tv_back.setOnClickListener(this);
         adress_save.setOnClickListener(this);
+        eted_city.setOnClickListener(this);
+        edimg_guanli.setOnClickListener(this);
     }
 
     private void submit() {
@@ -70,6 +77,10 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
 
 
     }
+    //选择城市
+    private void showAddressDialog() {
+        new AddressUtils().ShowAddressDialog(this, ad_address);
+    }
 
     @Override
     public void onClick(View v) {
@@ -78,6 +89,19 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.adress_save:
+                break;
+            case R.id. eted_city:
+                showAddressDialog();
+                break;
+            case R.id. edimg_guanli:
+                 if(tag==1){
+                     edimg_guanli.setImageResource(R.drawable.select_true);
+                     tag=2;
+                 }
+                else if(tag==2){
+                     bool=false;
+                     edimg_guanli.setImageResource(R.drawable.sleect_false);
+                 }
                 break;
         }
     }

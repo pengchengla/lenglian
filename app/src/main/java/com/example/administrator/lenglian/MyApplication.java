@@ -23,7 +23,8 @@ public class MyApplication extends Application {
         super.onCreate();
         initUMShare();
         initUMPush();
-        initTongJi();
+        instance=this;
+
     }
 
     private void initTongJi() {

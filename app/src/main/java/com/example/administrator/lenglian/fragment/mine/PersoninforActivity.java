@@ -1,10 +1,13 @@
 package com.example.administrator.lenglian.fragment.mine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +20,7 @@ import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.good.QueRenOrderActivity;
 import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SoftKeyboardTool;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
@@ -78,6 +82,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id. person_ming:
+
                 showCarDialog( R.style.Alpah_aniamtion,1);
                 break;
             case R.id. person_nickname:
@@ -190,7 +195,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 //设置监听事件
                 .builder();
         ed = (EditText) dialog.getView(R.id.person_nicheng).findViewById(R.id.person_nicheng);
-
+        SoftKeyboardTool.showSoftKeyboard(ed);
         dialog.getView(R.id.btn_sure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,12 +204,14 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 else  if(type==2){
                     person_nick.setText(ed.getText().toString());
                 }
+                SoftKeyboardTool.closeKeyboard(ed);
                 dialog.dismiss();
             }
         });
         dialog.getView(R.id.btn_pause).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoftKeyboardTool.closeKeyboard(ed);
                 dialog.dismiss();
             }
         });

@@ -12,6 +12,8 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.adapter.Gradeadapter;
 import com.example.administrator.lenglian.fragment.mine.bean.photobean;
+import com.example.administrator.lenglian.utils.MyGradeview;
+import com.example.administrator.lenglian.view.MyGridView;
 import com.example.administrator.lenglian.view.MyRatingBar;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
     private RelativeLayout collect_title;
     private MyRatingBar ratingbar;
     private TextView evate_ping;
-    private GridView evate_grade;
+    private MyGradeview evate_grade;
     private TextView evate_zhuip;
     private Button zhuijia;
     private List<photobean> list=new ArrayList<>();
@@ -67,11 +69,12 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         collect_title = (RelativeLayout) findViewById(R.id.collect_title);
         ratingbar = (MyRatingBar) findViewById(R.id.ratingbar);
         evate_ping = (TextView) findViewById(R.id.evate_ping);
-        evate_grade = (GridView) findViewById(R.id.evate_grade);
+        evate_grade = (MyGradeview) findViewById(R.id.evate_grade);
         evate_zhuip = (TextView) findViewById(R.id.evate_zhuip);
         zhuijia = (Button) findViewById(R.id.zhuijia);
         zhuijia.setOnClickListener(this);
         tv_back.setOnClickListener(this);
+
     }
 
     @Override
