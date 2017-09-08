@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
-import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.base.UMLoginActivity;
 
 /**
  * Created by Administrator on 2017/8/24.
  */
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends UMLoginActivity implements View.OnClickListener {
     private EditText edt_phone, edt_mima, edt_code;
     private Button btn_login;
     private TextView tv_forgetpsw, tv_zhuce;

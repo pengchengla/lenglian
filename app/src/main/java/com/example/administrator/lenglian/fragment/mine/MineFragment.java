@@ -1,6 +1,8 @@
 package com.example.administrator.lenglian.fragment.mine;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,6 +13,7 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
+import com.example.administrator.lenglian.utils.BaseDialog;
 
 /**
  * Created by Administrator on 2017/8/24.ss
@@ -34,6 +37,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public RelativeLayout mine_manual;
     public RelativeLayout mine_kefu;
     public TextView tv_back;
+
     @Override
     protected View initView() {
         View rootView = View.inflate(mContext, R.layout.activity_mine, null);
@@ -104,14 +108,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(it5);
                 break;
             case R.id.seven://我的地址
-                Intent it6=new Intent(getActivity(), AddaddressActivity.class);
+                Intent it6=new Intent(getActivity(),AddressActivity.class);
                 startActivity(it6);
                 break;
             case R.id.eight://用户指南
                 Intent it7=new Intent(getActivity(),ManualActivity.class);
                 startActivity(it7);
                 break;
-            case R.id.nine:
+            case R.id.nine://打电话
+                showDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
                 break;
             case R.id.mine_set:
                 Intent set=new Intent(getActivity(),SetActivity.class);
@@ -127,8 +132,42 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-
-
+    private void showDialog(int grary, int animationStyle) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(mContext);
+        final BaseDialog dialog = builder.setViewId(R.layout.dialog_phone)
+                //设置dialogpadding
+                .setPaddingdp(10, 0, 10, 0)
+                //设置显示位置
+                .setGravity(grary)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.show();
+        TextView tv_content = dialog.getView(R.id.tv_content);
+        tv_content.setText("确认拨打010-12345674？");
+        TextView tv_canel = dialog.getView(R.id.tv_canel);
+        tv_canel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //关闭dialog
+                dialog.close();
+            }
+        });
+        TextView tv_yes = dialog.getView(R.id.tv_yes);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "010-12345674"));
+                //跳转到拨号界面，同时传递电话号码
+                startActivity(dialIntent);
+            }
+        });
+    }
 
 
 }
