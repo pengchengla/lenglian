@@ -22,7 +22,7 @@ import com.example.administrator.lenglian.utils.BaseDialog;
 public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_msg_number;
     public LinearLayout ll_msg;
-    public TextView mine_set;
+    public LinearLayout mine_set;
     public ImageView mine_head;
     public TextView mine_phone;
     public TextView mine_name;
@@ -43,7 +43,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         View rootView = View.inflate(mContext, R.layout.activity_mine, null);
         tv_msg_number= (TextView) rootView.findViewById(R.id.tv_msg_number);
         ll_msg = (LinearLayout) rootView.findViewById(R.id.ll_msg);
-        mine_set = (TextView) rootView.findViewById(R.id.mine_set);
+        mine_set = (LinearLayout) rootView.findViewById(R.id.mine_set);
         mine_head = (ImageView) rootView.findViewById(R.id.mine_head);
         mine_phone = (TextView) rootView.findViewById(R.id.mine_phone);
         mine_name = (TextView) rootView.findViewById(R.id.mine_name);

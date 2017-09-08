@@ -44,6 +44,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         peisongatingbar = (MyRatingBar) findViewById(R.id.peisongatingbar);
         shopfuratingbar = (MyRatingBar) findViewById(R.id.shopfuratingbar);
         shop_tijiao = (TextView) findViewById(R.id.shop_tijiao);
+        tv_back.setOnClickListener(this);
     }
 
     private void submit() {
