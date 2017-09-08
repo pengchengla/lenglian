@@ -159,6 +159,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     recycler_result.setVisibility(View.GONE);
                     mHistoryList = getHistory();//从本地取出来
                     if (mHistoryList != null && mHistoryList.size() > 0) {
+                        iv_delete.setVisibility(View.VISIBLE);
                         if (mHistoryAdapter != null) {
                             mHistoryAdapter.notifyDataSetChanged();//刷新一下界面
                         } else {
@@ -283,8 +284,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 mHistoryList.clear();
                 saveHistory();
                 if (mHistoryAdapter != null) {
+                    mHistoryAdapter.getData().clear();//如果不加这句的话第二次删除就会不生效，真不知道为什么
                     mHistoryAdapter.notifyDataSetChanged();
                 }
+                iv_delete.setVisibility(View.GONE);
                 dialog.close();
             }
         });

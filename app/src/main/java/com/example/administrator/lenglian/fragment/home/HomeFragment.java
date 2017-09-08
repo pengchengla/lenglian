@@ -25,6 +25,7 @@ import com.example.administrator.lenglian.fragment.mine.AlterationActivity;
 import com.example.administrator.lenglian.utils.BannerUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -126,6 +127,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
         picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
         BannerUtils.startBanner(banner, picList);
+        banner.setOnBannerClickListener(new OnBannerClickListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                startActivity(new Intent(mContext,GoodDetailActivity.class));
+            }
+        });
         if (mCuxiaoAdapter == null) {
             mCuxiaoAdapter = new CuxiaoAdapter(R.layout.home_cuxiao_item, picList);
         }

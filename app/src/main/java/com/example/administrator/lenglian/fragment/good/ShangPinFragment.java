@@ -82,7 +82,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
         picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
         BannerUtils.startBanner(banner, picList);
-        SpannableString spannableString = new SpannableString("原价:2999");
+        SpannableString spannableString = new SpannableString("原价:￥2999");
         StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
         spannableString.setSpan(strikethroughSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         tv_yuanjia.setText(spannableString);
@@ -105,6 +105,12 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
 
         mCommentAdapter = new CommentAdapter(R.layout.comment_item, list);
         recycler_tuijian.setAdapter(mCommentAdapter);
+        mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(mContext,GoodDetailActivity.class));
+            }
+        });
     }
 
     class CanshuAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
@@ -136,6 +142,12 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             ratingBar.setStar(3.0f);//设置显示的星星个数
             ratingBar.setStepSize(MyRatingBar.StepSize.Full);//设置每次点击增加一颗星还是半颗星
 
+
+            TextView tv_phone = helper.getView(R.id.tv_phone);
+            String phone="15811337458";
+            String phone1 = phone.substring(0, 3);
+            String phone2 = phone.substring(7, 11);
+            tv_phone.setText(phone1+"****"+phone2);
         }
     }
 

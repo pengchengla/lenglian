@@ -70,7 +70,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/login_edt_bg">
+        android:background="@drawable/login_edt_bg"
+        android:visibility="gone">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,8 +102,8 @@
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
             android:text="xtjk"
-            android:textSize="15sp"
-            android:textColor="@color/text_red_dark"/>
+            android:textColor="@color/text_red_dark"
+            android:textSize="15sp"/>
     </LinearLayout>
     <Button
         android:id="@+id/btn_login"
@@ -112,9 +113,9 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_blue"
+        android:gravity="center"
         android:padding="10dp"
         android:text="登录"
-        android:gravity="center"
         android:textColor="@color/white"
         android:textSize="18sp"/>
     <RelativeLayout

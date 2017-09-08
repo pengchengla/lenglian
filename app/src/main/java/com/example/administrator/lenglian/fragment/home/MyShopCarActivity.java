@@ -1,18 +1,24 @@
 package com.example.administrator.lenglian.fragment.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.ShopCarBean;
+import com.example.administrator.lenglian.fragment.good.QueRenOrderActivity;
+import com.example.administrator.lenglian.listener.SnappingStepperValueChangeListener;
+import com.example.administrator.lenglian.view.SnappingStepper;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -20,11 +26,12 @@ import java.util.List;
 
 public class MyShopCarActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView tv_back, tv_edit, tv_jiesuan;
+    private TextView tv_back, tv_edit, tv_jiesuan, tv_total_count, tv_total_price, tv_quanxuan;
     private RecyclerView recycler_shopcar;
     private ShopCarAdapter mCarAdapter;
     private boolean isEditing;
     private List<ShopCarBean> mList;
+    private LinearLayout ll_money;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +43,19 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
         recycler_shopcar.setLayoutManager(new LinearLayoutManager(this));
         tv_edit = (TextView) findViewById(R.id.tv_edit);
         tv_edit.setOnClickListener(this);
+        tv_quanxuan = (TextView) findViewById(R.id.tv_quanxuan);
+        tv_quanxuan.setOnClickListener(this);
         tv_jiesuan = (TextView) findViewById(R.id.tv_jiesuan);
         tv_jiesuan.setOnClickListener(this);
+        tv_total_count = (TextView) findViewById(R.id.tv_count);
+        tv_total_price = (TextView) findViewById(R.id.tv_total_price);
         mList = new ArrayList<>();
         mList.add(new ShopCarBean("111111111111111", false));
         mList.add(new ShopCarBean("222222222222222", false));
         mList.add(new ShopCarBean("333333333333333", false));
         mList.add(new ShopCarBean("444444444444444", false));
         mCarAdapter = new ShopCarAdapter(R.layout.item_mycar, mList);
+        ll_money = (LinearLayout) findViewById(R.id.ll_money);
         recycler_shopcar.setAdapter(mCarAdapter);
         mCarAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -78,18 +90,44 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.tv_jiesuan:
-
+                if (tv_jiesuan.getText().toString().equals("全部删除")) {
+                    if (isAllChecked()) {
+                        mList.clear();
+                        mCarAdapter.notifyDataSetChanged();
+                        tv_quanxuan.setVisibility(View.GONE);
+                    } else {
+                        Toast.makeText(this, "请先点击全选", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    if (noOneChecked()) {
+                        Toast.makeText(this, "请先选中产品", Toast.LENGTH_SHORT).show();
+                    } else {
+                        startActivity(new Intent(this, QueRenOrderActivity.class));
+                    }
+                }
                 break;
             case R.id.tv_edit:
                 isEditing = !isEditing;
                 if (isEditing) {
                     tv_edit.setText("完成");
-                    tv_jiesuan.setText("删除");
+                    tv_jiesuan.setText("全部删除");
+                    ll_money.setVisibility(View.GONE);
+                    tv_quanxuan.setVisibility(View.VISIBLE);
                 } else {
                     tv_edit.setText("编辑全部");
                     tv_jiesuan.setText("去结算");
+                    ll_money.setVisibility(View.VISIBLE);
+                    tv_quanxuan.setVisibility(View.GONE);
                 }
                 mCarAdapter.notifyDataSetChanged();
+                break;
+            case R.id.tv_quanxuan:
+                for (int i = 0; i < mList.size(); i++) {
+                    mList.get(i).setChecked(true);
+                }
+                if (mCarAdapter != null) {
+                    mCarAdapter.notifyDataSetChanged();
+                }
                 break;
         }
     }
@@ -107,14 +145,20 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                         .setVisible(R.id.tv_delete, true)
                         .setVisible(R.id.tv_title, false)
                         .setVisible(R.id.tv_price, false)
-                        .setVisible(R.id.tv_size, false);
+                        .setVisible(R.id.tv_qian, false)
+                        .setVisible(R.id.tv_size, false)
+                        .setVisible(R.id.tv_xxxxxx, false);
             } else if (!isEditing) {
                 helper.setVisible(R.id.stepper, false)
                         .setVisible(R.id.tv_delete, false)
                         .setVisible(R.id.tv_title, true)
+                        .setVisible(R.id.tv_qian, true)
                         .setVisible(R.id.tv_price, true)
-                        .setVisible(R.id.tv_size, true);
+                        .setVisible(R.id.tv_size, true)
+                        .setVisible(R.id.tv_xxxxxx, true);
             }
+            final TextView tv_size = helper.getView(R.id.tv_size);
+            final TextView tv_price = helper.getView(R.id.tv_price);
             helper.setText(R.id.tv_title, item.getTitle())
                     .setChecked(R.id.cb_car, item.isChecked())
                     .addOnClickListener(R.id.tv_delete);
@@ -125,6 +169,8 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                     for (int i = 0; i < mList.size(); i++) {
                         if (helper.getAdapterPosition() == i) {
                             mList.get(i).setChecked(!mCarAdapter.getData().get(i).isChecked());
+                            tv_total_count.setText(tv_size.getText().toString());
+                            tv_total_price.setText(tv_price.getText().toString() + "");
                         } else {
                             mList.get(i).setChecked(false);
                         }
@@ -132,6 +178,40 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                     mCarAdapter.notifyDataSetChanged();
                 }
             });
+            SnappingStepper stepper = helper.getView(R.id.stepper);
+            stepper.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
+                @Override
+                public void onValueChange(View view, int value) {
+                    helper.setText(R.id.tv_size, value + "");
+                    helper.setText(R.id.tv_price, 1777 * value + "");
+                    if (!noOneChecked()) {
+                        tv_total_count.setText(tv_size.getText().toString());
+                        tv_total_price.setText(tv_price.getText().toString() + "");
+                    }
+                }
+            });
+            if (noOneChecked()) {
+                tv_total_count.setText("0");
+                tv_total_price.setText("0.00");
+            }
         }
+    }
+
+    private boolean noOneChecked() {
+        for (ShopCarBean shopCarBean : mList) {
+            if (shopCarBean.isChecked()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isAllChecked() {
+        for (ShopCarBean shopCarBean : mList) {
+            if (!shopCarBean.isChecked()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/bg_yuanjiao_huise"
+                android:background="@drawable/bg_yuanjiao_red"
                 android:paddingBottom="6dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"

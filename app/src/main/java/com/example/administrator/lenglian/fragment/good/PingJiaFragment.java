@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -72,6 +73,12 @@ public class PingJiaFragment extends BaseFragment {
             ratingBar.setClickable(false);//设置可否点击
             ratingBar.setStar(3.0f);//设置显示的星星个数
             ratingBar.setStepSize(MyRatingBar.StepSize.Full);//设置每次点击增加一颗星还是半颗星
+
+            TextView tv_phone = helper.getView(R.id.tv_phone);
+            String phone="15811337458";
+            String phone1 = phone.substring(0, 3);
+            String phone2 = phone.substring(7, 11);
+            tv_phone.setText(phone1+"****"+phone2);
 
         }
     }
