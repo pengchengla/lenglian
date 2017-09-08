@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
-import com.example.administrator.lenglian.bean.RegisterBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SendSmsTimerUtils;
 
@@ -57,9 +57,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 getCode();
                 break;
             case R.id.btn_yes:
-                //                register();
-                Intent intent1 = new Intent(this, ZiLiaoActivity.class);
-                startActivity(intent1);
+                register();
                 break;
             case R.id.tv_xieyi:
                 Intent intent = new Intent(this, XieYiActivity.class);
@@ -113,15 +111,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void checkCode() {
         ArrayMap arrayMap = new ArrayMap<String, String>();
-        RetrofitManager.post("", arrayMap, new BaseObserver1<RegisterBean>("") {
+        arrayMap.put("mobile", edt_phone.getText().toString().trim());
+        arrayMap.put("password", edt_mima.getText().toString().trim());
+        RetrofitManager.get(MyContants.BASEURL + "s=User/register", arrayMap, new BaseObserver1<String>("") {
             @Override
-            public void onSuccess(RegisterBean result, String tag) {
+            public void onSuccess(String result, String tag) {
 
+                Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
+//                Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
+//                startActivity(intent1);
             }
 
             @Override
             public void onFailed(int code) {
-
+                Toast.makeText(RegisterActivity.this, "失败" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }

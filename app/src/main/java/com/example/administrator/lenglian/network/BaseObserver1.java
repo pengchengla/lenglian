@@ -1,12 +1,8 @@
 package com.example.administrator.lenglian.network;
 
-import android.widget.Toast;
-
-
 import com.alibaba.fastjson.JSON;
 import com.example.administrator.lenglian.base.BaseBean;
 import com.socks.library.KLog;
-
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -33,20 +29,20 @@ public abstract class BaseObserver1<T> implements Observer<String> {
      * 5 主框架页面结构
      * 6 fragment 切换 通用
      * 7 rxjava retrofit mvp
+     *
      * @param d
      */
     private String tag;
-    public BaseObserver1(String tag){
+
+    public BaseObserver1(String tag) {
         this.tag = tag;
     }
 
     @Override
-    public void onSubscribe( Disposable d) {
-
+    public void onSubscribe(Disposable d) {
 
 
     }
-
 
 
     @Override
@@ -57,11 +53,11 @@ public abstract class BaseObserver1<T> implements Observer<String> {
             Type genType = getClass().getGenericSuperclass();
             Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
             Class entityClass = (Class) params[0];
-            T t = (T)  JSON.parseObject(s,entityClass);
-            BaseBean baseBean = (BaseBean) t ;
-           // Toast.makeText(.getApplication(), ""+baseBean.getResult_code(), Toast.LENGTH_SHORT).show();
+            T t = (T) JSON.parseObject(s, entityClass);
+            BaseBean baseBean = (BaseBean) t;
+            // Toast.makeText(.getApplication(), ""+baseBean.getResult_code(), Toast.LENGTH_SHORT).show();
             KLog.e(s);
-            onSuccess(t,tag);
+            onSuccess(t, tag);
         } catch (Exception e) {
             onFailed(JSON_FORMAT_ERROR);
             e.printStackTrace();
@@ -73,18 +69,18 @@ public abstract class BaseObserver1<T> implements Observer<String> {
     @Override
     public void onError(@NonNull Throwable e) {
         try {
-            if(e != null){
-                if(e instanceof HttpException){
+            if (e != null) {
+                if (e instanceof HttpException) {
                     onFailed(HTTP_ERROR);
-                } else if(e instanceof SocketException){
+                } else if (e instanceof SocketException) {
                     onFailed(NET_WORK_ERROR);
-                }else {
+                } else {
                     onFailed(UNKNOW_ERROR);
                 }
-            }else {
+            } else {
                 onFailed(UNKNOW_ERROR);
             }
-            e.printStackTrace() ;
+            e.printStackTrace();
             System.out.println();
             KLog.i(e);
         } catch (Exception e1) {
@@ -101,21 +97,18 @@ public abstract class BaseObserver1<T> implements Observer<String> {
     }
 
 
-    public abstract void onSuccess(T result,String tag);
+    public abstract void onSuccess(T result, String tag);
 
     /**
      * code
-     *  1000 UNKNOW_ERROR 未知错误
-     *  1001 json 转化异常  parse error
-     *  1002 当前网络不可用     java.net.SocketException: Network is unreachable  超时
-     *  1003 服务器不可用 401 402 403 500 502 503 504
+     * 1000 UNKNOW_ERROR 未知错误
+     * 1001 json 转化异常  parse error
+     * 1002 当前网络不可用     java.net.SocketException: Network is unreachable  超时
+     * 1003 服务器不可用 401 402 403 500 502 503 504
+     *
      * @param code
      */
     public abstract void onFailed(int code);
-
-
-
-
 
 
     public static final int UNKNOW_ERROR = 1000;
@@ -123,14 +116,14 @@ public abstract class BaseObserver1<T> implements Observer<String> {
     public static final int NET_WORK_ERROR = 1002;
     public static final int HTTP_ERROR = 1003;
 
-//    HttpException 都属于 http exception
-//    private static final int UNAUTHORIZED = 401;
-//    private static final int FORBIDDEN = 403;
-//    private static final int NOT_FOUND = 404;
-//    private static final int REQUEST_TIMEOUT = 408;
-//    private static final int INTERNAL_SERVER_ERROR = 500;
-//    private static final int BAD_GATEWAY = 502;
-//    private static final int SERVICE_UNAVAILABLE = 503;
-//    private static final int GATEWAY_TIMEOUT = 504;
+    //    HttpException 都属于 http exception
+    //    private static final int UNAUTHORIZED = 401;
+    //    private static final int FORBIDDEN = 403;
+    //    private static final int NOT_FOUND = 404;
+    //    private static final int REQUEST_TIMEOUT = 408;
+    //    private static final int INTERNAL_SERVER_ERROR = 500;
+    //    private static final int BAD_GATEWAY = 502;
+    //    private static final int SERVICE_UNAVAILABLE = 503;
+    //    private static final int GATEWAY_TIMEOUT = 504;
 
 }

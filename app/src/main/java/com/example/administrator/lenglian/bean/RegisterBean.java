@@ -6,33 +6,34 @@ package com.example.administrator.lenglian.bean;
 
 public class RegisterBean {
 
-    /**
-     * msg : success
-     * code : 200
-     * datas : {"user_id":110}
-     */
-    private String msg;
-    private int code;
-    private DatasEntity datas;
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+    /**
+     * code : 1
+     * success : 注册成功
+     * datas : {"user_id":"10"}
+     */
+    private int code;
+    private String success;
+    private DatasEntity datas;
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
     }
 
     public void setDatas(DatasEntity datas) {
         this.datas = datas;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
     public int getCode() {
         return code;
+    }
+
+    public String getSuccess() {
+        return success;
     }
 
     public DatasEntity getDatas() {
@@ -41,15 +42,15 @@ public class RegisterBean {
 
     public static class DatasEntity {
         /**
-         * user_id : 110
+         * user_id : 10
          */
-        private int user_id;
+        private String user_id;
 
-        public void setUser_id(int user_id) {
+        public void setUser_id(String user_id) {
             this.user_id = user_id;
         }
 
-        public int getUser_id() {
+        public String getUser_id() {
             return user_id;
         }
     }

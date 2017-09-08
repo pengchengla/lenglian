@@ -28,7 +28,7 @@ public class RetrofitManager {
 
 
     private static ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://114.215.83.139/cfc/api.php?")
+            .baseUrl("http://114.215.83.139/")
             .addConverterFactory(ScalarsConverterFactory.create())
             // .client(okHttpClient)
             //把 以前的 call 转化成 Observable
