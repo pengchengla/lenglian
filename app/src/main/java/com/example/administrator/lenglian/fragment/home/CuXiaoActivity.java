@@ -79,7 +79,7 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         protected void convert(BaseViewHolder helper, String item) {
-            SpannableString spannableString = new SpannableString("原价:2999");
+            SpannableString spannableString = new SpannableString("原价:￥2999");
             StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
             spannableString.setSpan(strikethroughSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             helper.setText(R.id.tv_price, spannableString);

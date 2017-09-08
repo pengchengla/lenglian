@@ -36,7 +36,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.tv_tijiao:
-//                startActivity(new Intent(this,));
+//                startActivity(new Intent(this,OrderPayActivity.class));
                 break;
             case R.id.iv_address:
                 startActivity(new Intent(this, AddressActivity.class));

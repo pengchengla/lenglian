@@ -20,7 +20,7 @@
         <item name="android:layout_width">0dp</item>
     </style>
 
-    <!--主页面房源类型tab的style-->
+    <!--房源详情tab的style-->
     <style name="xiangqing_tab_style">
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>

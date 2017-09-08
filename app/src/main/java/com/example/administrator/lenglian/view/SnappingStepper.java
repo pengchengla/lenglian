@@ -76,8 +76,8 @@ public class SnappingStepper extends RelativeLayout implements View.OnTouchListe
         }
     }
 
-    private int value = 0;
-    private int minValue = 0;
+    private int value = 1;//布局中默认显示出的数字
+    private int minValue = 1;//最小要显示的数字
     private int maxValue = 100;
 
     public SnappingStepper(Context context) {

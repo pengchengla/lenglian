@@ -171,7 +171,6 @@
 
         <activity android:name=".fragment.good.QueRenOrderActivity">
         </activity>
-        <activity android:name=".fragment.order.activity.RenewActivity" />
     </application>
 
 </manifest>

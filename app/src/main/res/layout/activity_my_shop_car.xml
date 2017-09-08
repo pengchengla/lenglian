@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
         ></android.support.v7.widget.RecyclerView>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -61,48 +61,79 @@
             android:paddingBottom="10dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingTop="10dp"
-        >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="合计"
-                android:textSize="16sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="x"
-                android:textSize="18sp"
-            />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10"
-                android:textColor="@color/textblack"
-                android:textSize="18sp"
-            />
-            <TextView
+            android:paddingTop="10dp">
+            <LinearLayout
+                android:id="@+id/ll_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="1777"
-                android:textColor="@color/text_red"
-                android:textSize="18sp"/>
+            >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="合计"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textSize="18sp"
+                />
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/textblack"
+                    android:textSize="20sp"
+                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="￥"
+                    android:textColor="@color/text_red"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tv_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="0.00"
+                    android:textColor="@color/text_red"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_quanxuan"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_yuanjiao_blue"
+                android:gravity="center"
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="8dp"
+                android:text="全选"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
             <TextView
                 android:id="@+id/tv_jiesuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="130dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:background="@drawable/bg_yuanjiao_blue"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="8dp"
                 android:text="去结算"
                 android:textColor="@color/white"
-                android:textSize="18sp"/>
-        </LinearLayout>
+                android:textSize="16sp"/>
+        </RelativeLayout>
     </FrameLayout>
 </LinearLayout>
