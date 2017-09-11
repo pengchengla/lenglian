@@ -114,20 +114,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("mobile", edt_phone.getText().toString().trim());
         arrayMap.put("password", edt_mima.getText().toString().trim());
-        RetrofitManager.get(MyContants.BASEURL +"s=User/register", arrayMap, new BaseObserver1<RegisterBean>("register") {
+        RetrofitManager.get(MyContants.BASEURL + "s=User/register", arrayMap, new BaseObserver1<RegisterBean>("") {
             @Override
             public void onSuccess(RegisterBean result, String tag) {
-                   if(tag.equals("register")){
-                       Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
-                   }
 
-//                Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
-//                startActivity(intent1);
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
+                startActivity(intent1);
             }
 
             @Override
             public void onFailed(int code) {
-                Toast.makeText(RegisterActivity.this, "失败" + code, Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "注册失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }

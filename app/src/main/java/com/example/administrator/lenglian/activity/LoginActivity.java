@@ -3,14 +3,22 @@ package com.example.administrator.lenglian.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.UMLoginActivity;
+import com.example.administrator.lenglian.bean.LoginBean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
 
 /**
  * Created by Administrator on 2017/8/24.
@@ -47,8 +55,7 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                Intent intent1 = new Intent(this, MainActivity.class);
-                startActivity(intent1);
+                login();
                 break;
             case R.id.tv_zhuce:
                 Intent intent2 = new Intent(this, RegisterActivity.class);
@@ -65,5 +72,26 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
             case R.id.iv_qq:
                 break;
         }
+    }
+
+    private void login() {
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("mobile", edt_phone.getText().toString().trim());
+        arrayMap.put("password", edt_mima.getText().toString().trim());
+        arrayMap.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=User/login", arrayMap, new BaseObserver1<LoginBean>("") {
+            @Override
+            public void onSuccess(LoginBean result, String tag) {
+                Toast.makeText(LoginActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent1);
+                SpUtils.putString(LoginActivity.this,"userid",result.getDatas().getUser_id());
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(LoginActivity.this, "登录失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

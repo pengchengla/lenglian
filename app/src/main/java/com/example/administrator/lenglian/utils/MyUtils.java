@@ -93,8 +93,8 @@ public class MyUtils {
         }
     }
 
-    public static String getPsw(String psw) {
-        return getMD5(getMD5(psw)) + "fujuwang";
+    public static String getToken() {
+        return getMD5(getCurrentDate() + "xfkj");
     }
 
 
@@ -118,6 +118,14 @@ public class MyUtils {
         long lcc_time = Long.valueOf(time);
         String format = sdf.format(new Date(lcc_time * 1000L));
         return format;
+    }
+
+    //  时间戳转为日期  /年/月/日
+    public static String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String date = sdf.format(curDate);
+        return date;
     }
 
     //  时间戳转为日期  /年/月/日/时/分
