@@ -49,6 +49,7 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
         furatingbar.setStepSize(MyRatingBar.StepSize.Full);//设置每次点击增加一颗星还是半颗星
         tv_back.setOnClickListener(this);
         tijiao.setOnClickListener(this);
+        warantu_edtext.setOnClickListener(this);
     }
 
     private void submit() {
@@ -71,6 +72,9 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.tijiao:
+                break;
+            case R.id. warantu_edtext:
+                warantu_edtext.setCursorVisible(true);
                 break;
         }
     }

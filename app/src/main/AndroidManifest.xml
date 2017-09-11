@@ -76,7 +76,7 @@
         <activity android:name=".fragment.mine.EvaluateActivity"></activity>
         <activity android:name=".fragment.mine.CollectionActivity"></activity>
         <activity android:name=".fragment.mine.AlterationActivity"></activity>
-        <activity android:name=".fragment.mine.AboutweActivity" />
+        <activity android:name=".fragment.mine.AboutweActivity" android:windowSoftInputMode="stateHidden" />
         <activity android:name=".fragment.mine.AmendpwdActivity"></activity>
         <activity android:name=".fragment.mine.SetActivity"></activity>
         <activity android:name=".fragment.mine.AccountActivity"></activity>
@@ -91,6 +91,7 @@
         <activity android:name=".fragment.order.activity.BaoxiuActivity"></activity>
         <activity android:name=".fragment.order.activity.ShopdetailActivity" android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".fragment.order.activity.OrderPayActivity"></activity>
+        <activity android:name=".fragment.mine.ZhijiaActivity"></activity>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"

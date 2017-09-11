@@ -114,11 +114,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("mobile", edt_phone.getText().toString().trim());
         arrayMap.put("password", edt_mima.getText().toString().trim());
-        RetrofitManager.get(MyContants.BASEURL + "s=User/register", arrayMap, new BaseObserver1<RegisterBean>("") {
+        RetrofitManager.get(MyContants.BASEURL +"s=User/register", arrayMap, new BaseObserver1<RegisterBean>("register") {
             @Override
             public void onSuccess(RegisterBean result, String tag) {
+                   if(tag.equals("register")){
+                       Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                   }
 
-                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
 //                Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
 //                startActivity(intent1);
             }

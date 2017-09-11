@@ -23,6 +23,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout set_clean;
     private RelativeLayout set_about;
     private Button btn_exit;
+    private TextView clean_huan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
         set_clean = (RelativeLayout) findViewById(R.id.set_clean);
         set_about = (RelativeLayout) findViewById(R.id.set_about);
         btn_exit = (Button) findViewById(R.id.btn_exit);
+        clean_huan = (TextView) findViewById(R.id.clean_huan);
         btn_exit.setOnClickListener(this);
         set_zhanhao.setOnClickListener(this);
         set_clean.setOnClickListener(this);
@@ -59,9 +61,10 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.set_update:
 
+
                 break;
             case R.id.set_clean:
-
+                clean_huan.setText("");
                 break;
             case R.id.set_about:
                   Intent intent1=new Intent(this,AboutweActivity.class);

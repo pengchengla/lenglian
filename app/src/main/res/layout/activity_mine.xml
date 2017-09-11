@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/hui">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:scrollbars="none"
@@ -96,7 +95,7 @@
                             android:textSize="12sp"/>
                     </LinearLayout>
 
-                    <ImageView
+                    <com.example.administrator.lenglian.view.CircleImageView
                         android:id="@+id/mine_head"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
@@ -131,8 +130,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="10dp">
-
+                    >
+                    <View
+                        android:background="@color/hui"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
                     <RelativeLayout
                         android:id="@+id/one"
                          android:background="@color/white"
@@ -165,10 +167,8 @@
 </RelativeLayout>
 
                     <View
-                        android:background="#e0e0e0"
+                        android:background="@color/hui"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="18dip"
-                        android:layout_marginRight="15dip"
                         android:layout_height="1dp"/>
                     <RelativeLayout
                         android:id="@+id/two"
@@ -197,12 +197,14 @@
                             android:layout_marginRight="15dp"
                             android:padding="10dp"
 
-
                             />
 
                     </RelativeLayout>
+                    <View
+                        android:background="@color/hui"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
                      <RelativeLayout
-                         android:layout_marginTop="10dp"
                          android:id="@+id/three"
                          android:background="@color/white"
                        android:layout_width="match_parent"
@@ -230,11 +232,9 @@
 
                 </RelativeLayout>
                     <View
-                        android:background="#e0e0e0"
+                        android:background="@color/hui"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="18dip"
-                        android:layout_marginRight="15dip"
-                        android:layout_height="1dp"></View>
+                        android:layout_height="1dp"/>
                     <RelativeLayout
                         android:id="@+id/four"
                         android:background="@color/white"
@@ -262,9 +262,12 @@
                             />
 
                     </RelativeLayout>
+                    <View
+                        android:background="@color/hui"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
                     <RelativeLayout
                         android:id="@+id/five"
-                        android:layout_marginTop="10dp"
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -291,11 +294,9 @@
 
                     </RelativeLayout>
                     <View
-                        android:background="#e0e0e0"
+                        android:background="@color/hui"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="18dip"
-                        android:layout_marginRight="15dip"
-                        android:layout_height="1dp"></View>
+                        android:layout_height="1dp"/>
                     <RelativeLayout
                         android:id="@+id/six"
                         android:background="@color/white"
@@ -324,11 +325,9 @@
 
                     </RelativeLayout>
                     <View
-                        android:background="#e0e0e0"
+                        android:background="@color/hui"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="18dip"
-                        android:layout_marginRight="15dip"
-                        android:layout_height="1dp"></View>
+                        android:layout_height="1dp"/>
                     <RelativeLayout
                         android:id="@+id/seven"
                         android:background="@color/white"
@@ -356,10 +355,13 @@
                             />
 
                     </RelativeLayout>
-
+                    <View
+                        android:background="@color/hui"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
                     <RelativeLayout
                         android:id="@+id/eight"
-                        android:layout_marginTop="10dp"
+
                         android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -386,11 +388,9 @@
 
                     </RelativeLayout>
                     <View
-                        android:background="#e0e0e0"
+                        android:background="@color/hui"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="18dip"
-                        android:layout_marginRight="15dip"
-                        android:layout_height="1dp"></View>
+                        android:layout_height="1dp"/>
                     <RelativeLayout
                         android:id="@+id/nine"
                         android:background="@color/white"
@@ -416,9 +416,10 @@
                             android:drawablePadding="10dp"
                             android:padding="5dp"
                             android:text="010-12345674"
+                            android:textColor="@color/textblack"
                             android:layout_marginRight="20dp"
                             android:layout_alignParentRight="true"
-                            android:textSize="16sp"
+
                             />
 
 

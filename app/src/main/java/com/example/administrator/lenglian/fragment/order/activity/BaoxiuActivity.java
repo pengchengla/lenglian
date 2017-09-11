@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.utils.SoftKeyboardTool;
 import com.example.administrator.lenglian.utils.provice.AddressUtils;
 
 /**
@@ -64,6 +65,7 @@ public class BaoxiuActivity extends BaseActivity implements View.OnClickListener
                    finish();
                 break;
             case R.id.baoaddress:
+                SoftKeyboardTool.closeKeyboard(baoxiu_phone);
                 showAddressDialog();
                 break;
 

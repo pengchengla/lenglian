@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.utils.SoftKeyboardTool;
 import com.example.administrator.lenglian.utils.provice.AddressUtils;
 
 /**
@@ -92,6 +93,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id. eted_city:
                 showAddressDialog();
+                SoftKeyboardTool.closeKeyboard( eted_phone);
                 break;
             case R.id. edimg_guanli:
                 bool=!bool;

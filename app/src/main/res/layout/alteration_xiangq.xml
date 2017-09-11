@@ -5,36 +5,51 @@
     android:orientation="vertical"
     android:background="@color/hui">
 
-    <RelativeLayout
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6798e7"
-        android:padding="10dp">
+        android:padding="5dp"
+        >
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/fan"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_back_white"
+                android:layout_width="15dp"
+                android:layout_height="14dp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/fan"
+                android:gravity="left"
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="返回"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+
         <TextView
-            android:id="@+id/tv_back"
+            android:layout_weight="5"
+            android:gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_back_white"
-            android:drawablePadding="6dp"
-            android:padding="10dp"
-            android:text="返回"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/alterationq"
+            android:text="退还详情"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:textSize="17sp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:textSize="18sp" />
 
-
-    </RelativeLayout>
-
+    </LinearLayout>
     <LinearLayout
         android:background="@color/white"
           android:layout_marginTop="5dp"
@@ -61,7 +76,7 @@
                 android:padding="8dp"
                 android:textSize="14sp"
                 android:layout_marginRight="10dip"
-                android:textColor="@color/black"
+                android:textColor="@color/textblack"
                 android:text="阿拉阿发发发 阿达阿达sdaaadadadada啊大大啊大大啊啊啊阿达"/>
 
             <LinearLayout

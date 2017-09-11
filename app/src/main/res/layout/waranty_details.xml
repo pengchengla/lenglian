@@ -5,31 +5,51 @@
     android:background="@color/hui"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#6798e7">
-        <TextView
-            android:id="@+id/tv_back"
+        android:background="#6798e7"
+        android:padding="10dp"
+        >
+        <RelativeLayout
+            android:layout_weight="2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/fanhui_2x"
-            android:drawablePadding="6dp"
-            android:padding="8dp"
-            android:text="返回"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            />
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/fan"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_back_white"
+                android:layout_width="15dp"
+                android:layout_height="14dp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/fan"
+                android:gravity="left"
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="返回"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
 
         <TextView
+            android:layout_weight="5"
+            android:gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/detail"
+            android:text="报修详情"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:layout_centerHorizontal="true"
-            android:textSize="18sp"/>
-    </RelativeLayout>
+            android:textSize="18sp" />
+
+    </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
         android:background="@color/white"
@@ -162,7 +182,7 @@
                 android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="报修情况："/>
+                android:text="报修情况:"/>
             <TextView
                 android:layout_weight="1"
                 android:textColor="@color/textblack"

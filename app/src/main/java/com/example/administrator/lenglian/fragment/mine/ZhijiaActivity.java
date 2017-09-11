@@ -16,31 +16,33 @@ import com.example.administrator.lenglian.base.BaseActivity;
  * author:衣鹏宇(ypu)
  */
 
-public class AboutweActivity extends BaseActivity implements View.OnClickListener {
-
+public class ZhijiaActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back;
-    private EditText set_edwe;
+    private TextView tijiao;
+    private EditText edt_pin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.set_aboutwe);
+        setContentView(R.layout.evalute_addto);
         initView();
 
     }
 
     private void initView() {
         tv_back = (TextView) findViewById(R.id.tv_back);
-        set_edwe = (EditText) findViewById(R.id.set_edwe);
+        tijiao = (TextView) findViewById(R.id.tijiao);
+        edt_pin = (EditText) findViewById(R.id.edt_pin);
         tv_back.setOnClickListener(this);
-        set_edwe.setOnClickListener(this);
+        tijiao.setOnClickListener(this);
+        edt_pin.setOnClickListener(this);
     }
 
     private void submit() {
         // validate
-        String edwe = set_edwe.getText().toString().trim();
-        if (TextUtils.isEmpty(edwe)) {
-            Toast.makeText(this, "关于我们的内容", Toast.LENGTH_SHORT).show();
+        String pin = edt_pin.getText().toString().trim();
+        if (TextUtils.isEmpty(pin)) {
+            Toast.makeText(this, "你的评论~", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -55,8 +57,11 @@ public class AboutweActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_back:
                 finish();
                 break;
-            case R.id. set_edwe:
-                set_edwe.setCursorVisible(true);
+            case R.id.tijiao:
+                 //提交
+                break;
+            case R.id.edt_pin:
+                 edt_pin.setCursorVisible(true);
                 break;
         }
     }

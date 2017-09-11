@@ -6,10 +6,11 @@
     android:background="#F0F0F2">
 
     <RelativeLayout
+        android:id="@+id/collect_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6798e7"
-        android:padding="10dp">
+        android:padding="5dp">
         <TextView
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
@@ -26,18 +27,30 @@
             android:id="@+id/card_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Remove"
+            android:text="解绑"
             android:padding="10dp"
             android:textColor="@color/white"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
             android:textSize="16sp"
             />
+        <TextView
+            android:id="@+id/collect_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="完成"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:textSize="18sp"
+            android:visibility="gone"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/card"
+            android:text="添加银行卡"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -46,6 +59,7 @@
 
 
     </RelativeLayout>
+
 
     <ListView
         android:id="@+id/card_list"

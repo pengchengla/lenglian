@@ -87,6 +87,7 @@
                 >
 
                 <EditText
+                    android:cursorVisible="false"
                     android:background="@null"
                     android:id="@+id/warantu_edtext"
                     android:layout_width="match_parent"

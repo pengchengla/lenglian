@@ -55,10 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="25dip"
             android:layout_marginRight="10dip"
             android:background="@null"
-            android:inputType="number"
             android:padding="5dp"
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
@@ -83,7 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="25dip"
             android:layout_marginRight="10dip"
             android:background="@null"
             android:inputType="number"
@@ -133,19 +130,16 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginTop="2dp"
         android:background="@color/white"
         android:padding="10dp">
         <EditText
             android:id="@+id/tuihuan_xianq"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent"
             android:background="@null"
             android:hint="详细地址：街道/小区/门牌号等"
-            android:inputType="number"
-            android:padding="30dp"
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
     </LinearLayout>
@@ -174,12 +168,9 @@
         <EditText
             android:id="@+id/baoxiu_xianqing"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent"
             android:background="@null"
             android:hint="请简述保修情况"
-            android:inputType="number"
-            android:padding="30dp"
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
     </LinearLayout>

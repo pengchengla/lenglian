@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
-    >
-
+    android:layout_height="match_parent">
     <LinearLayout
-        android:gravity="center"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6798e7"
-        android:padding="5dp"
-        >
-        <RelativeLayout
-            android:layout_weight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:padding="10dp">
         <ImageView
-            android:layout_centerVertical="true"
-            android:id="@+id/fan"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:src="@drawable/icon_back_white"
-            android:layout_width="15dp"
-            android:layout_height="14dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <TextView
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/fan"
-            android:gravity="left"
+           android:gravity="left"
+            android:layout_weight="0.5"
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:text="返回"
             android:textColor="@color/white"
             android:textSize="16sp"
             />
 
-        </RelativeLayout>
+
 
         <TextView
-            android:layout_weight="2"
+
+            android:layout_weight="1"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,28 +37,17 @@
             android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="18sp" />
-       <LinearLayout
 
-           android:layout_weight="1"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content">
         <TextView
+            android:layout_weight="1"
             android:gravity="center"
             android:id="@+id/adress_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/address_add"
-          android:padding="10dp"
+            android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="16sp"
             />
-       </LinearLayout>
     </LinearLayout>
-    <ListView
-        android:scrollbars="none"
-        android:divider="@color/white"
-        android:dividerHeight="0dp"
-        android:id="@+id/list_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
 </LinearLayout>

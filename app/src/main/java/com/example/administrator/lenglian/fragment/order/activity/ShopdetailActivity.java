@@ -45,6 +45,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         shopfuratingbar = (MyRatingBar) findViewById(R.id.shopfuratingbar);
         shop_tijiao = (TextView) findViewById(R.id.shop_tijiao);
         tv_back.setOnClickListener(this);
+        warantu_edtext.setOnClickListener(this);
     }
 
     private void submit() {
@@ -65,6 +66,9 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.tv_back:
                 finish();
+                break;
+            case R.id.warantu_edtext:
+                warantu_edtext.setCursorVisible(true);
                 break;
         }
     }

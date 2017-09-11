@@ -5,35 +5,51 @@
     android:orientation="vertical"
     android:background="#F0F0F2">
 
-    <RelativeLayout
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#6798e7">
-        <TextView
-            android:id="@+id/tv_back"
+        android:background="#6798e7"
+        android:padding="5dp"
+        >
+        <RelativeLayout
+            android:layout_weight="2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_back_white"
-            android:drawablePadding="6dp"
-            android:padding="8dp"
-            android:text="返回"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            />
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/fan"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_back_white"
+                android:layout_width="15dp"
+                android:layout_height="14dp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/fan"
+                android:gravity="left"
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="返回"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
 
         <TextView
+            android:layout_weight="5"
+            android:gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/wallte"
+            android:text="我的钱包"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:layout_centerHorizontal="true"
-            android:textSize="17sp"/>
+            android:textSize="18sp" />
 
-
-
-    </RelativeLayout>
-
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/recl_title"
         android:layout_width="match_parent"
@@ -55,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的余额"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:layout_below="@id/img_yu"
@@ -71,15 +87,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
+                android:textSize="18sp"
+                android:textColor="@color/textblack"/>
             <TextView
                 android:id="@+id/balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1.00"
-                android:textSize="16sp"
-                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textColor="@color/textblack"
                />
 
         </LinearLayout>
@@ -92,12 +108,11 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:padding="10dp"
         android:layout_below="@id/recl_title"
         android:layout_marginTop="10dp"
         >
         <TextView
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
@@ -113,17 +128,16 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:layout_marginTop="1dp"
+        android:padding="10dp"
+        android:layout_marginTop="0.5dp"
         android:layout_below="@id/wallet_time"
         >
 
         <TextView
             android:id="@+id/wallet_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
+            android:layout_marginLeft="5dip"
             android:padding="5dp"
             android:text="2017-01-01 08:00:00至2017-01-01 08:00:00"
             android:textSize="16dp"
@@ -133,7 +147,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:padding="10dp"
         android:layout_marginTop="10dp"
         android:layout_below="@id/wallet_dates"
         >

@@ -14,6 +14,7 @@ import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.view.CircleImageView;
 
 /**
  * Created by Administrator on 2017/8/24.ss
@@ -23,7 +24,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_msg_number;
     public LinearLayout ll_msg;
     public LinearLayout mine_set;
-    public ImageView mine_head;
+    public CircleImageView mine_head;
     public TextView mine_phone;
     public TextView mine_name;
     public RelativeLayout title_back;
@@ -44,7 +45,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tv_msg_number= (TextView) rootView.findViewById(R.id.tv_msg_number);
         ll_msg = (LinearLayout) rootView.findViewById(R.id.ll_msg);
         mine_set = (LinearLayout) rootView.findViewById(R.id.mine_set);
-        mine_head = (ImageView) rootView.findViewById(R.id.mine_head);
+        mine_head = (CircleImageView) rootView.findViewById(R.id.mine_head);
         mine_phone = (TextView) rootView.findViewById(R.id.mine_phone);
         mine_name = (TextView) rootView.findViewById(R.id.mine_name);
         title_back = (RelativeLayout) rootView.findViewById(R.id.title_back);

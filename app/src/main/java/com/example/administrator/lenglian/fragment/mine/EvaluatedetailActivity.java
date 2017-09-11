@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -81,7 +82,9 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.zhuijia:
-
+                 //跳转
+                Intent intent=new Intent(EvaluatedetailActivity.this,ZhijiaActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_back:
                  finish();

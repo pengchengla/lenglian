@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6798e7"
-        android:padding="10dp">
+        android:padding="5dp">
         <TextView
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
             android:textSize="16dp"
             android:layout_gravity="center"
             android:textColor="@color/textblack"/>
-        <ImageView
+        <com.example.administrator.lenglian.view.CircleImageView
             android:id="@+id/person_pho"
             android:src="@drawable/icon_weibo"
             android:layout_gravity="center"
@@ -72,7 +72,7 @@
 
     <LinearLayout
         android:id="@+id/person_ming"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/person_nickname"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/person_sex"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -4,56 +4,88 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <RelativeLayout
-        android:id="@+id/collect_title"
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6798e7"
-        android:padding="10dp">
+        android:padding="5dp"
+        >
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/fan"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_back_white"
+                android:layout_width="15dp"
+                android:layout_height="14dp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/fan"
+                android:gravity="left"
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="返回"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+
         <TextView
-            android:id="@+id/tv_back"
+            android:layout_weight="5"
+            android:gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_back_white"
-            android:drawablePadding="6dp"
-            android:padding="10dp"
-            android:text="返回"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pinjia"
+            android:text="评价"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:textSize="17sp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:textSize="18sp" />
 
-
-
-    </RelativeLayout>
+    </LinearLayout>
+     <View
+         android:layout_width="wrap_content"
+         android:layout_height="12dp"
+         android:background="@color/hui"/>
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_height="80dp"
+            android:src="@drawable/binggui"/>
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
      <LinearLayout
          android:layout_width="wrap_content"
          android:layout_height="wrap_content">
          <TextView
-             android:padding="10dp"
+             android:padding="5dp"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="商品打分 :"
+             android:text="商品打分："
              android:layout_marginTop="20dp"
-             android:layout_marginLeft="20dp"
-             android:textSize="16sp"
-             android:textColor="@color/black"/>
+             android:layout_marginLeft="10dp"
+             android:textSize="15sp"
+             android:textColor="@color/textblack"/>
 
          <com.example.administrator.lenglian.view.MyRatingBar
              android:layout_marginTop="8dp"
-             android:layout_marginLeft="10dp"
              android:id="@+id/ratingbar"
              android:layout_width="200dp"
              android:layout_height="wrap_content"
@@ -73,31 +105,40 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content">
           <TextView
-              android:textColor="@color/black"
-              android:padding="10dp"
-              android:layout_marginLeft="20dp"
+              android:textColor="@color/textblack"
+              android:padding="5dp"
+              android:layout_marginLeft="10dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="商品评价："
-              android:textSize="16sp"
+              android:textSize="15sp"
               />
           <TextView
+              android:padding="10dp"
               android:id="@+id/evate_ping"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="功能强啊阿达打的"
-               android:textSize="16sp"
-              android:textColor="@color/black"/>
+               android:textSize="14sp"
+              android:textColor="@color/textblack"/>
       </LinearLayout>
+   </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/hui"></View>
         <TextView
-            android:padding="20dp"
-            android:layout_marginLeft="40dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/textblack"
+            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="晒图:"/>
+            android:text="晒图："/>
           <com.example.administrator.lenglian.utils.MyGradeview
+              android:layout_marginTop="10dp"
               android:verticalSpacing="10dp"
               android:scrollbars="none"
               android:id="@+id/evate_grade"
@@ -111,24 +152,31 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/hui"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
-            android:textColor="@color/black"
             android:padding="10dp"
-            android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="追加评论："
-            android:textSize="16sp"
+            android:textSize="14sp"
             />
         <TextView
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/evate_zhuip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="功能强啊阿达打的"
-            android:textSize="16sp"
-            android:textColor="@color/black"/>
+            android:textSize="14sp"
+            android:textColor="@color/textblack"/>
 
     </LinearLayout>
     <View
@@ -137,6 +185,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
        <Button
+           android:layout_marginBottom="20dp"
            android:id="@+id/zhuijia"
            android:layout_marginTop="10dp"
            android:layout_gravity="right"
