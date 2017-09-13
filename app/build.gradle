@@ -89,4 +89,6 @@ dependencies {
     compile 'com.github.zhaokaiqiang.klog:library:1.6.0'
    //fastjson
     compile 'com.alibaba:fastjson:1.1.62.android'
+    //图片选择器
+    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.1'
 }
