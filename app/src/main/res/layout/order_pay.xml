@@ -4,32 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#6798e7">
-        <TextView
-            android:id="@+id/tv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/fanhui_2x"
-            android:drawablePadding="6dp"
-            android:padding="8dp"
-            android:text="返回"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dingdan"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:layout_centerHorizontal="true"
-            android:textSize="18sp"/>
-    </RelativeLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -37,7 +11,7 @@
         android:orientation="horizontal">
         <ImageView
             android:layout_margin="3dp"
-            android:id="@+id/iv_tupian"
+            android:id="@+id/pay_tupian"
             android:layout_width="100dp"
             android:layout_height="80dp"
             android:src="@drawable/binggui"/>
@@ -48,7 +22,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/orderlist_count"
+                android:id="@+id/paylist_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -73,7 +47,7 @@
                     android:textSize="16dp"
                     android:text="1389.00"
                     android:layout_weight="1"
-                    android:id="@+id/textView" />
+                    android:id="@+id/pay_price" />
 
 
             </LinearLayout>
@@ -119,4 +93,10 @@
             android:textColor="@drawable/selector_kuang"
             />
 </LinearLayout>
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/hui"
+        />
     </LinearLayout>

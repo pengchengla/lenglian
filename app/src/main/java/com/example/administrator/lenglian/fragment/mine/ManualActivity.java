@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -38,5 +39,14 @@ public class ManualActivity extends BaseActivity {
                 finish();
             }
         });
+        about_ding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                  //订购
+                Intent intent=new Intent(ManualActivity.this,DinggouActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 }

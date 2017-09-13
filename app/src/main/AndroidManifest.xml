@@ -29,6 +29,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera" />
 
 
 
@@ -92,6 +95,9 @@
         <activity android:name=".fragment.order.activity.ShopdetailActivity" android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".fragment.order.activity.OrderPayActivity"></activity>
         <activity android:name=".fragment.mine.ZhijiaActivity"></activity>
+        <activity android:name=".fragment.mine.DinggouActivity"></activity>
+        <activity android:name=".fragment.mine.PictureActivity"></activity>
+        <activity android:name=".utils.pictureutils.PlusImageActivity"></activity>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -175,6 +181,17 @@
 
         <activity android:name=".fragment.good.QueRenOrderActivity">
         </activity>
+        <!--解决7.0照相机崩溃问题-->
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.xykj.customview.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

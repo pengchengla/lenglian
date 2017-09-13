@@ -50,6 +50,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.set_btn:
               //修改密码提交
+                submit();
                 break;
             case R.id.tv_back:
                 finish();
@@ -62,21 +63,38 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
         // validate
         String initialpwd = set_initialpwd.getText().toString().trim();
         if (TextUtils.isEmpty(initialpwd)) {
-            Toast.makeText(this, "请输入6-20位密码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输原始密码", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String loginpwd = set_loginpwd.getText().toString().trim();
         if (TextUtils.isEmpty(loginpwd)) {
+            Toast.makeText(this, "请输入新密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+         else   if (set_loginpwd.getText().toString().length() < 5 || set_loginpwd.getText().toString().length() > 20) {
             Toast.makeText(this, "请输入6-20位密码", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String replacepwd = set_replacepwd.getText().toString().trim();
         if (TextUtils.isEmpty(replacepwd)) {
+            Toast.makeText(this, "请再次输入新密码", Toast.LENGTH_SHORT).show();
+            return;
+        }else  if (set_loginpwd.getText().toString().trim().equals(set_replacepwd.getText().toString().trim())){
+            Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
+              //返回数据
+
+            return;
+        }
+        else   if (set_loginpwd.getText().toString().length() < 5 || set_loginpwd.getText().toString().length() > 20) {
             Toast.makeText(this, "请输入6-20位密码", Toast.LENGTH_SHORT).show();
             return;
         }
+        else {
+            Toast.makeText(this, "两次密码不一致,请重新输入", Toast.LENGTH_SHORT).show();
+        }
+
 
         // TODO validate success, do something
 

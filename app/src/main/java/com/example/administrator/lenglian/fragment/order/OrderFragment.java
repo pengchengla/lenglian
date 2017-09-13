@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.utils.MyContants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +55,10 @@ public class OrderFragment extends BaseFragment {
 //        }
         apiList = new ArrayList<>();
         //放接口
-        apiList.add("");
-        apiList.add("");
-        apiList.add("");
-        apiList.add("");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder");
+        apiList.add(MyContants.BASEURL +"s=User/register");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder");
         for (int i = 0; i < list.size(); i++) {
             tab.addTab(tab.newTab().setText(list.get(i)));
         }

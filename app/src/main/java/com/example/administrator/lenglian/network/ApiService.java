@@ -4,6 +4,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -41,7 +42,11 @@ public interface ApiService {
 
     //上传图片
     @Multipart
-    @POST("MyInterface/userAction_uploadImage.action")
+    @POST("multipart/form-data")
     Observable<String> uploadPhoto(@Part("user.file") MultipartBody file, @PartMap Map<String, String> map);
 
+    //上传单张图片
+    @Multipart
+    @POST("multipart/form-data")
+    Observable<ResponseBody> uploadPhoto(@Part MultipartBody.Part imgs, @PartMap Map<String, String> map);
 }

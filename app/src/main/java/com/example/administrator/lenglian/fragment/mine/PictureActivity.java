@@ -1,10 +1,11 @@
-package com.example.administrator.lenglian.fragment.order.activity;
+package com.example.administrator.lenglian.fragment.mine;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,32 +13,28 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.MainActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.utils.BaseDialog;
-import com.example.administrator.lenglian.utils.MyGradeview;
 import com.example.administrator.lenglian.utils.PictureSelectorConfig;
 import com.example.administrator.lenglian.utils.pictureutils.GridViewAdapter;
 import com.example.administrator.lenglian.utils.pictureutils.MainConstant;
+import com.example.administrator.lenglian.utils.pictureutils.PhotoUtils;
 import com.example.administrator.lenglian.utils.pictureutils.PlusImageActivity;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
-import com.example.administrator.lenglian.view.MyGridView;
-import com.example.administrator.lenglian.view.MyRatingBar;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -54,38 +51,32 @@ import static com.luck.picture.lib.config.PictureConfig.REQUEST_CAMERA;
  * author:衣鹏宇(ypu)
  */
 
-public class ShopdetailActivity extends BaseActivity implements View.OnClickListener {
-    private TextView tv_back;
-    private ImageView shop_img;
-    private MyRatingBar shop_ratingbar;
-    private EditText warantu_edtext;
-    private TextView textView4;
-    private MyRatingBar peisongatingbar;
-    private MyRatingBar shopfuratingbar;
-    private TextView shop_tijiao;
-    private MyGradeview pin_grade;
+public class PictureActivity extends BaseActivity {
+
+
     private static final String TAG = "MainActivity";
     private Context mContext;
+    private GridView gridView;
     private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
     private Bitmap photo;
     private File file;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shopdetail);
+        setContentView(R.layout.picture);
+
         mContext = this;
-        pin_grade = (MyGradeview) findViewById(R.id.pin_grade);
-        initView();
+        gridView = (GridView) findViewById(R.id.gridView);
         initGridView();
-
-
     }
+
     //初始化展示上传图片的GridView
     private void initGridView() {
         mGridViewAddImgAdapter = new GridViewAdapter(mContext, mPicList);
-        pin_grade.setAdapter(mGridViewAddImgAdapter);
-        pin_grade.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setAdapter(mGridViewAddImgAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -97,7 +88,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                     } else {
                         showphoto(R.style.Alpah_aniamtion, Gravity.CENTER_VERTICAL);
                         //添加凭证图片
-                        //   selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
+                     //   selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
                     }
                 } else {
                     viewPluImg(position);
@@ -173,7 +164,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
     private void useCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/test/" + System.currentTimeMillis() + ".jpg");
+                   + "/test/" + System.currentTimeMillis() + ".jpg");
         file.getParentFile().mkdirs();
 
         //改变Uri  com.xykj.customview.fileprovider注意和xml中的一致
@@ -216,9 +207,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-//        if (resultCode == RESULT_OK) {
-
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     // 图片选择结果回调
@@ -235,7 +224,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                     mPicList.add(absolutePath); //把图片添加到将要上传的图片数组中
                     mGridViewAddImgAdapter.notifyDataSetChanged();
                     break;
-           // }
+            }
         }
         if (requestCode == MainConstant.REQUEST_CODE_MAIN && resultCode == MainConstant.RESULT_CODE_VIEW_IMG) {
             //查看大图页面删除了图片
@@ -254,43 +243,5 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         byte[] appicon = baos.toByteArray();// 转为byte数组
         return Base64.encodeToString(appicon, Base64.DEFAULT);
 
-    }
-
-    private void initView() {
-        tv_back = (TextView) findViewById(R.id.tv_back);
-        shop_img = (ImageView) findViewById(R.id.shop_img);
-        shop_ratingbar = (MyRatingBar) findViewById(R.id.shop_ratingbar);
-        warantu_edtext = (EditText) findViewById(R.id.warantu_edtext);
-        textView4 = (TextView) findViewById(R.id.textView4);
-        peisongatingbar = (MyRatingBar) findViewById(R.id.peisongatingbar);
-        shopfuratingbar = (MyRatingBar) findViewById(R.id.shopfuratingbar);
-        shop_tijiao = (TextView) findViewById(R.id.shop_tijiao);
-        tv_back.setOnClickListener(this);
-        warantu_edtext.setOnClickListener(this);
-    }
-
-    private void submit() {
-        // validate
-        String edtext = warantu_edtext.getText().toString().trim();
-        if (TextUtils.isEmpty(edtext)) {
-            Toast.makeText(this, "分享你的租赁心的  ", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // TODO validate success, do something
-
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_back:
-                finish();
-                break;
-            case R.id.warantu_edtext:
-                warantu_edtext.setCursorVisible(true);
-                break;
-        }
     }
 }

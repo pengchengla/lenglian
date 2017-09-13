@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
@@ -65,6 +66,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.set_clean:
                 clean_huan.setText("");
+                Toast.makeText(this,"清除缓存成功",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.set_about:
                   Intent intent1=new Intent(this,AboutweActivity.class);

@@ -55,7 +55,9 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                login();
+                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent1);
+             //   login();
                 break;
             case R.id.tv_zhuce:
                 Intent intent2 = new Intent(this, RegisterActivity.class);
@@ -83,8 +85,7 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
             @Override
             public void onSuccess(LoginBean result, String tag) {
                 Toast.makeText(LoginActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
-                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent1);
+
                 SpUtils.putString(LoginActivity.this,"userid",result.getDatas().getUser_id());
             }
 

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.utils.MyUtils;
 
 /**
  * date : ${Date}
@@ -50,7 +51,7 @@ public class AddcardActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_yes:
-
+                submit();
                 break;
             case R.id.tv_back:
                   finish();
@@ -69,6 +70,9 @@ public class AddcardActivity extends BaseActivity implements View.OnClickListene
         String phone = ced_phone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (!MyUtils.isMobileNO(ced_phone.getText().toString())) {
+            Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
             return;
         }
 

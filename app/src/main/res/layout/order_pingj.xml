@@ -102,7 +102,7 @@
         <TextView
             android:clickable="true"
             android:layout_marginLeft="8dp"
-            android:text="退换"
+            android:text="退还"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -134,9 +134,9 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:gravity="center"
-            android:background="@drawable/selector_bian"
+            android:background="@drawable/shape_redline"
             android:id="@+id/order_evaluation"
-            android:textColor="@drawable/textcolers"
+            android:textColor="@color/redd"
             />
 
     </LinearLayout>

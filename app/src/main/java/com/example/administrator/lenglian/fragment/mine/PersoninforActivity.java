@@ -18,15 +18,22 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.good.QueRenOrderActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.fragment.mine.util.NiftyDialogBuilder;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SoftKeyboardTool;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
 
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -52,6 +59,27 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_personal);
         initView();
+         inindata();
+    }
+
+    private void inindata() {
+          //加载网络请求
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id","65");
+        map.put("token",MyUtils.getToken());
+        String token = MyUtils.getToken();
+        System.out.print(token);
+        RetrofitManager.post(MyContants.BASEURL +"s=User/viewProfile", map, new BaseObserver1<Indexbean>("") {
+            @Override
+            public void onSuccess(Indexbean result, String tag) {
+                ToastUtils.show(PersoninforActivity.this,"成功",1);
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -80,6 +108,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()){
             case R.id.person_pho:
                 showphoto(R.style.Alpah_aniamtion,Gravity.CENTER_VERTICAL);
+
 
                 break;
             case R.id. person_ming:
@@ -199,7 +228,8 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 //设置dialog的宽高
                 .setWidthHeightpx(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                 //设置触摸dialog外围是否关闭
-                .isOnTouchCanceled(true)
+                .isOnTouchCanceled(false)
+
                 //设置监听事件
                 .builder();
         ed = (EditText) dialog.getView(R.id.person_nicheng).findViewById(R.id.person_nicheng);
@@ -223,6 +253,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 dialog.dismiss();
             }
         });
+
         dialog.show();
     }
 }

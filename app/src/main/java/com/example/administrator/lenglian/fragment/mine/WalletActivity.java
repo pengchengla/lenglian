@@ -6,9 +6,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.order.bean.Walletbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -33,6 +42,25 @@ public class WalletActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_wallet);
         initView();
+        //添加数据
+        inindata();
+    }
+
+    private void inindata() {
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id","110");
+        map.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=User/viewWallet", map, new BaseObserver1<Walletbean>("") {
+            @Override
+            public void onSuccess(Walletbean result, String tag) {
+                Toast.makeText(WalletActivity.this,"成功"+result.getMsg(),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(WalletActivity.this,"失败",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initView() {

@@ -56,6 +56,12 @@ public class RetrofitManager {
     }
 
 
+    public static void postphoto(String url, Map<String,String> map, Observer<String> observer){
+        apiService.get(url,map).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
 
 
 
