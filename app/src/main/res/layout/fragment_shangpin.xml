@@ -71,6 +71,7 @@
                     android:textSize="16sp"
                 />
                 <ImageView
+                    android:id="@+id/iv_isSale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -119,6 +120,7 @@
                     android:text="评价("
                     android:textSize="15sp"/>
                 <TextView
+                    android:id="@+id/tv_pingjia_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"

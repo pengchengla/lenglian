@@ -104,6 +104,4 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 break;
         }
     }
-
-
 }

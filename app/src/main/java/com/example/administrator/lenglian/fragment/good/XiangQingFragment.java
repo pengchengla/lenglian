@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.good;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +11,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
-import com.squareup.picasso.Picasso;
+import com.example.administrator.lenglian.bean.GoodDetailBean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -33,6 +40,8 @@ public class XiangQingFragment extends BaseFragment {
     private TextView tv_baozhuang, tv_fuwu, tv_jiage, tv_nengxiao;
     private RecyclerView recycler_photo;
     private PhotoAdapter mPhotoAdapter;
+    private String mId;
+    private GoodDetailBean.DatasEntity mDatas;
 
     @Override
     protected View initView() {
@@ -88,9 +97,30 @@ public class XiangQingFragment extends BaseFragment {
             }
         });
         rgp.check(R.id.rb_tuwen);
-        initTuwen();
-        initRule();
-        initShouhou();
+        mId = getActivity().getIntent().getStringExtra("id");
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("pro_id", mId);
+        arrayMap.put("user_id", SpUtils.getString(mContext,"user_id",""));
+        RetrofitManager.get(MyContants.BASEURL + "s=Product/profileProduct", arrayMap, new BaseObserver1<GoodDetailBean>("") {
+            @Override
+            public void onSuccess(GoodDetailBean result, String tag) {
+
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+                    mDatas = result.getDatas();
+                    initTuwen();
+                    initRule();
+                    initShouhou();
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(mContext, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initTuwen() {
@@ -106,21 +136,21 @@ public class XiangQingFragment extends BaseFragment {
     }
 
     private void initShouhou() {
-        tv_baozhuang.setText("啦啦啦啦啦啦");
-        tv_fuwu.setText("啦啦啦啦啦啦");
-        tv_jiage.setText("啦啦啦啦啦啦");
-        tv_nengxiao.setText("啦啦啦啦啦啦");
+        tv_baozhuang.setText(mDatas.getPro_list());
+        tv_fuwu.setText(mDatas.getPro_rent());
+        tv_jiage.setText(mDatas.getPrice_introduce());
+        tv_nengxiao.setText(mDatas.getPower_introduce());
     }
 
     private void initRule() {
-        tv_color.setText("啦啦啦啦啦");
-        tv_zhileng.setText("啦啦啦啦啦");
-        tv_kongwen.setText("啦啦啦啦啦");
-        tv_dianliang.setText("啦啦啦啦啦");
-        tv_xinghao.setText("啦啦啦啦啦");
-        tv_goodname.setText("啦啦啦啦啦");
-        tv_pinpai.setText("啦啦啦啦啦");
-        tv_type.setText("啦啦啦啦啦");
+        tv_color.setText(mDatas.getPro_color());
+        tv_zhileng.setText(mDatas.getCool_type());
+        tv_kongwen.setText(mDatas.getControl_type());
+        tv_dianliang.setText(mDatas.getPro_power());
+        tv_xinghao.setText(mDatas.getPro_model());
+        tv_goodname.setText(mDatas.getPro_name());
+        tv_pinpai.setText(mDatas.getPro_brand());
+        tv_type.setText(mDatas.getClass_name());
     }
 
     class PhotoAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
@@ -131,9 +161,9 @@ public class XiangQingFragment extends BaseFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, String item) {
-            //史上最强bug，现在还没弄明白为什么glide不行Picasso就行，到底是不是库出的问题
-            Picasso.with(mContext).load(R.drawable.changxiaotupian).into((ImageView) helper.getView(R.id.iv_photo));
-//            Glide.with(mContext).load(R.drawable.changxiaotupian).into((ImageView) helper.getView(R.id.iv_photo));
+            //如果在布局中设置图片的高度是自适应的话，图片就加载不出来，除非给个固定的高度，这是为什么呢？
+            Glide.with(mContext).load(R.drawable.changxiaotupian)
+                    .into((ImageView) helper.getView(R.id.iv_photo));
         }
     }
 }

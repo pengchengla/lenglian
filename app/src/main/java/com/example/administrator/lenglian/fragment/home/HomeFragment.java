@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
@@ -21,9 +24,13 @@ import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.activity.SearchActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.EventMessage;
+import com.example.administrator.lenglian.bean.HomeBean;
 import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
 import com.example.administrator.lenglian.fragment.mine.AlterationActivity;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BannerUtils;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerClickListener;
@@ -39,7 +46,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private TextView tv_search, tv_msg_number,
-            tv_allgoods, tv_myorder, tv_mytui, tv_mycar,tv_text_msg;
+            tv_allgoods, tv_myorder, tv_mytui, tv_mycar, tv_text_msg;
     private LinearLayout ll_msg, ll_supermarket, ll_chufang, ll_haixian, ll_xuegao;
     private Banner banner;
     private List<String> picList = new ArrayList<>();
@@ -89,7 +96,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rl_comment.setOnClickListener(this);
         rl_top = (RelativeLayout) view.findViewById(R.id.rl_top);
         nestView = (NestedScrollView) view.findViewById(R.id.nestView);
-        iv_msg= (ImageView) view.findViewById(R.id.iv_msg);
+        iv_msg = (ImageView) view.findViewById(R.id.iv_msg);
         return view;
     }
 
@@ -130,56 +137,73 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 }
             }
         });
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("", "");
+        RetrofitManager.get(MyContants.BASEURL + "s=Home/home", arrayMap, new BaseObserver1<HomeBean>("") {
+            @Override
+            public void onSuccess(HomeBean result, String tag) {
+
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+                    if(picList.size()==0){
+                        for (int i=0;i<result.getDatas().getBanner().size();i++){
+                            picList.add(result.getDatas().getBanner().get(i).getUrl());
+                        }
+                    }
+                    BannerUtils.startBanner(banner, picList);
+                    banner.setOnBannerClickListener(new OnBannerClickListener() {
+                        @Override
+                        public void OnBannerClick(int position) {
+                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                        }
+                    });
+                    if (mChangxiaoAdapter == null) {
+                        mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.home_changxiao_item, result.getDatas().getBest());
+                    }
+                    recycler_changxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
+                    recycler_changxiao.setNestedScrollingEnabled(false);
+                    recycler_changxiao.setAdapter(mChangxiaoAdapter);
+                    mChangxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                        }
+                    });
+
+                    if (mCuxiaoAdapter == null) {
+                        mCuxiaoAdapter = new CuxiaoAdapter(R.layout.home_cuxiao_item, result.getDatas().getSale());
+                    }
+                    recycler_cuxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
+                    recycler_cuxiao.setNestedScrollingEnabled(false);
+                    recycler_cuxiao.setAdapter(mCuxiaoAdapter);
+                    mCuxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                        }
+                    });
+
+                    if (mCommentAdapter == null) {
+                        mCommentAdapter = new CommentAdapter(R.layout.home_comment_item, result.getDatas().getRecommend());
+                    }
+                    recycler_comment.setLayoutManager(new LinearLayoutManager(mContext));
+                    recycler_comment.setNestedScrollingEnabled(false);
+                    recycler_comment.setAdapter(mCommentAdapter);
+                    mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(mContext, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+            }
+        });
         tv_msg_number.setText("11");
-        picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
-        picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
-        picList.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4267222417,1017407570&fm=200&gp=0.jpg");
-        BannerUtils.startBanner(banner, picList);
-        banner.setOnBannerClickListener(new OnBannerClickListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                startActivity(new Intent(mContext,GoodDetailActivity.class));
-            }
-        });
-        if (mCuxiaoAdapter == null) {
-            mCuxiaoAdapter = new CuxiaoAdapter(R.layout.home_cuxiao_item, picList);
-        }
-        recycler_cuxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
-        recycler_cuxiao.setNestedScrollingEnabled(false);
-        recycler_cuxiao.setAdapter(mCuxiaoAdapter);
-        mCuxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mContext, GoodDetailActivity.class));
-            }
-        });
-
-        if (mChangxiaoAdapter == null) {
-            mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.home_changxiao_item, picList);
-        }
-        recycler_changxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
-        recycler_changxiao.setNestedScrollingEnabled(false);
-        recycler_changxiao.setAdapter(mChangxiaoAdapter);
-        mChangxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mContext, GoodDetailActivity.class));
-            }
-        });
-
-
-        if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(R.layout.home_comment_item, picList);
-        }
-        recycler_comment.setLayoutManager(new LinearLayoutManager(mContext));
-        recycler_comment.setNestedScrollingEnabled(false);
-        recycler_comment.setAdapter(mCommentAdapter);
-        mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(mContext, GoodDetailActivity.class));
-            }
-        });
     }
 
     @Override
@@ -243,38 +267,49 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    class CuxiaoAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    class CuxiaoAdapter extends BaseQuickAdapter<HomeBean.DatasEntity.SaleEntity, BaseViewHolder> {
 
-        public CuxiaoAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+        public CuxiaoAdapter(@LayoutRes int layoutResId, @Nullable List<HomeBean.DatasEntity.SaleEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, String item) {
+        protected void convert(BaseViewHolder helper, HomeBean.DatasEntity.SaleEntity item) {
+            helper.setText(R.id.tv_main_title, item.getMain_title())
+                    .setText(R.id.tv_sub_title, item.getSub_title());
+            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                    .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }
 
-    class ChangxiaoAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    class ChangxiaoAdapter extends BaseQuickAdapter<HomeBean.DatasEntity.BestEntity, BaseViewHolder> {
 
-        public ChangxiaoAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+        public ChangxiaoAdapter(@LayoutRes int layoutResId, @Nullable List<HomeBean.DatasEntity.BestEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, String item) {
-
+        protected void convert(BaseViewHolder helper, HomeBean.DatasEntity.BestEntity item) {
+            helper.setText(R.id.tv_main_title, item.getMain_title())
+                    .setText(R.id.tv_sub_title, item.getSub_title());
+            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                    .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }
 
-    class CommentAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    class CommentAdapter extends BaseQuickAdapter<HomeBean.DatasEntity.RecommendEntity, BaseViewHolder> {
 
-        public CommentAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+        public CommentAdapter(@LayoutRes int layoutResId, @Nullable List<HomeBean.DatasEntity.RecommendEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, String item) {
-
+        protected void convert(BaseViewHolder helper, HomeBean.DatasEntity.RecommendEntity item) {
+            helper.setText(R.id.tv_main_title, item.getMain_title())
+                    .setText(R.id.tv_sub_title, item.getSub_title())
+                    .setText(R.id.tv_price, "￥" + item.getPro_price());
+            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                    .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }
 }

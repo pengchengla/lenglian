@@ -144,7 +144,7 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                 helper.setVisible(R.id.stepper, true)
                         .setVisible(R.id.tv_delete, true)
                         .setVisible(R.id.tv_title, false)
-                        .setVisible(R.id.tv_price, false)
+                        .setVisible(R.id.tv_price_pro, false)
                         .setVisible(R.id.tv_qian, false)
                         .setVisible(R.id.tv_size, false)
                         .setVisible(R.id.tv_xxxxxx, false);
@@ -153,12 +153,12 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                         .setVisible(R.id.tv_delete, false)
                         .setVisible(R.id.tv_title, true)
                         .setVisible(R.id.tv_qian, true)
-                        .setVisible(R.id.tv_price, true)
+                        .setVisible(R.id.tv_price_pro, true)
                         .setVisible(R.id.tv_size, true)
                         .setVisible(R.id.tv_xxxxxx, true);
             }
             final TextView tv_size = helper.getView(R.id.tv_size);
-            final TextView tv_price = helper.getView(R.id.tv_price);
+            final TextView tv_price = helper.getView(R.id.tv_price_pro);
             helper.setText(R.id.tv_title, item.getTitle())
                     .setChecked(R.id.cb_car, item.isChecked())
                     .addOnClickListener(R.id.tv_delete);
@@ -183,7 +183,7 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void onValueChange(View view, int value) {
                     helper.setText(R.id.tv_size, value + "");
-                    helper.setText(R.id.tv_price, 1777 * value + "");
+                    helper.setText(R.id.tv_price_pro, 1777 * value + "");
                     if (!noOneChecked()) {
                         tv_total_count.setText(tv_size.getText().toString());
                         tv_total_price.setText(tv_price.getText().toString() + "");

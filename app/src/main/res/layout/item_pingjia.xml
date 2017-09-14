@@ -34,10 +34,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
         <TextView
+            android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="功能很强大，租金很便宜"/>
         <TextView
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -49,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"></android.support.v7.widget.RecyclerView>
     <TextView
+        android:id="@+id/tv_add_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

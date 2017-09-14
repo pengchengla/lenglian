@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,15 +50,17 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
         iv_qq.setOnClickListener(this);
         iv_weibo = (ImageView) findViewById(R.id.iv_weibo);
         iv_weibo.setOnClickListener(this);
+
+
+        edt_phone.setText("15811337458");
+        edt_mima.setText("123456");
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent1);
-             //   login();
+                login();
                 break;
             case R.id.tv_zhuce:
                 Intent intent2 = new Intent(this, RegisterActivity.class);
@@ -77,6 +80,14 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
     }
 
     private void login() {
+        if (TextUtils.isEmpty(edt_phone.getText().toString())) {
+            Toast.makeText(this, "请填写您的手机号", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(edt_mima.getText().toString())) {
+            Toast.makeText(this, "请填写您的密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("mobile", edt_phone.getText().toString().trim());
         arrayMap.put("password", edt_mima.getText().toString().trim());
@@ -84,9 +95,13 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
         RetrofitManager.get(MyContants.BASEURL + "s=User/login", arrayMap, new BaseObserver1<LoginBean>("") {
             @Override
             public void onSuccess(LoginBean result, String tag) {
-                Toast.makeText(LoginActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
-
-                SpUtils.putString(LoginActivity.this,"userid",result.getDatas().getUser_id());
+                if (result.getCode() == 200) {
+                    Toast.makeText(LoginActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent1);
+                    SpUtils.putString(LoginActivity.this, "user_id", result.getDatas().getUser_id());
+//                    Toast.makeText(LoginActivity.this, result.getDatas().getUser_id(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

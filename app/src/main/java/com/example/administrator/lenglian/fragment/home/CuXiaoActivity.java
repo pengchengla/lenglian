@@ -4,22 +4,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.CuXiaoBean;
 import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CuXiaoActivity extends BaseActivity implements View.OnClickListener {
@@ -55,34 +62,48 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
 
     private void initData() {
         recycler_cuxiao.setLayoutManager(new LinearLayoutManager(this));
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        mCuXiaoAdapter = new CuXiaoAdapter(R.layout.cuxiao_item, list);
-        recycler_cuxiao.setAdapter(mCuXiaoAdapter);
-        mCuXiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("pro_id", "");
+        RetrofitManager.get(MyContants.BASEURL + "s=Product/listSale", arrayMap, new BaseObserver1<CuXiaoBean>("") {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(CuXiaoActivity.this, GoodDetailActivity.class));
+            public void onSuccess(CuXiaoBean result, String tag) {
+
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+                    mCuXiaoAdapter = new CuXiaoAdapter(R.layout.cuxiao_item, result.getDatas());
+                    recycler_cuxiao.setAdapter(mCuXiaoAdapter);
+                    mCuXiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            startActivity(new Intent(CuXiaoActivity.this, GoodDetailActivity.class));
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(CuXiaoActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    class CuXiaoAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    class CuXiaoAdapter extends BaseQuickAdapter<CuXiaoBean.DatasEntity, BaseViewHolder> {
 
-        public CuXiaoAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+        public CuXiaoAdapter(@LayoutRes int layoutResId, @Nullable List<CuXiaoBean.DatasEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, String item) {
-            SpannableString spannableString = new SpannableString("原价:￥2999");
+        protected void convert(BaseViewHolder helper, CuXiaoBean.DatasEntity item) {
+            SpannableString spannableString = new SpannableString("原价:￥"+item.getPro_price());
             StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
             spannableString.setSpan(strikethroughSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            helper.setText(R.id.tv_price, spannableString);
+            helper.setText(R.id.tv_price_pro, spannableString)
+            .setText(R.id.tv_title,item.getMain_title())
+            .setText(R.id.tv_price_now,"￥"+item.getSale_price());
+            Glide.with(mContext).load(item.getPro_pic())
+                    .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }
 

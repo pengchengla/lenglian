@@ -4,19 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.ChangXiaoBean;
 import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChangXiaoActivity extends BaseActivity implements View.OnClickListener {
@@ -52,31 +59,44 @@ public class ChangXiaoActivity extends BaseActivity implements View.OnClickListe
 
     private void initData() {
         recycler_changxiao.setLayoutManager(new LinearLayoutManager(this));
-        List<String> list=new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.changxiao_item,list);
-        recycler_changxiao.setAdapter(mChangxiaoAdapter);
-        mChangxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("pro_id", "");
+        RetrofitManager.get(MyContants.BASEURL + "s=Product/listBest", arrayMap, new BaseObserver1<ChangXiaoBean>("") {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(ChangXiaoActivity.this, GoodDetailActivity.class));
+            public void onSuccess(ChangXiaoBean result, String tag) {
+
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+                    mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.changxiao_item,result.getDatas());
+                    recycler_changxiao.setAdapter(mChangxiaoAdapter);
+                    mChangxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            startActivity(new Intent(ChangXiaoActivity.this, GoodDetailActivity.class));
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(ChangXiaoActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    class ChangxiaoAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    class ChangxiaoAdapter extends BaseQuickAdapter<ChangXiaoBean.DatasEntity, BaseViewHolder> {
 
-        public ChangxiaoAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+        public ChangxiaoAdapter(@LayoutRes int layoutResId, @Nullable List<ChangXiaoBean.DatasEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, String item) {
-
+        protected void convert(BaseViewHolder helper, ChangXiaoBean.DatasEntity item) {
+            helper.setText(R.id.tv_title,item.getMain_title())
+                    .setText(R.id.tv_price,"￥"+item.getPro_price());
+            Glide.with(mContext).load(item.getPro_pic())
+                    .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }
 

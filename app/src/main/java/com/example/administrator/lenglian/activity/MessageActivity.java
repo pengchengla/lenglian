@@ -3,18 +3,25 @@ package com.example.administrator.lenglian.activity;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.MsgBean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MessageActivity extends BaseActivity implements View.OnClickListener {
@@ -31,13 +38,31 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         tv_back.setOnClickListener(this);
         recycler_msg = (RecyclerView) findViewById(R.id.recycler_msg);
         recycler_msg.setLayoutManager(new LinearLayoutManager(this));
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        mMsgAdapter = new MsgAdapter(R.layout.item_msg, list);
-        recycler_msg.setAdapter(mMsgAdapter);
+        initData();
+    }
+
+    private void initData() {
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("user_id", SpUtils.getString(MessageActivity.this, "user_id", ""));
+        arrayMap.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=User/listNews", arrayMap, new BaseObserver1<MsgBean>("") {
+            @Override
+            public void onSuccess(MsgBean result, String tag) {
+
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+                    mMsgAdapter = new MsgAdapter(R.layout.item_msg, result.getDatas());
+                    recycler_msg.setAdapter(mMsgAdapter);
+                }else {
+                    Toast.makeText(MessageActivity.this, "暂时没有消息", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(MessageActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -64,15 +89,18 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    class MsgAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    class MsgAdapter extends BaseQuickAdapter<MsgBean.DatasEntity, BaseViewHolder> {
 
-        public MsgAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+        public MsgAdapter(@LayoutRes int layoutResId, @Nullable List<MsgBean.DatasEntity> data) {
             super(layoutResId, data);
+
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, String item) {
-
+        protected void convert(BaseViewHolder helper, MsgBean.DatasEntity item) {
+            helper.setText(R.id.tv_msg_type, item.getNews_type().equals("1") ? "订单通知" : "保修通知")
+                    .setText(R.id.tv_date, item.getSend_time())
+                    .setText(R.id.tv_msg_content, item.getNews());
         }
     }
 }

@@ -6,9 +6,9 @@
               android:orientation="vertical">
     <ImageView
         android:id="@+id/iv_tupian"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:src="@drawable/binggui"/>
     <View
         android:layout_width="match_parent"
@@ -17,22 +17,24 @@
         android:layout_margin="10dp"
         android:background="@color/huise"></View>
     <TextView
+        android:id="@+id/tv_main_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
         android:layout_gravity="center"
+        android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="cfc冷链"
         android:textColor="@color/textblack"
         android:textSize="14sp"/>
     <TextView
+        android:id="@+id/tv_sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
         android:layout_gravity="center"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:paddingTop="5dp"
         android:text="常温柜"
         android:textColor="#54c7fc"
         android:textSize="14sp"/>

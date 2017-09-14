@@ -251,7 +251,7 @@
                     android:textColor="@color/textblack"
                     android:textSize="15sp"/>
                 <EditText
-                    android:id="@+id/edt_detail_address"
+                    android:id="@+id/edt_liuyan"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginLeft="10dip"

@@ -119,8 +119,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(RegisterBean result, String tag) {
 
                 //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
-                Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
-                startActivity(intent1);
+                if (result.getCode()==200){
+                    Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
+                    intent1.putExtra("userid",result.getDatas().getUser_id());
+                    startActivity(intent1);
+                }
             }
 
             @Override

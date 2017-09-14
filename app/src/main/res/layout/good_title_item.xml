@@ -14,7 +14,7 @@
             android:background="@color/blue"></View>
         <RadioButton
             android:id="@+id/rb_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/rb_bg_selector"
