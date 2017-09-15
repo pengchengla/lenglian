@@ -8,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,7 +34,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
     private RelativeLayout select_delte;
     private CheckBox collect_check;
     private Button collect_btn;
-    private List<Collectbean>  mList;
+    private List<Collectbean> mList;
     private boolean isEditing;
     private Collectionadapter collectionadapter;
 
@@ -54,9 +52,8 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         mList.add(new Collectbean("豪华冰柜你值得拥有，没说错散打", false));
         mList.add(new Collectbean("奢侈冰柜你值得拥有，没说错散打", false));
         mList.add(new Collectbean("豪华冰柜你值得拥有哈哈哈，没说错散打", false));
-        collectionadapter = new Collectionadapter(R.layout.collect_item,mList);
+        collectionadapter = new Collectionadapter(R.layout.collect_item, mList);
         list_collect.setAdapter(collectionadapter);
-
     }
 
     private void initView() {
@@ -74,15 +71,11 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         collect_ok.setOnClickListener(this);
         collect_btn.setOnClickListener(this);
         collect_check.setOnClickListener(this);
-
-
-
-
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_back:
                 finish();
                 break;
@@ -104,35 +97,35 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                 break;
         }
     }
-      class Collectionadapter extends BaseQuickAdapter<Collectbean, BaseViewHolder> {
-          public Collectionadapter(@LayoutRes int layoutResId, @Nullable List<Collectbean> data) {
-              super(layoutResId, data);
-          }
 
-          @Override
-          protected void convert( final BaseViewHolder helper, Collectbean item) {
-              if(isEditing){
-                  helper.setVisible(R.id.collect_check,true);
-              }
-              else if (!isEditing){
-                  helper.setVisible(R.id.collect_check,false);
-              }
-              helper.setText(R.id.collect_count, item.getTitle())
-                      .setChecked(R.id.collect_check, item.isChecked());
-              helper.getView(R.id.ll_root_view).setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-                      //直接在外层用adapter的点击事件就不管用，真是邪门
-                      for (int i = 0; i < mList.size(); i++) {
-                          if (helper.getAdapterPosition() == i) {
-                              mList.get(i).setChecked(! collectionadapter.getData().get(i).isChecked());
-                          } else {
-                              mList.get(i).setChecked(false);
-                          }
-                      }
-                      collectionadapter.notifyDataSetChanged();
-                  }
-              });
-          }
-      }
+    class Collectionadapter extends BaseQuickAdapter<Collectbean, BaseViewHolder> {
+        public Collectionadapter(@LayoutRes int layoutResId, @Nullable List<Collectbean> data) {
+            super(layoutResId, data);
+        }
+
+        @Override
+        protected void convert(final BaseViewHolder helper, Collectbean item) {
+            if (isEditing) {
+                helper.setVisible(R.id.collect_check, true);
+            } else if (!isEditing) {
+                helper.setVisible(R.id.collect_check, false);
+            }
+            helper.setText(R.id.collect_count, item.getTitle())
+                    .setChecked(R.id.collect_check, item.isChecked());
+            helper.getView(R.id.ll_root_view).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //直接在外层用adapter的点击事件就不管用，真是邪门
+                    for (int i = 0; i < mList.size(); i++) {
+                        if (helper.getAdapterPosition() == i) {
+                            mList.get(i).setChecked(!collectionadapter.getData().get(i).isChecked());
+                        } else {
+                            mList.get(i).setChecked(false);
+                        }
+                    }
+                    collectionadapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
 }

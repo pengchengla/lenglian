@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/hui"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/hui"
+                android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/collect_title"
         android:layout_width="match_parent"
@@ -20,94 +20,94 @@
             android:text="返回"
             android:textColor="@color/white"
             android:textSize="16sp"
-            />
+        />
 
         <TextView
             android:id="@+id/collect_bianji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="编辑"
-            android:padding="10dp"
-            android:textColor="@color/white"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
+            android:padding="10dp"
+            android:text="编辑"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            />
+        />
         <TextView
             android:id="@+id/collect_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="完成"
-            android:padding="10dp"
-            android:textColor="@color/white"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
+            android:padding="10dp"
+            android:text="完成"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:visibility="gone"
-            />
+        />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/collect"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="18sp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:text="@string/collect"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
 
 
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/collect_title"
         android:id="@+id/list_collect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        ></android.support.v7.widget.RecyclerView>
+        android:layout_below="@id/collect_title"
+    ></android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
         android:id="@+id/select_delte"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <CheckBox
-            android:id="@+id/collect_check"
-            android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:button="@null"
-            android:background="@drawable/cb_selector"
-            android:checked="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"
-           android:layout_gravity="center"
+            <CheckBox
+                android:id="@+id/collect_check"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/cb_selector"
+                android:button="@null"
+                android:checked="true"
             />
 
             <TextView
-                android:layout_gravity="center"
-               android:gravity="center"
-                android:padding="10dp"
-                android:textSize="17sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="全选"/>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="全选"
+                android:textSize="17sp"/>
 
         </LinearLayout>
         <Button
-            android:gravity="center"
             android:id="@+id/collect_btn"
-            android:background="@color/redd"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/redd"
+            android:gravity="center"
             android:text="删除"/>
     </RelativeLayout>
 

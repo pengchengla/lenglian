@@ -24,7 +24,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.CommentBean;
-import com.example.administrator.lenglian.bean.EasyBean;
+import com.example.administrator.lenglian.bean.EditCollectBean;
 import com.example.administrator.lenglian.bean.GoodDetailBean;
 import com.example.administrator.lenglian.bean.PingjiaBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -158,6 +158,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     } else {
                         isCollected = true;
                     }
+                    collect_id=mDatas.getCollect_id();
                     refreshCollect();
                 } else {
 
@@ -223,11 +224,9 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         if (isCollected) {
             iv_collect.setImageResource(R.drawable.icon_collect);
             tv_collect.setText("已收藏");
-            isCollected = true;
         } else if (!isCollected) {
             iv_collect.setImageResource(R.drawable.icon_uncollect);
             tv_collect.setText("收藏");
-            isCollected = false;
         }
     }
 
@@ -303,6 +302,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     }
 
     private boolean isCollected;
+    private String collect_id;
 
     @Override
     public void onClick(View v) {
@@ -310,10 +310,10 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             case R.id.tv_share:
                 break;
             case R.id.ll_collect:
-                if (mDatas.getCollect() == 0) {
-                    collect(false);
-                } else {
+                if (isCollected) {
                     collect(true);
+                } else {
+                    collect(false);
                 }
                 break;
             case R.id.tv_lijizulin:
@@ -329,17 +329,18 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         ArrayMap arrayMap2 = new ArrayMap();
         if (yijingshoucang) {
             arrayMap2.put("token", MyUtils.getToken());
-            arrayMap2.put("collect_id", mDatas.getCollect_id());
+            arrayMap2.put("collect_id", collect_id);
         } else {
             arrayMap2.put("pro_id", mId);
             arrayMap2.put("token", MyUtils.getToken());
             arrayMap2.put("user_id", SpUtils.getString(mContext, "user_id", ""));
         }
-        RetrofitManager.get(MyContants.BASEURL + "s=User/editCollect", arrayMap2, new BaseObserver1<EasyBean>("") {
+        RetrofitManager.get(MyContants.BASEURL + "s=User/editCollect", arrayMap2, new BaseObserver1<EditCollectBean>("") {
             @Override
-            public void onSuccess(EasyBean result, String tag) {
+            public void onSuccess(EditCollectBean result, String tag) {
                 if (result.getCode() == 200) {
                     isCollected = !isCollected;
+                    collect_id=result.getDatas().getCollect_id();
                     refreshCollect();
                 } else {
                     //101是没有数据

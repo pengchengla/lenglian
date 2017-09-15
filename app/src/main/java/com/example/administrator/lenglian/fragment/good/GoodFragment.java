@@ -93,7 +93,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void switchData(String class_id) {
-//        Toast.makeText(mContext, " " + class_id, Toast.LENGTH_SHORT).show();
+        //        Toast.makeText(mContext, " " + class_id, Toast.LENGTH_SHORT).show();
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("class_id", class_id);
         RetrofitManager.get(MyContants.BASEURL + "s=Product/listProduct", arrayMap, new BaseObserver1<GoodBean>("") {
@@ -105,18 +105,18 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                     if (mContentAdapter == null) {
                         mContentAdapter = new ContentAdapter(R.layout.good_content_item, result.getDatas());
                         recycler_content.setAdapter(mContentAdapter);
-                    }else {
+                    } else {
                         mContentAdapter.setNewData(result.getDatas());
                     }
                     mContentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                             Intent intent = new Intent(mContext, GoodDetailActivity.class);
-                            intent.putExtra("id",mContentAdapter.getData().get(position).getPro_id());
+                            intent.putExtra("id", mContentAdapter.getData().get(position).getPro_id());
                             startActivity(intent);
                         }
                     });
-                }else {
+                } else {
                     //没数据的时候返回的code是101
                 }
             }
