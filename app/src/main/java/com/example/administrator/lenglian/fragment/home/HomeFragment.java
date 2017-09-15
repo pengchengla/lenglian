@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
@@ -47,17 +50,18 @@ import java.util.List;
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private TextView tv_search, tv_msg_number,
             tv_allgoods, tv_myorder, tv_mytui, tv_mycar, tv_text_msg;
-    private LinearLayout ll_msg, ll_supermarket, ll_chufang, ll_haixian, ll_xuegao;
+    private LinearLayout ll_msg;
     private Banner banner;
     private List<String> picList = new ArrayList<>();
-    private RecyclerView recycler_cuxiao, recycler_changxiao, recycler_comment;
+    private RecyclerView recycler_cuxiao, recycler_changxiao, recycler_comment, recycler_class;
     private RelativeLayout rl_cuxiao, rl_changxiao, rl_comment, rl_top;
     private CuxiaoAdapter mCuxiaoAdapter;
     private ChangxiaoAdapter mChangxiaoAdapter;
     private CommentAdapter mCommentAdapter;
     private NestedScrollView nestView;
     private int mDistanceY;
-    private ImageView iv_msg;
+    private ImageView iv_msg, iv_changxiao_big;
+    private MiddleAdapter mMiddleAdapter;
 
     @Override
     protected View initView() {
@@ -77,14 +81,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         tv_mytui.setOnClickListener(this);
         tv_mycar = (TextView) view.findViewById(R.id.tv_mycar);
         tv_mycar.setOnClickListener(this);
-        ll_supermarket = (LinearLayout) view.findViewById(R.id.ll_supermarket);
-        ll_supermarket.setOnClickListener(this);
-        ll_chufang = (LinearLayout) view.findViewById(R.id.ll_chufang);
-        ll_chufang.setOnClickListener(this);
-        ll_haixian = (LinearLayout) view.findViewById(R.id.ll_haixian);
-        ll_haixian.setOnClickListener(this);
-        ll_xuegao = (LinearLayout) view.findViewById(R.id.ll_xuegao);
-        ll_xuegao.setOnClickListener(this);
         recycler_cuxiao = (RecyclerView) view.findViewById(R.id.recycler_cuxiao);
         recycler_changxiao = (RecyclerView) view.findViewById(R.id.recycler_changxiao);
         recycler_comment = (RecyclerView) view.findViewById(R.id.recycler_comment);
@@ -97,6 +93,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rl_top = (RelativeLayout) view.findViewById(R.id.rl_top);
         nestView = (NestedScrollView) view.findViewById(R.id.nestView);
         iv_msg = (ImageView) view.findViewById(R.id.iv_msg);
+        iv_changxiao_big = (ImageView) view.findViewById(R.id.iv_changxiao_big);
+        recycler_class = (RecyclerView) view.findViewById(R.id.recycler_class);
         return view;
     }
 
@@ -145,8 +143,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
                 //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
-                    if(picList.size()==0){
-                        for (int i=0;i<result.getDatas().getBanner().size();i++){
+                    if (picList.size() == 0) {
+                        for (int i = 0; i < result.getDatas().getBanner().size(); i++) {
                             picList.add(result.getDatas().getBanner().get(i).getUrl());
                         }
                     }
@@ -158,7 +156,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                     });
                     if (mChangxiaoAdapter == null) {
-                        mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.home_changxiao_item, result.getDatas().getBest());
+                        List<HomeBean.DatasEntity.BestEntity> bestEntityList = new ArrayList<HomeBean.DatasEntity.BestEntity>();
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()
+                                .error(R.drawable.default_banner)
+                                .priority(Priority.NORMAL)
+                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                        Glide.with(mContext).load(result.getDatas().getBest().get(0).getPro_pic().get(0).getUrl())
+                                .apply(options)
+                                .into(iv_changxiao_big);
+                        for (int i = 1; i < result.getDatas().getBest().size(); i++) {
+                            bestEntityList.add(result.getDatas().getBest().get(i));
+                        }
+                        mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.home_changxiao_item, bestEntityList);
                     }
                     recycler_changxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
                     recycler_changxiao.setNestedScrollingEnabled(false);
@@ -195,6 +205,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             startActivity(new Intent(mContext, GoodDetailActivity.class));
                         }
                     });
+                    recycler_class.setLayoutManager(new GridLayoutManager(mContext, 2));
+                    recycler_class.setNestedScrollingEnabled(false);
+                    mMiddleAdapter = new MiddleAdapter(R.layout.home_class_item, result.getDatas().getPro_class());
+                    recycler_class.setAdapter(mMiddleAdapter);
                 }
             }
 
@@ -234,26 +248,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 Intent intent3 = new Intent(mContext, MyShopCarActivity.class);
                 startActivity(intent3);
                 break;
-            case R.id.ll_supermarket:
-                EventMessage eventMessage3 = new EventMessage();
-                eventMessage3.setMsg("allgoods");
-                EventBus.getDefault().postSticky(eventMessage3);
-                break;
-            case R.id.ll_chufang:
-                EventMessage eventMessage4 = new EventMessage();
-                eventMessage4.setMsg("allgoods");
-                EventBus.getDefault().postSticky(eventMessage4);
-                break;
-            case R.id.ll_haixian:
-                EventMessage eventMessage5 = new EventMessage();
-                eventMessage5.setMsg("allgoods");
-                EventBus.getDefault().postSticky(eventMessage5);
-                break;
-            case R.id.ll_xuegao:
-                EventMessage eventMessage6 = new EventMessage();
-                eventMessage6.setMsg("allgoods");
-                EventBus.getDefault().postSticky(eventMessage6);
-                break;
             case R.id.rl_cuxiao:
                 Intent intent4 = new Intent(mContext, CuXiaoActivity.class);
                 startActivity(intent4);
@@ -277,7 +271,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         protected void convert(BaseViewHolder helper, HomeBean.DatasEntity.SaleEntity item) {
             helper.setText(R.id.tv_main_title, item.getMain_title())
                     .setText(R.id.tv_sub_title, item.getSub_title());
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
             Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                    .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }
@@ -292,7 +292,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         protected void convert(BaseViewHolder helper, HomeBean.DatasEntity.BestEntity item) {
             helper.setText(R.id.tv_main_title, item.getMain_title())
                     .setText(R.id.tv_sub_title, item.getSub_title());
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
             Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                    .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }
@@ -308,7 +314,33 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             helper.setText(R.id.tv_main_title, item.getMain_title())
                     .setText(R.id.tv_sub_title, item.getSub_title())
                     .setText(R.id.tv_price, "￥" + item.getPro_price());
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
             Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                    .apply(options)
+                    .into((ImageView) helper.getView(R.id.iv_tupian));
+        }
+    }
+
+    class MiddleAdapter extends BaseQuickAdapter<HomeBean.DatasEntity.ProClassEntity, BaseViewHolder> {
+
+        public MiddleAdapter(@LayoutRes int layoutResId, @Nullable List<HomeBean.DatasEntity.ProClassEntity> data) {
+            super(layoutResId, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, HomeBean.DatasEntity.ProClassEntity item) {
+            helper.setText(R.id.tv_name, item.getClass_name());
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_circle)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+            Glide.with(mContext).load(item.getUrl())
+                    .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }

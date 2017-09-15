@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
@@ -95,7 +98,13 @@ public class ChangXiaoActivity extends BaseActivity implements View.OnClickListe
         protected void convert(BaseViewHolder helper, ChangXiaoBean.DatasEntity item) {
             helper.setText(R.id.tv_title,item.getMain_title())
                     .setText(R.id.tv_price,"￥"+item.getPro_price());
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
             Glide.with(mContext).load(item.getPro_pic())
+                    .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }

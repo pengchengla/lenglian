@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
@@ -102,7 +105,13 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
             helper.setText(R.id.tv_price_pro, spannableString)
             .setText(R.id.tv_title,item.getMain_title())
             .setText(R.id.tv_price_now,"￥"+item.getSale_price());
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
             Glide.with(mContext).load(item.getPro_pic())
+                    .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }
     }
