@@ -395,6 +395,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     intent.putExtra("duration", stepper.getValue() + "");
                     startActivity(intent);
                 } else if (type == 2) {
+
                     Toast.makeText(mContext, "已成功加入租赁车", Toast.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();

@@ -13,6 +13,16 @@ public class LoginBean
      */
     private int code;
     private String success;
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     private DatasEntity datas;
 
     public void setCode(int code) {

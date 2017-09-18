@@ -55,6 +55,10 @@ public class MainActivity extends BaseActivity {
             rgp.check(R.id.rb_good);
         } else if (eventMessage.getMsg().equals("order")) {
             rgp.check(R.id.rb_order);
+        } else if (eventMessage.getMsg().equals("class_id")) {
+            rgp.check(R.id.rb_good);
+            EventMessage eventMessage2 = new EventMessage("good_title",eventMessage.getMsg2());
+            EventBus.getDefault().postSticky(eventMessage2);
         }
     }
 

@@ -43,12 +43,10 @@
             android:text="@string/collect"
             android:textColor="@color/white"
             android:textSize="18sp"/>
-
-
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_collect"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/collect_title"
     ></android.support.v7.widget.RecyclerView>
@@ -61,6 +59,7 @@
         android:background="@color/white"
         android:visibility="gone">
         <LinearLayout
+            android:id="@+id/ll_checkall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -76,7 +75,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/cb_selector"
                 android:button="@null"
-                android:checked="true"
+                android:checked="false"
+                android:clickable="false"
             />
 
             <TextView

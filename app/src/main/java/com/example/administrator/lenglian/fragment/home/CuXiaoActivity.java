@@ -78,7 +78,9 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
                     mCuXiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            startActivity(new Intent(CuXiaoActivity.this, GoodDetailActivity.class));
+                            Intent intent = new Intent(CuXiaoActivity.this, GoodDetailActivity.class);
+                            intent.putExtra("id", mCuXiaoAdapter.getData().get(position).getPro_id());
+                            startActivity(intent);
                         }
                     });
                 }

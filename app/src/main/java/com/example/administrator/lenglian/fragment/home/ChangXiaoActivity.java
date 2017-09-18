@@ -75,7 +75,9 @@ public class ChangXiaoActivity extends BaseActivity implements View.OnClickListe
                     mChangxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            startActivity(new Intent(ChangXiaoActivity.this, GoodDetailActivity.class));
+                            Intent intent = new Intent(ChangXiaoActivity.this, GoodDetailActivity.class);
+                            intent.putExtra("id", mChangxiaoAdapter.getData().get(position).getPro_id());
+                            startActivity(intent);
                         }
                     });
                 }

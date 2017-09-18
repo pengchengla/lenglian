@@ -18,7 +18,6 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SendSmsTimerUtils;
-import com.example.administrator.lenglian.utils.SpUtils;
 
 /**
  * Created by Administrator on 2017/8/24.
@@ -68,7 +67,26 @@ public class ForgetpswActivity extends BaseActivity implements View.OnClickListe
             Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
             return;
         }
-        SendSmsTimerUtils.sendSms(tv_getcode, R.color.white, R.color.text_red);
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("mobile", edt_phone.getText().toString().trim());
+        RetrofitManager.get(MyContants.BASEURL + "s=Verify/sendSMS", arrayMap, new BaseObserver1<EasyBean>("") {
+            @Override
+            public void onSuccess(EasyBean result, String tag) {
+
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+                    Toast.makeText(ForgetpswActivity.this, "验证码已发送", Toast.LENGTH_SHORT).show();
+                    SendSmsTimerUtils.sendSms(tv_getcode, R.color.white, R.color.text_red);
+                } else {
+                    Toast.makeText(ForgetpswActivity.this, "验证码发送失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(ForgetpswActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void modifyPsw() {
@@ -98,8 +116,9 @@ public class ForgetpswActivity extends BaseActivity implements View.OnClickListe
             return;
         }
         ArrayMap arrayMap = new ArrayMap<String, String>();
-        arrayMap.put("user_id", SpUtils.getString(ForgetpswActivity.this, "user_id", ""));
         arrayMap.put("token", MyUtils.getToken());
+        arrayMap.put("mobile", edt_phone.getText().toString().trim());
+        arrayMap.put("code", edt_code.getText().toString().trim());
         arrayMap.put("new_password", edt_mima.getText().toString().trim());
         RetrofitManager.get(MyContants.BASEURL + "s=User/changeNonePassword", arrayMap, new BaseObserver1<EasyBean>("") {
             @Override

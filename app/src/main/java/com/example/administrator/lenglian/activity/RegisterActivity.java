@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EasyBean;
 import com.example.administrator.lenglian.bean.RegisterBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -78,7 +79,26 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
             return;
         }
-        SendSmsTimerUtils.sendSms(tv_getcode, R.color.white, R.color.text_red);
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("mobile", edt_phone.getText().toString().trim());
+        RetrofitManager.get(MyContants.BASEURL + "s=Verify/sendSMS", arrayMap, new BaseObserver1<EasyBean>("") {
+            @Override
+            public void onSuccess(EasyBean result, String tag) {
+
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+                    Toast.makeText(RegisterActivity.this, "验证码已发送", Toast.LENGTH_SHORT).show();
+                    SendSmsTimerUtils.sendSms(tv_getcode, R.color.white, R.color.text_red);
+                } else {
+                    Toast.makeText(RegisterActivity.this, "验证码发送失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(RegisterActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void register() {
@@ -107,13 +127,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(this, "两次输入的密码不同，请重新输入", Toast.LENGTH_SHORT).show();
             return;
         }
-        checkCode();
+        goMain();
     }
 
-    private void checkCode() {
+    private void goMain() {
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("mobile", edt_phone.getText().toString().trim());
         arrayMap.put("password", edt_mima.getText().toString().trim());
+        arrayMap.put("code", edt_code.getText().toString().trim());
         RetrofitManager.get(MyContants.BASEURL + "s=User/register", arrayMap, new BaseObserver1<RegisterBean>("") {
             @Override
             public void onSuccess(RegisterBean result, String tag) {

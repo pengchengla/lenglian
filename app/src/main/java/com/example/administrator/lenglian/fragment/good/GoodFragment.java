@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.SearchActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.bean.GoodBean;
 import com.example.administrator.lenglian.bean.GoodTypeBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -28,7 +29,10 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 /**
@@ -40,7 +44,6 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerView recycler_content;
     private TextView tv_search;
     //    private List<TitleBean> titleList = new ArrayList<>();
-    private List<String> contentList = new ArrayList<>();
     private TitleAdapter mTitleAdapter;
     private ContentAdapter mContentAdapter;
 
@@ -51,7 +54,14 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         recycler_content = (RecyclerView) view.findViewById(R.id.recycler_content);
         tv_search = (TextView) view.findViewById(R.id.tv_search);
         tv_search.setOnClickListener(this);
+        EventBus.getDefault().register(this);  //注册
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public void onResume() {
@@ -62,6 +72,15 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("商品总界面");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void myEvent(EventMessage eventMessage) {
+        if (eventMessage.getMsg().equals("good_title")) {
+            String msg = eventMessage.getMsg2();
+            Toast.makeText(mContext, " " + msg, Toast.LENGTH_SHORT).show();
+            switchTitleOne(msg);
+        }
     }
 
     @Override
@@ -92,8 +111,25 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                 Toast.makeText(mContext, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
+    private void switchTitleOne(String msg) {
+        //直接在外层用adapter的点击事件就不管用，真是邪门
+        for (int i = 0; i < mTitleAdapter.getData().size(); i++) {
+            if (mTitleAdapter.getData().get(i).getClass_id().equals(msg)) {
+                mTitleAdapter.getData().get(i).setChecked(true);
+                mTitleAdapter.getViewByPosition(recycler_title, i, R.id.title_left_view)
+                        .setBackgroundResource(R.color.blue);
+                switchData(mTitleAdapter.getData().get(i).getClass_id());
+            } else {
+                mTitleAdapter.getData().get(i).setChecked(false);
+                mTitleAdapter.getViewByPosition(recycler_title, i, R.id.title_left_view)
+                        .setBackgroundResource(R.color.white);
+            }
+        }
+        mTitleAdapter.notifyDataSetChanged();
+    }
+
 
     private void switchData(String class_id) {
         //        Toast.makeText(mContext, " " + class_id, Toast.LENGTH_SHORT).show();

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,17 +42,20 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
     private CheckBox cb_checkAll;
     private Button btn_delete;
     private boolean isEditing;
+    private boolean isAllChecked;
     private CollectionAdapter mCollectionadapter;
+    private List<CollectListBean.DatasEntity> mDatas;
+    private LinearLayout ll_checkall;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_collect);
         initView();
-        inindata();
+        initdata();
     }
 
-    private void inindata() {
+    private void initdata() {
         ArrayMap arrayMap2 = new ArrayMap();
         arrayMap2.put("token", MyUtils.getToken());
         arrayMap2.put("user_id", SpUtils.getString(CollectionActivity.this, "user_id", ""));
@@ -59,12 +63,32 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(CollectListBean result, String tag) {
                 if (result.getCode() == 200) {
-                    mCollectionadapter = new CollectionAdapter(R.layout.collect_item, result.getDatas());
+                    mDatas = result.getDatas();
+                    mCollectionadapter = new CollectionAdapter(R.layout.collect_item, mDatas);
                     recycler_collect.setAdapter(mCollectionadapter);
                 } else {
                     //101是没有数据
-                    Toast.makeText(CollectionActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                    if (mCollectionadapter != null) {
+                        mDatas.clear();
+                        mCollectionadapter.notifyDataSetChanged();
+                        rl_select_delete.setVisibility(View.GONE);
+                        collect_bianji.setText("编辑");
+                    }
+                    Toast.makeText(CollectionActivity.this, "您还没有收藏商品，快去收藏吧", Toast.LENGTH_SHORT).show();
                 }
+                mCollectionadapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        mDatas.get(position).setChecked(!mDatas.get(position).isChecked());
+                        mCollectionadapter.notifyDataSetChanged();
+                        if (isAllItemChecked()) {
+                            //如果所有item都选中了，就让全选按钮变红
+                            cb_checkAll.setChecked(true);
+                        }else {
+                            cb_checkAll.setChecked(false);
+                        }
+                    }
+                });
             }
 
             @Override
@@ -72,14 +96,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
             }
         });
-        mCollectionadapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mCollectionadapter.getData().get(position)
-                        .setChecked(!mCollectionadapter.getData().get(position).isChecked());
-                mCollectionadapter.notifyDataSetChanged();
-            }
-        });
+
     }
 
     private void initView() {
@@ -94,7 +111,8 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         tv_back.setOnClickListener(this);
         collect_bianji.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
-        cb_checkAll.setOnClickListener(this);
+        ll_checkall = (LinearLayout) findViewById(R.id.ll_checkall);
+        ll_checkall.setOnClickListener(this);
     }
 
     @Override
@@ -104,21 +122,33 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.collect_bianji:
-                isEditing = !isEditing;
-                if (isEditing) {
-                    collect_bianji.setText("完成");
-                    rl_select_delete.setVisibility(View.VISIBLE);
+                if (mDatas == null || mDatas.size() == 0) {
+                    return;
                 } else {
-                    collect_bianji.setText("编辑");
-                    rl_select_delete.setVisibility(View.GONE);
+                    if (isEditing) {
+                        collect_bianji.setText("编辑");
+                        rl_select_delete.setVisibility(View.GONE);
+                    } else {
+                        collect_bianji.setText("完成");
+                        rl_select_delete.setVisibility(View.VISIBLE);
+                    }
+                    isEditing = !isEditing;
+                    mCollectionadapter.notifyDataSetChanged();
                 }
-                mCollectionadapter.notifyDataSetChanged();
                 break;
             case R.id.collect_btn://删除
-                deleteCollect();
+                if (mDatas == null || mDatas.size() == 0) {
+                    return;
+                } else {
+                    deleteCollect();
+                }
                 break;
-            case R.id.collect_check://全选
-
+            case R.id.ll_checkall://全选
+                if (mDatas == null || mDatas.size() == 0) {
+                    return;
+                } else {
+                    setAllItemChecked();
+                }
                 break;
         }
     }
@@ -135,7 +165,8 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(EditCollectBean result, String tag) {
                 if (result.getCode() == 200) {
-
+                    Toast.makeText(CollectionActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                    initdata();
                 } else {
                     //101是没有数据
                 }
@@ -149,19 +180,44 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
     }
 
     private boolean hasItemChecked() {
-        for (int i = 0; i < mCollectionadapter.getData().size(); i++) {
-            if (mCollectionadapter.getData().get(i).isChecked()) {
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (mDatas.get(i).isChecked()) {
                 return true;
             }
         }
         return false;
     }
 
+    private boolean isAllItemChecked() {
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (!mDatas.get(i).isChecked()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void setAllItemChecked() {
+        if (isAllChecked) {
+            for (int i = 0; i < mDatas.size(); i++) {
+                mDatas.get(i).setChecked(false);
+            }
+            cb_checkAll.setChecked(false);
+        } else {
+            for (int i = 0; i < mDatas.size(); i++) {
+                mDatas.get(i).setChecked(true);
+            }
+            cb_checkAll.setChecked(true);
+        }
+        isAllChecked = !isAllChecked;
+        mCollectionadapter.notifyDataSetChanged();
+    }
+
     private String getAllDeleteCollectIds() {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < mCollectionadapter.getData().size(); i++) {
-            if (mCollectionadapter.getData().get(i).isChecked()) {
-                builder.append(mCollectionadapter.getData().get(i).getCollect_id() + ",");
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (mDatas.get(i).isChecked()) {
+                builder.append(mDatas.get(i).getCollect_id() + ",");
             }
         }
         String substring = builder.substring(builder.toString().length() - 1);

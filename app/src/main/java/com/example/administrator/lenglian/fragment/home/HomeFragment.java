@@ -139,7 +139,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         arrayMap.put("", "");
         RetrofitManager.get(MyContants.BASEURL + "s=Home/home", arrayMap, new BaseObserver1<HomeBean>("") {
             @Override
-            public void onSuccess(HomeBean result, String tag) {
+            public void onSuccess(final HomeBean result, String tag) {
 
                 //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
@@ -152,7 +152,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     banner.setOnBannerClickListener(new OnBannerClickListener() {
                         @Override
                         public void OnBannerClick(int position) {
-                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                            Intent intent = new Intent(mContext, WebActivity.class);
+                            intent.putExtra("url", result.getDatas().getBanner().get(position).getBanner_address());
+                            startActivity(intent);
                         }
                     });
                     if (mChangxiaoAdapter == null) {
@@ -165,6 +167,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         Glide.with(mContext).load(result.getDatas().getBest().get(0).getPro_pic().get(0).getUrl())
                                 .apply(options)
                                 .into(iv_changxiao_big);
+                        iv_changxiao_big.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(mContext, GoodDetailActivity.class);
+                                intent.putExtra("id", result.getDatas().getBest().get(0).getPro_id());
+                                startActivity(intent);
+                            }
+                        });
                         for (int i = 1; i < result.getDatas().getBest().size(); i++) {
                             bestEntityList.add(result.getDatas().getBest().get(i));
                         }
@@ -176,7 +186,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     mChangxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                            Intent intent = new Intent(mContext, GoodDetailActivity.class);
+                            intent.putExtra("id", mChangxiaoAdapter.getData().get(position).getPro_id());
+                            startActivity(intent);
                         }
                     });
 
@@ -189,7 +201,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     mCuxiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                            Intent intent = new Intent(mContext, GoodDetailActivity.class);
+                            intent.putExtra("id", mCuxiaoAdapter.getData().get(position).getPro_id());
+                            startActivity(intent);
                         }
                     });
 
@@ -202,13 +216,23 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                            Intent intent = new Intent(mContext, GoodDetailActivity.class);
+                            intent.putExtra("id", mCommentAdapter.getData().get(position).getPro_id());
+                            startActivity(intent);
                         }
                     });
                     recycler_class.setLayoutManager(new GridLayoutManager(mContext, 2));
                     recycler_class.setNestedScrollingEnabled(false);
                     mMiddleAdapter = new MiddleAdapter(R.layout.home_class_item, result.getDatas().getPro_class());
                     recycler_class.setAdapter(mMiddleAdapter);
+                    mMiddleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            EventMessage eventMessage2 = new EventMessage("class_id",
+                                    mMiddleAdapter.getData().get(position).getClass_id());
+                            EventBus.getDefault().postSticky(eventMessage2);
+                        }
+                    });
                 }
             }
 
@@ -232,13 +256,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent2);
                 break;
             case R.id.tv_allgoods:
-                EventMessage eventMessage = new EventMessage();
-                eventMessage.setMsg("allgoods");
+                EventMessage eventMessage = new EventMessage("allgoods");
                 EventBus.getDefault().postSticky(eventMessage);
                 break;
             case R.id.tv_myorder:
-                EventMessage eventMessage2 = new EventMessage();
-                eventMessage2.setMsg("order");
+                EventMessage eventMessage2 = new EventMessage("order");
                 EventBus.getDefault().postSticky(eventMessage2);
                 break;
             case R.id.tv_mytui:

@@ -52,8 +52,8 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
         iv_weibo.setOnClickListener(this);
 
 
-        edt_phone.setText("15811337458");
-        edt_mima.setText("123456");
+//        edt_phone.setText("15811337458");
+//        edt_mima.setText("123456");
     }
 
     @Override
@@ -101,6 +101,8 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
                     startActivity(intent1);
                     SpUtils.putString(LoginActivity.this, "user_id", result.getDatas().getUser_id());
 //                    Toast.makeText(LoginActivity.this, result.getDatas().getUser_id(), Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(LoginActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
-                android:lines="2"
+                android:maxLines="2"
                 android:text="都是撒大家看撒谎大手机客户端哈撒打算看电话卡四大皆空撒"
                 android:textSize="16sp"
             />
