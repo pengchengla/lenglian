@@ -43,7 +43,7 @@ public interface ApiService {
     //上传图片
     @Multipart
     @POST("multipart/form-data")
-    Observable<String> uploadPhoto(@Part("user.file") MultipartBody file, @PartMap Map<String, String> map);
+    Observable<String> uploadPhoto(@Part("sfile") MultipartBody file, @PartMap Map<String, String> map);
 
     //上传单张图片
     @Multipart

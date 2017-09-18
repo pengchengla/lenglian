@@ -45,7 +45,7 @@ public class Deliveryadapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
       ViewHolder holder = null;
         if (convertView == null) {
              holder=new ViewHolder();
@@ -58,15 +58,17 @@ public class Deliveryadapter extends BaseAdapter {
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
-            holder.orderlist_count.setText(list.get(position).getCount());
-             holder.reying_btn.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     //确认收货
-                 }
-             });
-
         }
+        holder.reying_btn.setFocusable(false);
+        holder.orderlist_count.setText(list.get(position).getCount());
+        holder.reying_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //确认收货
+                 list.remove(position);
+                notifyDataSetChanged();
+            }
+        });
 
 
         return convertView;

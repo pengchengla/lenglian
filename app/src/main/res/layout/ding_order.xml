@@ -56,14 +56,14 @@
 
             </LinearLayout>
 
-</LinearLayout>
-
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/hui" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/hui" />
 
     <LinearLayout
         android:id="@+id/evaluate"
@@ -76,7 +76,7 @@
         <TextView
             android:layout_weight="1"
             android:clickable="true"
-            android:text="激活"
+            android:text="续费"
             android:layout_marginLeft="3dp"
             android:layout_width="62dp"
             android:layout_height="wrap_content"
@@ -84,28 +84,14 @@
             android:gravity="center"
             android:padding="10dp"
             android:background="@drawable/selector_bian"
-            android:id="@+id/order_activate"
-            android:textColor="@drawable/textcolers"
-           />
-        <TextView
-            android:clickable="true"
-            android:layout_weight="1"
-            android:text="续费"
-            android:layout_marginLeft="8dp"
-            android:layout_width="62dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:background="@drawable/selector_bian"
             android:id="@+id/order_renew"
             android:textColor="@drawable/textcolers"
             />
         <TextView
-            android:layout_weight="1"
             android:clickable="true"
-            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
             android:text="退还"
+            android:layout_marginLeft="8dp"
             android:layout_width="62dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -118,8 +104,8 @@
         <TextView
             android:layout_weight="1"
             android:clickable="true"
-            android:text="报修"
             android:layout_marginLeft="8dp"
+            android:text="报修"
             android:layout_width="62dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -130,16 +116,30 @@
             android:textColor="@drawable/textcolers"
             />
         <TextView
-            android:layout_marginLeft="8dp"
-           android:clickable="true"
+            android:layout_weight="1"
+            android:clickable="true"
             android:text="评价"
+            android:layout_marginLeft="8dp"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:background="@drawable/selector_bian"
+            android:id="@+id/order_evaluation"
+            android:textColor="@drawable/textcolers"
+            />
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:clickable="true"
+            android:text="激活"
             android:padding="10dp"
             android:layout_width="62dp"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:gravity="center"
             android:background="@drawable/shape_redline"
-            android:id="@+id/order_evaluation"
+            android:id="@+id/order_activate"
             android:textColor="@color/redd"
             />
 
@@ -147,7 +147,7 @@
 
     <LinearLayout
         android:visibility="gone"
-       android:id="@+id/pay"
+        android:id="@+id/pay"
         android:gravity="right"
         android:layout_gravity="right"
         android:layout_marginTop="10dp"
@@ -204,7 +204,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/hui" />
-    </LinearLayout>
+</LinearLayout>
 
 
 

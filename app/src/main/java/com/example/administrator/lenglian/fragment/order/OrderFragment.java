@@ -1,18 +1,27 @@
 package com.example.administrator.lenglian.fragment.order;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.TextureView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.SpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +37,44 @@ public class OrderFragment extends BaseFragment {
     private List<String> list;
     private FrameLayout pager;
     private List<Indexbean> lists=new ArrayList<>();
+    private LinearLayout liner_tab;
+    private Button view_btn;
+    private RelativeLayout real_login;
+
     @Override
     protected View initView() {
         View view=View.inflate(mContext, R.layout.activity_mineorder,null);
         tab = (TabLayout) view.findViewById(R.id.tab);
         pager = (FrameLayout) view.findViewById(R.id.container);
+        liner_tab = (LinearLayout) view.findViewById(R.id.liner_tab);
+        view_btn = (Button) view.findViewById(R.id.view_btn);
+        real_login = (RelativeLayout) view.findViewById(R.id.real_login);
+
+        view_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+
+
+        if (!TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
+              real_login.setVisibility(View.GONE);
+            liner_tab.setVisibility(View.VISIBLE);
+
+        }
         return view;
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
     }
 
     @Override
@@ -56,9 +97,9 @@ public class OrderFragment extends BaseFragment {
         apiList = new ArrayList<>();
         //放接口
         apiList.add(MyContants.BASEURL+"s=Order/listOrder");
-        apiList.add(MyContants.BASEURL +"s=User/register");
-        apiList.add(MyContants.BASEURL+"s=Order/listOrder");
-        apiList.add(MyContants.BASEURL+"s=Order/listOrder");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=10");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=1");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=8");
         for (int i = 0; i < list.size(); i++) {
             tab.addTab(tab.newTab().setText(list.get(i)));
         }

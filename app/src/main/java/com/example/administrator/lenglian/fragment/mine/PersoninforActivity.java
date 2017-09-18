@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.transition.Transition;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,6 +22,8 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.good.QueRenOrderActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Personbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.mine.util.NiftyDialogBuilder;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -26,13 +31,16 @@ import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SoftKeyboardTool;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.socks.library.KLog;
 
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,26 +61,150 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
     private TextView person_data;
     private LinearLayout person_birth;
     private EditText ed;
-
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
+    private Stringnick stringnick;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_personal);
         initView();
-         inindata();
+   //      inindata();//下拉个人信息
+
+
+
+    }
+//修改地址
+    private void ininaddress() {
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("sex",   person_data.getText().toString());
+        String token = MyUtils.getToken();
+        System.out.print(token);
+        KLog.d(token + "-----------------------");
+        RetrofitManager.post(MyContants.BASEURL + "s=User/editProfile", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200){
+                    ToastUtils.showShort(PersoninforActivity.this,"修改成功");
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                ToastUtils.showShort(PersoninforActivity.this,"修改失败");
+            }
+        });
+    }
+
+    //修改性别
+    private void ininsex() {
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        if( person_exselect.getText().toString().equals("男")){
+            map.put("sex",   "1");
+        }
+        else {
+            map.put("sex",   "2");
+        }
+
+        String token = MyUtils.getToken();
+        System.out.print(token);
+        KLog.d(token + "-----------------------");
+        RetrofitManager.post(MyContants.BASEURL + "s=User/editProfile", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200){
+                    ToastUtils.showShort(PersoninforActivity.this,"修改成功");
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                ToastUtils.showShort(PersoninforActivity.this,"修改失败");
+            }
+        });
+
+    }
+    //修改昵称
+    private void ininnick() {
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("nick_name",  person_name.getText().toString());
+        String token = MyUtils.getToken();
+        System.out.print(token);
+        KLog.d(token + "-----------------------");
+        RetrofitManager.post(MyContants.BASEURL +"s=User/editProfile", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200){
+                    ToastUtils.showShort(PersoninforActivity.this,"修改成功");
+                }
+
+            }
+
+            @Override
+            public void onFailed(int code) {
+                ToastUtils.showShort(PersoninforActivity.this,"修改失败");
+            }
+        });
+
+    }
+
+    //修改名字
+    private void ininamend() {
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("nick_name",  person_name.getText().toString());
+        String token = MyUtils.getToken();
+        System.out.print(token);
+        KLog.d(token + "-----------------------");
+        RetrofitManager.post(MyContants.BASEURL + "s=User/editProfile", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200){
+                    ToastUtils.showShort(PersoninforActivity.this,"修改成功");
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                ToastUtils.showShort(PersoninforActivity.this,"修改失败");
+            }
+        });
+
+
     }
 
     private void inindata() {
           //加载网络请求
         Map<String,String> map=new HashMap<>();
-        map.put("user_id","65");
+        map.put("user_id",SpUtils.getString(this,"user_id",""));
         map.put("token",MyUtils.getToken());
         String token = MyUtils.getToken();
         System.out.print(token);
-        RetrofitManager.post(MyContants.BASEURL +"s=User/viewProfile", map, new BaseObserver1<Indexbean>("") {
+        RetrofitManager.get(MyContants.BASEURL +"s=User/viewProfile", map, new BaseObserver1<Personbean>("") {
             @Override
-            public void onSuccess(Indexbean result, String tag) {
-                ToastUtils.show(PersoninforActivity.this,"成功",1);
+            public void onSuccess(Personbean result, String tag) {
+                if(result.getCode()==200) {
+                    ToastUtils.showShort(PersoninforActivity.this, "修改成功");
+
+                    ToastUtils.show(PersoninforActivity.this, result.getCode() + "成功", 1);
+                    List<Personbean.DatasBean> datas = result.getDatas();
+                    person_name.setText(datas.get(0).getUser_name());
+                    person_nick.setText(datas.get(0).getNick_name());
+                    if (datas.get(0).getSex().equals("1")) {
+                        person_exselect.setText("男");
+                    } else {
+                        person_exselect.setText("女");
+                    }
+
+                    person_data.setText(datas.get(0).getBirth());
+                }
             }
 
             @Override
@@ -114,17 +246,22 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             case R.id. person_ming:
 
                 showCarDialog( R.style.Alpah_aniamtion,1);
+
                 break;
             case R.id. person_nickname:
                 showCarDialog( R.style.Alpah_aniamtion,2);
+
                 break;
             case R.id.person_birth:
                 showBirthdayDialog();
+
                 break;
             case R.id.person_sex:
                 showGenderDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion);
+
                 break;
             case R.id.tv_back:
+                stringnick.stringname(person_nick.getText().toString().trim());
                 finish();
                 break;
         }
@@ -148,6 +285,8 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 person_exselect.setText("男");
+                //修改性别
+                ininsex();
                 dialog.dismiss();
             }
         });
@@ -155,6 +294,8 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 person_exselect.setText("女");
+                //修改性别
+                ininsex();
                 dialog.dismiss();
             }
         });
@@ -173,6 +314,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 person_data .setText(MyUtils.dateToString(date, "MEDIUM"));
+                ininaddress();
             }
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
@@ -183,6 +325,8 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         //注：根据需求来决定是否使用该方法（一般是精确到秒的情况），
         // 此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，
         // 导致选中时间与当前时间不匹配的问题。
+        //修改地址
+
     }
       //头像选取
     private void showphoto(int animationStyle,int gr){
@@ -204,6 +348,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 //相册选取
+
                 dialog.dismiss();
             }
         });
@@ -238,9 +383,12 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 if(type==1){
-                 person_name.setText(ed.getText().toString());}
+                 person_name.setText(ed.getText().toString());
+                    ininamend();}
                 else  if(type==2){
                     person_nick.setText(ed.getText().toString());
+                    //修改昵称
+                    ininnick();
                 }
                 SoftKeyboardTool.closeKeyboard(ed);
                 dialog.dismiss();
@@ -256,4 +404,12 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
 
         dialog.show();
     }
+     //创建接口
+    public interface Stringnick{
+        void stringname(String name);
+    }
+        public void SetStringmane(Stringnick stringnick){
+
+                this.stringnick=stringnick;
+        }
 }

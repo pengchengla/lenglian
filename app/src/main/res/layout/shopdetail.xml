@@ -198,14 +198,13 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/shape_blueline"
                     android:layout_centerHorizontal="true"
-                    android:padding="10dp"
                     android:textSize="16sp"
                     android:text="提交评论"
                     android:textColor="#6798e7"
                     android:layout_width="150dp"
                     android:gravity="center"
                     android:layout_marginBottom="20dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="50dp" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

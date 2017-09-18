@@ -55,12 +55,15 @@ public class Payadapter extends BaseAdapter {
             holder.iv_tupian = (ImageView)  convertView.findViewById(R.id.pay_tupian);
             holder.orderlist_count = (TextView)  convertView.findViewById(R.id.paylist_count);
             holder.textView = (TextView)  convertView.findViewById(R.id.pay_price);
-            holder.order_pause = (TextView)  convertView.findViewById(R.id.order_pause);
-            holder.order_zhifi = (TextView)  convertView.findViewById(R.id.order_zhifi);
-
+            holder.order_pause = (TextView)  convertView.findViewById(R.id.order_pau);
+            holder.order_zhifi = (TextView)  convertView.findViewById(R.id.order_zhi);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+        }
+            holder.order_pause.setFocusable(false);
+            holder.order_zhifi.setFocusable(false);
+
             holder.orderlist_count.setText(list.get(position).getCount());
              holder.order_pause.setOnClickListener(new View.OnClickListener() {
                  @Override
@@ -76,7 +79,7 @@ public class Payadapter extends BaseAdapter {
                      showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion);
                  }
              });
-        }
+
 
 
         return convertView;

@@ -11,6 +11,16 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -30,6 +40,29 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_alterpwd);
         initView();
+
+    }
+
+    private void initnetwork() {
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("password", set_initialpwd.getText().toString());
+        map.put("new_password", set_loginpwd.getText().toString());
+        RetrofitManager.post(MyContants.BASEURL + "s=User/addComment", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200){
+                    ToastUtils.showShort(AmendpwdActivity.this,"修改成功");
+
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -51,6 +84,8 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
             case R.id.set_btn:
               //修改密码提交
                 submit();
+                initnetwork();
+                finish();
                 break;
             case R.id.tv_back:
                 finish();

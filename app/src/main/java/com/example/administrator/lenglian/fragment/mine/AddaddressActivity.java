@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,8 +13,18 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SoftKeyboardTool;
+import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.utils.provice.AddressUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -30,6 +41,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
     private ImageView edimg_guanli;
     private TextView ad_address;
     boolean bool;
+    private boolean aBoolean;
 
 
     @Override
@@ -52,21 +64,34 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
         adress_save.setOnClickListener(this);
         eted_city.setOnClickListener(this);
         edimg_guanli.setOnClickListener(this);
+        Intent it=getIntent();
+        aBoolean = it.getBooleanExtra("boolean", true);
     }
 
     private void submit() {
         // validate
         String name = etad_name.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
-            Toast.makeText(this, "name不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "姓名不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String phone = eted_phone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            Toast.makeText(this, "phone不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
+        else if (!MyUtils.isMobileNO(eted_phone.getText().toString())) {
+            Toast.makeText(this, "手机号格式不正确", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String address= ad_address.getText().toString();
+        if(TextUtils.isEmpty(address)){
+            ToastUtils.showShort(AddaddressActivity.this,"请选择省市区");
+            return;
+        }
+
+
 
         String xianq = eted_xianq.getText().toString().trim();
         if (TextUtils.isEmpty(xianq)) {
@@ -75,9 +100,91 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
         }
 
         // TODO validate success, do something
+   if(aBoolean){
+    /*
+      走编辑网络请求
+
+     */
+        ininbianji();
+   }
+        else {
+       inindata();
+   }
 
 
     }
+
+    private void ininbianji() {
+        //加载网络请求
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id",SpUtils.getString(this,"user_id",""));//随时传过来的----------------
+        map.put("token",MyUtils.getToken());
+        map.put("receive_name",etad_name.getText().toString());
+        map.put("mobile",eted_phone.getText().toString());
+        map.put("express_id","");//传过来的--------------
+        /*
+          ------------差一个地区----------------
+         */
+        map.put("address_detail",eted_xianq.getText().toString());
+        if(bool){
+            map.put("is_default","1");
+
+        }
+        else {
+            map.put("is_default","2");
+        }
+        RetrofitManager.get(MyContants.BASEURL + "s=User/editExpress", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                int code = result.getCode();
+                if(code==200){
+                    ToastUtils.showShort(AddaddressActivity.this,"添加成功");
+                     Intent intent=new Intent(AddaddressActivity.this,AddressActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+    }
+
+    private void inindata() {
+        //加载网络请求
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token",MyUtils.getToken());
+        map.put("recieve_name", etad_name.getText().toString());
+        map.put("mobile",eted_phone.getText().toString());
+        /*
+          ------------差一个地区----------------
+         */
+        map.put("address_detail",eted_xianq.getText().toString());
+        if(bool){
+            map.put("is_default","1");
+
+        }
+        else {
+            map.put("is_default","2");
+        }
+        RetrofitManager.get(MyContants.BASEURL + "s=User/editExpress", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                int code = result.getCode();
+                if(code==200){
+                   ToastUtils.showShort(AddaddressActivity.this,"添加成功");
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+    }
+
     //选择城市
     private void showAddressDialog() {
         new AddressUtils().ShowAddressDialog(this, ad_address);
@@ -90,6 +197,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.adress_save:
+                submit();
                 break;
             case R.id. eted_city:
                 showAddressDialog();
@@ -99,6 +207,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 bool=!bool;
                  if(bool){
                      edimg_guanli.setImageResource(R.drawable.select_true);
+
 
                  }
                 else {

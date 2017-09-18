@@ -3,32 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/hui">
-    <RelativeLayout
+    android:background="#f5f5f5">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#6798e7">
-        <TextView
+        android:background="#6798e7"
+        android:padding="5dp"
+        android:weightSum="3"
+        >
+        <RelativeLayout
             android:id="@+id/tv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_back_white"
-            android:drawablePadding="6dp"
-            android:padding="8dp"
-            android:text="返回"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            />
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/fan"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_back_white"
+                android:layout_width="15dp"
+                android:layout_height="14dp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/fan"
+                android:layout_marginLeft="5dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="返回"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/oder_detail"
+            android:text="订单详情"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:layout_centerHorizontal="true"
-            android:textSize="17sp"/>
-    </RelativeLayout>
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
     <ScrollView
         android:scrollbars="none"
         android:layout_width="match_parent"
@@ -37,7 +72,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/zhifutitle">
+
+            </RelativeLayout>
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/zhifu3x">
@@ -89,7 +131,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:gravity="left"
                     android:id="@+id/detail_number"
                     android:textColor="@color/textblack"
@@ -99,6 +141,8 @@
                     android:text="1345678"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+
             </LinearLayout>
          <LinearLayout
              android:background="@color/white"
@@ -111,7 +155,7 @@
                  android:layout_margin="5dp"
                  android:padding="10dp"
                  android:textSize="16sp"
-                 android:text="收 货 人"
+                 android:text="收  货  人"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content" />
              <TextView
@@ -122,14 +166,14 @@
                  android:textSize="16sp"
                  android:text="朱志成"
                  android:layout_weight="2"
-                 android:gravity="right"
+                 android:gravity="left"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content" />
 
          </LinearLayout>
             <LinearLayout
                 android:background="@color/white"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -149,14 +193,14 @@
                     android:textSize="16sp"
                     android:text="13864975351"
                     android:layout_weight="2"
-                    android:gravity="right"
+                    android:gravity="left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
             <LinearLayout
                 android:background="@color/white"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -176,7 +220,7 @@
                     android:textSize="16sp"
                     android:text="北京市海淀区软件园"
                     android:layout_weight="2"
-                    android:gravity="right"
+                    android:gravity="left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -187,6 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
                 android:layout_margin="5dp"
                 android:id="@+id/shop_tupian"
@@ -244,7 +289,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -291,7 +336,7 @@
             </LinearLayout>
             <LinearLayout
                 android:background="@color/white"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -317,7 +362,7 @@
             </LinearLayout>
             <LinearLayout
                 android:background="@color/white"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -359,7 +404,7 @@
             </LinearLayout>
             <LinearLayout
                 android:background="@color/white"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -402,7 +447,7 @@
             </LinearLayout>
             <LinearLayout
                 android:background="@color/white"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -427,12 +472,38 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
-              <android.support.v7.widget.RecyclerView
-                  android:id="@+id/odetail_recy"
-                  android:layout_width="match_parent"
-                  android:layout_height="200dp"></android.support.v7.widget.RecyclerView>
-
             <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/textblack"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:text="租了又租"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                  <com.example.administrator.lenglian.utils.MyGradeview
+                   android:layout_marginLeft="10dp"
+                     android:layout_marginRight="10dp"
+                     android:verticalSpacing="5dp"
+                     android:horizontalSpacing="5dp"
+                     android:numColumns="3"
+                     android:layout_marginTop="10dp"
+                     android:id="@+id/odetail_recy"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"></com.example.administrator.lenglian.utils.MyGradeview>
+         <View
+             android:background="@color/white"
+             android:layout_width="match_parent"
+             android:layout_height="20dp"
+             ></View>
+            </LinearLayout>
+            <LinearLayout
+
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="right"
@@ -447,9 +518,9 @@
                     android:padding="10dp"
                     android:textSize="18sp"
                     android:gravity="center"
-                    android:background="@drawable/selector_bian"
+                    android:background="@drawable/shape_huiline"
                     android:id="@+id/order_pause"
-                    android:textColor="@drawable/textcolers"
+                    android:textColor="#b2b2b2"
                     />
                 <TextView
                     android:layout_gravity="right"

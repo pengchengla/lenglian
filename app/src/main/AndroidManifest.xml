@@ -96,8 +96,9 @@
         <activity android:name=".fragment.order.activity.OrderPayActivity"></activity>
         <activity android:name=".fragment.mine.ZhijiaActivity"></activity>
         <activity android:name=".fragment.mine.DinggouActivity"></activity>
-        <activity android:name=".fragment.mine.PictureActivity"></activity>
         <activity android:name=".utils.pictureutils.PlusImageActivity"></activity>
+        <activity android:name=".fragment.order.activity.ReceiptActivity"></activity>
+        <activity android:name=".fragment.order.activity.AppraiseActivity"></activity>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"

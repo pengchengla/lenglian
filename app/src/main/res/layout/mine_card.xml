@@ -63,7 +63,6 @@
 
     <ListView
         android:id="@+id/card_list"
-        android:background="#0ff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 

@@ -127,7 +127,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginTop="2dp"
         android:background="@color/white"
         android:padding="10dp">
@@ -135,11 +135,10 @@
             android:id="@+id/tuihuan_xianq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:background="@null"
+            android:layout_marginLeft="12dip"
             android:hint="详细地址：街道/小区/门牌号等"
-            android:inputType="number"
-            android:padding="30dp"
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
     </LinearLayout>

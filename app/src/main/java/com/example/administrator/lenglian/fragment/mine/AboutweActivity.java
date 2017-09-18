@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 
@@ -26,6 +27,7 @@ public class AboutweActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_aboutwe);
         initView();
+
 
     }
 

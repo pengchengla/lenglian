@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.fragment.mine.bean.Evaluatedetailbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.fragment.mine.bean.photobean;
 
@@ -24,7 +25,7 @@ import java.util.List;
 public class Gradeadapter extends BaseAdapter {
     private Context context;
     private List<photobean> list;
-
+   // private List<Evaluatedetailbean.DatasBean.PicBean> list;
     public Gradeadapter(Context context, List<photobean> list) {
         this.context = context;
         this.list = list;
