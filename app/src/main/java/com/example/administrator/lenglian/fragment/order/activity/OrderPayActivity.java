@@ -5,10 +5,18 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.mine.adapter.Gradeadapter;
+import com.example.administrator.lenglian.fragment.mine.bean.photobean;
+import com.example.administrator.lenglian.fragment.order.adapter.Order_gride;
+import com.example.administrator.lenglian.utils.MyGradeview;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * date : ${Date}
@@ -16,7 +24,7 @@ import com.example.administrator.lenglian.base.BaseActivity;
  */
 
 public class OrderPayActivity extends BaseActivity implements View.OnClickListener {
-    private TextView tv_back;
+    private RelativeLayout tv_back;
     private TextView detail_number;
     private TextView detail_name;
     private TextView detail_phone;
@@ -30,20 +38,40 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
     private TextView total_price;
     private TextView ususally_invoice;
     private TextView order_data;
-    private RecyclerView odetail_recy;
+    private MyGradeview odetail_recy;
     private TextView order_pause;
     private TextView order_zhifi;
-
+    private List<photobean> list=new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_detail);
         initView();
+        inindata();
+    }
+    private void inindata() {
+        photobean ph=new photobean();
+        ph.setPhoto(R.drawable.binggui);
+        photobean ph2=new photobean();
+        ph2.setPhoto(R.drawable.binggui);
+        photobean ph3=new photobean();
+        ph3.setPhoto(R.drawable.binggui);
+        photobean pho4=new photobean();
+        pho4.setPhoto(R.drawable.binggui);
+        photobean pho5=new photobean();
+        pho5.setPhoto(R.drawable.binggui);
+        list.add(ph);
+        list.add(ph2);
+        list.add(ph3);
+        list.add(pho4);
+        list.add(pho5);
+        Order_gride gradeadapter=new  Order_gride(this,list);
+        odetail_recy.setAdapter(gradeadapter);
     }
 
     private void initView() {
-        tv_back = (TextView) findViewById(R.id.tv_back);
+        tv_back = (RelativeLayout) findViewById(R.id.tv_back);
         detail_number = (TextView) findViewById(R.id.detail_number);
         detail_name = (TextView) findViewById(R.id.detail_name);
         detail_phone = (TextView) findViewById(R.id.detail_phone);
@@ -57,7 +85,7 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         total_price = (TextView) findViewById(R.id.total_price);
         ususally_invoice = (TextView) findViewById(R.id.ususally_invoice);
         order_data = (TextView) findViewById(R.id.order_data);
-        odetail_recy = (RecyclerView) findViewById(R.id.odetail_recy);
+        odetail_recy = (MyGradeview) findViewById(R.id.odetail_recy);
         order_pause = (TextView) findViewById(R.id.order_pause);
         order_zhifi = (TextView) findViewById(R.id.order_zhifi);
         tv_back.setOnClickListener(this);

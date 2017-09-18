@@ -1,5 +1,8 @@
 package com.example.administrator.lenglian.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+
 import java.util.List;
 
 /**
@@ -13,6 +16,8 @@ public class AddressBean {
      * code : 200
      * datas : [{"address_detail":"详细地址","express_id":"28","recieve_name":"aaa","address":"bbb","mobile":"18888888888","is_default":"1"}]
      */
+
+    private Long id;
     private String msg;
     private int code;
     private List<DatasEntity> datas;

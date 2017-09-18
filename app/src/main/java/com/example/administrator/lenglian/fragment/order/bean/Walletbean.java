@@ -7,10 +7,11 @@ package com.example.administrator.lenglian.fragment.order.bean;
 
 public class Walletbean {
 
+
     /**
      * code : 200
      * msg : success
-     * datas : {"balance":"100","balance_begin_time":"","balance_end_time":"","deposit":"20"}
+     * datas : {"balance":"余额","start_time":"开始时间","end_time":"结束时间","pro_deposit":"押金"}
      */
 
     private int code;
@@ -43,16 +44,16 @@ public class Walletbean {
 
     public static class DatasBean {
         /**
-         * balance : 100
-         * balance_begin_time :
-         * balance_end_time :
-         * deposit : 20
+         * balance : 余额
+         * start_time : 开始时间
+         * end_time : 结束时间
+         * pro_deposit : 押金
          */
 
         private String balance;
-        private String balance_begin_time;
-        private String balance_end_time;
-        private String deposit;
+        private String start_time;
+        private String end_time;
+        private String pro_deposit;
 
         public String getBalance() {
             return balance;
@@ -62,28 +63,28 @@ public class Walletbean {
             this.balance = balance;
         }
 
-        public String getBalance_begin_time() {
-            return balance_begin_time;
+        public String getStart_time() {
+            return start_time;
         }
 
-        public void setBalance_begin_time(String balance_begin_time) {
-            this.balance_begin_time = balance_begin_time;
+        public void setStart_time(String start_time) {
+            this.start_time = start_time;
         }
 
-        public String getBalance_end_time() {
-            return balance_end_time;
+        public String getEnd_time() {
+            return end_time;
         }
 
-        public void setBalance_end_time(String balance_end_time) {
-            this.balance_end_time = balance_end_time;
+        public void setEnd_time(String end_time) {
+            this.end_time = end_time;
         }
 
-        public String getDeposit() {
-            return deposit;
+        public String getPro_deposit() {
+            return pro_deposit;
         }
 
-        public void setDeposit(String deposit) {
-            this.deposit = deposit;
+        public void setPro_deposit(String pro_deposit) {
+            this.pro_deposit = pro_deposit;
         }
     }
 }

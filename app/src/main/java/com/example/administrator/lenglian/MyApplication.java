@@ -3,7 +3,10 @@ package com.example.administrator.lenglian;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.administrator.lenglian.dao.DaoMaster;
+import com.example.administrator.lenglian.dao.DaoSession;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -16,14 +19,32 @@ import com.umeng.socialize.UMShareAPI;
  */
 
 public class MyApplication extends Application {
-    private static Application instance;
-
+    private static MyApplication application;
+    public static DaoSession daoSession;
     @Override
     public void onCreate() {
         super.onCreate();
         initUMShare();
         initUMPush();
-        instance=this;
+        application=this;
+
+        initGreendao();
+    }
+    public static MyApplication  getApplication(){
+        if(application == null){
+            application = getApplication() ;
+        }
+        return application;
+    }
+    public void initGreendao(){
+
+
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"lenglian.db");
+        DaoMaster master = new DaoMaster(helper.getWritableDatabase());
+        //   加密
+//        DaoMaster master = new DaoMaster(helper.getEncryptedWritableDb("1111"));
+
+        daoSession = master.newSession() ;
 
     }
 
@@ -65,7 +86,7 @@ public class MyApplication extends Application {
                 //                mRegistrationId = mPushAgent.getRegistrationId();
                 //                Toast.makeText(MyApplication.this, "注册成功" + mRegistrationId, Toast.LENGTH_SHORT).show();
                 //                SpUtils.putString(instance, "UMPUSHID", mRegistrationId);
-                SpUtils.putString(instance, "UMPUSHID", deviceToken);
+                SpUtils.putString( application, "UMPUSHID", deviceToken);
             }
 
             @Override
@@ -85,10 +106,10 @@ public class MyApplication extends Application {
     }
 
     public static Application getInstance() {
-        return instance;
+        return  application;
     }
 
     public static Context getGloableContext() {
-        return instance.getApplicationContext();
+        return  application.getApplicationContext();
     }
 }

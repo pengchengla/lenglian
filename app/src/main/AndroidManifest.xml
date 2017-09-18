@@ -34,6 +34,8 @@
     <uses-feature android:name="android.hardware.camera.autofocus"/>
     <uses-feature android:name="android.hardware.camera"/>
 
+
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -102,6 +104,35 @@
         <activity android:name=".fragment.mine.ZhijiaActivity"/>
         <activity android:name=".fragment.mine.DinggouActivity"/>
         <activity android:name=".utils.pictureutils.PlusImageActivity"/>
+        <activity android:name=".fragment.mine.AddcardActivity"></activity>
+        <activity android:name=".fragment.mine.CardActivity"></activity>
+        <activity android:name=".fragment.mine.WarrantyActivity"></activity>
+        <activity android:name=".fragment.mine.WalletActivity"></activity>
+        <activity android:name=".fragment.mine.AddressActivity" />
+        <activity android:name=".fragment.mine.ManualActivity"></activity>
+        <activity android:name=".fragment.mine.EvaluateActivity"></activity>
+        <activity android:name=".fragment.mine.CollectionActivity"></activity>
+        <activity android:name=".fragment.mine.AlterationActivity"></activity>
+        <activity android:name=".fragment.mine.AboutweActivity" android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".fragment.mine.AmendpwdActivity"></activity>
+        <activity android:name=".fragment.mine.SetActivity"></activity>
+        <activity android:name=".fragment.mine.AccountActivity"></activity>
+        <activity android:name=".fragment.mine.PersoninforActivity"></activity>
+        <activity android:name=".fragment.mine.WarrantydetailActivity"></activity>
+        <activity android:name=".fragment.mine.MaintenanceActivity" android:windowSoftInputMode="stateHidden" ></activity>
+        <activity android:name=".fragment.mine.bean.AlterdetailActivity"></activity>
+        <activity android:name=".fragment.mine.EvaluatedetailActivity"></activity>
+        <activity android:name=".fragment.mine.AddaddressActivity"></activity>
+        <activity android:name=".fragment.order.activity.RenewActivity"></activity>
+        <activity android:name=".fragment.mine.ReturnActivity"></activity>
+        <activity android:name=".fragment.order.activity.BaoxiuActivity"></activity>
+        <activity android:name=".fragment.order.activity.ShopdetailActivity" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".fragment.order.activity.OrderPayActivity"></activity>
+        <activity android:name=".fragment.mine.ZhijiaActivity"></activity>
+        <activity android:name=".fragment.mine.DinggouActivity"></activity>
+        <activity android:name=".utils.pictureutils.PlusImageActivity"></activity>
+        <activity android:name=".fragment.order.activity.ReceiptActivity"></activity>
+        <activity android:name=".fragment.order.activity.AppraiseActivity"></activity>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -166,27 +197,26 @@
             android:theme="@style/Theme.UMDefault"/>
         <!-- 友盟第三方登录及分享end -->
 
-
-        <!-- 支付宝支付配置start -->
+        <!--支付宝支付配置start-->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
-        <!-- 支付宝支付配置end -->
+        <!--支付宝支付配置end-->
 
         <activity android:name=".fragment.good.QueRenOrderActivity">
         </activity>
-        <!-- 解决7.0照相机崩溃问题 -->
+        <!--解决7.0照相机崩溃问题-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -195,7 +225,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity android:name=".fragment.home.WebActivity">

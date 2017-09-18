@@ -49,9 +49,12 @@ public class PlusImageActivity extends AppCompatActivity implements ViewPager.On
             @Override
             public void ok() {
                 super.ok();
-                imgList.remove(mPosition); //从数据源移除删除的图片
-                setPosition();
-                dismiss();
+                if(imgList.size()>0) {
+                    imgList.remove(mPosition); //从数据源移除删除的图片
+                    setPosition();
+                    dismiss();
+                }
+
             }
         };
         dialog.show();
@@ -96,8 +99,14 @@ public class PlusImageActivity extends AppCompatActivity implements ViewPager.On
                 back();
                 break;
             case R.id.delete_iv:
-                //删除图片
-                deletePic();
+                if(imgList.size()>0){
+                    //删除图片
+                    deletePic();
+                }
+                else {
+                    ToastUtils.showShort(PlusImageActivity.this,"当前已没有图片");
+                }
+
                 break;
         }
     }

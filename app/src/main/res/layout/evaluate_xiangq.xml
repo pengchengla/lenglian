@@ -15,10 +15,12 @@
         android:layout_height="wrap_content"
         android:background="#6798e7"
         android:padding="5dp"
+        android:weightSum="3"
         >
         <RelativeLayout
-            android:layout_weight="2"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_centerVertical="true"
@@ -30,11 +32,11 @@
             <TextView
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/fan"
-                android:gravity="left"
+                android:layout_marginLeft="5dp"
                 android:id="@+id/tv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+
                 android:text="返回"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -43,11 +45,21 @@
         </RelativeLayout>
 
         <TextView
-            android:layout_weight="5"
-            android:gravity="left"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="评价"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
             android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="18sp" />
@@ -62,6 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/evaluate_img"
             android:layout_width="80dp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp"

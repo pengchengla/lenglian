@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -10,6 +11,15 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -20,6 +30,7 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
     private TextView tv_back;
     private TextView tijiao;
     private EditText edt_pin;
+    private String comment_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,6 +38,39 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.evalute_addto);
         initView();
 
+
+    }
+
+    private void ininnetwork() {
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("comment_id",comment_id);
+        map.put("add_content",  edt_pin.getText().toString());
+        RetrofitManager.post(MyContants.BASEURL+"s=User/addComment",map,new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200){
+                    Intent it=new Intent(ZhijiaActivity.this,EvaluatedetailActivity.class);
+                   it.putExtra("count",edt_pin.getText().toString());
+                    startActivity(it);
+                    finish();
+
+
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        finish();
+        super.onDestroy();
     }
 
     private void initView() {
@@ -36,20 +80,10 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
         tv_back.setOnClickListener(this);
         tijiao.setOnClickListener(this);
         edt_pin.setOnClickListener(this);
+        Intent intent = getIntent();
+        comment_id = intent.getStringExtra("comment_id");
     }
 
-    private void submit() {
-        // validate
-        String pin = edt_pin.getText().toString().trim();
-        if (TextUtils.isEmpty(pin)) {
-            Toast.makeText(this, "你的评论~", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // TODO validate success, do something
-
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -58,6 +92,7 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.tijiao:
+                ininnetwork();//加载网络
                  //提交
                 break;
             case R.id.edt_pin:

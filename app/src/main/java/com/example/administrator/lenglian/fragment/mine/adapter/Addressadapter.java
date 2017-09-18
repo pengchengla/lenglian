@@ -14,9 +14,19 @@ import android.widget.TextView;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.AddaddressActivity;
 import com.example.administrator.lenglian.fragment.mine.AddressActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Addressbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -25,9 +35,10 @@ import java.util.List;
 
 public class Addressadapter extends BaseAdapter {
     private Context context;
-    private List<Indexbean> list;
+//    private List<Indexbean> list;
+    private List<Addressbean.DatasBean>list;
    boolean aBoolean;
-    public Addressadapter(Context context,List<Indexbean> list) {
+    public Addressadapter(Context context, List<Addressbean.DatasBean>list) {
         this.context = context;
         this.list=list;
     }
@@ -66,43 +77,85 @@ public class Addressadapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.ad_name.setText(list.get(position).getCount());
+        holder.ad_name.setText(list.get(position).getReceive_name());
+        holder.ad_phone.setText(list.get(position).getMobile());
+        holder.ad_adress.setText(list.get(position).getAddress_detail());
+        String is_default = list.get(position).getIs_default();
+        if(is_default.equals("1")){
+            holder.ad_text.setText("默认地址");
+            holder.ad_text.setTextColor(Color.RED);
+            holder.ad_imgmo.setImageResource(R.drawable.icon_single_checked);
+
+        }
+        else {
+            holder.ad_text.setText("设为默认");
+        }
+
          holder.ad_bianji.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  Intent it=new Intent(context,AddaddressActivity.class);
+                   it.putExtra("boolean",true);
+                 /*
+                   传递数据----------------------
+                  */
+           //      it.putExtra("ad_name",list.get(position))
+
+
                  context.startActivity(it);
              }
          });
         holder.ad_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                deleteaadres(position);
              list.remove(position);
+
                 notifyDataSetChanged();
             }
         });
-        final ViewHolder finalHolder = holder;
-        holder.change_zhuangtai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                aBoolean=!aBoolean;
-                if(aBoolean){
-                     finalHolder.ad_imgmo.setImageResource(R.drawable.icon_single_checked);
-                    finalHolder.ad_text.setText("默认地址");
-                    finalHolder.ad_text.setTextColor(Color.RED);
-
-                }
-                else {
-                    finalHolder.ad_imgmo.setImageResource(R.drawable.icon_single_unchecked);
-                    finalHolder.ad_text.setText("设为默认");
-                    finalHolder.ad_text.setTextColor(Color.BLACK);
-                }
-            }
-        });
+  //      final ViewHolder finalHolder = holder;
+//        holder.change_zhuangtai.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                aBoolean=!aBoolean;
+//                if(aBoolean){
+//                     finalHolder.ad_imgmo.setImageResource(R.drawable.icon_single_checked);
+//                    finalHolder.ad_text.setText("默认地址");
+//                    finalHolder.ad_text.setTextColor(Color.RED);
+//
+//                }
+//                else {
+//                    finalHolder.ad_imgmo.setImageResource(R.drawable.icon_single_unchecked);
+//                    finalHolder.ad_text.setText("设为默认");
+//                    finalHolder.ad_text.setTextColor(Color.BLACK);
+//                }
+//            }
+//        });
         return convertView;
     }
 
+    private void deleteaadres( int position){
+        Map<String,String> map=new HashMap<>();
+           map.put("user_id", SpUtils.getString(context,"user_id",""));
+           map.put("token", MyUtils.getToken());
+           map.put("express_id",list.get(position).getExpress_id());
+           map.put("is_del","1");
 
+        RetrofitManager.get(MyContants.BASEURL + "s=User/editExpress", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+              if(result.getCode()==200)  {
+                  ToastUtils.showShort(context,"删除成功");
+              }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+    }
     class ViewHolder {
 
         public TextView ad_name;

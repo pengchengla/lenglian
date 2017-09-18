@@ -55,7 +55,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
         if (convertView == null) {
             holder = new ViewHolder();
             //填充布局
-            convertView = LayoutInflater.from(context).inflate(R.layout.order_pingj, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.ding_order, null);
             holder.order_tupian = (ImageView)  convertView .findViewById(R.id.order_tupian);
             holder.order_count = (TextView)  convertView .findViewById(R.id.order_count);
             holder.order_price = (TextView)  convertView .findViewById(R.id.order_price);

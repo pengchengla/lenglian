@@ -1,4 +1,4 @@
-package com.example.administrator.lenglian.fragment.mine.adapter;
+package com.example.administrator.lenglian.fragment.order.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
-import com.example.administrator.lenglian.fragment.mine.bean.Evaluatebean;
-import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.fragment.mine.adapter.Gradeadapter;
+import com.example.administrator.lenglian.fragment.mine.bean.photobean;
 
 import java.util.List;
 
@@ -19,11 +19,12 @@ import java.util.List;
  * author:衣鹏宇(ypu)
  */
 
-public class Evaiuateadapter extends BaseAdapter {
+public class Order_gride extends BaseAdapter {
+
     private Context context;
-    //private List<Indexbean> list;
-    List<Evaluatebean.DatasBean> list;
-    public Evaiuateadapter(Context context,  List<Evaluatebean.DatasBean> list) {
+    private List<photobean> list;
+    // private List<Evaluatedetailbean.DatasBean.PicBean> list;
+    public  Order_gride(Context context, List<photobean> list) {
         this.context = context;
         this.list = list;
     }
@@ -49,21 +50,20 @@ public class Evaiuateadapter extends BaseAdapter {
         if(convertView==null){
             holder=new ViewHolder();
             //填充布局
-            convertView= LayoutInflater.from(context).inflate(R.layout.alteration_item,null);
-            holder.alteration_count= (TextView) convertView.findViewById(R.id.alteration_count);
-            holder.alteration_img= (ImageView) convertView.findViewById(R.id.alteration_tupian);
-            holder.alteration_money= (TextView) convertView.findViewById(R.id.alteration_price);
+            convertView= LayoutInflater.from(context).inflate(R.layout.order_gradeitem,null);
+            holder.image= (ImageView) convertView.findViewById(R.id.gride_imgage);
+            holder.order_gradetext= (TextView) convertView.findViewById(R.id.gride_text);
             convertView.setTag(holder);
         }
         else {
             holder= (ViewHolder) convertView.getTag();
         }
-        holder.alteration_count.setText(list.get(position).getMain_title());
+        //  Toast.makeText(context,list.get(position).getPhoto()+"",Toast.LENGTH_SHORT).show();
+        holder.image.setImageResource(list.get(position).getPhoto());
         return convertView;
     }
-    class ViewHolder{
-        ImageView alteration_img;
-        TextView alteration_count,alteration_money;
-
+    class  ViewHolder{
+        ImageView image;
+        TextView order_gradetext;
     }
 }

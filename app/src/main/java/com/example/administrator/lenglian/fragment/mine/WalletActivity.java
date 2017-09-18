@@ -48,7 +48,7 @@ public class WalletActivity extends BaseActivity {
 
     private void inindata() {
         Map<String,String> map=new HashMap<>();
-        map.put("user_id","110");
+        map.put("user_id","76");//传过来的--------------------
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL + "s=User/viewWallet", map, new BaseObserver1<Walletbean>("") {
             @Override

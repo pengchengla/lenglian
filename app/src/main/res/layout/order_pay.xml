@@ -76,7 +76,7 @@
             android:textSize="14sp"
             android:gravity="center"
             android:background="@drawable/selector_bian"
-            android:id="@+id/order_pause"
+            android:id="@+id/order_pau"
             android:textColor="@drawable/textcolers"
             />
         <TextView
@@ -89,7 +89,7 @@
             android:textSize="14sp"
             android:gravity="center"
             android:background="@drawable/selector_kuangs"
-            android:id="@+id/order_zhifi"
+            android:id="@+id/order_zhi"
             android:textColor="@drawable/selector_kuang"
             />
 </LinearLayout>
