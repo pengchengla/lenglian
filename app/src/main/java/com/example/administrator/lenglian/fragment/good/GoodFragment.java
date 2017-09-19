@@ -78,7 +78,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     public void myEvent(EventMessage eventMessage) {
         if (eventMessage.getMsg().equals("good_title")) {
             String msg = eventMessage.getMsg2();
-            Toast.makeText(mContext, " " + msg, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, " " + msg, Toast.LENGTH_SHORT).show();
             switchTitleOne(msg);
         }
     }
@@ -118,13 +118,9 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         for (int i = 0; i < mTitleAdapter.getData().size(); i++) {
             if (mTitleAdapter.getData().get(i).getClass_id().equals(msg)) {
                 mTitleAdapter.getData().get(i).setChecked(true);
-                mTitleAdapter.getViewByPosition(recycler_title, i, R.id.title_left_view)
-                        .setBackgroundResource(R.color.blue);
                 switchData(mTitleAdapter.getData().get(i).getClass_id());
             } else {
                 mTitleAdapter.getData().get(i).setChecked(false);
-                mTitleAdapter.getViewByPosition(recycler_title, i, R.id.title_left_view)
-                        .setBackgroundResource(R.color.white);
             }
         }
         mTitleAdapter.notifyDataSetChanged();
@@ -189,11 +185,9 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                     for (int i = 0; i < mTitleAdapter.getData().size(); i++) {
                         if (helper.getAdapterPosition() == i) {
                             mTitleAdapter.getData().get(i).setChecked(true);
-                            helper.getView(R.id.title_left_view).setBackgroundResource(R.color.blue);
                             switchData(mTitleAdapter.getData().get(i).getClass_id());
                         } else {
                             mTitleAdapter.getData().get(i).setChecked(false);
-                            helper.getView(R.id.title_left_view).setBackgroundResource(R.color.white);
                         }
                     }
                     mTitleAdapter.notifyDataSetChanged();

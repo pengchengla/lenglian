@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity {
                 switchFragment(preFragment, mBaseFragmentList.get(position));
             }
         });
+        rgp.check(R.id.rb_good);//因为向商品fragment发eventbus的时候，商品fragment没创建出来，所以就加这么一个狠招
         rgp.check(R.id.rb_home);//默认选中首页
     }
 
