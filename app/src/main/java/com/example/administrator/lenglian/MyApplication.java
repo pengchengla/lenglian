@@ -3,8 +3,6 @@ package com.example.administrator.lenglian;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.administrator.lenglian.dao.DaoMaster;
-import com.example.administrator.lenglian.dao.DaoSession;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
@@ -19,7 +17,6 @@ import com.umeng.socialize.UMShareAPI;
 
 public class MyApplication extends Application {
     private static MyApplication application;
-    public static DaoSession daoSession;
 
     @Override
     public void onCreate() {
@@ -28,7 +25,6 @@ public class MyApplication extends Application {
         initUMPush();
         application = this;
 
-        initGreendao();
     }
 
     public static MyApplication getApplication() {
@@ -38,17 +34,6 @@ public class MyApplication extends Application {
         return application;
     }
 
-    public void initGreendao() {
-
-
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "lenglian.db");
-        DaoMaster master = new DaoMaster(helper.getWritableDatabase());
-        //   加密
-        //        DaoMaster master = new DaoMaster(helper.getEncryptedWritableDb("1111"));
-
-        daoSession = master.newSession();
-
-    }
 
     private void initTongJi() {
         //友盟统计

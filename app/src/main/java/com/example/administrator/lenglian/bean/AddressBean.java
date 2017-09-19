@@ -1,7 +1,5 @@
 package com.example.administrator.lenglian.bean;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 
 import java.util.List;
 
