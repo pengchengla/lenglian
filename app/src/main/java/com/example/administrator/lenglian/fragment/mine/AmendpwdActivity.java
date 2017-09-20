@@ -54,7 +54,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(Resultbean result, String tag) {
                 if(result.getCode()==200){
                     ToastUtils.showShort(AmendpwdActivity.this,"修改成功");
-
+                    finish();
                 }
             }
 
@@ -84,8 +84,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
             case R.id.set_btn:
               //修改密码提交
                 submit();
-                initnetwork();
-                finish();
+
                 break;
             case R.id.tv_back:
                 finish();
@@ -131,7 +130,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
         }
 
 
-        // TODO validate success, do something
+        initnetwork();
 
 
     }

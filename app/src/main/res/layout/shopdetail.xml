@@ -72,8 +72,8 @@
                     app:starHalf="@drawable/xing_stroke"
                     app:starImageSize="20dp"
                     app:starPadding="10dp"
-                    app:starStep="3"
                     app:stepSize="Full"
+                    app:starStep="0"
                     android:layout_gravity="center"
                     >
                 </com.example.administrator.lenglian.view.MyRatingBar>
@@ -144,7 +144,7 @@
                     app:starHalf="@drawable/xing_stroke"
                     app:starImageSize="20dp"
                     app:starPadding="10dp"
-                    app:starStep="3"
+                    app:starStep="0"
                     app:stepSize="Full"
                     >
                 </com.example.administrator.lenglian.view.MyRatingBar>
@@ -178,7 +178,7 @@
                     app:starHalf="@drawable/xing_stroke"
                     app:starImageSize="20dp"
                     app:starPadding="10dp"
-                    app:starStep="3"
+                    app:starStep="0"
                     app:stepSize="Full"
                     >
                 </com.example.administrator.lenglian.view.MyRatingBar>

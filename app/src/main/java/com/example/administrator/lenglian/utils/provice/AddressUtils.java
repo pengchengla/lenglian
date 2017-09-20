@@ -8,17 +8,22 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.example.administrator.lenglian.base.Ctiy;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/8/29.
  */
 
 public class AddressUtils {
+
     private ArrayList<JsonBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
@@ -95,6 +100,23 @@ public class AddressUtils {
 
 
     private void initJsonData() {//解析数据
+         final ArrayList<String> list=new ArrayList<>();
+        RetrofitManager.get("http://restapi.amap.com/v3/config/district?key=14e56af2ef172af0123d877d8236027a&subdistrict=3", new BaseObserver1<Ctiy>("") {
+            @Override
+            public void onSuccess(Ctiy result, String tag) {
+                List<Ctiy.DistrictsBeanXXX> districts = result.getDistricts();
+                for (int i = 0; i < districts.size(); i++) {
+                  list.add(districts.get(i).getName());
+                }
+                options2Items.add(list);
+                List<Ctiy.DistrictsBeanXXX.DistrictsBeanXX> districts1 = result.getDistricts().get(0).getDistricts();
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
 
         /**
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件

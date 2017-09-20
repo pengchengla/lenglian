@@ -63,7 +63,6 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
     private EditText ed;
     private FragmentManager manager;
     private FragmentTransaction transaction;
-    private Stringnick stringnick;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,9 +132,11 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         Map<String, String> map = new HashMap<>();
         map.put("user_id", SpUtils.getString(this,"user_id",""));
         map.put("token", MyUtils.getToken());
-        map.put("nick_name",  person_name.getText().toString());
+        map.put("nick_name",  person_nick.getText().toString());
         String token = MyUtils.getToken();
         System.out.print(token);
+        SpUtils.putString(this,"nick_name",person_nick.getText().toString());
+
         KLog.d(token + "-----------------------");
         RetrofitManager.post(MyContants.BASEURL +"s=User/editProfile", map, new BaseObserver1<Resultbean>("") {
             @Override
@@ -261,7 +262,6 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.tv_back:
-                stringnick.stringname(person_nick.getText().toString().trim());
                 finish();
                 break;
         }
@@ -404,12 +404,4 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
 
         dialog.show();
     }
-     //创建接口
-    public interface Stringnick{
-        void stringname(String name);
-    }
-        public void SetStringmane(Stringnick stringnick){
-
-                this.stringnick=stringnick;
-        }
 }

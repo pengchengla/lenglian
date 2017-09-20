@@ -80,8 +80,8 @@ public class RetrofitManager {
     }
 
 
-    public static void uploadPhoto(MultipartBody multipartBody,Map<String,String> map, Observer<String> observer){
-        apiService.uploadPhoto(multipartBody,map)
+    public static void uploadPhoto(MultipartBody multipartBody, Observer<String> observer){
+        apiService.uploadPhoto(multipartBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

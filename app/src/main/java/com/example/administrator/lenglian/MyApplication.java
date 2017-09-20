@@ -3,7 +3,10 @@ package com.example.administrator.lenglian;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.administrator.lenglian.dao.DaoMaster;
+import com.example.administrator.lenglian.dao.DaoSession;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -23,13 +26,13 @@ public class MyApplication extends Application {
         super.onCreate();
         initUMShare();
         initUMPush();
-        application = this;
+        application=this;
+
 
     }
-
-    public static MyApplication getApplication() {
-        if (application == null) {
-            application = getApplication();
+    public static MyApplication  getApplication(){
+        if(application == null){
+            application = getApplication() ;
         }
         return application;
     }
@@ -93,10 +96,10 @@ public class MyApplication extends Application {
     }
 
     public static Application getInstance() {
-        return application;
+        return  application;
     }
 
     public static Context getGloableContext() {
-        return application.getApplicationContext();
+        return  application.getApplicationContext();
     }
 }
