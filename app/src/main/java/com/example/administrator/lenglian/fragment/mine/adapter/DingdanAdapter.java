@@ -12,11 +12,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.fragment.mine.bean.Addressbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Personbean;
 import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
 import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.fragment.order.activity.ShopdetailActivity;
+import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
 
 import java.util.List;
 
@@ -27,9 +30,10 @@ import java.util.List;
 
 public class DingdanAdapter extends BaseAdapter implements View.OnClickListener {
     private Context context;
-    private List<Indexbean> list;
+  //  private List<Indexbean> list;
+    private List<Dingdanbean.DatasBean> list;
 
-    public DingdanAdapter(Context context, List<Indexbean> list) {
+    public DingdanAdapter(Context context, List<Dingdanbean.DatasBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -50,7 +54,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
@@ -74,7 +78,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.order_count.setText(list.get(position).getCount());
+        holder.order_count.setText(list.get(position).getMain_title());
         holder.order_renew.setFocusable(false);
         //续费
          holder.order_renew.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +88,24 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
                  context.startActivity(intent);
              }
          });
-        holder.order_tuihuan.setOnClickListener(this);
-        holder.order_repairs.setOnClickListener(this);
+        //退换
+        holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,ReturnActivity.class);
+              intent.putExtra("order_id", list.get(position).getOrder_id());
+               context.startActivity(intent);
+            }
+        });
+        //报修
+        holder.order_repairs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inten=new Intent(context,BaoxiuActivity.class);
+         //       inten.putExtra("order_id", lists.get(position).getOrder_id());
+                context.startActivity(inten);
+            }
+        });
         holder.order_evaluation.setOnClickListener(this);
 
 
@@ -95,14 +115,8 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.order_tuihuan:
-                 Intent intent=new Intent(context,ReturnActivity.class);
-                context.startActivity(intent);
-                break;
-            case R.id.order_repairs:
-                Intent inten=new Intent(context,BaoxiuActivity.class);
-                context.startActivity(inten);
-                break;
+
+            //评价
             case R.id.order_evaluation:
                 Intent inte=new Intent(context,ShopdetailActivity.class);
                 context.startActivity(inte);

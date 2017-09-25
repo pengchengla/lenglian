@@ -12,9 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.SpUtils;
 
 /**
  * date : ${Date}
@@ -57,6 +60,12 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_exit:
+                //退出登录
+                SpUtils.getString(this,"user_id","");
+                Intent inten=new Intent(SetActivity.this, LoginActivity.class);
+                startActivity(inten);
+                finish();
+
 
                 break;
             case R.id.set_zhanhao:

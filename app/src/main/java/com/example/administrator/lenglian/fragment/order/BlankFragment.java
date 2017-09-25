@@ -31,6 +31,7 @@ import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,7 +118,7 @@ public class BlankFragment extends BaseFragment {
     private void evaluate() {
         //评价
         Map<String,String> map=new HashMap<>();
-        map.put("user_id","76");
+        map.put("user_id", SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
             @Override
@@ -143,7 +144,7 @@ public class BlankFragment extends BaseFragment {
     private void delivery() {
 
         Map<String,String> map=new HashMap<>();
-        map.put("user_id","76");
+        map.put("user_id",SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
             @Override
@@ -165,23 +166,28 @@ public class BlankFragment extends BaseFragment {
             }
         });
     }
-
+   //全部订单
     private void ininjson() {
+
         Map<String,String> map=new HashMap<>();
-          map.put("user_id","76");
+          map.put("user_id",SpUtils.getString(mContext,"user_id",""));
           map.put("token", MyUtils.getToken());
         RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                 Toast.makeText(getActivity(), result.getMsg()+"hahah", Toast.LENGTH_SHORT).show();
-                Indexbean index;
-                for (int i = 0; i < 5; i++) {
-                    index=new Indexbean();
-                    index.setCount("哈发发嘎啊发发发阿发啊啊"+i);
-                    list.add(index);
+                if(result.getCode()==200){
+                    List<Dingdanbean.DatasBean> datas = result.getDatas();
+                    DingdanAdapter dindanadapter=new DingdanAdapter(getActivity(),datas);
+                    list_recying.setAdapter(dindanadapter);
                 }
-                DingdanAdapter dindanadapter=new DingdanAdapter(getActivity(),list);
-                list_recying.setAdapter(dindanadapter);
+//                Indexbean index;
+//                for (int i = 0; i < 5; i++) {
+//                    index=new Indexbean();
+//                    index.setCount("哈发发嘎啊发发发阿发啊啊"+i);
+//                    list.add(index);
+//                }
+
             }
 
             @Override
@@ -190,15 +196,16 @@ public class BlankFragment extends BaseFragment {
             }
         });
     }
+    //支付
     private void Zhifu() {
         ArrayMap map = new ArrayMap<String, String>();
-        map.put("user_id","76");
+        map.put("user_id",SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
-        RetrofitManager.get(api, map, new BaseObserver1<RegisterBean>("") {
+        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
             @Override
-            public void onSuccess(RegisterBean result, String tag) {
+            public void onSuccess(Dingdanbean result, String tag) {
 
-                        Toast.makeText(getActivity(), result.getSuccess()+"哈哈", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), result.getCode()+"哈哈", Toast.LENGTH_SHORT).show();
                 Indexbean index;
                 for (int i = 0; i < 5; i++) {
                     index=new Indexbean();

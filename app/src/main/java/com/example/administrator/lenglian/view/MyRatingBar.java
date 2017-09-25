@@ -63,6 +63,7 @@ public class MyRatingBar extends LinearLayout {
      * 每次点击星星所增加的量是整个还是半个
      */
     private StepSize stepSize;
+    private int fint;
 
     /**
      * 设置半星的图片资源文件
@@ -185,6 +186,7 @@ public class MyRatingBar extends LinearLayout {
             addView(imageView);
         }
         setStar(starStep);
+
     }
 
     /**
@@ -208,7 +210,15 @@ public class MyRatingBar extends LinearLayout {
 
     }
 
+    /*
+     得到星星的个数
+     */
 
+     public int getSetbar(){
+
+
+         return fint;
+     }
     /**
      * 设置星星的个数
      *
@@ -222,7 +232,7 @@ public class MyRatingBar extends LinearLayout {
         }
         this.starStep = rating;
         //浮点数的整数部分
-        int fint = (int) rating;
+        fint = (int) rating;
         BigDecimal b1 = new BigDecimal(Float.toString(rating));
         BigDecimal b2 = new BigDecimal(Integer.toString(fint));
         //浮点数的小数部分

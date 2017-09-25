@@ -1,6 +1,5 @@
 package com.example.administrator.lenglian.fragment.mine.bean;
 
-
 import java.util.List;
 
 /**
@@ -8,13 +7,13 @@ import java.util.List;
  * author:衣鹏宇(ypu)
  */
 
-public class Evaluatebean {
+public class Baoxiubean {
 
 
     /**
      * code : 200
      * success : success
-     * datas : [{"comment_id":"1","pro_id":"1","pro_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg"}]
+     * datas : [{"repair_id":"1","pro_id":"1","order_id":"10","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg"}]
      */
 
     private int code;
@@ -47,29 +46,31 @@ public class Evaluatebean {
 
     public static class DatasBean {
         /**
-         * comment_id : 1
+         * repair_id : 1
          * pro_id : 1
-         * pro_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+         * order_id : 10
+         * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
          * main_title : 啊啊啊啊啊
          * pro_price : 1
          * sub_title : 广泛的是第三方
          * pro_name : fdsafdg
          */
 
-        private String comment_id;
+        private String repair_id;
         private String pro_id;
-        private String pro_pic;
+        private String order_id;
         private String main_title;
         private String pro_price;
         private String sub_title;
         private String pro_name;
+        private List<ProPicBean> pro_pic;
 
-        public String getComment_id() {
-            return comment_id;
+        public String getRepair_id() {
+            return repair_id;
         }
 
-        public void setComment_id(String comment_id) {
-            this.comment_id = comment_id;
+        public void setRepair_id(String repair_id) {
+            this.repair_id = repair_id;
         }
 
         public String getPro_id() {
@@ -80,12 +81,12 @@ public class Evaluatebean {
             this.pro_id = pro_id;
         }
 
-        public String getPro_pic() {
-            return pro_pic;
+        public String getOrder_id() {
+            return order_id;
         }
 
-        public void setPro_pic(String pro_pic) {
-            this.pro_pic = pro_pic;
+        public void setOrder_id(String order_id) {
+            this.order_id = order_id;
         }
 
         public String getMain_title() {
@@ -118,6 +119,30 @@ public class Evaluatebean {
 
         public void setPro_name(String pro_name) {
             this.pro_name = pro_name;
+        }
+
+        public List<ProPicBean> getPro_pic() {
+            return pro_pic;
+        }
+
+        public void setPro_pic(List<ProPicBean> pro_pic) {
+            this.pro_pic = pro_pic;
+        }
+
+        public static class ProPicBean {
+            /**
+             * url : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+             */
+
+            private String url;
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
         }
     }
 }

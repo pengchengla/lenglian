@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,21 +30,36 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyGradeview;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.GridViewAdapter;
 import com.example.administrator.lenglian.utils.pictureutils.MainConstant;
 import com.example.administrator.lenglian.utils.pictureutils.PictureSelectorConfig;
 import com.example.administrator.lenglian.utils.pictureutils.PlusImageActivity;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.example.administrator.lenglian.utils.pictureutils.UploadUtil;
 import com.example.administrator.lenglian.view.MyRatingBar;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.socks.library.KLog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static com.luck.picture.lib.config.PictureConfig.REQUEST_CAMERA;
 
@@ -67,6 +84,15 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
     private Bitmap photo;
     private File file;
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+
+
+        }
+    };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +103,47 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         initGridView();
 
 
+
     }
+   //加载网络请求
+    private void inintwork() {
+        int setbar = shop_ratingbar.getSetbar();
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("pro_id","");             //商品id
+        map.put("pro_score", setbar+"");//商品评分
+        map.put("express_score",peisongatingbar.getSetbar()+"");
+        map.put("service_score",shopfuratingbar.getSetbar()+"");
+        map.put("content",warantu_edtext.getText().toString());
+        /*
+         图片------------------------------
+         */
+     // RetrofitManager.postphoto();
+    }
+
+    private void network(File files) {
+        String [] arr = file.getAbsolutePath().split("/");
+
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("multipart/form-data"), files);
+        MultipartBody body = new MultipartBody.Builder()
+                .addFormDataPart("sfile",arr[arr.length-1],requestFile)
+                .build();
+        RetrofitManager.uploadPhoto(body, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+    }
+
+
     //初始化展示上传图片的GridView
     private void initGridView() {
         mGridViewAddImgAdapter = new GridViewAdapter(mContext, mPicList);
@@ -209,7 +275,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
             Toast.makeText(this, "需要存储权限", Toast.LENGTH_SHORT).show();
         }
     }
-
+    String s;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -230,6 +296,26 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                     Log.e("TAG", "---------" + FileProvider.getUriForFile(this, "com.xykj.customview.fileprovider", file));
                     String absolutePath = file.getAbsolutePath();
                     mPicList.add(absolutePath); //把图片添加到将要上传的图片数组中
+                    Thread thred=new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Map<String,File> files=new HashMap<>();
+                            files.put("sfile",file);
+                            s = UploadUtil.uploadFile(files, MyContants.BASEURL + "s=Upload/upload");
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    KLog.a("Tag",s);
+                                    ToastUtils.showShort(mContext,s);
+                                }
+                            });
+
+                        }
+                    });
+                    thred.start();
+
+
                     mGridViewAddImgAdapter.notifyDataSetChanged();
                     break;
            // }
@@ -264,6 +350,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         shop_tijiao = (TextView) findViewById(R.id.shop_tijiao);
         tv_back.setOnClickListener(this);
         warantu_edtext.setOnClickListener(this);
+        shop_tijiao.setOnClickListener(this);
     }
 
     private void submit() {
@@ -287,6 +374,10 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.warantu_edtext:
                 warantu_edtext.setCursorVisible(true);
+                break;
+            case R.id.shop_tijiao:
+                ToastUtils.showShort(mContext,"hahah");
+                inintwork();
                 break;
         }
     }

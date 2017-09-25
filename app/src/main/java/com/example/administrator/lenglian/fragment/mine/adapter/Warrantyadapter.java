@@ -11,8 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.MaintenanceActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Baoxiubean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 
 import java.util.List;
@@ -24,9 +29,9 @@ import java.util.List;
 
 public class Warrantyadapter extends BaseAdapter {
       private Context context;
-    private List<Indexbean> list;
+     private List<Baoxiubean.DatasBean> list;
 
-    public Warrantyadapter(Context context,List<Indexbean> list) {
+    public Warrantyadapter(Context context,List<Baoxiubean.DatasBean> list) {
         this.context = context;
         this.list=list;
     }
@@ -62,8 +67,19 @@ public class Warrantyadapter extends BaseAdapter {
         else {
             holder= (ViewHolder) convertView.getTag();
         }
-         holder.warranty_count.setText(list.get(position).getCount());
-         holder.warranty_pinjia.setFocusable(false);
+         holder.warranty_count.setText(list.get(position).getMain_title());
+        //加载图片
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+       Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
+               .apply(options)
+               .into(holder.warranty_img);
+
+        holder.warranty_money.setText(list.get(position).getPro_price());
+           holder.warranty_pinjia.setFocusable(false);
         holder.warranty_pinjia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

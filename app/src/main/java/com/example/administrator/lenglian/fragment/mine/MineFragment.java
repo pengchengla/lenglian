@@ -88,15 +88,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
 
         }
+         if(!TextUtils.isEmpty(SpUtils.getString(getActivity(),"nick_name",""))){
+               mine_name.setText(SpUtils.getString(getActivity(),"nick_name",""));
 
+         }
         return rootView;
     }
-    PersoninforActivity.Stringnick s=new PersoninforActivity.Stringnick() {
-        @Override
-        public void stringname(String name) {
-            mine_name.setText(name);
-        }
-    };
     @Override
     protected void initData() {
         tv_msg_number.setText("11");

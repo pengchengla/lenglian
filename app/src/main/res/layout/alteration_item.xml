@@ -11,11 +11,12 @@
         <ImageView
             android:layout_margin="8dp"
             android:id="@+id/alteration_tupian"
-            android:layout_width="115dp"
-            android:layout_height="90dp"
+            android:layout_width="90dp"
+            android:layout_height="80dp"
             android:src="@drawable/binggui"/>
 
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -25,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:layout_marginRight="20dip"
                 android:textColor="@color/black"
                 android:text="阿拉阿发发发 阿达阿达sdaaadadadada啊大大啊大大啊啊啊阿达"/>

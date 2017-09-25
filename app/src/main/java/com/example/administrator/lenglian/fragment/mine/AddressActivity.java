@@ -65,7 +65,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onFailed(int code) {
-
+            ToastUtils.showShort(AddressActivity.this,"网络失败,请检查网络");
             }
         });
     }
@@ -93,6 +93,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             case R.id.adress_add:
                 Intent it=new Intent(AddressActivity.this,AddaddressActivity.class);
                 startActivity(it);
+                finish();
                 break;
         }
     }
