@@ -9,8 +9,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
 import com.example.administrator.lenglian.utils.BaseDialog;
 
 import java.util.List;
@@ -22,9 +27,9 @@ import java.util.List;
 
 public class Deliveryadapter extends BaseAdapter {
     private Context context;
-    private List<Indexbean> list;
+    private  List<Dingdanbean.DatasBean> list;
 
-    public Deliveryadapter(Context context, List<Indexbean> list) {
+    public Deliveryadapter(Context context,  List<Dingdanbean.DatasBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -60,7 +65,19 @@ public class Deliveryadapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.reying_btn.setFocusable(false);
-        holder.orderlist_count.setText(list.get(position).getCount());
+        /*
+          加载图片
+         */
+        RequestOptions options=new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
+                .apply(options)
+                .into(holder.iv_tupian);
+        holder.orderlist_count.setText(list.get(position).getMain_title());
+        holder.textView.setText(list.get(position).getPro_price());
         holder.reying_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

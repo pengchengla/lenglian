@@ -10,10 +10,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
-            android:layout_margin="3dp"
+           android:layout_marginLeft="10dp"
             android:id="@+id/pay_tupian"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:src="@drawable/binggui"/>
 
         <LinearLayout
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:layout_marginRight="40dip"
                 android:textColor="@color/textblack"
                 android:text="阿拉阿发发发 阿达阿达啊大大啊大大啊啊啊阿达"/>
@@ -39,6 +39,7 @@
                     android:textColor="@color/redd"
                     android:textSize="14dp"
                     android:padding="6dp"
+                    android:layout_marginLeft="5dp"
                     android:text="¥"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,6 +58,7 @@
     </LinearLayout>
 
     <View
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/hui" />

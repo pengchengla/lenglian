@@ -61,8 +61,8 @@
 
             android:layout_margin="8dp"
             android:id="@+id/waranty_tupian"
-            android:layout_width="115dp"
-            android:layout_height="90dp"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
             android:src="@drawable/binggui"/>
 
         <LinearLayout
@@ -85,7 +85,7 @@
         </LinearLayout>
     <LinearLayout
         android:background="@color/white"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -170,7 +170,7 @@
         </LinearLayout>
     </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="1dp"
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

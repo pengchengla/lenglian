@@ -11,6 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
 import com.example.administrator.lenglian.fragment.mine.adapter.DingdanAdapter;
@@ -18,6 +22,7 @@ import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
 import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
 import com.example.administrator.lenglian.fragment.order.activity.ShopdetailActivity;
+import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
 
 import java.util.List;
 
@@ -28,9 +33,9 @@ import java.util.List;
 
 public class Evaluateadapter extends BaseAdapter implements View.OnClickListener {
     private Context context;
-    private List<Indexbean> list;
+    private List<Dingdanbean.DatasBean> list;
 
-    public Evaluateadapter(Context context, List<Indexbean> list) {
+    public Evaluateadapter(Context context, List<Dingdanbean.DatasBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -75,7 +80,20 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.order_count.setText(list.get(position).getCount());
+        /*
+          加载图片
+         */
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
+                .apply(options)
+                .into(  holder.order_tupian);
+        holder.order_count.setText(list.get(position).getMain_title());
+        holder.order_price.setText(list.get(position).getPro_price());
+
         holder.order_renew.setFocusable(false);
         //续费
         holder.order_renew.setOnClickListener(new View.OnClickListener() {

@@ -141,6 +141,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                     ToastUtils.showShort(AddaddressActivity.this,"添加成功");
                      Intent intent=new Intent(AddaddressActivity.this,AddressActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
 

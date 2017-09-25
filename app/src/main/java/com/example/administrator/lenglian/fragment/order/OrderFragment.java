@@ -97,14 +97,17 @@ public class OrderFragment extends BaseFragment {
         apiList = new ArrayList<>();
         //放接口
         apiList.add(MyContants.BASEURL+"s=Order/listOrder");
-        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=10");
+        //支付
         apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=1");
-        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=8");
+        //收货
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=2,3");
+        //评价
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=10");
         for (int i = 0; i < list.size(); i++) {
             tab.addTab(tab.newTab().setText(list.get(i)));
         }
 
-        getFragmentManager().beginTransaction().replace(R.id.container,BlankFragment.newInstance(apiList.get(0))).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.container,BlankFragment.newInstance(apiList.get(0))).commit();
 
         tab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -125,7 +128,7 @@ public class OrderFragment extends BaseFragment {
 //                    }
 //                }
 //                fragmentTransaction.commit();
-               getFragmentManager().beginTransaction().replace(R.id.container,BlankFragment.newInstance(apiList.get(tab.getPosition()))).commit();
+               getChildFragmentManager().beginTransaction().replace(R.id.container,BlankFragment.newInstance(apiList.get(tab.getPosition()))).commit();
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {

@@ -10,8 +10,17 @@ import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.PayUtil;
 import com.example.administrator.lenglian.view.SnappingStepper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -35,6 +44,36 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_renew);
         initView();
+        //加载网络请求
+        network();
+        initdata();
+    }
+
+    private void initdata() {
+
+
+    }
+    //网络请求
+    private void network() {
+        Map<String,String> map=new HashMap<>();
+        map.put("order_id","");
+        map.put("renewal_duration",renew_num.getValue()+"" );
+        map.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=Order/renewalOrder", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+
+
+
+
     }
 
     private void initView() {
@@ -58,64 +97,10 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.renew_btn:
-                showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion);
+                PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,this);
+
                 break;
         }
     }
-      //支付
-      private void showGenderDialog(int grary, int animationStyle) {
-          BaseDialog.Builder builder = new BaseDialog.Builder(this);
-          final BaseDialog dialog = builder.setViewId(R.layout.order_diagzhifu)
-                  //设置dialogpadding
-                  .setPaddingdp(10, 0, 10, 0)
-                  //设置显示位置
-                  .setGravity(grary)
-                  //设置动画
-                  .setAnimation(animationStyle)
-                  //设置dialog的宽高
-                  .setWidthHeightpx(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                  //设置触摸dialog外围是否关闭
-                  .isOnTouchCanceled(true)
-                  //设置监听事件
-                  .builder();
-          //支付宝
-          dialog.getView(R.id.zhifu_zhifubao).setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
 
-                  dialog.dismiss();
-              }
-          });
-          //微信
-          dialog.getView(R.id.zhifu_weixin).setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-
-                  dialog.dismiss();
-              }
-          });
-          //银行
-          dialog.getView(R.id.zhifu_bank).setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-
-                  dialog.dismiss();
-              }
-          });
-          //银行2
-          dialog.getView(R.id.zhifu_bank2).setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-
-                  dialog.dismiss();
-              }
-          });
-          dialog.getView(R.id.zhifu_cancel).setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  dialog.dismiss();
-              }
-          });
-          dialog.show();
-      }
 }

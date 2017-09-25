@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.mine.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.bean.Addressbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Personbean;
@@ -20,6 +25,8 @@ import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.fragment.order.activity.ShopdetailActivity;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
+import com.example.administrator.lenglian.utils.PayUtil;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
 import java.util.List;
 
@@ -30,8 +37,7 @@ import java.util.List;
 
 public class DingdanAdapter extends BaseAdapter implements View.OnClickListener {
     private Context context;
-  //  private List<Indexbean> list;
-    private List<Dingdanbean.DatasBean> list;
+    private  List<Dingdanbean.DatasBean> list;
 
     public DingdanAdapter(Context context, List<Dingdanbean.DatasBean> list) {
         this.context = context;
@@ -54,7 +60,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
@@ -78,7 +84,63 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+          //加载数据
+        holder.order_evaluation.setFocusable(false);
+        holder.order_zhifi.setFocusable(false);
+        holder.order_pause.setFocusable(false);
         holder.order_count.setText(list.get(position).getMain_title());
+        holder.order_price.setText(list.get(position).getPro_price());
+        /*
+         photo
+         */
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
+                .apply(options)
+                .into(holder.order_tupian);
+        ToastUtils.showShort(context,list.get(position).getOrder_status().toString());
+        /*
+          状态判断
+         */
+        if("1".equals(list.get(position).getOrder_status())){
+
+         holder.pay.setVisibility(View.VISIBLE);
+            holder.evaluate.setVisibility(View.GONE);
+            holder.evaluate.setVisibility(View.GONE);
+
+        }
+        else if("2".equals(list.get(position).getOrder_status())||"3".equals(list.get(position).getOrder_status())){
+            holder.pay.setVisibility(View.GONE);
+            holder.evaluate.setVisibility(View.GONE);
+            holder.receving.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.evaluate.setVisibility(View.VISIBLE);
+            holder.pay.setVisibility(View.GONE);
+            holder.receving.setVisibility(View.GONE);
+        }
+        /*
+          监听--------------------------
+         */
+         //取消订单
+
+          holder.order_pause.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  list.remove(position);
+                  notifyDataSetChanged();
+              }
+          });
+         //支付
+         holder.order_zhifi.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,context);
+             }
+         });
         holder.order_renew.setFocusable(false);
         //续费
          holder.order_renew.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +151,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
              }
          });
         //退换
+        holder.order_tuihuan.setFocusable(false);
         holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,11 +161,12 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
             }
         });
         //报修
+        holder.order_repairs.setFocusable(false);
         holder.order_repairs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent inten=new Intent(context,BaoxiuActivity.class);
-         //       inten.putExtra("order_id", lists.get(position).getOrder_id());
+               inten.putExtra("order_id", list.get(position).getOrder_id());
                 context.startActivity(inten);
             }
         });
@@ -111,6 +175,8 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
 
         return convertView;
     }
+
+
 
     @Override
     public void onClick(View v) {
