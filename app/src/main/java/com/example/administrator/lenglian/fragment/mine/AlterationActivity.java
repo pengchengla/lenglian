@@ -34,6 +34,8 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
     private TextView tv_back;
     private ListView list_alteration;
     private List<Indexbean> list=new ArrayList<>();
+    private List<Returnbean.DatasBean> datas;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +53,14 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
          map.put("user_id", SpUtils.getString(this,"user_id",""));
         map.put("token", MyUtils.getToken());
          RetrofitManager.get(MyContants.BASEURL + "s=Order/listReturn", map, new BaseObserver1<Returnbean>("") {
+
+
              @Override
              public void onSuccess(Returnbean result, String tag) {
                    if(result.getCode()==200){
-                       List<Returnbean.DatasBean> datas = result.getDatas();
+                       datas = result.getDatas();
                        //加载适配器
-                       list_alteration.setAdapter(new Alterationadapter(AlterationActivity.this,datas));
+                       list_alteration.setAdapter(new Alterationadapter(AlterationActivity.this, datas));
                    }
              }
 
@@ -80,6 +84,7 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent it=new Intent(AlterationActivity.this,AlterdetailActivity.class);
+                it.putExtra("return_id",datas.get(position).getReturn_id());
                 startActivity(it);
             }
         });

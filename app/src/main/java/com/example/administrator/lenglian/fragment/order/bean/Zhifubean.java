@@ -1,4 +1,4 @@
-package com.example.administrator.lenglian.fragment.mine.bean;
+package com.example.administrator.lenglian.fragment.order.bean;
 
 import java.util.List;
 
@@ -7,13 +7,12 @@ import java.util.List;
  * author:衣鹏宇(ypu)
  */
 
-public class BaoDetail {
-
+public class Zhifubean {
 
     /**
      * code : 200
      * success : success
-     * datas : [{"pro_id":"1","contact_name":"1","contact_mobile":"1","repair_address":"1","order_id":"10","repair_num":"1","repair_status":"1","repair_note":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg"}]
+     * datas : [{"order_id":"11","order_num":"aaabbb","order_status":"1","pro_id":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg"}]
      */
 
     private int code;
@@ -46,14 +45,10 @@ public class BaoDetail {
 
     public static class DatasBean {
         /**
+         * order_id : 11
+         * order_num : aaabbb
+         * order_status : 1
          * pro_id : 1
-         * contact_name : 1
-         * contact_mobile : 1
-         * repair_address : 1
-         * order_id : 10
-         * repair_num : 1
-         * repair_status : 1
-         * repair_note : 1
          * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
          * main_title : 啊啊啊啊啊
          * pro_price : 1
@@ -61,51 +56,15 @@ public class BaoDetail {
          * pro_name : fdsafdg
          */
 
-        private String pro_id;
-        private String contact_name;
-        private String contact_mobile;
-        private String repair_address;
         private String order_id;
-        private String repair_num;
-        private String repair_status;
-        private String repair_note;
+        private String order_num;
+        private String order_status;
+        private String pro_id;
         private String main_title;
         private String pro_price;
         private String sub_title;
         private String pro_name;
         private List<ProPicBean> pro_pic;
-
-        public String getPro_id() {
-            return pro_id;
-        }
-
-        public void setPro_id(String pro_id) {
-            this.pro_id = pro_id;
-        }
-
-        public String getContact_name() {
-            return contact_name;
-        }
-
-        public void setContact_name(String contact_name) {
-            this.contact_name = contact_name;
-        }
-
-        public String getContact_mobile() {
-            return contact_mobile;
-        }
-
-        public void setContact_mobile(String contact_mobile) {
-            this.contact_mobile = contact_mobile;
-        }
-
-        public String getRepair_address() {
-            return repair_address;
-        }
-
-        public void setRepair_address(String repair_address) {
-            this.repair_address = repair_address;
-        }
 
         public String getOrder_id() {
             return order_id;
@@ -115,28 +74,28 @@ public class BaoDetail {
             this.order_id = order_id;
         }
 
-        public String getRepair_num() {
-            return repair_num;
+        public String getOrder_num() {
+            return order_num;
         }
 
-        public void setRepair_num(String repair_num) {
-            this.repair_num = repair_num;
+        public void setOrder_num(String order_num) {
+            this.order_num = order_num;
         }
 
-        public String getRepair_status() {
-            return repair_status;
+        public String getOrder_status() {
+            return order_status;
         }
 
-        public void setRepair_status(String repair_status) {
-            this.repair_status = repair_status;
+        public void setOrder_status(String order_status) {
+            this.order_status = order_status;
         }
 
-        public String getRepair_note() {
-            return repair_note;
+        public String getPro_id() {
+            return pro_id;
         }
 
-        public void setRepair_note(String repair_note) {
-            this.repair_note = repair_note;
+        public void setPro_id(String pro_id) {
+            this.pro_id = pro_id;
         }
 
         public String getMain_title() {

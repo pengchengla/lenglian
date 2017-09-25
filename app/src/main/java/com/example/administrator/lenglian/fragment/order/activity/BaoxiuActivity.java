@@ -117,7 +117,7 @@ public class BaoxiuActivity extends BaseActivity implements View.OnClickListener
         }
 
         // 加载网络请求
-      //  network();
+       network();
 
 
     }
@@ -130,8 +130,8 @@ public class BaoxiuActivity extends BaseActivity implements View.OnClickListener
         map.put("order_id",order_id);
         map.put("contact_name",baoxiu_name.getText().toString());
         map.put("contact_mobile",baoxiu_phone.getText().toString());
-        map.put("area_id","");
-        map.put("return_address",tuihuan_xianq.getText().toString());
+        map.put("area_id", baoxiu_address.getText().toString());
+        map.put("repair_address",tuihuan_xianq.getText().toString());
         map.put("repair_note",baoxiu_xianqing.getText().toString());
 
         RetrofitManager.post(MyContants.BASEURL + "s=Order/newRepair", map, new BaseObserver1<Resultbean>("") {

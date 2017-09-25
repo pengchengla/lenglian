@@ -2,9 +2,6 @@ package com.example.administrator.lenglian;
 
 import android.app.Application;
 import android.content.Context;
-
-import com.example.administrator.lenglian.dao.DaoMaster;
-import com.example.administrator.lenglian.dao.DaoSession;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;

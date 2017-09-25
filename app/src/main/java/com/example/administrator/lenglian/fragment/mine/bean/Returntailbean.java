@@ -7,13 +7,12 @@ import java.util.List;
  * author:衣鹏宇(ypu)
  */
 
-public class BaoDetail {
-
+public class Returntailbean {
 
     /**
      * code : 200
      * success : success
-     * datas : [{"pro_id":"1","contact_name":"1","contact_mobile":"1","repair_address":"1","order_id":"10","repair_num":"1","repair_status":"1","repair_note":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg"}]
+     * datas : [{"return_id":"13","pro_id":"1","order_num":"aaabbb","commit_time":"2017-09-20 16:36:43","ok_time":"0000-00-00 00:00:00","contact_name":"安静","contact_mobile":"18310482720","return_address":"规矩是外包","return_status":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg"}]
      */
 
     private int code;
@@ -46,14 +45,15 @@ public class BaoDetail {
 
     public static class DatasBean {
         /**
+         * return_id : 13
          * pro_id : 1
-         * contact_name : 1
-         * contact_mobile : 1
-         * repair_address : 1
-         * order_id : 10
-         * repair_num : 1
-         * repair_status : 1
-         * repair_note : 1
+         * order_num : aaabbb
+         * commit_time : 2017-09-20 16:36:43
+         * ok_time : 0000-00-00 00:00:00
+         * contact_name : 安静
+         * contact_mobile : 18310482720
+         * return_address : 规矩是外包
+         * return_status : 1
          * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
          * main_title : 啊啊啊啊啊
          * pro_price : 1
@@ -61,19 +61,28 @@ public class BaoDetail {
          * pro_name : fdsafdg
          */
 
+        private String return_id;
         private String pro_id;
+        private String order_num;
+        private String commit_time;
+        private String ok_time;
         private String contact_name;
         private String contact_mobile;
-        private String repair_address;
-        private String order_id;
-        private String repair_num;
-        private String repair_status;
-        private String repair_note;
+        private String return_address;
+        private String return_status;
         private String main_title;
         private String pro_price;
         private String sub_title;
         private String pro_name;
         private List<ProPicBean> pro_pic;
+
+        public String getReturn_id() {
+            return return_id;
+        }
+
+        public void setReturn_id(String return_id) {
+            this.return_id = return_id;
+        }
 
         public String getPro_id() {
             return pro_id;
@@ -81,6 +90,30 @@ public class BaoDetail {
 
         public void setPro_id(String pro_id) {
             this.pro_id = pro_id;
+        }
+
+        public String getOrder_num() {
+            return order_num;
+        }
+
+        public void setOrder_num(String order_num) {
+            this.order_num = order_num;
+        }
+
+        public String getCommit_time() {
+            return commit_time;
+        }
+
+        public void setCommit_time(String commit_time) {
+            this.commit_time = commit_time;
+        }
+
+        public String getOk_time() {
+            return ok_time;
+        }
+
+        public void setOk_time(String ok_time) {
+            this.ok_time = ok_time;
         }
 
         public String getContact_name() {
@@ -99,44 +132,20 @@ public class BaoDetail {
             this.contact_mobile = contact_mobile;
         }
 
-        public String getRepair_address() {
-            return repair_address;
+        public String getReturn_address() {
+            return return_address;
         }
 
-        public void setRepair_address(String repair_address) {
-            this.repair_address = repair_address;
+        public void setReturn_address(String return_address) {
+            this.return_address = return_address;
         }
 
-        public String getOrder_id() {
-            return order_id;
+        public String getReturn_status() {
+            return return_status;
         }
 
-        public void setOrder_id(String order_id) {
-            this.order_id = order_id;
-        }
-
-        public String getRepair_num() {
-            return repair_num;
-        }
-
-        public void setRepair_num(String repair_num) {
-            this.repair_num = repair_num;
-        }
-
-        public String getRepair_status() {
-            return repair_status;
-        }
-
-        public void setRepair_status(String repair_status) {
-            this.repair_status = repair_status;
-        }
-
-        public String getRepair_note() {
-            return repair_note;
-        }
-
-        public void setRepair_note(String repair_note) {
-            this.repair_note = repair_note;
+        public void setReturn_status(String return_status) {
+            this.return_status = return_status;
         }
 
         public String getMain_title() {

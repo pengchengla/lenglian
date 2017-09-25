@@ -27,11 +27,15 @@ import com.example.administrator.lenglian.fragment.order.adapter.Deliveryadapter
 import com.example.administrator.lenglian.fragment.order.adapter.Evaluateadapter;
 import com.example.administrator.lenglian.fragment.order.adapter.Payadapter;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
+import com.example.administrator.lenglian.fragment.order.bean.Zhifubean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.google.gson.Gson;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +52,7 @@ public class BlankFragment extends BaseFragment {
     private ListView list_recying;
     private List<Indexbean> list=new ArrayList<>();
     private String api;
+    private List<Dingdanbean.DatasBean> datas;
 
     public static BlankFragment newInstance(String text) {
         Bundle bundle = new Bundle();
@@ -74,38 +79,55 @@ public class BlankFragment extends BaseFragment {
         if(api.equals(MyContants.BASEURL+"s=Order/listOrder")){
             //网络请求
             ininjson();
-        }
-        else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=10")){
-            //待支付
-            Zhifu();
+            return;
         }
         else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=1")){
+            //待支付
+            Zhifu();
+            return;
+        }
+        else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=2,3")){
 
                //待收货
             delivery();
+            return;
         }
-        else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=8")){
+        else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=10")){
             //待评价
             evaluate();
+            return;
         }
 
        //点击跳转
         list_recying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (api.equals("第一个接口")){
+                if (api.equals(MyContants.BASEURL +"s=Order/listOrder")){
+                     if("1".equals(datas.get(position).getOrder_status())){
+                         Intent intent=new Intent(getActivity(), OrderPayActivity.class);
+                         startActivity(intent);
+                     }
+                    else if("2".equals(datas.get(position).getOrder_status())||"3".equals(datas.get(position).getOrder_status())){
+                         Intent it=new Intent(getActivity(), ReceiptActivity.class);
+                         startActivity(it);
+                     }
+                    else {
+                         Intent intent=new Intent(getActivity(), AppraiseActivity.class);
+                         startActivity(intent);
+                     }
                 //    Intent inetn=new Intent(this,class);
                     //跳支付
-                }else if (api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=10")){
+                }else if (api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=1")){
                     Intent intent=new Intent(getActivity(), OrderPayActivity.class);
                     startActivity(intent);
                 }
                 //跳收货
-                else  if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=1")){
+                else  if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=2,3")){
                       Intent it=new Intent(getActivity(), ReceiptActivity.class);
                     startActivity(it);
                 }
-                else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=8")){
+                //跳评价
+                else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=10")){
                        Intent intent=new Intent(getActivity(), AppraiseActivity.class);
                     startActivity(intent);
                 }
@@ -120,18 +142,17 @@ public class BlankFragment extends BaseFragment {
         Map<String,String> map=new HashMap<>();
         map.put("user_id", SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
-        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
+        map.put("order_status","10");
+
+        RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
-                Toast.makeText(getActivity(), result.getMsg()+"hahah", Toast.LENGTH_SHORT).show();
-                Indexbean index;
-                for (int i = 0; i < 5; i++) {
-                    index=new Indexbean();
-                    index.setCount("哈发发嘎啊发发发阿发啊啊"+i);
-                    list.add(index);
-                }
-               Evaluateadapter evaluateadapyer=new  Evaluateadapter (getActivity(),list);
-                list_recying.setAdapter(evaluateadapyer);
+                    if(result.getCode()==200){
+                        List<Dingdanbean.DatasBean> datas = result.getDatas();
+                        Evaluateadapter evaluateadapyer=new  Evaluateadapter (getActivity(),datas );
+                        list_recying.setAdapter(evaluateadapyer);
+                    }
+
             }
 
             @Override
@@ -146,18 +167,16 @@ public class BlankFragment extends BaseFragment {
         Map<String,String> map=new HashMap<>();
         map.put("user_id",SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
-        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
+        map.put("order_status","2,3");
+        RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
-                Toast.makeText(getActivity(), result.getMsg()+"hahah", Toast.LENGTH_SHORT).show();
-                Indexbean index;
-                for (int i = 0; i < 5; i++) {
-                    index=new Indexbean();
-                    index.setCount("哈发发嘎啊发发发阿发啊啊"+i);
-                    list.add(index);
+                if(result.getCode()==200){
+                    List<Dingdanbean.DatasBean> datas = result.getDatas();
+                    Deliveryadapter deliveryadapter=new Deliveryadapter(getActivity(),datas);
+                    list_recying.setAdapter(deliveryadapter);
                 }
-                Deliveryadapter deliveryadapter=new Deliveryadapter(getActivity(),list);
-                list_recying.setAdapter(deliveryadapter);
+
             }
 
             @Override
@@ -172,24 +191,20 @@ public class BlankFragment extends BaseFragment {
         Map<String,String> map=new HashMap<>();
           map.put("user_id",SpUtils.getString(mContext,"user_id",""));
           map.put("token", MyUtils.getToken());
-        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
+        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("zong") {
+
+
+
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
-                Toast.makeText(getActivity(), result.getMsg()+"hahah", Toast.LENGTH_SHORT).show();
-                if(result.getCode()==200){
-                    List<Dingdanbean.DatasBean> datas = result.getDatas();
-                    DingdanAdapter dindanadapter=new DingdanAdapter(getActivity(),datas);
-                    list_recying.setAdapter(dindanadapter);
+                if (tag.equals("zong")) {
+                    if (result.getCode() == 200) {
+                        datas = result.getDatas();
+                        DingdanAdapter dindanadapter = new DingdanAdapter(getActivity(), datas);
+                        list_recying.setAdapter(dindanadapter);
+                    }
                 }
-//                Indexbean index;
-//                for (int i = 0; i < 5; i++) {
-//                    index=new Indexbean();
-//                    index.setCount("哈发发嘎啊发发发阿发啊啊"+i);
-//                    list.add(index);
-//                }
-
             }
-
             @Override
             public void onFailed(int code) {
                 Toast.makeText(getActivity(), "注册失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
@@ -201,19 +216,18 @@ public class BlankFragment extends BaseFragment {
         ArrayMap map = new ArrayMap<String, String>();
         map.put("user_id",SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
-        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
-            @Override
-            public void onSuccess(Dingdanbean result, String tag) {
+        map.put("order_status","1");
+        KLog.a(api);
+        RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Zhifubean>("zhifu") {
 
-                        Toast.makeText(getActivity(), result.getCode()+"哈哈", Toast.LENGTH_SHORT).show();
-                Indexbean index;
-                for (int i = 0; i < 5; i++) {
-                    index=new Indexbean();
-                    index.setCount("哈发发嘎啊发发发阿发啊啊"+i);
-                    list.add(index);
+            @Override
+            public void onSuccess(Zhifubean result, String tag) {
+
+              if  (tag.equals("zhifu")) {
+                    List<Zhifubean.DatasBean> datas = result.getDatas();
+                    Payadapter payadapter = new Payadapter(getActivity(), datas);
+                    list_recying.setAdapter(payadapter);
                 }
-                Payadapter payadapter=new Payadapter(getActivity(),list);
-                list_recying.setAdapter(payadapter);
             }
 
             @Override
@@ -225,14 +239,6 @@ public class BlankFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        Indexbean index;
-        for (int i = 0; i < 5; i++) {
-            index=new Indexbean();
-            index.setCount("哈发发嘎啊发发发阿发啊啊"+i);
-            list.add(index);
-        }
-//        DingdanAdapter dindanadapter=new DingdanAdapter(getActivity(),list);
-//        list_recying.setAdapter(dindanadapter);
     }
 
 

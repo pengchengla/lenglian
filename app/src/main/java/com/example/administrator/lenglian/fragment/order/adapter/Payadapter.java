@@ -10,11 +10,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
+import com.example.administrator.lenglian.fragment.order.bean.Zhifubean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.PayUtil;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -23,9 +38,9 @@ import java.util.List;
 
 public class Payadapter extends BaseAdapter {
     private Context context;
-    private List<Indexbean> list;
+    private List<Zhifubean.DatasBean> list;
 
-    public Payadapter(Context context, List<Indexbean> list) {
+    public Payadapter(Context context,List<Zhifubean.DatasBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -61,22 +76,40 @@ public class Payadapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+           //加载数据
+
             holder.order_pause.setFocusable(false);
             holder.order_zhifi.setFocusable(false);
+           /*
+             加载图片
+            */
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
+                .apply(options)
+                .into(  holder.iv_tupian);
+            holder.orderlist_count.setText(list.get(position).getMain_title());
+        holder.textView.setText(list.get(position).getPro_price());
 
-            holder.orderlist_count.setText(list.get(position).getCount());
-             holder.order_pause.setOnClickListener(new View.OnClickListener() {
+
+        holder.order_pause.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
                      //取消
+                     pausevoid(position);
                      list.remove(position);
                      notifyDataSetChanged();
+
                  }
              });
              holder.order_zhifi.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-                     showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion);
+                     PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,context);
+
                  }
              });
 
@@ -84,62 +117,7 @@ public class Payadapter extends BaseAdapter {
 
         return convertView;
     }
-    //支付
-    private void showGenderDialog(int grary, int animationStyle) {
-        BaseDialog.Builder builder = new BaseDialog.Builder(context);
-        final BaseDialog dialog = builder.setViewId(R.layout.order_diagzhifu)
-                //设置dialogpadding
-                .setPaddingdp(10, 0, 10, 0)
-                //设置显示位置
-                .setGravity(grary)
-                //设置动画
-                .setAnimation(animationStyle)
-                //设置dialog的宽高
-                .setWidthHeightpx(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                //设置触摸dialog外围是否关闭
-                .isOnTouchCanceled(true)
-                //设置监听事件
-                .builder();
-        //支付宝
-        dialog.getView(R.id.zhifu_zhifubao).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                dialog.dismiss();
-            }
-        });
-        //微信
-        dialog.getView(R.id.zhifu_weixin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss();
-            }
-        });
-        //银行
-        dialog.getView(R.id.zhifu_bank).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss();
-            }
-        });
-        //银行2
-        dialog.getView(R.id.zhifu_bank2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss();
-            }
-        });
-        dialog.getView(R.id.zhifu_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
     class ViewHolder {
         public View rootView;
         public TextView tv_back;
@@ -150,4 +128,29 @@ public class Payadapter extends BaseAdapter {
         public TextView order_zhifi;
 
     }
+
+
+      public void pausevoid( int position){
+          /*
+       向服务器传送取消的订单
+      */
+          Map<String,String> map=new HashMap<>();
+          map.put("order_id",list.get(position).getOrder_id());
+          map.put("token", MyUtils.getToken());
+          RetrofitManager.get(MyContants.BASEURL + "s=Order/cancelOrder", map, new BaseObserver1<Resultbean>("") {
+              @Override
+              public void onSuccess(Resultbean result, String tag) {
+                  if(result.getCode()==200)  {
+                      ToastUtils.showShort(context,"删除成功");
+                  }
+              }
+
+              @Override
+              public void onFailed(int code) {
+
+              }
+          });
+
+      }
+
 }
