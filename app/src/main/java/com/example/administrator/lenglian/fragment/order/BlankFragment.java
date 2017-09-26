@@ -56,7 +56,10 @@ public class BlankFragment extends BaseFragment {
     private ListView list_recying;
     private List<Indexbean> list = new ArrayList<>();
     private String api;
-    private List<Dingdanbean.DatasBean> datas;
+    private List<Dingdanbean.DatasBean> datas;//总
+    private List<Dingdanbean.DatasBean> datasp;//评价
+    private List<Dingdanbean.DatasBean> datash;//收货
+    private List<Zhifubean.DatasBean> datasf;//支付
     private SpringView springview;
     Payadapter payadapter;
     Deliveryadapter deliveryadapter;
@@ -108,7 +111,9 @@ public class BlankFragment extends BaseFragment {
 
         }
 
-        //点击跳转
+        /*
+          -----------------------点击跳转
+         */
         list_recying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -121,6 +126,7 @@ public class BlankFragment extends BaseFragment {
                         startActivity(it);
                     } else {
                         Intent intent = new Intent(getActivity(), AppraiseActivity.class);
+                        intent.putExtra("order_id",datas.get(position).getOrder_id());
                         startActivity(intent);
                     }
                     //    Intent inetn=new Intent(this,class);
@@ -199,11 +205,12 @@ public class BlankFragment extends BaseFragment {
 
 
 
+
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                     if(result.getCode()==200){
-                        List<Dingdanbean.DatasBean> datas = result.getDatas();
-                        evaluateadapyer = new Evaluateadapter(getActivity(),datas );
+                        datasp = result.getDatas();
+                        evaluateadapyer = new Evaluateadapter(getActivity(),datasp );
                         list_recying.setAdapter(evaluateadapyer);
                     }
 
@@ -223,11 +230,14 @@ public class BlankFragment extends BaseFragment {
         map.put("token", MyUtils.getToken());
         map.put("order_status","2,3");
         RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
+
+
+
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                 if(result.getCode()==200){
-                    List<Dingdanbean.DatasBean> datas = result.getDatas();
-                     deliveryadapter=new Deliveryadapter(getActivity(),datas);
+                    datash = result.getDatas();
+                     deliveryadapter=new Deliveryadapter(getActivity(), datash);
                     list_recying.setAdapter(deliveryadapter);
                 }
 
@@ -273,12 +283,14 @@ public class BlankFragment extends BaseFragment {
         KLog.a(api);
         RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Zhifubean>("zhifu") {
 
+
+
             @Override
             public void onSuccess(Zhifubean result, String tag) {
 
               if  (tag.equals("zhifu")) {
-                    List<Zhifubean.DatasBean> datas = result.getDatas();
-                    payadapter = new Payadapter(getActivity(), datas);
+                  datasf = result.getDatas();
+                    payadapter = new Payadapter(getActivity(), datasf);
                     list_recying.setAdapter(payadapter);
                 }
             }

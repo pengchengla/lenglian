@@ -3,6 +3,7 @@ package com.example.administrator.lenglian.fragment.order.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -11,12 +12,19 @@ import android.widget.TextView;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.adapter.Gradeadapter;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.mine.bean.photobean;
 import com.example.administrator.lenglian.fragment.order.adapter.Order_gride;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyGradeview;
+import com.example.administrator.lenglian.utils.PayUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -49,7 +57,31 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.order_detail);
         initView();
         inindata();
+        //网络请求
+        network();
     }
+
+    private void network() {
+        Map<String,String> map=new HashMap<>();
+        RetrofitManager.post(MyContants.BASEURL + "", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                  if(result.getCode()==200){
+
+
+                     //合计之后的价格=押金+配送费+商品价格x月份
+                    //  total_price.setText("");
+                }
+
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+    }
+
     private void inindata() {
         photobean ph=new photobean();
         ph.setPhoto(R.drawable.binggui);
@@ -68,6 +100,7 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         list.add(pho5);
         Order_gride gradeadapter=new  Order_gride(this,list);
         odetail_recy.setAdapter(gradeadapter);
+
     }
 
     private void initView() {
@@ -96,6 +129,14 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
           switch (v.getId()){
               case R.id.tv_back:
                   finish();
+                  break;
+              case R.id.order_zhifi:
+                  //支付
+                  PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,OrderPayActivity.this);
+                  break;
+              case R.id. order_pause:
+                  //取消
+
                   break;
           }
 

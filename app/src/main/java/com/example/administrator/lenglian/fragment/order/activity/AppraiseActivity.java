@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.order.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,6 +10,17 @@ import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.fragment.order.bean.Detailbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -34,12 +46,39 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
     private TextView details_songdadata;
     private TextView distribution_paymentmethod;
     private TextView distribution_sum;
+    private String order_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_details);
         initView();
+        network();
+    }
+
+    private void network() {
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("order_id",order_id);
+        RetrofitManager.get(MyContants.BASEURL + "s=Order/profileOrder", map, new BaseObserver1<Detailbean>("") {
+            @Override
+            public void onSuccess(Detailbean result, String tag) {
+                if(result.getCode()==200){
+                    List<Detailbean.DatasBean> datas =result.getDatas();
+                    //加载数据
+                    details_number.setText(datas.get(0).getOrder_num());
+                   // details_person.setText(datas.get(0).);
+
+
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -61,6 +100,9 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
         distribution_paymentmethod = (TextView) findViewById(R.id.distribution_paymentmethod);
         distribution_sum = (TextView) findViewById(R.id.distribution_sum);
         tv_back.setOnClickListener(this);
+        //得到数据
+        Intent intent = getIntent();
+        order_id = intent.getStringExtra("order_id");
     }
 
     @Override
