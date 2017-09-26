@@ -91,7 +91,6 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.mine_personal);
         initView();
         inindata();//下拉个人信息
-
     }
 
     //修改地址
