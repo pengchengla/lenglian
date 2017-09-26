@@ -6,23 +6,31 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
-import com.example.administrator.lenglian.bean.ShopCarBean;
+import com.example.administrator.lenglian.db.LitePalHelper;
+import com.example.administrator.lenglian.db.ShopCarBean;
 import com.example.administrator.lenglian.fragment.good.QueRenOrderActivity;
 import com.example.administrator.lenglian.listener.SnappingStepperValueChangeListener;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.view.SnappingStepper;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.administrator.lenglian.R.id.stepper;
 
 public class MyShopCarActivity extends BaseActivity implements View.OnClickListener {
 
@@ -30,8 +38,18 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
     private RecyclerView recycler_shopcar;
     private ShopCarAdapter mCarAdapter;
     private boolean isEditing;
-    private List<ShopCarBean> mList;
     private LinearLayout ll_money;
+    private List<ShopCarBean> mData;
+    private String mGoodId;
+    private String mImgUrl;
+    private String mName;
+    private String mPeisongfei;
+    private String mYajin;
+    private String mDuration;
+    private String mPrice;
+    private FrameLayout fl_havecar;
+    private RelativeLayout rl_nocar;
+    private Button btn_login, btn_go;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,24 +66,52 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
         tv_jiesuan = (TextView) findViewById(R.id.tv_jiesuan);
         tv_jiesuan.setOnClickListener(this);
         tv_total_count = (TextView) findViewById(R.id.tv_count);
-        tv_total_price = (TextView) findViewById(R.id.tv_total_price);
-        mList = new ArrayList<>();
-        mList.add(new ShopCarBean("111111111111111", false));
-        mList.add(new ShopCarBean("222222222222222", false));
-        mList.add(new ShopCarBean("333333333333333", false));
-        mList.add(new ShopCarBean("444444444444444", false));
-        mCarAdapter = new ShopCarAdapter(R.layout.item_mycar, mList);
         ll_money = (LinearLayout) findViewById(R.id.ll_money);
-        recycler_shopcar.setAdapter(mCarAdapter);
-        mCarAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.tv_delete) {
-                    mCarAdapter.getData().remove(position);
-                    mCarAdapter.notifyItemRemoved(position);
+        tv_total_price = (TextView) findViewById(R.id.tv_total_price);
+        fl_havecar = (FrameLayout) findViewById(R.id.fl_havecar);
+        rl_nocar = (RelativeLayout) findViewById(R.id.rl_nocar);
+        btn_login = (Button) findViewById(R.id.btn_login);
+        btn_login.setOnClickListener(this);
+        btn_go = (Button) findViewById(R.id.btn_go);
+        btn_go.setOnClickListener(this);
+        initData();
+    }
+
+    private void initData() {
+        mData = LitePalHelper.search();
+        if (mData != null && mData.size() > 0) {
+            fl_havecar.setVisibility(View.VISIBLE);
+            rl_nocar.setVisibility(View.GONE);
+            tv_edit.setVisibility(View.VISIBLE);
+            mCarAdapter = new ShopCarAdapter(R.layout.item_mycar, mData);
+            recycler_shopcar.setAdapter(mCarAdapter);
+            mCarAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (view.getId() == R.id.tv_delete) {
+                        if (noOneChecked()) {
+                            Toast.makeText(MyShopCarActivity.this, "请先选中产品", Toast.LENGTH_SHORT).show();
+                        } else {
+                            LitePalHelper.deleteOne(mCarAdapter.getData().get(position).getGoodId());
+                            //                        mCarAdapter.getData().remove(position);
+                            //                        mCarAdapter.notifyItemRemoved(position);
+                            initData();
+                        }
+                    }
                 }
+            });
+        } else {
+            fl_havecar.setVisibility(View.GONE);
+            rl_nocar.setVisibility(View.VISIBLE);
+            tv_edit.setVisibility(View.GONE);
+            if (TextUtils.isEmpty(SpUtils.getString(this, "user_id", ""))) {
+                btn_login.setVisibility(View.VISIBLE);
+                btn_go.setVisibility(View.GONE);
+            } else {
+                btn_login.setVisibility(View.GONE);
+                btn_go.setVisibility(View.VISIBLE);
             }
-        });
+        }
     }
 
     @Override
@@ -92,9 +138,11 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_jiesuan:
                 if (tv_jiesuan.getText().toString().equals("全部删除")) {
                     if (isAllChecked()) {
-                        mList.clear();
-                        mCarAdapter.notifyDataSetChanged();
+                        //                        mData.clear();
+                        //                        mCarAdapter.notifyDataSetChanged();
                         tv_quanxuan.setVisibility(View.GONE);
+                        LitePalHelper.deleteAll();
+                        initData();
                     } else {
                         Toast.makeText(this, "请先点击全选", Toast.LENGTH_SHORT).show();
                     }
@@ -102,7 +150,15 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                     if (noOneChecked()) {
                         Toast.makeText(this, "请先选中产品", Toast.LENGTH_SHORT).show();
                     } else {
-                        startActivity(new Intent(this, QueRenOrderActivity.class));
+                        Intent intent = new Intent(this, QueRenOrderActivity.class);
+                        intent.putExtra("id", mGoodId);
+                        intent.putExtra("duration", mDuration);
+                        intent.putExtra("imgUrl", mImgUrl);
+                        intent.putExtra("name", mName);
+                        intent.putExtra("price", mPrice);
+                        intent.putExtra("yajin", mYajin);
+                        intent.putExtra("peisongfei", mPeisongfei);
+                        startActivity(intent);
                     }
                 }
                 break;
@@ -122,12 +178,22 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                 mCarAdapter.notifyDataSetChanged();
                 break;
             case R.id.tv_quanxuan:
-                for (int i = 0; i < mList.size(); i++) {
-                    mList.get(i).setChecked(true);
+                for (int i = 0; i < mData.size(); i++) {
+                    mData.get(i).setChecked(true);
                 }
                 if (mCarAdapter != null) {
                     mCarAdapter.notifyDataSetChanged();
                 }
+                break;
+            case R.id.btn_login:
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                break;
+            case R.id.btn_go:
+//                EventMessage eventMessage = new EventMessage("allgoods");
+//                EventBus.getDefault().postSticky(eventMessage);
+//                finish();
+
                 break;
         }
     }
@@ -139,9 +205,9 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
         }
 
         @Override
-        protected void convert(final BaseViewHolder helper, ShopCarBean item) {
+        protected void convert(final BaseViewHolder helper, final ShopCarBean item) {
             if (isEditing) {
-                helper.setVisible(R.id.stepper, true)
+                helper.setVisible(stepper, true)
                         .setVisible(R.id.tv_delete, true)
                         .setVisible(R.id.tv_title, false)
                         .setVisible(R.id.tv_price_pro, false)
@@ -149,7 +215,7 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                         .setVisible(R.id.tv_size, false)
                         .setVisible(R.id.tv_xxxxxx, false);
             } else if (!isEditing) {
-                helper.setVisible(R.id.stepper, false)
+                helper.setVisible(stepper, false)
                         .setVisible(R.id.tv_delete, false)
                         .setVisible(R.id.tv_title, true)
                         .setVisible(R.id.tv_qian, true)
@@ -157,36 +223,52 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                         .setVisible(R.id.tv_size, true)
                         .setVisible(R.id.tv_xxxxxx, true);
             }
-            final TextView tv_size = helper.getView(R.id.tv_size);
-            final TextView tv_price = helper.getView(R.id.tv_price_pro);
-            helper.setText(R.id.tv_title, item.getTitle())
+            helper.setText(R.id.tv_title, item.getName())
                     .setChecked(R.id.cb_car, item.isChecked())
                     .addOnClickListener(R.id.tv_delete);
+            final TextView tv_size = helper.getView(R.id.tv_size);
+            final TextView tv_price = helper.getView(R.id.tv_price_pro);
+            tv_size.setText(item.getDuration() + "");
+            tv_price.setText(Float.parseFloat(item.getPrice()) * item.getDuration() + "");
             helper.getView(R.id.ll_root_view).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //直接在外层用adapter的点击事件就不管用，真是邪门
-                    for (int i = 0; i < mList.size(); i++) {
+                    for (int i = 0; i < mData.size(); i++) {
                         if (helper.getAdapterPosition() == i) {
-                            mList.get(i).setChecked(!mCarAdapter.getData().get(i).isChecked());
-                            tv_total_count.setText(tv_size.getText().toString());
-                            tv_total_price.setText(tv_price.getText().toString() + "");
+                            mData.get(i).setChecked(!mData.get(i).isChecked());
+                            mDuration = mData.get(i).getDuration() + "";
+                            tv_total_count.setText(mDuration);
+                            mPrice = mData.get(i).getPrice();
+                            tv_total_price.setText(tv_price.getText().toString());
+                            mGoodId = mData.get(i).getGoodId();
+                            mImgUrl = mData.get(i).getImgUrl();
+                            mName = mData.get(i).getName();
+                            mPeisongfei = mData.get(i).getPeisongfei();
+                            mYajin = mData.get(i).getYajin();
                         } else {
-                            mList.get(i).setChecked(false);
+                            mData.get(i).setChecked(false);
                         }
                     }
                     mCarAdapter.notifyDataSetChanged();
                 }
             });
-            SnappingStepper stepper = helper.getView(R.id.stepper);
+            final SnappingStepper stepper = helper.getView(R.id.stepper);
+            stepper.setText(item.getDuration() + "");
             stepper.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
                 @Override
                 public void onValueChange(View view, int value) {
-                    helper.setText(R.id.tv_size, value + "");
-                    helper.setText(R.id.tv_price_pro, 1777 * value + "");
                     if (!noOneChecked()) {
-                        tv_total_count.setText(tv_size.getText().toString());
-                        tv_total_price.setText(tv_price.getText().toString() + "");
+                        tv_size.setText(value + "");
+                        tv_price.setText(Float.parseFloat(item.getPrice()) * value + "");
+                        tv_total_count.setText(value + "");
+                        tv_total_price.setText(Float.parseFloat(item.getPrice()) * value + "");
+                        LitePalHelper.updateCount(item.getGoodId(), value);
+                        mData = LitePalHelper.search();
+                        notifyDataSetChanged();
+                    } else {
+                        stepper.setText(item.getDuration() + "");
+                        Toast.makeText(MyShopCarActivity.this, "请先选中一款产品", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -198,7 +280,7 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
     }
 
     private boolean noOneChecked() {
-        for (ShopCarBean shopCarBean : mList) {
+        for (ShopCarBean shopCarBean : mData) {
             if (shopCarBean.isChecked()) {
                 return false;
             }
@@ -207,7 +289,7 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
     }
 
     private boolean isAllChecked() {
-        for (ShopCarBean shopCarBean : mList) {
+        for (ShopCarBean shopCarBean : mData) {
             if (!shopCarBean.isChecked()) {
                 return false;
             }

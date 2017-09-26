@@ -74,7 +74,7 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
     private void inindata() {
 //        Indexbean index=new Indexbean();
 //        for (int i = 0; i < 5; i++) {
-//               index.setCount("豪华的冰柜，你值得拥有。爱不释手无与伦比哈哈哈"+i);
+//               index.setDuration("豪华的冰柜，你值得拥有。爱不释手无与伦比哈哈哈"+i);
 //            list.add(index);
 //        }
 

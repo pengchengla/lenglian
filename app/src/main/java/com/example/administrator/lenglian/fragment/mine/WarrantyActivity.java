@@ -74,7 +74,7 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
     private void initdata() {
 //          Indexbean indexbean=new Indexbean();
 //        for (int i = 0; i < 5; i++) {
-//            indexbean.setCount("阿拉阿发发发 阿达阿达啊大大啊大大啊啊啊阿达"+i);
+//            indexbean.setDuration("阿拉阿发发发 阿达阿达啊大大啊大大啊啊啊阿达"+i);
 //            list.add(indexbean);
 //        }
 //

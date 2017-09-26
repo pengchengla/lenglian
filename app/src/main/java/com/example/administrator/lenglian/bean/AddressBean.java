@@ -55,7 +55,7 @@ public class AddressBean {
          */
         private String address_detail;
         private String express_id;
-        private String recieve_name;
+        private String receive_name;
         private String address;
         private String mobile;
         private String is_default;
@@ -68,8 +68,8 @@ public class AddressBean {
             this.express_id = express_id;
         }
 
-        public void setRecieve_name(String recieve_name) {
-            this.recieve_name = recieve_name;
+        public void setRecieve_name(String receive_name) {
+            this.receive_name = receive_name;
         }
 
         public void setAddress(String address) {
@@ -93,7 +93,7 @@ public class AddressBean {
         }
 
         public String getRecieve_name() {
-            return recieve_name;
+            return receive_name;
         }
 
         public String getAddress() {

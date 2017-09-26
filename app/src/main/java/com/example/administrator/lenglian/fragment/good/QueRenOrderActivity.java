@@ -12,11 +12,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.AddressBean;
 import com.example.administrator.lenglian.bean.OrderPushBean;
 import com.example.administrator.lenglian.fragment.mine.AddressActivity;
+import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
@@ -25,14 +30,22 @@ import com.example.administrator.lenglian.utils.SpUtils;
 
 
 public class QueRenOrderActivity extends BaseActivity implements View.OnClickListener {
-    private TextView tv_back, tv_tijiao, tv_name, tv_phone, tv_address;
-    private ImageView iv_address;
+    private TextView tv_back, tv_tijiao, tv_name, tv_phone,
+            tv_address, tv_title, tv_price, tv_count, tv_yajin,
+            tv_peisongfei, tv_total_price, tv_total_price_bottom;
+    private ImageView iv_address, iv_tupian;
     private String mId, duration;
     private EditText edt_liuyan;
     private LinearLayout ll_hasAddress;
     private RelativeLayout rl_noaddress;
     private String express_id;
     private String mOrder_id;
+    private String img_url;
+    private String good_title;
+    private String good_price;
+    private String yajin;
+    private String peisongfei;
+    private String total_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +65,56 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
         ll_hasAddress = (LinearLayout) findViewById(R.id.ll_hasAddress);
         rl_noaddress = (RelativeLayout) findViewById(R.id.rl_noaddress);
         rl_noaddress.setOnClickListener(this);
+        iv_tupian = (ImageView) findViewById(R.id.iv_tupian);
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_price = (TextView) findViewById(R.id.tv_price);
+        tv_count = (TextView) findViewById(R.id.tv_count);
+        tv_yajin = (TextView) findViewById(R.id.tv_yajin);
+        tv_peisongfei = (TextView) findViewById(R.id.tv_peisongfei);
+        tv_total_price = (TextView) findViewById(R.id.tv_total_price);
+        tv_total_price_bottom = (TextView) findViewById(R.id.tv_total_price_bottom);
+        initAddress();
         initData();
     }
 
     private void initData() {
+        mId = getIntent().getStringExtra("id");
+        duration = getIntent().getStringExtra("duration");
+        img_url = getIntent().getStringExtra("imgUrl");
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(this).load(img_url)
+                .apply(options)
+                .into(iv_tupian);
+        good_title = getIntent().getStringExtra("name");
+        tv_title.setText(good_title);
+        good_price = getIntent().getStringExtra("price");
+        tv_price.setText("￥" + good_price);
+        tv_count.setText("x" + duration);
+        yajin = getIntent().getStringExtra("yajin");
+        tv_yajin.setText("￥" + yajin);
+        peisongfei = getIntent().getStringExtra("peisongfei");
+        tv_peisongfei.setText("￥" + peisongfei);
+        float price = Float.parseFloat(good_price) * Integer.parseInt(duration)
+                + Float.parseFloat(yajin) + Float.parseFloat(peisongfei);
+        total_price = price + "";
+        tv_total_price.setText("￥" + total_price);
+        tv_total_price_bottom.setText("￥" + total_price);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initAddress();
+    }
+
+    private void initAddress() {
         ArrayMap arrayMap = new ArrayMap();
+        Toast.makeText(this, " " + SpUtils.getString(QueRenOrderActivity.this, "user_id", "")
+                , Toast.LENGTH_SHORT).show();
         arrayMap.put("user_id", SpUtils.getString(QueRenOrderActivity.this, "user_id", ""));
         arrayMap.put("token", MyUtils.getToken());
         arrayMap.put("is_default", "1");
@@ -104,9 +162,6 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void pushOrder() {
-        mId = getIntent().getStringExtra("id");
-        duration = getIntent().getStringExtra("duration");
-        //        Toast.makeText(this, "id::"+mId+"   时长::"+duration, Toast.LENGTH_SHORT).show();
         ArrayMap arrayMap2 = new ArrayMap();
         arrayMap2.put("pro_id", mId);
         arrayMap2.put("token", MyUtils.getToken());
@@ -114,18 +169,20 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
         arrayMap2.put("duration", duration);
         arrayMap2.put("express_id", express_id);
         arrayMap2.put("order_note", edt_liuyan.getText().toString());
+        //        Toast.makeText(this, "id::" + mId + "   时长::" + duration, Toast.LENGTH_SHORT).show();
         RetrofitManager.post(MyContants.BASEURL + "s=Order/newOrder", arrayMap2, new BaseObserver1<OrderPushBean>("") {
             @Override
             public void onSuccess(OrderPushBean result, String tag) {
-                Toast.makeText(QueRenOrderActivity.this, "xxxxxxxx", Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
-                    Toast.makeText(QueRenOrderActivity.this, "成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(QueRenOrderActivity.this, "成功", Toast.LENGTH_SHORT).show();
                     mOrder_id = result.getDatas().getOrder_id();
                     Toast.makeText(QueRenOrderActivity.this, " " + mOrder_id, Toast.LENGTH_SHORT).show();
-                    //                    startActivity(new Intent(this, OrderPayActivity.class));
+                    Intent intent = new Intent(QueRenOrderActivity.this, OrderPayActivity.class);
+                    intent.putExtra("orderid",mOrder_id);
+                    startActivity(intent);
                 } else {
                     //101是没有数据
-                    Toast.makeText(QueRenOrderActivity.this, "sssss" + result.getError(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QueRenOrderActivity.this, "" + result.getError(), Toast.LENGTH_SHORT).show();
                 }
             }
 

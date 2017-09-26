@@ -78,7 +78,7 @@ public class EvaluateActivity extends BaseActivity {
     private void inindata() {
 //        Indexbean indexbean=new Indexbean();
 //        for (int i = 0; i < 5; i++) {
-//            indexbean.setCount("冷链冰柜你知道的太多了。你值得拥有还在等什么拿起电话加入吧");
+//            indexbean.setDuration("冷链冰柜你知道的太多了。你值得拥有还在等什么拿起电话加入吧");
 //            list.add(indexbean);
 //        }
 //

@@ -45,6 +45,7 @@
             android:textSize="15sp"/>
     </RelativeLayout>
     <FrameLayout
+        android:id="@+id/fl_havecar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/huise">
@@ -106,7 +107,6 @@
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_quanxuan"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -118,7 +118,8 @@
                 android:paddingTop="8dp"
                 android:text="全选"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/tv_jiesuan"
                 android:layout_width="wrap_content"
@@ -136,4 +137,43 @@
                 android:textSize="16sp"/>
         </RelativeLayout>
     </FrameLayout>
+    <RelativeLayout
+        android:id="@+id/rl_nocar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_bigcar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bigcar"/>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_bigcar"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="请先登录"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+        <Button
+            android:id="@+id/btn_go"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_bigcar"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_blue"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="购物车空的呢"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+    </RelativeLayout>
 </LinearLayout>

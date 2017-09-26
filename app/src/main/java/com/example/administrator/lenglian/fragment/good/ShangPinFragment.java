@@ -30,6 +30,9 @@ import com.example.administrator.lenglian.bean.CommentBean;
 import com.example.administrator.lenglian.bean.EditCollectBean;
 import com.example.administrator.lenglian.bean.GoodDetailBean;
 import com.example.administrator.lenglian.bean.PingjiaBean;
+import com.example.administrator.lenglian.db.LitePalHelper;
+import com.example.administrator.lenglian.db.ShopCarBean;
+import com.example.administrator.lenglian.listener.SnappingStepperValueChangeListener;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BannerUtils;
@@ -65,6 +68,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     private String mId;
     private ImageView iv_isSale;
     private GoodDetailBean.DatasEntity mDatas;
+    private int duration = 1;
 
     @Override
     protected View initView() {
@@ -161,7 +165,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     } else {
                         isCollected = true;
                     }
-                    collect_id=mDatas.getCollect_id();
+                    collect_id = mDatas.getCollect_id();
                     refreshCollect();
                 } else {
 
@@ -174,29 +178,11 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             }
         });
 
+        initComment();
+        initPingjia();
+    }
 
-        ArrayMap arrayMap1 = new ArrayMap();
-        arrayMap1.put("pro_id", mId);
-        RetrofitManager.get(MyContants.BASEURL + "s=Product/listRecommend", arrayMap1, new BaseObserver1<CommentBean>("") {
-            @Override
-            public void onSuccess(CommentBean result, String tag) {
-                if (result.getCode() == 200) {
-                    mCommentAdapter = new CommentAdapter(R.layout.comment_item, result.getDatas());
-                    recycler_tuijian.setAdapter(mCommentAdapter);
-                    mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            startActivity(new Intent(mContext, GoodDetailActivity.class));
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailed(int code) {
-
-            }
-        });
+    private void initPingjia() {
         ArrayMap arrayMap2 = new ArrayMap();
         arrayMap2.put("pro_id", mId);
         arrayMap2.put("token", MyUtils.getToken());
@@ -213,6 +199,31 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     recycler_pingjia.setAdapter(mPingjiaAdapter);
                 } else {
                     //101是没有数据
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+    }
+
+    private void initComment() {
+        ArrayMap arrayMap1 = new ArrayMap();
+        arrayMap1.put("pro_id", mId);
+        RetrofitManager.get(MyContants.BASEURL + "s=Product/listRecommend", arrayMap1, new BaseObserver1<CommentBean>("") {
+            @Override
+            public void onSuccess(CommentBean result, String tag) {
+                if (result.getCode() == 200) {
+                    mCommentAdapter = new CommentAdapter(R.layout.comment_item, result.getDatas());
+                    recycler_tuijian.setAdapter(mCommentAdapter);
+                    mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                        }
+                    });
                 }
             }
 
@@ -356,7 +367,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             public void onSuccess(EditCollectBean result, String tag) {
                 if (result.getCode() == 200) {
                     isCollected = !isCollected;
-                    collect_id=result.getDatas().getCollect_id();
+                    collect_id = result.getDatas().getCollect_id();
                     refreshCollect();
                 } else {
                     //101是没有数据
@@ -386,6 +397,13 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                 //设置监听事件
                 .builder();
         final SnappingStepper stepper = dialog.getView(R.id.stepper);
+        SnappingStepper ssp = dialog.getView(R.id.stepper);
+        ssp.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
+            @Override
+            public void onValueChange(View view, int value) {
+                duration = value;
+            }
+        });
         dialog.getView(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -393,14 +411,36 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     Intent intent = new Intent(mContext, QueRenOrderActivity.class);
                     intent.putExtra("id", mId);
                     intent.putExtra("duration", stepper.getValue() + "");
+                    intent.putExtra("imgUrl", mDatas.getPro_pic().get(0).getUrl());
+                    intent.putExtra("name", mDatas.getMain_title());
+                    intent.putExtra("price", mDatas.getSale_price().equals("0") ?
+                            mDatas.getPro_price() : mDatas.getSale_price());
+                    intent.putExtra("yajin",mDatas.getPro_deposit());
+                    intent.putExtra("peisongfei",mDatas.getExpress_money());
                     startActivity(intent);
                 } else if (type == 2) {
-
-                    Toast.makeText(mContext, "已成功加入租赁车", Toast.LENGTH_SHORT).show();
+                    insertCar();
                 }
                 dialog.dismiss();
             }
         });
         dialog.show();
+    }
+
+    private void insertCar() {
+        if (LitePalHelper.isInserted(mDatas.getPro_id())) {
+            ShopCarBean shopCarBean = LitePalHelper.
+                    getInsertedOneBean(mDatas.getPro_id());
+            if (shopCarBean != null) {
+                LitePalHelper.add(shopCarBean);
+            }
+        } else {
+            LitePalHelper.add(new ShopCarBean(mDatas.getPro_id(),
+                    mDatas.getMain_title(),
+                    mDatas.getSale_price().equals("0") ? mDatas.getPro_price() : mDatas.getSale_price(),
+                    mDatas.getPro_pic().get(0).getUrl(),
+                    duration,mDatas.getPro_deposit(),mDatas.getExpress_money()
+                    ));
+        }
     }
 }

@@ -36,7 +36,7 @@ import com.example.administrator.lenglian.utils.BannerUtils;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
-import com.youth.banner.listener.OnBannerClickListener;
+import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -149,7 +149,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                     }
                     BannerUtils.startBanner(banner, picList);
-                    banner.setOnBannerClickListener(new OnBannerClickListener() {
+                    banner.setOnBannerListener(new OnBannerListener() {
                         @Override
                         public void OnBannerClick(int position) {
                             Intent intent = new Intent(mContext, WebActivity.class);

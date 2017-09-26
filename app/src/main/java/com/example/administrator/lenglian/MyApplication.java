@@ -2,8 +2,9 @@ package com.example.administrator.lenglian;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.example.administrator.lenglian.utils.SpUtils;
-import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -11,11 +12,13 @@ import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
+import org.litepal.LitePalApplication;
+
 /**
  * Created by Administrator on 2017/8/24.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends LitePalApplication {
     private static MyApplication application;
 
     @Override
@@ -24,8 +27,6 @@ public class MyApplication extends Application {
         initUMShare();
         initUMPush();
         application=this;
-
-
     }
 
     @Override
