@@ -247,6 +247,8 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                     Glide.with(PersoninforActivity.this).load(datas.get(0).getHead())
                             .apply(options)
                             .into(person_pho);
+                    //sp存头像
+                    SpUtils.putString(PersoninforActivity.this,"photo",datas.get(0).getHead());
                 }
             }
 

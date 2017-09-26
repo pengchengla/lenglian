@@ -13,15 +13,27 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
+import com.example.administrator.lenglian.fragment.mine.bean.Personbean;
 import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
+import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.view.CircleImageView;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/8/24.ss
@@ -93,13 +105,56 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                mine_name.setText(SpUtils.getString(getActivity(),"nick_name",""));
 
          }
+        //取头像
+        String photo = SpUtils.getString(getActivity(), "photo", "");
+        //加载数据
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(mContext).load(photo)
+                .apply(options)
+                .into(mine_head);
         return rootView;
     }
     @Override
     protected void initData() {
         tv_msg_number.setText("11");
          //网络请求
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id",SpUtils.getString(getActivity(),"user_id",""));
+        map.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=User/viewProfile", map, new BaseObserver1<Personbean>("") {
+            @Override
+            public void onSuccess(Personbean result, String tag) {
 
+                    if(result.getCode()==200){
+                        List<Personbean.DatasBean> datas = result.getDatas();
+                        //加载数据
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()
+                                .error(R.drawable.default_square)
+                                .priority(Priority.NORMAL)
+                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                        Glide.with(mContext).load(datas.get(0).getHead())
+                                .apply(options)
+                                .into(mine_head);
+                        //昵称
+                        mine_name.setText(datas.get(0).getUser_name());
+                        //手机号
+
+
+
+
+                    }
+    }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
 
     }
 

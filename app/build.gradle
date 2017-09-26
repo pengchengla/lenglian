@@ -9,6 +9,7 @@ android {
         targetSdkVersion 22//懒得做权限适配
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -40,6 +41,8 @@ android {
 }
 
 dependencies {
+    //解决655536
+    compile 'com.android.support:multidex:1.0.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -91,4 +94,6 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.62.android'
     //图片选择器
     compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.1'
+    //Springview
+    compile 'com.liaoinstan.springview:library:1.2.6'
 }

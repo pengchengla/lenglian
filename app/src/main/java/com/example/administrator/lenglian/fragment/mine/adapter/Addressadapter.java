@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
@@ -72,7 +73,7 @@ public class Addressadapter extends BaseAdapter {
           holder.ad_text = (TextView)    convertView.findViewById(R.id.ad_text);
             holder.ad_bianji = (TextView)  convertView.findViewById(R.id.ad_bianji);
             holder.ad_delete = (TextView) convertView.findViewById(R.id.ad_delete);
-            holder.change_zhuangtai = (LinearLayout) convertView.findViewById(R.id.change_zhuangtai);
+            holder.change_zhuangtai = (RelativeLayout) convertView.findViewById(R.id.change_zhuangtai);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -216,7 +217,7 @@ public class Addressadapter extends BaseAdapter {
         public TextView ad_text;
         public TextView ad_bianji;
         public TextView ad_delete;
-        private LinearLayout change_zhuangtai;
+        private RelativeLayout change_zhuangtai;
 
 
     }

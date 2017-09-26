@@ -88,6 +88,9 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
         holder.order_evaluation.setFocusable(false);
         holder.order_zhifi.setFocusable(false);
         holder.order_pause.setFocusable(false);
+        holder.order_tuihuan.setFocusable(false);
+        holder.order_repairs.setFocusable(false);
+        holder.order_renew.setFocusable(false);
         holder.order_count.setText(list.get(position).getMain_title());
         holder.order_price.setText(list.get(position).getPro_price());
         /*
@@ -105,23 +108,66 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
         /*
           状态判断
          */
-        if("1".equals(list.get(position).getOrder_status())){
+        if("5".equals(list.get(position).getOrder_status())) {
 
-         holder.pay.setVisibility(View.VISIBLE);
+            holder.pay.setVisibility(View.VISIBLE);
             holder.evaluate.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.GONE);
+            if ("6".equals(list.get(position).getOrder_status()) || "7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status())) {
 
+                holder.order_renew.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, RenewActivity.class);
+                        intent.putExtra("order_id", list.get(position).getOrder_id());
+                        context.startActivity(intent);
+                    }
+                });
+
+            } else {
+                //退换
+
+                holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ReturnActivity.class);
+                        intent.putExtra("order_id", list.get(position).getOrder_id());
+                        context.startActivity(intent);
+                    }
+                });
+                //续费
+                holder.order_renew.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, RenewActivity.class);
+                        intent.putExtra("order_id", list.get(position).getOrder_id());
+                        context.startActivity(intent);
+                    }
+                });
+                //报修
+
+                holder.order_repairs.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent inten = new Intent(context, BaoxiuActivity.class);
+                        inten.putExtra("order_id", list.get(position).getOrder_id());
+                        context.startActivity(inten);
+                    }
+                });
+
+            }
         }
-        else if("2".equals(list.get(position).getOrder_status())||"3".equals(list.get(position).getOrder_status())){
-            holder.pay.setVisibility(View.GONE);
-            holder.evaluate.setVisibility(View.GONE);
-            holder.receving.setVisibility(View.VISIBLE);
-        }
-        else {
-            holder.evaluate.setVisibility(View.VISIBLE);
-            holder.pay.setVisibility(View.GONE);
-            holder.receving.setVisibility(View.GONE);
-        }
+            //收货
+            else if ("2".equals(list.get(position).getOrder_status()) || "3".equals(list.get(position).getOrder_status())) {
+                holder.pay.setVisibility(View.GONE);
+                holder.evaluate.setVisibility(View.GONE);
+                holder.receving.setVisibility(View.VISIBLE);
+            } else {
+                holder.evaluate.setVisibility(View.VISIBLE);
+                holder.pay.setVisibility(View.GONE);
+                holder.receving.setVisibility(View.GONE);
+            }
+
         /*
           监听--------------------------
          */
@@ -141,36 +187,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
                  PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,context);
              }
          });
-        holder.order_renew.setFocusable(false);
-        //续费
-         holder.order_renew.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Intent intent=new Intent(context,RenewActivity.class);
-                 intent.putExtra("order_id",list.get(position).getOrder_id());
-                 context.startActivity(intent);
-             }
-         });
-        //退换
-        holder.order_tuihuan.setFocusable(false);
-        holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context,ReturnActivity.class);
-              intent.putExtra("order_id", list.get(position).getOrder_id());
-               context.startActivity(intent);
-            }
-        });
-        //报修
-        holder.order_repairs.setFocusable(false);
-        holder.order_repairs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent inten=new Intent(context,BaoxiuActivity.class);
-               inten.putExtra("order_id", list.get(position).getOrder_id());
-                context.startActivity(inten);
-            }
-        });
+
         holder.order_evaluation.setOnClickListener(this);
 
 
