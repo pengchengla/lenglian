@@ -19,7 +19,7 @@ import com.umeng.socialize.shareboard.ShareBoardConfig;
  */
 
 public class UMShareActivity extends BaseActivity {
-    private static ShareBoardConfig setShareBoardConfig() {
+    public static ShareBoardConfig setShareBoardConfig() {
         ShareBoardConfig config = new ShareBoardConfig();
         config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
         config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);
@@ -29,7 +29,7 @@ public class UMShareActivity extends BaseActivity {
         return config;
     }
 
-    protected static void shareText(Activity context) {
+    public static void shareText(Activity context) {
         ShareAction shareAction = new ShareAction(context).withText("hello")
                 //setDisplayList中设置的枚举参数就是最终分享面板中显示的平台，所传入参数的顺序即为最终面板分享平台的排列顺序
                 .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN)
@@ -38,7 +38,7 @@ public class UMShareActivity extends BaseActivity {
         shareAction.open(setShareBoardConfig());//设置分享面板样式
     }
 
-    protected static void shareImage(Activity context, String imgUrl) {
+    public static void shareImage(Activity context, String imgUrl) {
         UMImage image = new UMImage(context, imgUrl);//网络图片
         //        UMImage image = new UMImage(UMShareActivity.this, file);//本地文件
         //        UMImage image = new UMImage(UMShareActivity.this, R.drawable.xxx);//资源文件
@@ -58,7 +58,7 @@ public class UMShareActivity extends BaseActivity {
         shareAction.share();
     }
 
-    protected static void shareWebUrl(String url, String title, String imgUrl, String des, Activity context) {
+    public static void shareWebUrl(String url, String title, String imgUrl, String des, Activity context) {
         UMWeb web = new UMWeb(url);
         web.setTitle(title);//标题
         UMImage thumb = new UMImage(context, imgUrl);
@@ -72,7 +72,7 @@ public class UMShareActivity extends BaseActivity {
     }
 
 
-    private static UMShareListener umShareListener = new UMShareListener() {
+    public static UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onStart(SHARE_MEDIA platform) {
             //分享开始的回调

@@ -26,6 +26,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
+import com.example.administrator.lenglian.base.UMShareActivity;
 import com.example.administrator.lenglian.bean.CommentBean;
 import com.example.administrator.lenglian.bean.EditCollectBean;
 import com.example.administrator.lenglian.bean.GoodDetailBean;
@@ -335,6 +336,8 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_share:
+                UMShareActivity.shareWebUrl("",mDatas.getMain_title(),mDatas.getPro_pic().get(0).getUrl()
+                ,mDatas.getSub_title(),mActivity);
                 break;
             case R.id.ll_collect:
                 if (isCollected) {

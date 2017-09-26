@@ -1,7 +1,18 @@
 package com.example.administrator.lenglian.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -16,17 +27,29 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.EasyBean;
+import com.example.administrator.lenglian.fragment.mine.bean.Upphotobean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.PhotoUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.example.administrator.lenglian.utils.pictureutils.UploadUtil;
 import com.example.administrator.lenglian.utils.provice.AddressUtils;
+import com.google.gson.Gson;
+import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.example.administrator.lenglian.fragment.mine.PersoninforActivity.hasSdcard;
 
 public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener {
 
@@ -34,6 +57,18 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
     private EditText edt_name, edt_nicheng, edt_detail_address;
     private TextView tv_xingbie, tv_birthday, tv_address, tv_tiaoguo, tv_yes;
     private String mUserid;
+    private static final int CODE_GALLERY_REQUEST = 0xa0;
+    private static final int CODE_CAMERA_REQUEST = 0xa1;
+    private static final int CODE_RESULT_REQUEST = 0xa2;
+    private static final int CAMERA_PERMISSIONS_REQUEST_CODE = 0x03;
+    private static final int STORAGE_PERMISSIONS_REQUEST_CODE = 0x04;
+    private File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/photo.jpg");
+    private File fileCropUri = new File(Environment.getExternalStorageDirectory().getPath() + "/crop_photo.jpg");
+    private Uri imageUri;
+    private Uri cropImageUri;
+    private Handler handler = new Handler();
+    private Upphotobean upphotobean;
+    private String imgUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +114,7 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                 showGenderDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion);
                 break;
             case R.id.iv_head:
+                showphoto(R.style.Alpah_aniamtion, Gravity.CENTER_VERTICAL);
                 break;
             case R.id.tv_birthday:
                 showBirthdayDialog();
@@ -95,6 +131,180 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                 break;
         }
     }
+
+    //头像选取
+    private void showphoto(int animationStyle, int gr) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(this);
+        final BaseDialog dialog = builder.setViewId(R.layout.photo_dialg)
+                //设置dialogpadding
+                .setPaddingdp(40, 40, 40, 40)
+                //设置显示位置
+                .setGravity(gr)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.getView(R.id.photo_xiangce).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //相册选取
+                autoObtainStoragePermission();
+                dialog.dismiss();
+            }
+        });
+        dialog.getView(R.id.photo_cream).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //相机选取
+                autoObtainCameraPermission();
+                dialog.dismiss();
+            }
+
+
+        });
+        dialog.show();
+    }
+
+    private void autoObtainStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSIONS_REQUEST_CODE);
+        } else {
+            PhotoUtils.openPic(this, CODE_GALLERY_REQUEST);
+        }
+    }
+
+    //调用相机
+    private void autoObtainCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                ToastUtils.showShort(this, "您已经拒绝过一次");
+            }
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, CAMERA_PERMISSIONS_REQUEST_CODE);
+        } else {//有权限直接调用系统相机拍照
+            if (hasSdcard()) {
+                imageUri = Uri.fromFile(fileUri);
+                if (Build.VERSION.SDK_INT >= 24)
+                    imageUri = FileProvider.getUriForFile(ZiLiaoActivity.this, "com.xykj.customview.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
+                PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
+            } else {
+                ToastUtils.showShort(this, "设备没有SD卡！");
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case CAMERA_PERMISSIONS_REQUEST_CODE: {//调用系统相机申请拍照权限回调
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (hasSdcard()) {
+                        imageUri = Uri.fromFile(fileUri);
+                        if (Build.VERSION.SDK_INT >= 24)
+                            imageUri = FileProvider.getUriForFile(ZiLiaoActivity.this, "com.zz.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
+                        PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
+                    } else {
+                        ToastUtils.showShort(this, "设备没有SD卡！");
+                    }
+                } else {
+
+                    ToastUtils.showShort(this, "请允许打开相机！！");
+                }
+                break;
+            }
+            case STORAGE_PERMISSIONS_REQUEST_CODE://调用系统相册申请Sdcard权限回调
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PhotoUtils.openPic(this, CODE_GALLERY_REQUEST);
+                } else {
+
+                    ToastUtils.showShort(this, "请允许打操作SDCard！！");
+                }
+                break;
+        }
+    }
+
+    private static final int output_X = 480;
+    private static final int output_Y = 480;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case CODE_CAMERA_REQUEST://拍照完成回调
+                    cropImageUri = Uri.fromFile(fileCropUri);
+                    KLog.a(cropImageUri);
+                    PhotoUtils.cropImageUri(this, imageUri, cropImageUri, 1, 1, output_X, output_Y, CODE_RESULT_REQUEST);
+
+                    break;
+                case CODE_GALLERY_REQUEST://访问相册完成回调
+                    if (hasSdcard()) {
+                        cropImageUri = Uri.fromFile(fileCropUri);
+                        KLog.a(cropImageUri);
+                        Uri newUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));
+
+                        if (Build.VERSION.SDK_INT >= 24)
+                            newUri = FileProvider.getUriForFile(this, "com.xykj.customview.fileprovider", new File(newUri.getPath()));
+                        PhotoUtils.cropImageUri(this, newUri, cropImageUri, 1, 1, output_X, output_Y, CODE_RESULT_REQUEST);
+                    } else {
+                        ToastUtils.showShort(this, "设备没有SD卡！");
+                    }
+                    break;
+                case CODE_RESULT_REQUEST:
+                    Bitmap bitmap = PhotoUtils.getBitmapFromUri(cropImageUri, this);
+                    KLog.a(cropImageUri);
+                    //将URl上传到服务器
+                    photowork();
+                    ToastUtils.showShort(ZiLiaoActivity.this, cropImageUri.toString());
+                    if (bitmap != null) {
+                        showImages(bitmap);
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void showImages(Bitmap bitmap) {
+        //设置图片到页面
+        iv_head.setImageBitmap(bitmap);
+    }
+
+    private void photowork() {
+        final Thread thred = new Thread(new Runnable() {
+            private String s;
+
+            @Override
+            public void run() {
+                Map<String, File> files = new HashMap<>();
+                files.put("sfile", fileCropUri);
+                s = UploadUtil.uploadFile(files, MyContants.BASEURL + "s=Upload/upload");
+                Gson gson = new Gson();
+                upphotobean = gson.fromJson(s, Upphotobean.class);
+                List<Upphotobean.DatasBean> datas = upphotobean.getDatas();
+                imgUrl = datas.get(0).getUrl();
+                goMain();
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        KLog.a("Tag", s);
+                        ToastUtils.showShort(ZiLiaoActivity.this, s);
+                    }
+                });
+
+            }
+        });
+        thred.start();
+    }
+
 
     private void goMain() {
         if (TextUtils.isEmpty(edt_nicheng.getText().toString())) {
@@ -124,6 +334,7 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
         arrayMap.put("sex", tv_xingbie.getText().toString().equals("男") ? "1" : "2");
         arrayMap.put("birth", tv_birthday.getText().toString());
         arrayMap.put("user_address", "");
+        arrayMap.put("head", imgUrl);
         arrayMap.put("address_detail", edt_detail_address.getText().toString());
         RetrofitManager.get(MyContants.BASEURL + "s=User/editProfile", arrayMap, new BaseObserver1<EasyBean>("") {
             @Override
@@ -131,7 +342,7 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                 if (result.getCode() == 200) {
                     Intent intent1 = new Intent(ZiLiaoActivity.this, MainActivity.class);
                     startActivity(intent1);
-                    SpUtils.putString(ZiLiaoActivity.this,"user_id",mUserid);
+                    SpUtils.putString(ZiLiaoActivity.this, "user_id", mUserid);
                 }
             }
 

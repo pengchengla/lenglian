@@ -182,7 +182,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                     startActivity(intent);
                 } else {
                     //101是没有数据
-                    Toast.makeText(QueRenOrderActivity.this, "" + result.getError(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QueRenOrderActivity.this, "提交失败" + result.getError(), Toast.LENGTH_SHORT).show();
                 }
             }
 
