@@ -96,4 +96,5 @@ dependencies {
     compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.1'
     //Springview
     compile 'com.liaoinstan.springview:library:1.2.6'
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }
