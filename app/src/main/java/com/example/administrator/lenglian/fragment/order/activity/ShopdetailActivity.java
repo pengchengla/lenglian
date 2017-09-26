@@ -45,6 +45,7 @@ import com.example.administrator.lenglian.utils.pictureutils.PlusImageActivity;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.utils.pictureutils.UploadUtil;
 import com.example.administrator.lenglian.view.MyRatingBar;
+import com.google.gson.Gson;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -302,6 +303,8 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                             Map<String,File> files=new HashMap<>();
                             files.put("sfile",file);
                             s = UploadUtil.uploadFile(files, MyContants.BASEURL + "s=Upload/upload");
+                            Gson gson=new Gson();
+                 //           gson.fromJson(s,)
 
                             handler.post(new Runnable() {
                                 @Override

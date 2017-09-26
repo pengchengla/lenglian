@@ -77,7 +77,19 @@ public class PayUtil {
         viewById.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.showShort(context,list.get(position).getName());
+
+                  if(list.get(position).getName().equals("支付宝支付")){
+
+                      ToastUtils.showShort(context,list.get(position).getName());
+                  }
+                else if("微信支付".equals(list.get(position).getName())){
+                      ToastUtils.showShort(context,list.get(position).getName());
+
+                  }
+                  //银行卡支付
+                else {
+                      ToastUtils.showShort(context,list.get(position).getName());
+                  }
             }
         });
         dialog.getView(R.id.zhifu_cancel).setOnClickListener(new View.OnClickListener() {

@@ -147,6 +147,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
              @Override
              public void onClick(View v) {
                  Intent intent=new Intent(context,RenewActivity.class);
+                 intent.putExtra("order_id",list.get(position).getOrder_id());
                  context.startActivity(intent);
              }
          });
@@ -181,7 +182,6 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
             //评价
             case R.id.order_evaluation:
                 Intent inte=new Intent(context,ShopdetailActivity.class);

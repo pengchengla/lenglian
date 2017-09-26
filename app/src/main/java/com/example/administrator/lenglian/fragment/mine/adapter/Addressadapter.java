@@ -89,6 +89,8 @@ public class Addressadapter extends BaseAdapter {
         }
         else {
             holder.ad_text.setText("设为默认");
+            holder.ad_text.setTextColor(Color.BLACK);
+            holder.ad_imgmo.setImageResource(R.drawable.icon_single_unchecked);
         }
 
          holder.ad_bianji.setOnClickListener(new View.OnClickListener() {
@@ -114,24 +116,73 @@ public class Addressadapter extends BaseAdapter {
                 notifyDataSetChanged();
             }
         });
-  //      final ViewHolder finalHolder = holder;
-//        holder.change_zhuangtai.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                aBoolean=!aBoolean;
-//                if(aBoolean){
-//                     finalHolder.ad_imgmo.setImageResource(R.drawable.icon_single_checked);
-//                    finalHolder.ad_text.setText("默认地址");
-//                    finalHolder.ad_text.setTextColor(Color.RED);
-//
-//                }
-//                else {
-//                    finalHolder.ad_imgmo.setImageResource(R.drawable.icon_single_unchecked);
-//                    finalHolder.ad_text.setText("设为默认");
-//                    finalHolder.ad_text.setTextColor(Color.BLACK);
-//                }
-//            }
-//        });
+        final ViewHolder finalHolder = holder;
+        holder.change_zhuangtai.setOnClickListener(new View.OnClickListener() {
+
+            private String express_id;
+
+            @Override
+            public void onClick(View v) {
+                aBoolean=!aBoolean;
+                //网络请求
+                Map<String,String> map=new HashMap<String, String>();
+                map.put("user_id",SpUtils.getString(context,"user_id",""));
+                map.put("token",MyUtils.getToken());
+                express_id = list.get(position).getExpress_id();
+                map.put("express_id", express_id);
+                if(aBoolean){
+                    map.put("is_default","1");
+                    finalHolder.ad_imgmo.setImageResource(R.drawable.icon_single_checked);
+                    finalHolder.ad_text.setText("默认地址");
+                    finalHolder.ad_text.setTextColor(Color.RED);
+                }
+                else {
+                    map.put("is_default","2");
+                    finalHolder.ad_imgmo.setImageResource(R.drawable.icon_single_unchecked);
+                    finalHolder.ad_text.setText("设为默认");
+                    finalHolder.ad_text.setTextColor(Color.BLACK);
+
+                }
+                 RetrofitManager.get(MyContants.BASEURL + "s=User/editExpress", map, new BaseObserver1<Resultbean>("") {
+                     @Override
+                     public void onSuccess(Resultbean result, String tag) {
+                         if(result.getCode()==200) {
+                             ToastUtils.showShort(context, "修改成功");
+                             Map<String,String> map=new HashMap<>();
+                             map.put("user_id", SpUtils.getString(context,"user_id",""));//传过来的--------------
+                             map.put("token", MyUtils.getToken());
+                             RetrofitManager.get(MyContants.BASEURL +"s=User/listExpress",map, new BaseObserver1<Addressbean>("") {
+                                 @Override
+                                 public void onSuccess(Addressbean result, String tag) {
+                                     int code = result.getCode();
+                                     if (code==200){
+                                         ToastUtils.showShort(context,result.getSuccess());
+                                        list = result.getDatas();
+                                         notifyDataSetChanged();
+
+
+
+                                     }
+                                 }
+
+                                 @Override
+                                 public void onFailed(int code) {
+                                     ToastUtils.showShort(context,"网络失败,请检查网络");
+                                 }
+                             });
+
+
+
+                         }
+                     }
+
+                     @Override
+                     public void onFailed(int code) {
+
+                     }
+                 });
+            }
+        });
         return convertView;
     }
 
