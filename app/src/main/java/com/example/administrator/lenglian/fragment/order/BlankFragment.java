@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.order;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.text.util.Rfc822Token;
@@ -35,6 +36,9 @@ import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.google.gson.Gson;
+import com.liaoinstan.springview.container.DefaultFooter;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -50,10 +54,15 @@ public class BlankFragment extends BaseFragment {
 
     private TextView tv_back;
     private ListView list_recying;
-    private List<Indexbean> list=new ArrayList<>();
+    private List<Indexbean> list = new ArrayList<>();
     private String api;
     private List<Dingdanbean.DatasBean> datas;
+    private SpringView springview;
+    Payadapter payadapter;
+    Deliveryadapter deliveryadapter;
+    private Evaluateadapter evaluateadapyer;
 
+    private DingdanAdapter dindanadapter;
     public static BlankFragment newInstance(String text) {
         Bundle bundle = new Bundle();
         bundle.putString("api", text);
@@ -67,6 +76,10 @@ public class BlankFragment extends BaseFragment {
         View view = View.inflate(mContext, R.layout.order_recying, null);
         this.tv_back = (TextView) view.findViewById(R.id.tv_back);
         this.list_recying = (ListView) view.findViewById(R.id.list_recying);
+        this.springview = (SpringView) view.findViewById(R.id.springview);
+        //设置类型
+        springview.setType(SpringView.Type.FOLLOW);
+
         return view;
     }
 
@@ -76,80 +89,121 @@ public class BlankFragment extends BaseFragment {
 
         //  接口
         api = getArguments().getString("api");
-        if(api.equals(MyContants.BASEURL+"s=Order/listOrder")){
+        if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
             //网络请求
             ininjson();
-            return;
-        }
-        else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=1")){
+
+        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
             //待支付
             Zhifu();
-            return;
-        }
-        else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=2,3")){
 
-               //待收货
+        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
+
+            //待收货
             delivery();
-            return;
-        }
-        else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=10")){
+
+        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
             //待评价
             evaluate();
-            return;
+
         }
 
-       //点击跳转
+        //点击跳转
         list_recying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (api.equals(MyContants.BASEURL +"s=Order/listOrder")){
-                     if("1".equals(datas.get(position).getOrder_status())){
-                         Intent intent=new Intent(getActivity(), OrderPayActivity.class);
-                         startActivity(intent);
-                     }
-                    else if("2".equals(datas.get(position).getOrder_status())||"3".equals(datas.get(position).getOrder_status())){
-                         Intent it=new Intent(getActivity(), ReceiptActivity.class);
-                         startActivity(it);
-                     }
-                    else {
-                         Intent intent=new Intent(getActivity(), AppraiseActivity.class);
-                         startActivity(intent);
-                     }
-                //    Intent inetn=new Intent(this,class);
+                if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
+                    if ("1".equals(datas.get(position).getOrder_status())) {
+                        Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                        startActivity(intent);
+                    } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status())) {
+                        Intent it = new Intent(getActivity(), ReceiptActivity.class);
+                        startActivity(it);
+                    } else {
+                        Intent intent = new Intent(getActivity(), AppraiseActivity.class);
+                        startActivity(intent);
+                    }
+                    //    Intent inetn=new Intent(this,class);
                     //跳支付
-                }else if (api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=1")){
-                    Intent intent=new Intent(getActivity(), OrderPayActivity.class);
+                } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
+                    Intent intent = new Intent(getActivity(), OrderPayActivity.class);
                     startActivity(intent);
                 }
                 //跳收货
-                else  if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=2,3")){
-                      Intent it=new Intent(getActivity(), ReceiptActivity.class);
+                else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
+                    Intent it = new Intent(getActivity(), ReceiptActivity.class);
                     startActivity(it);
                 }
                 //跳评价
-                else if(api.equals(MyContants.BASEURL +"s=Order/listOrder/order_status=10")){
-                       Intent intent=new Intent(getActivity(), AppraiseActivity.class);
+                else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
+                    Intent intent = new Intent(getActivity(), AppraiseActivity.class);
                     startActivity(intent);
                 }
             }
         });
 
 
-    }
+        springview.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(api.equals(MyContants.BASEURL + "s=Order/listOrder")){
+                            dindanadapter.notifyDataSetChanged();
+                        }
+                        else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
+                            //待支付
+                          payadapter.notifyDataSetChanged();
+
+                        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
+
+                            //待收货
+                          deliveryadapter.notifyDataSetChanged();
+
+                        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
+                            //待评价
+                       evaluateadapyer.notifyDataSetChanged();
+
+                        }
+                        springview.onFinishFreshAndLoad();
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public void onLoadmore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        springview.onFinishFreshAndLoad();
+                    }
+                }, 1000);
+            }
+        });
+        springview.setHeader(new DefaultHeader(getActivity()));
+        springview.setFooter(new DefaultFooter(getActivity()));
+
+
+}
+
 
     private void evaluate() {
         //评价
         Map<String,String> map=new HashMap<>();
         map.put("user_id", SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
-        map.put("order_status","10");
+        map.put("order_status","0");
 
         RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
+
+
+
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                     if(result.getCode()==200){
                         List<Dingdanbean.DatasBean> datas = result.getDatas();
-                        Evaluateadapter evaluateadapyer=new  Evaluateadapter (getActivity(),datas );
+                        evaluateadapyer = new Evaluateadapter(getActivity(),datas );
                         list_recying.setAdapter(evaluateadapyer);
                     }
 
@@ -173,7 +227,7 @@ public class BlankFragment extends BaseFragment {
             public void onSuccess(Dingdanbean result, String tag) {
                 if(result.getCode()==200){
                     List<Dingdanbean.DatasBean> datas = result.getDatas();
-                    Deliveryadapter deliveryadapter=new Deliveryadapter(getActivity(),datas);
+                     deliveryadapter=new Deliveryadapter(getActivity(),datas);
                     list_recying.setAdapter(deliveryadapter);
                 }
 
@@ -191,18 +245,17 @@ public class BlankFragment extends BaseFragment {
         Map<String,String> map=new HashMap<>();
           map.put("user_id",SpUtils.getString(mContext,"user_id",""));
           map.put("token", MyUtils.getToken());
-        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("zong") {
+        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
 
 
 
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
-                if (tag.equals("zong")) {
                     if (result.getCode() == 200) {
                         datas = result.getDatas();
-                        DingdanAdapter dindanadapter = new DingdanAdapter(getActivity(), datas);
+                        dindanadapter = new DingdanAdapter(getActivity(), datas);
                         list_recying.setAdapter(dindanadapter);
-                    }
+
                 }
             }
             @Override
@@ -225,7 +278,7 @@ public class BlankFragment extends BaseFragment {
 
               if  (tag.equals("zhifu")) {
                     List<Zhifubean.DatasBean> datas = result.getDatas();
-                    Payadapter payadapter = new Payadapter(getActivity(), datas);
+                    payadapter = new Payadapter(getActivity(), datas);
                     list_recying.setAdapter(payadapter);
                 }
             }

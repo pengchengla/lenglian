@@ -86,9 +86,9 @@
             android:textSize="14sp"
             android:gravity="center"
             android:padding="10dp"
-            android:background="@drawable/selector_bian"
+            android:background="@drawable/shape_line"
             android:id="@+id/order_renew"
-            android:textColor="@drawable/textcolers"
+            android:textColor="@color/black"
             />
         <TextView
             android:clickable="true"
@@ -100,9 +100,9 @@
             android:padding="10dp"
             android:textSize="14sp"
             android:gravity="center"
-            android:background="@drawable/selector_bian"
+            android:background="@drawable/shape_line"
             android:id="@+id/order_tuihuan"
-            android:textColor="@drawable/textcolers"
+            android:textColor="@color/black"
             />
         <TextView
             android:layout_weight="1"
@@ -114,9 +114,9 @@
             android:padding="10dp"
             android:textSize="14sp"
             android:gravity="center"
-            android:background="@drawable/selector_bian"
+            android:background="@drawable/shape_line"
             android:id="@+id/order_repairs"
-            android:textColor="@drawable/textcolers"
+            android:textColor="@color/black"
             />
         <TextView
             android:layout_weight="1"
@@ -128,9 +128,9 @@
             android:padding="10dp"
             android:textSize="14sp"
             android:gravity="center"
-            android:background="@drawable/selector_bian"
+            android:background="@drawable/shape_line"
             android:id="@+id/order_evaluation"
-            android:textColor="@drawable/textcolers"
+            android:textColor="@color/black"
             />
         <TextView
             android:layout_marginLeft="8dp"

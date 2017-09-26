@@ -88,12 +88,6 @@ public class OrderFragment extends BaseFragment {
         list.add(String.format(Locale.CHINA, "待支付"));
         list.add(String.format(Locale.CHINA, "待收货"));
         list.add(String.format(Locale.CHINA, "待评价"));
-//        Indexbean index;
-//        for (int i = 0; i < 5; i++) {
-//            index=new Indexbean();
-//            index.setCount("哈发发嘎啊发发发阿发啊啊"+i);
-//            lists.add(index);
-//        }
         apiList = new ArrayList<>();
         //放接口
         apiList.add(MyContants.BASEURL+"s=Order/listOrder");
@@ -102,7 +96,7 @@ public class OrderFragment extends BaseFragment {
         //收货
         apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=2,3");
         //评价
-        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=10");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder/is_comment=0");
         for (int i = 0; i < list.size(); i++) {
             tab.addTab(tab.newTab().setText(list.get(i)));
         }
