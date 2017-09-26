@@ -68,6 +68,7 @@
         android:background="@color/hui" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/evaluate"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="18dp"
@@ -183,26 +184,25 @@
             />
     </LinearLayout>
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/receving"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
             android:text="确认收货"
             android:layout_width="80dp"
             android:layout_height="40dp"
-            android:padding="10dp"
             android:textSize="14sp"
             android:gravity="center"
             android:background="@drawable/shape_redline"
             android:id="@+id/recying_btn"
             android:textColor="@color/redd"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
+            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
     <View
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/hui" />

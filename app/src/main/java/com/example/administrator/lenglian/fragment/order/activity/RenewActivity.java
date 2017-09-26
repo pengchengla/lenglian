@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.order.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.PayUtil;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.view.SnappingStepper;
 
 import java.util.HashMap;
@@ -38,6 +40,7 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
     private TextView renew_geshu;
     private TextView renew_total;
     private TextView renew_btn;
+    private String order_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,23 +48,30 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.order_renew);
         initView();
         //加载网络请求
-        network();
+
         initdata();
     }
 
     private void initdata() {
+        Intent intent = getIntent();
+        order_id = intent.getStringExtra("order_id");
 
 
     }
     //网络请求
     private void network() {
         Map<String,String> map=new HashMap<>();
-        map.put("order_id","");
+        map.put("order_id",order_id);
         map.put("renewal_duration",renew_num.getValue()+"" );
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL + "s=Order/renewalOrder", map, new BaseObserver1<Resultbean>("") {
             @Override
             public void onSuccess(Resultbean result, String tag) {
+
+                    if(result.getCode()==200) {
+
+                        ToastUtils.showShort(RenewActivity.this,"续费成功");
+                    }
 
             }
 
@@ -97,8 +107,8 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.renew_btn:
-                PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,this);
-
+            //    PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,this);
+                network();
                 break;
         }
     }

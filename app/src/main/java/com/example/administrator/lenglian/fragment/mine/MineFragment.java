@@ -18,6 +18,7 @@ import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.view.CircleImageView;
@@ -97,6 +98,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
         tv_msg_number.setText("11");
+         //网络请求
+
 
     }
 
