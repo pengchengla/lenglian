@@ -23,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.activity.SearchActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
@@ -34,6 +35,7 @@ import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BannerUtils;
 import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -252,6 +254,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.ll_msg:
+                if (!MyUtils.islogin(mContext)) {
+                    Intent intent2 = new Intent(mContext, LoginActivity.class);
+                    intent2.putExtra("gologin", "gologin");
+                    startActivity(intent2);
+                    return;
+                }
                 Intent intent2 = new Intent(mContext, MessageActivity.class);
                 startActivity(intent2);
                 break;
@@ -319,9 +327,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
-                    .apply(options)
-                    .into((ImageView) helper.getView(R.id.iv_tupian));
+            if (item.getPro_pic() != null && item.getPro_pic().size() > 0) {
+                Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                        .apply(options)
+                        .into((ImageView) helper.getView(R.id.iv_tupian));
+            }
         }
     }
 

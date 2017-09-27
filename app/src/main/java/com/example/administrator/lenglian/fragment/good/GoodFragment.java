@@ -78,7 +78,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     public void myEvent(EventMessage eventMessage) {
         if (eventMessage.getMsg().equals("good_title")) {
             String msg = eventMessage.getMsg2();
-//            Toast.makeText(mContext, " " + msg, Toast.LENGTH_SHORT).show();
+            //            Toast.makeText(mContext, " " + msg, Toast.LENGTH_SHORT).show();
             switchTitleOne(msg);
         }
     }
@@ -210,9 +210,11 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
-                    .apply(options)
-                    .into((ImageView) helper.getView(R.id.iv_tupian));
+            if (item.getPro_pic() != null && item.getPro_pic().size() > 0) {
+                Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                        .apply(options)
+                        .into((ImageView) helper.getView(R.id.iv_tupian));
+            }
         }
     }
 

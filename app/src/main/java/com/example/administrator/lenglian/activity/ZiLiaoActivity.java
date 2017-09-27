@@ -127,6 +127,7 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                 goMain();
                 break;
             case R.id.tv_tiaoguo:
+                SpUtils.putString(ZiLiaoActivity.this, "user_id", mUserid);
                 startActivity(new Intent(this, MainActivity.class));
                 break;
         }
@@ -208,7 +209,8 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                     if (hasSdcard()) {
                         imageUri = Uri.fromFile(fileUri);
                         if (Build.VERSION.SDK_INT >= 24)
-                            imageUri = FileProvider.getUriForFile(ZiLiaoActivity.this, "com.zz.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
+                            imageUri = FileProvider.getUriForFile(ZiLiaoActivity.this,
+                                    "com.xykj.customview.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
                         PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
                     } else {
                         ToastUtils.showShort(this, "设备没有SD卡！");
@@ -333,7 +335,7 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
         arrayMap.put("nick_name", edt_nicheng.getText().toString());
         arrayMap.put("sex", tv_xingbie.getText().toString().equals("男") ? "1" : "2");
         arrayMap.put("birth", tv_birthday.getText().toString());
-        arrayMap.put("user_address", "");
+        arrayMap.put("user_address", tv_address.getText().toString());
         arrayMap.put("head", imgUrl);
         arrayMap.put("address_detail", edt_detail_address.getText().toString());
         RetrofitManager.get(MyContants.BASEURL + "s=User/editProfile", arrayMap, new BaseObserver1<EasyBean>("") {

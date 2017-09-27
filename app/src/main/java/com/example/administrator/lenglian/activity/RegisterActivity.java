@@ -59,10 +59,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 getCode();
                 break;
             case R.id.btn_yes:
-//                register();
-                Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
-                intent1.putExtra("userid","79");
-                startActivity(intent1);
+                register();
+//                Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
+//                intent1.putExtra("userid","79");
+//                startActivity(intent1);
                 break;
             case R.id.tv_xieyi:
                 Intent intent = new Intent(this, XieYiActivity.class);

@@ -52,8 +52,8 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
         iv_weibo.setOnClickListener(this);
 
 
-        edt_phone.setText(SpUtils.getString(LoginActivity.this,"phone",""));
-        edt_mima.setText(SpUtils.getString(LoginActivity.this,"password",""));
+        //        edt_phone.setText(SpUtils.getString(LoginActivity.this,"phone",""));
+        //        edt_mima.setText(SpUtils.getString(LoginActivity.this,"password",""));
     }
 
     @Override
@@ -97,13 +97,17 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
             public void onSuccess(LoginBean result, String tag) {
                 if (result.getCode() == 200) {
                     Toast.makeText(LoginActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent1);
                     SpUtils.putString(LoginActivity.this, "user_id", result.getDatas().getUser_id());
                     SpUtils.putString(LoginActivity.this, "phone", edt_phone.getText().toString().trim());
                     SpUtils.putString(LoginActivity.this, "password", edt_mima.getText().toString().trim());
-//                    Toast.makeText(LoginActivity.this, result.getDatas().getUser_id(), Toast.LENGTH_SHORT).show();
-                }else {
+                    if (getIntent().getStringExtra("gologin").equals("gologin")) {
+                        finish();
+                    } else {
+                        Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent1);
+                    }
+                    //                    Toast.makeText(LoginActivity.this, result.getDatas().getUser_id(), Toast.LENGTH_SHORT).show();
+                } else {
                     Toast.makeText(LoginActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
                 }
             }

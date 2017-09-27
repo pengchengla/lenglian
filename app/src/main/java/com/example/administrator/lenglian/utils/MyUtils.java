@@ -49,8 +49,8 @@ public class MyUtils {
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
-    public static boolean dologin(Context context) {
-        String userid = SpUtils.getString(context, "userid", "");
+    public static boolean islogin(Context context) {
+        String userid = SpUtils.getString(context, "user_id", "");
         if (TextUtils.isEmpty(userid)) {
             Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
             return false;

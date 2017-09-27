@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.fragment.home.MyShopCarActivity;
+import com.example.administrator.lenglian.utils.MyUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -100,6 +102,12 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.iv_car:
+                if (!MyUtils.islogin(this)) {
+                    Intent intent2 = new Intent(this, LoginActivity.class);
+                    intent2.putExtra("gologin","gologin");
+                    startActivity(intent2);
+                    return;
+                }
                 startActivity(new Intent(this, MyShopCarActivity.class));
                 break;
         }

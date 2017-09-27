@@ -113,8 +113,8 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
 
     private void initAddress() {
         ArrayMap arrayMap = new ArrayMap();
-        Toast.makeText(this, " " + SpUtils.getString(QueRenOrderActivity.this, "user_id", "")
-                , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, " " + SpUtils.getString(QueRenOrderActivity.this, "user_id", "")
+//                , Toast.LENGTH_SHORT).show();
         arrayMap.put("user_id", SpUtils.getString(QueRenOrderActivity.this, "user_id", ""));
         arrayMap.put("token", MyUtils.getToken());
         arrayMap.put("is_default", "1");
