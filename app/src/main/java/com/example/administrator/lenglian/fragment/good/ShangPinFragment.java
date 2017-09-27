@@ -25,7 +25,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
-import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.base.UMShareActivity;
 import com.example.administrator.lenglian.bean.CommentBean;
@@ -338,9 +337,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.tv_share:
                 if (!MyUtils.islogin(mContext)) {
-                    Intent intent2 = new Intent(mContext, LoginActivity.class);
-                    intent2.putExtra("gologin","gologin");
-                    startActivity(intent2);
+                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 UMShareActivity.shareWebUrl("",mDatas.getMain_title(),mDatas.getPro_pic().get(0).getUrl()
@@ -348,9 +345,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.ll_collect:
                 if (!MyUtils.islogin(mContext)) {
-                    Intent intent2 = new Intent(mContext, LoginActivity.class);
-                    intent2.putExtra("gologin","gologin");
-                    startActivity(intent2);
+                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 if (isCollected) {
@@ -361,18 +356,14 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.tv_lijizulin:
                 if (!MyUtils.islogin(mContext)) {
-                    Intent intent2 = new Intent(mContext, LoginActivity.class);
-                    intent2.putExtra("gologin","gologin");
-                    startActivity(intent2);
+                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 showCarDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion, 1);
                 break;
             case R.id.tv_jiaruzulin:
                 if (!MyUtils.islogin(mContext)) {
-                    Intent intent2 = new Intent(mContext, LoginActivity.class);
-                    intent2.putExtra("gologin","gologin");
-                    startActivity(intent2);
+                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 showCarDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion, 2);

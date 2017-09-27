@@ -9,6 +9,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +24,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
-import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.activity.SearchActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
@@ -36,7 +36,6 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BannerUtils;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
-import com.example.administrator.lenglian.utils.SpUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -113,7 +112,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        Toast.makeText(mContext, " "+ SpUtils.getString(mContext,"user_id",""), Toast.LENGTH_SHORT).show();
+        //        Toast.makeText(mContext, " "+ SpUtils.getString(mContext,"user_id",""), Toast.LENGTH_SHORT).show();
         nestView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -257,9 +256,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.ll_msg:
                 if (!MyUtils.islogin(mContext)) {
-                    Intent intent2 = new Intent(mContext, LoginActivity.class);
-                    intent2.putExtra("gologin", "gologin");
-                    startActivity(intent2);
+                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 Intent intent2 = new Intent(mContext, MessageActivity.class);
@@ -292,6 +289,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+
+
 
     class CuxiaoAdapter extends BaseQuickAdapter<HomeBean.DatasEntity.SaleEntity, BaseViewHolder> {
 

@@ -13,7 +13,13 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.LoginActivity;
 
 import org.json.JSONObject;
 
@@ -56,6 +62,46 @@ public class MyUtils {
             return false;
         }
         return true;
+    }
+
+    public static void showloginDialog(final Context context, int grary, int animationStyle) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(context);
+        final BaseDialog dialog = builder.setViewId(R.layout.dialog_phone)
+                //设置dialogpadding
+                .setPaddingdp(10, 0, 10, 0)
+                //设置显示位置
+                .setGravity(grary)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.show();
+        TextView tv_content = dialog.getView(R.id.tv_content);
+        tv_content.setText("你还未登录，请登录");
+        TextView tv_canel = dialog.getView(R.id.tv_canel);
+        tv_canel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //关闭dialog
+                dialog.close();
+            }
+        });
+        TextView tv_yes = dialog.getView(R.id.tv_yes);
+        tv_yes.setText("去登陆");
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //登录
+                Intent intent = new Intent(context, LoginActivity.class);
+                intent.putExtra("gologin", "gologin");
+                context.startActivity(intent);
+                dialog.dismiss();
+            }
+        });
     }
 
     /**

@@ -7,11 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.administrator.lenglian.R;
-import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.fragment.home.MyShopCarActivity;
@@ -103,9 +103,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.iv_car:
                 if (!MyUtils.islogin(this)) {
-                    Intent intent2 = new Intent(this, LoginActivity.class);
-                    intent2.putExtra("gologin","gologin");
-                    startActivity(intent2);
+                    MyUtils.showloginDialog(this, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 startActivity(new Intent(this, MyShopCarActivity.class));
