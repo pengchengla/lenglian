@@ -143,8 +143,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         //昵称
                         mine_name.setText(datas.get(0).getUser_name());
                         //手机号
-
-
+                        String phone = SpUtils.getString(getActivity(), "phone", "");
+                        mine_phone.setText(phone);
 
 
                     }

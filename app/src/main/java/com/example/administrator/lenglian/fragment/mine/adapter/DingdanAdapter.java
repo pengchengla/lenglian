@@ -110,11 +110,19 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
          */
         if("5".equals(list.get(position).getOrder_status())) {
 
-            holder.pay.setVisibility(View.VISIBLE);
-            holder.evaluate.setVisibility(View.GONE);
-            holder.evaluate.setVisibility(View.GONE);
-            if ("6".equals(list.get(position).getOrder_status()) || "7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status())) {
+            holder.pay.setVisibility(View.GONE);
+            holder.evaluate.setVisibility(View.VISIBLE);
+            holder.receving.setVisibility(View.GONE);
 
+             //激活
+            holder.order_activate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   ToastUtils.showShort(context,"激活设备");
+                }
+            });
+            if ("6".equals(list.get(position).getOrder_status()) || "7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status())) {
+                  //续费
                 holder.order_renew.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,13 +166,18 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
             }
         }
             //收货
-            else if ("2".equals(list.get(position).getOrder_status()) || "3".equals(list.get(position).getOrder_status())) {
+            else if ("2".equals(list.get(position).getOrder_status()) || "3".equals(list.get(position).getOrder_status())|| "4".equals(list.get(position).getOrder_status())
+                || "9".equals(list.get(position).getOrder_status())|| "10".equals(list.get(position).getOrder_status())
+                || "7".equals(list.get(position).getOrder_status())|| "8".equals(list.get(position).getOrder_status())) {
                 holder.pay.setVisibility(View.GONE);
                 holder.evaluate.setVisibility(View.GONE);
                 holder.receving.setVisibility(View.VISIBLE);
-            } else {
-                holder.evaluate.setVisibility(View.VISIBLE);
-                holder.pay.setVisibility(View.GONE);
+
+
+            } else if("1".equals(list.get(position).getOrder_status())) {
+
+                holder.evaluate.setVisibility(View.GONE);
+                holder.pay.setVisibility(View.VISIBLE);
                 holder.receving.setVisibility(View.GONE);
             }
 

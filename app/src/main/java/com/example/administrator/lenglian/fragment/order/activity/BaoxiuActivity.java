@@ -125,7 +125,7 @@ public class BaoxiuActivity extends BaseActivity implements View.OnClickListener
 
     private void network() {
         Map<String,String> map=new HashMap<>();
-        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("user_id", SpUtils.getString(this,"user_id",SpUtils.getString(this,"user_id","")));
         map.put("token", MyUtils.getToken());
         map.put("order_id",order_id);
         map.put("contact_name",baoxiu_name.getText().toString());
