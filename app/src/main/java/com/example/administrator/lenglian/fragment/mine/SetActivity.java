@@ -1,7 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -12,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
@@ -61,7 +59,7 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_exit:
                 //退出登录
-                SpUtils.getString(this,"user_id","");
+                SpUtils.putString(this,"user_id","");
                 Intent inten=new Intent(SetActivity.this, LoginActivity.class);
                 startActivity(inten);
                 finish();

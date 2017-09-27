@@ -1,7 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -85,18 +84,12 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
     private Uri cropImageUri;
     private Handler handler=new Handler();
     private Upphotobean upphotobean;
-    private GoogleApiClient client;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_personal);
         initView();
         inindata();//下拉个人信息
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
     }
 //修改地址
     private void ininaddress() {
@@ -412,7 +405,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         } else {//有权限直接调用系统相机拍照
             if (hasSdcard()) {
                 imageUri = Uri.fromFile(fileUri);
-                if (Build.VERSION.SDK_INT >= 23)
+                if (Build.VERSION.SDK_INT >= 24)
                     imageUri = FileProvider.getUriForFile(PersoninforActivity.this, "com.xykj.customview.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
                 PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
             } else {
@@ -479,8 +472,8 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (hasSdcard()) {
                         imageUri = Uri.fromFile(fileUri);
-                        if (Build.VERSION.SDK_INT >= 23)
-                            imageUri = FileProvider.getUriForFile(PersoninforActivity.this, "com.zz.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
+                        if (Build.VERSION.SDK_INT >= 24)
+                            imageUri = FileProvider.getUriForFile(PersoninforActivity.this, "com.xykj.customview.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
                         PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
                     } else {
                         ToastUtils.showShort(this, "设备没有SD卡！");
@@ -525,7 +518,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                         KLog.a(cropImageUri);
                         Uri newUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));
 
-                        if (Build.VERSION.SDK_INT >=23)
+                        if (Build.VERSION.SDK_INT >=24)
                             newUri = FileProvider.getUriForFile(this, "com.xykj.customview.fileprovider", new File(newUri.getPath()));
                         PhotoUtils.cropImageUri(this, newUri, cropImageUri, 1, 1, output_X, output_Y, CODE_RESULT_REQUEST);
                     } else {
@@ -605,35 +598,5 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             PhotoUtils.openPic(this, CODE_GALLERY_REQUEST);
         }
 
-    }
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
     }
 }

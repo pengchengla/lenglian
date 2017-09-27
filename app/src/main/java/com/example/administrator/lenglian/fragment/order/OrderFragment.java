@@ -1,20 +1,14 @@
 package com.example.administrator.lenglian.fragment.order;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.LoginActivity;
@@ -59,9 +53,6 @@ public class OrderFragment extends BaseFragment {
             }
         });
 
-
-
-
         if (!TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
               real_login.setVisibility(View.GONE);
             liner_tab.setVisibility(View.VISIBLE);
@@ -74,7 +65,12 @@ public class OrderFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-
+        if (!hidden){
+            if (!TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
+                real_login.setVisibility(View.GONE);
+                liner_tab.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override

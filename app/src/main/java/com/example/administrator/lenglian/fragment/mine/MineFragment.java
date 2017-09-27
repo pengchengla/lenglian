@@ -1,14 +1,10 @@
 package com.example.administrator.lenglian.fragment.mine;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,7 +18,6 @@ import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.fragment.mine.bean.Personbean;
-import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
@@ -62,24 +57,24 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected View initView() {
         View rootView = View.inflate(mContext, R.layout.activity_mine, null);
-        tv_msg_number= (TextView) rootView.findViewById(R.id.tv_msg_number);
+        tv_msg_number = (TextView) rootView.findViewById(R.id.tv_msg_number);
         ll_msg = (LinearLayout) rootView.findViewById(R.id.ll_msg);
         mine_set = (LinearLayout) rootView.findViewById(R.id.mine_set);
         mine_head = (CircleImageView) rootView.findViewById(R.id.mine_head);
         mine_phone = (TextView) rootView.findViewById(R.id.mine_phone);
         mine_name = (TextView) rootView.findViewById(R.id.mine_name);
         title_back = (RelativeLayout) rootView.findViewById(R.id.title_back);
-        mine_wallet= (RelativeLayout) rootView.findViewById(R.id.one);
-        mine_card= (RelativeLayout) rootView.findViewById(R.id.two);
-        mine_Warranty= (RelativeLayout) rootView.findViewById(R.id.three);
-        mine_alteration= (RelativeLayout) rootView.findViewById(R.id.four);
-        mine_collection= (RelativeLayout) rootView.findViewById(R.id.five);
-        mine_evaluate= (RelativeLayout) rootView.findViewById(R.id.six);
-        mine_address= (RelativeLayout) rootView.findViewById(R.id.seven);
-        mine_manual= (RelativeLayout) rootView.findViewById(R.id.eight);
-        mine_kefu= (RelativeLayout) rootView.findViewById(R.id.nine);
+        mine_wallet = (RelativeLayout) rootView.findViewById(R.id.one);
+        mine_card = (RelativeLayout) rootView.findViewById(R.id.two);
+        mine_Warranty = (RelativeLayout) rootView.findViewById(R.id.three);
+        mine_alteration = (RelativeLayout) rootView.findViewById(R.id.four);
+        mine_collection = (RelativeLayout) rootView.findViewById(R.id.five);
+        mine_evaluate = (RelativeLayout) rootView.findViewById(R.id.six);
+        mine_address = (RelativeLayout) rootView.findViewById(R.id.seven);
+        mine_manual = (RelativeLayout) rootView.findViewById(R.id.eight);
+        mine_kefu = (RelativeLayout) rootView.findViewById(R.id.nine);
         mine_login = (TextView) rootView.findViewById(R.id.mine_login);
-       //设置监听
+        //设置监听
         mine_Warranty.setOnClickListener(this);
         mine_wallet.setOnClickListener(this);
         mine_card.setOnClickListener(this);
@@ -94,17 +89,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         mine_head.setOnClickListener(this);
         ll_msg.setOnClickListener(this);
         mine_login.setOnClickListener(this);
-        if (!TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
+        if (!TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
             mine_login.setVisibility(View.GONE);
             mine_name.setVisibility(View.VISIBLE);
             mine_phone.setVisibility(View.VISIBLE);
 
 
         }
-         if(!TextUtils.isEmpty(SpUtils.getString(getActivity(),"nick_name",""))){
-               mine_name.setText(SpUtils.getString(getActivity(),"nick_name",""));
+        if (!TextUtils.isEmpty(SpUtils.getString(getActivity(), "nick_name", ""))) {
+            mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
 
-         }
+        }
         //取头像
         String photo = SpUtils.getString(getActivity(), "photo", "");
         //加载数据
@@ -118,37 +113,52 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 .into(mine_head);
         return rootView;
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            if (!TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+                mine_login.setVisibility(View.GONE);
+                mine_name.setVisibility(View.VISIBLE);
+                mine_phone.setVisibility(View.VISIBLE);
+            }else {
+
+            }
+        }
+    }
+
     @Override
     protected void initData() {
         tv_msg_number.setText("11");
-         //网络请求
-        Map<String,String> map=new HashMap<>();
-        map.put("user_id",SpUtils.getString(getActivity(),"user_id",""));
+        //网络请求
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(getActivity(), "user_id", ""));
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL + "s=User/viewProfile", map, new BaseObserver1<Personbean>("") {
             @Override
             public void onSuccess(Personbean result, String tag) {
 
-                    if(result.getCode()==200){
-                        List<Personbean.DatasBean> datas = result.getDatas();
-                        //加载数据
-                        RequestOptions options = new RequestOptions()
-                                .centerCrop()
-                                .error(R.drawable.default_square)
-                                .priority(Priority.NORMAL)
-                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-                        Glide.with(mContext).load(datas.get(0).getHead())
-                                .apply(options)
-                                .into(mine_head);
-                        //昵称
-                        mine_name.setText(datas.get(0).getUser_name());
-                        //手机号
-                        String phone = SpUtils.getString(getActivity(), "phone", "");
-                        mine_phone.setText(phone);
+                if (result.getCode() == 200) {
+                    List<Personbean.DatasBean> datas = result.getDatas();
+                    //加载数据
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .error(R.drawable.default_square)
+                            .priority(Priority.NORMAL)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                    Glide.with(mContext).load(datas.get(0).getHead())
+                            .apply(options)
+                            .into(mine_head);
+                    //昵称
+                    mine_name.setText(datas.get(0).getUser_name());
+                    //手机号
+                    String phone = SpUtils.getString(getActivity(), "phone", "");
+                    mine_phone.setText(phone);
 
 
-                    }
-    }
+                }
+            }
 
             @Override
             public void onFailed(int code) {
@@ -160,71 +170,64 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.three://我的保修
-                Intent it=new Intent(getActivity(),WarrantyActivity.class);
+                Intent it = new Intent(getActivity(), WarrantyActivity.class);
                 startActivity(it);
                 break;
             case R.id.one://我的钱包
-                if(TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
-                    showloginDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
-                }
-                else {
-                    Intent it1=new Intent(getActivity(),WalletActivity.class);
+                if (TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+                    showloginDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
+                } else {
+                    Intent it1 = new Intent(getActivity(), WalletActivity.class);
                     startActivity(it1);
                 }
 
                 break;
             case R.id.two://我的银行卡
-                if(TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
-                    showloginDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
-                }
-                else {
+                if (TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+                    showloginDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
+                } else {
                     Intent it2 = new Intent(getActivity(), CardActivity.class);
                     startActivity(it2);
                 }
                 break;
             case R.id.four://我的退还
-                if(TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
-                    showloginDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
-                }
-                else {
+                if (TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+                    showloginDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
+                } else {
                     Intent it3 = new Intent(getActivity(), AlterationActivity.class);
                     startActivity(it3);
                 }
                 break;
             case R.id.five://我的收藏
-                if(TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
-                    showloginDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
-                }
-                else {
+                if (TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+                    showloginDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
+                } else {
                     Intent it4 = new Intent(getActivity(), CollectionActivity.class);
                     startActivity(it4);
                 }
                 break;
             case R.id.six://我的评价
-                if(TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
-                    showloginDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
-                }
-                else {
+                if (TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+                    showloginDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
+                } else {
                     Intent it5 = new Intent(getActivity(), EvaluateActivity.class);
                     startActivity(it5);
                 }
                 break;
             case R.id.seven://我的地址
-                if(TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
-                    showloginDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
-                }
-                else {
+                if (TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+                    showloginDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
+                } else {
                     Intent it6 = new Intent(getActivity(), AddressActivity.class);
                     startActivity(it6);
                 }
                 break;
             case R.id.eight://用户指南
-                if(TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
-                    showloginDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
-                }
-                else {
+                if (TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+                    showloginDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
+                } else {
                     Intent it7 = new Intent(getActivity(), ManualActivity.class);
                     startActivity(it7);
                 }
@@ -233,18 +236,18 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 showDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
                 break;
             case R.id.mine_set:
-                Intent set=new Intent(getActivity(),SetActivity.class);
+                Intent set = new Intent(getActivity(), SetActivity.class);
                 startActivity(set);
                 break;
             case R.id.mine_head:
-                 Intent head=new Intent(getActivity(),PersoninforActivity.class);
+                Intent head = new Intent(getActivity(), PersoninforActivity.class);
                 startActivity(head);
                 break;
             case R.id.ll_msg://消息
-                 startActivity(new Intent(mContext, MessageActivity.class));
+                startActivity(new Intent(mContext, MessageActivity.class));
                 break;
-            case R.id. mine_login:
-                  Intent intent=new Intent(getActivity(), LoginActivity.class);
+            case R.id.mine_login:
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
 
                 break;
@@ -288,6 +291,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }
         });
     }
+
     private void showloginDialog(int grary, int animationStyle) {
         BaseDialog.Builder builder = new BaseDialog.Builder(mContext);
         final BaseDialog dialog = builder.setViewId(R.layout.dialog_phone)
@@ -320,13 +324,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 //登录
-                 Intent intent=new Intent(getActivity(),LoginActivity.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.putExtra("gologin", "gologin");
                 startActivity(intent);
                 dialog.dismiss();
             }
         });
     }
-
 
 
 }

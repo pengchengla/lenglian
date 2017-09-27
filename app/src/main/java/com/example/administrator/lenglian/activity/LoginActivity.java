@@ -99,7 +99,7 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
                     Toast.makeText(LoginActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
                     SpUtils.putString(LoginActivity.this, "user_id", result.getDatas().getUser_id());
                     SpUtils.putString(LoginActivity.this, "phone", edt_phone.getText().toString().trim());
-                    SpUtils.putString(LoginActivity.this, "password", edt_mima.getText().toString().trim());
+//                    SpUtils.putString(LoginActivity.this, "password", edt_mima.getText().toString().trim());
                     if (getIntent().getStringExtra("gologin").equals("gologin")) {
                         finish();
                     } else {
