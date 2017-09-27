@@ -71,10 +71,13 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
                 startActivity(intent3);
                 break;
             case R.id.iv_weibo:
+                loginBySina(this);
                 break;
             case R.id.iv_weixin:
+                loginByWeiXin(this);
                 break;
             case R.id.iv_qq:
+                loginByQQ(this);
                 break;
         }
     }

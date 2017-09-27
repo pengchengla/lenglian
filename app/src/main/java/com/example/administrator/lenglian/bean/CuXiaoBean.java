@@ -8,10 +8,11 @@ import java.util.List;
 
 public class CuXiaoBean {
 
+
     /**
      * code : 200
      * success : success
-     * datas : [{"note":"1","pro_price":"1","pro_pic":[{"url":"1"}],"sub_title":"广泛的是第三方","pro_id":"1","sale_price":"0.60","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"},{"note":"123","pro_price":"2","pro_pic":[{"url":"1"}],"sub_title":"广泛的是第三方","pro_id":"2","sale_price":"0.10","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"}]
+     * datas : [{"note":"1","pro_price":"110.00","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"CF-1800F","pro_id":"3","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","sale_price":"0.60","main_title":"平面操作台","pro_name":"平面操作台"},{"note":"123","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","sale_price":"0.10","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"},{"note":"123","pro_price":"110.00","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170926/59ca3cd3698d8.jpg"}],"sub_title":"CF-1200","pro_id":"4","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","sale_price":"0.10","main_title":"厨房冰箱","pro_name":"厨房冰箱"},{"note":"123","pro_price":"165.00","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170926/59ca3cd3698d8.jpg"}],"sub_title":"CF-1800","pro_id":"5","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","sale_price":"0.10","main_title":"厨房冰箱","pro_name":"厨房冰箱"}]
      */
     private int code;
     private String success;
@@ -44,19 +45,21 @@ public class CuXiaoBean {
     public static class DatasEntity {
         /**
          * note : 1
-         * pro_price : 1
-         * pro_pic : [{"url":"1"}]
-         * sub_title : 广泛的是第三方
-         * pro_id : 1
+         * pro_price : 110.00
+         * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
+         * sub_title : CF-1800F
+         * pro_id : 3
+         * single_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
          * sale_price : 0.60
-         * main_title : 啊啊啊啊啊
-         * pro_name : fdsafdg
+         * main_title : 平面操作台
+         * pro_name : 平面操作台
          */
         private String note;
         private String pro_price;
         private List<ProPicEntity> pro_pic;
         private String sub_title;
         private String pro_id;
+        private String single_pic;
         private String sale_price;
         private String main_title;
         private String pro_name;
@@ -79,6 +82,10 @@ public class CuXiaoBean {
 
         public void setPro_id(String pro_id) {
             this.pro_id = pro_id;
+        }
+
+        public void setSingle_pic(String single_pic) {
+            this.single_pic = single_pic;
         }
 
         public void setSale_price(String sale_price) {
@@ -113,6 +120,10 @@ public class CuXiaoBean {
             return pro_id;
         }
 
+        public String getSingle_pic() {
+            return single_pic;
+        }
+
         public String getSale_price() {
             return sale_price;
         }
@@ -127,7 +138,7 @@ public class CuXiaoBean {
 
         public static class ProPicEntity {
             /**
-             * url : 1
+             * url : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
              */
             private String url;
 

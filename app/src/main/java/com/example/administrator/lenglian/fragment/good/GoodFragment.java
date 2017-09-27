@@ -211,7 +211,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
             if (item.getPro_pic() != null && item.getPro_pic().size() > 0) {
-                Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                Glide.with(mContext).load(item.getSingle_pic())
                         .apply(options)
                         .into((ImageView) helper.getView(R.id.iv_tupian));
             }

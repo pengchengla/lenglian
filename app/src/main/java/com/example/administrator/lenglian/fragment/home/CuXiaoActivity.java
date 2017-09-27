@@ -112,7 +112,7 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(item.getPro_pic())
+            Glide.with(mContext).load(item.getSingle_pic())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }

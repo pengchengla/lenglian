@@ -323,7 +323,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+            Glide.with(mContext).load(item.getSingle_pic())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }

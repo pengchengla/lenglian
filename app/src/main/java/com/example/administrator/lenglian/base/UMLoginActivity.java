@@ -60,21 +60,21 @@ public class UMLoginActivity extends BaseActivity {
         * 因此为了便于开发者使用，我们将一些常用的字段做了统一封装，开发者可以直接获取，
         * 不再需要对不同平台的不同字段名做转换，这里列出我们封装的字段及含义
         * */
-            //            Toast.makeText(MyApplication.getGloableContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getGloableContext(), "登陆成功", Toast.LENGTH_SHORT).show();
             final String username = data.get("name");
             final String userhead = data.get("iconurl");
             final String uid = data.get("uid");
-//            SpUtils.putString(MyApplication.getGloableContext(), "threeid", uid);
-//            SpUtils.putString(MyApplication.getGloableContext(), "logintype", "three");
-//            String type = "";
-//            if (platform.equals(SHARE_MEDIA.QQ)) {
-//                type = "qq";
-//            } else if (platform.equals(SHARE_MEDIA.WEIXIN)) {
-//                type = "weixin";
-//            } else if (platform.equals(SHARE_MEDIA.SINA)) {
-//                type = "weibo";
-//            }
-//            SpUtils.putString(MyApplication.getGloableContext(), "threetype", type);
+            //            SpUtils.putString(MyApplication.getGloableContext(), "threeid", uid);
+            //            SpUtils.putString(MyApplication.getGloableContext(), "logintype", "three");
+            //            String type = "";
+            //            if (platform.equals(SHARE_MEDIA.QQ)) {
+            //                type = "qq";
+            //            } else if (platform.equals(SHARE_MEDIA.WEIXIN)) {
+            //                type = "weixin";
+            //            } else if (platform.equals(SHARE_MEDIA.SINA)) {
+            //                type = "weibo";
+            //            }
+            //            SpUtils.putString(MyApplication.getGloableContext(), "threetype", type);
 
         }
 

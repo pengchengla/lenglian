@@ -161,13 +161,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                     });
                     if (mChangxiaoAdapter == null) {
-                        List<HomeBean.DatasEntity.BestEntity> bestEntityList = new ArrayList<HomeBean.DatasEntity.BestEntity>();
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
                                 .error(R.drawable.default_banner)
                                 .priority(Priority.NORMAL)
                                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-                        Glide.with(mContext).load(result.getDatas().getBest().get(0).getPro_pic().get(0).getUrl())
+                        //畅销那张大图
+                        Glide.with(mContext).load(result.getDatas().getBest().get(0).getSingle_pic())
                                 .apply(options)
                                 .into(iv_changxiao_big);
                         iv_changxiao_big.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +178,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 startActivity(intent);
                             }
                         });
+                        List<HomeBean.DatasEntity.BestEntity> bestEntityList = new ArrayList<HomeBean.DatasEntity.BestEntity>();
                         for (int i = 1; i < result.getDatas().getBest().size(); i++) {
                             bestEntityList.add(result.getDatas().getBest().get(i));
                         }
@@ -307,7 +308,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+            Glide.with(mContext).load(item.getSingle_pic())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }
@@ -329,7 +330,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
             if (item.getPro_pic() != null && item.getPro_pic().size() > 0) {
-                Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+                Glide.with(mContext).load(item.getSingle_pic())
                         .apply(options)
                         .into((ImageView) helper.getView(R.id.iv_tupian));
             }
@@ -352,7 +353,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
+            Glide.with(mContext).load(item.getSingle_pic())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
         }
