@@ -46,6 +46,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     //    private List<TitleBean> titleList = new ArrayList<>();
     private TitleAdapter mTitleAdapter;
     private ContentAdapter mContentAdapter;
+    private List<GoodTypeBean.DatasEntity> mTitleDatas;
 
     @Override
     protected View initView() {
@@ -86,7 +87,8 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
         recycler_content.setLayoutManager(new GridLayoutManager(mContext, 2));
-        recycler_title.setLayoutManager(new LinearLayoutManager(mContext));
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext);
+        recycler_title.setLayoutManager(mLinearLayoutManager);
 
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("", "");
@@ -97,7 +99,8 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                 //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
                     if (mTitleAdapter == null) {
-                        mTitleAdapter = new TitleAdapter(R.layout.good_title_item, result.getDatas());
+                        mTitleDatas = result.getDatas();
+                        mTitleAdapter = new TitleAdapter(R.layout.good_title_item, mTitleDatas);
                         recycler_title.setAdapter(mTitleAdapter);
                         mTitleAdapter.getData().get(0).setChecked(true);
                         mTitleAdapter.notifyDataSetChanged();//默认选中第一个
@@ -163,6 +166,8 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         });
     }
 
+    private int scrollPosition;
+
     class TitleAdapter extends BaseQuickAdapter<GoodTypeBean.DatasEntity, BaseViewHolder> {
 
         public TitleAdapter(@LayoutRes int layoutResId, @Nullable List<GoodTypeBean.DatasEntity> data) {
@@ -170,7 +175,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         }
 
         @Override
-        protected void convert(final BaseViewHolder helper, GoodTypeBean.DatasEntity item) {
+        protected void convert(final BaseViewHolder helper, final GoodTypeBean.DatasEntity item) {
             helper.setText(R.id.rb_title, item.getClass_name());
             helper.setChecked(R.id.rb_title, item.isChecked());
             if (item.isChecked()) {
@@ -186,11 +191,17 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                         if (helper.getAdapterPosition() == i) {
                             mTitleAdapter.getData().get(i).setChecked(true);
                             switchData(mTitleAdapter.getData().get(i).getClass_id());
+                            scrollPosition = i;
                         } else {
                             mTitleAdapter.getData().get(i).setChecked(false);
                         }
                     }
-                    mTitleAdapter.notifyDataSetChanged();
+//                    mTitleAdapter.notifyDataSetChanged();
+
+                    //                    Toast.makeText(mContext, " "+scrollPosition, Toast.LENGTH_SHORT).show();
+                    //                    recycler_title.smoothScrollToPosition(scrollPosition);
+                    ((LinearLayoutManager) recycler_title.getLayoutManager()).scrollToPositionWithOffset(scrollPosition, 0);
+
                 }
             });
         }
