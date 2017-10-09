@@ -16,7 +16,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.LoginActivity;
@@ -58,7 +57,7 @@ public class MyUtils {
     public static boolean islogin(Context context) {
         String userid = SpUtils.getString(context, "user_id", "");
         if (TextUtils.isEmpty(userid)) {
-            Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

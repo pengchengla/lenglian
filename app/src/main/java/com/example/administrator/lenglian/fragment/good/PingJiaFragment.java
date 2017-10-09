@@ -70,12 +70,12 @@ public class PingJiaFragment extends BaseFragment {
             @Override
             public void onSuccess(PingjiaBean result, String tag) {
                 if (result.getCode() == 200) {
-                    if (result.getDatas().size() > 99) {
+                    if (result.getDatas().getComment_data().size() > 99) {
                         tv_pingjia_count.setText("99+");
                     } else {
-                        tv_pingjia_count.setText(result.getDatas().size() + "");
+                        tv_pingjia_count.setText(result.getDatas().getComment_num() + "");
                     }
-                    mPingjiaAdapter = new PingjiaAdapter(R.layout.item_pingjia, result.getDatas());
+                    mPingjiaAdapter = new PingjiaAdapter(R.layout.item_pingjia, result.getDatas().getComment_data());
                     recycler_pingjia.setAdapter(mPingjiaAdapter);
                 }else {
                     //101是没有数据
@@ -89,14 +89,14 @@ public class PingJiaFragment extends BaseFragment {
         });
     }
 
-    class PingjiaAdapter extends BaseQuickAdapter<PingjiaBean.DatasEntity, BaseViewHolder> {
+    class PingjiaAdapter extends BaseQuickAdapter<PingjiaBean.DatasEntity.CommentDataEntity, BaseViewHolder> {
 
-        public PingjiaAdapter(@LayoutRes int layoutResId, @Nullable List<PingjiaBean.DatasEntity> data) {
+        public PingjiaAdapter(@LayoutRes int layoutResId, @Nullable List<PingjiaBean.DatasEntity.CommentDataEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PingjiaBean.DatasEntity item) {
+        protected void convert(BaseViewHolder helper, PingjiaBean.DatasEntity.CommentDataEntity item) {
             RecyclerView recycler_photo = helper.getView(R.id.recycler_ping_photo);
             recycler_photo.setLayoutManager(new GridLayoutManager(mContext, 3));
             PingPhotoAdapter pingPhotoAdapter = new PingPhotoAdapter(R.layout.item_photo, item.getPic());
@@ -115,18 +115,17 @@ public class PingJiaFragment extends BaseFragment {
             String phone1 = phone.substring(0, 3);
             String phone2 = phone.substring(7, 11);
             tv_phone.setText(phone1 + "****" + phone2);
-
         }
     }
 
-    class PingPhotoAdapter extends BaseQuickAdapter<PingjiaBean.DatasEntity.PicEntity, BaseViewHolder> {
+    class PingPhotoAdapter extends BaseQuickAdapter<PingjiaBean.DatasEntity.CommentDataEntity.PicEntity, BaseViewHolder> {
 
-        public PingPhotoAdapter(@LayoutRes int layoutResId, @Nullable List<PingjiaBean.DatasEntity.PicEntity> data) {
+        public PingPhotoAdapter(@LayoutRes int layoutResId, @Nullable List<PingjiaBean.DatasEntity.CommentDataEntity.PicEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PingjiaBean.DatasEntity.PicEntity item) {
+        protected void convert(BaseViewHolder helper, PingjiaBean.DatasEntity.CommentDataEntity.PicEntity item) {
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .error(R.drawable.default_square)

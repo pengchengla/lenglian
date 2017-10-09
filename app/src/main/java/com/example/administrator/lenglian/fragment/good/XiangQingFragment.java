@@ -28,7 +28,6 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -128,13 +127,7 @@ public class XiangQingFragment extends BaseFragment {
 
     private void initTuwen() {
         recycler_photo.setLayoutManager(new LinearLayoutManager(mContext));
-        List<String> list = new ArrayList<>();
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        list.add("");
-        mPhotoAdapter = new PhotoAdapter(R.layout.good_detail_item_photo, list);
+        mPhotoAdapter = new PhotoAdapter(R.layout.good_detail_item_photo, mDatas.getProfile_pic());
         recycler_photo.setAdapter(mPhotoAdapter);
     }
 
@@ -156,21 +149,21 @@ public class XiangQingFragment extends BaseFragment {
         tv_type.setText(mDatas.getClass_name());
     }
 
-    class PhotoAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    class PhotoAdapter extends BaseQuickAdapter<GoodDetailBean.DatasEntity.ProfilePicEntity, BaseViewHolder> {
 
-        public PhotoAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+        public PhotoAdapter(@LayoutRes int layoutResId, @Nullable List<GoodDetailBean.DatasEntity.ProfilePicEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, String item) {
+        protected void convert(BaseViewHolder helper, GoodDetailBean.DatasEntity.ProfilePicEntity item) {
             //如果在布局中设置图片的高度是自适应的话，图片就加载不出来，除非给个固定的高度，这是为什么呢？
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .error(R.drawable.default_banner)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(R.drawable.changxiaotupian)
+            Glide.with(mContext).load(item.getUrl())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_photo));
         }

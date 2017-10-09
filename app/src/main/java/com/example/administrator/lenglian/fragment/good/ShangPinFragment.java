@@ -27,7 +27,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.base.UMShareActivity;
-import com.example.administrator.lenglian.bean.CommentBean;
 import com.example.administrator.lenglian.bean.EditCollectBean;
 import com.example.administrator.lenglian.bean.GoodDetailBean;
 import com.example.administrator.lenglian.bean.PingjiaBean;
@@ -121,7 +120,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             canshunameList.add("日耗电量");
         }
         mId = getActivity().getIntent().getStringExtra("id");
-        //        Toast.makeText(mContext, " "+mId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, " "+mId+"  "+SpUtils.getString(mContext, "user_id", ""), Toast.LENGTH_SHORT).show();
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("pro_id", mId);
         arrayMap.put("user_id", SpUtils.getString(mContext, "user_id", ""));
@@ -166,8 +165,15 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     } else {
                         isCollected = true;
                     }
-                    collect_id = mDatas.getCollect_id();
                     refreshCollect();
+                    mCommentAdapter = new CommentAdapter(R.layout.comment_item, mDatas.getRecommend());
+                    recycler_tuijian.setAdapter(mCommentAdapter);
+                    mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                        }
+                    });
                 } else {
 
                 }
@@ -179,7 +185,6 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             }
         });
 
-        initComment();
         initPingjia();
     }
 
@@ -191,40 +196,15 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onSuccess(PingjiaBean result, String tag) {
                 if (result.getCode() == 200) {
-                    if (result.getDatas().size() > 99) {
+                    if (result.getDatas().getComment_data().size() > 99) {
                         tv_pingjia_count.setText("99+");
                     } else {
-                        tv_pingjia_count.setText(result.getDatas().size() + "");
+                        tv_pingjia_count.setText(result.getDatas().getComment_num() + "");
                     }
-                    mPingjiaAdapter = new PingjiaAdapter(R.layout.item_pingjia, result.getDatas());
+                    mPingjiaAdapter = new PingjiaAdapter(R.layout.item_pingjia, result.getDatas().getComment_data());
                     recycler_pingjia.setAdapter(mPingjiaAdapter);
                 } else {
                     //101是没有数据
-                }
-            }
-
-            @Override
-            public void onFailed(int code) {
-
-            }
-        });
-    }
-
-    private void initComment() {
-        ArrayMap arrayMap1 = new ArrayMap();
-        arrayMap1.put("pro_id", mId);
-        RetrofitManager.get(MyContants.BASEURL + "s=Product/listRecommend", arrayMap1, new BaseObserver1<CommentBean>("") {
-            @Override
-            public void onSuccess(CommentBean result, String tag) {
-                if (result.getCode() == 200) {
-                    mCommentAdapter = new CommentAdapter(R.layout.comment_item, result.getDatas());
-                    recycler_tuijian.setAdapter(mCommentAdapter);
-                    mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            startActivity(new Intent(mContext, GoodDetailActivity.class));
-                        }
-                    });
                 }
             }
 
@@ -259,21 +239,21 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    class PingjiaAdapter extends BaseQuickAdapter<PingjiaBean.DatasEntity, BaseViewHolder> {
+    class PingjiaAdapter extends BaseQuickAdapter<PingjiaBean.DatasEntity.CommentDataEntity, BaseViewHolder> {
 
-        public PingjiaAdapter(@LayoutRes int layoutResId, @Nullable List<PingjiaBean.DatasEntity> data) {
+        public PingjiaAdapter(@LayoutRes int layoutResId, @Nullable List<PingjiaBean.DatasEntity.CommentDataEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PingjiaBean.DatasEntity item) {
+        protected void convert(BaseViewHolder helper, PingjiaBean.DatasEntity.CommentDataEntity item) {
             RecyclerView recycler_photo = helper.getView(R.id.recycler_ping_photo);
             recycler_photo.setLayoutManager(new GridLayoutManager(mContext, 3));
             PingPhotoAdapter pingPhotoAdapter = new PingPhotoAdapter(R.layout.item_photo, item.getPic());
             recycler_photo.setAdapter(pingPhotoAdapter);
             MyRatingBar ratingBar = helper.getView(R.id.ratingbar);
             ratingBar.setClickable(false);//设置可否点击
-            ratingBar.setStar(Float.parseFloat(item.getPro_score()));//设置显示的星星个数
+            ratingBar.setStar(item.getPro_score() == null ? 0f : Float.parseFloat(item.getPro_score()));//设置显示的星星个数
             ratingBar.setStepSize(MyRatingBar.StepSize.Full);//设置每次点击增加一颗星还是半颗星
             helper.setText(R.id.tv_content, item.getContent())
                     .setText(R.id.tv_time, item.getCommit_time())
@@ -288,14 +268,14 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    class PingPhotoAdapter extends BaseQuickAdapter<PingjiaBean.DatasEntity.PicEntity, BaseViewHolder> {
+    class PingPhotoAdapter extends BaseQuickAdapter<PingjiaBean.DatasEntity.CommentDataEntity.PicEntity, BaseViewHolder> {
 
-        public PingPhotoAdapter(@LayoutRes int layoutResId, @Nullable List<PingjiaBean.DatasEntity.PicEntity> data) {
+        public PingPhotoAdapter(@LayoutRes int layoutResId, @Nullable List<PingjiaBean.DatasEntity.CommentDataEntity.PicEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PingjiaBean.DatasEntity.PicEntity item) {
+        protected void convert(BaseViewHolder helper, PingjiaBean.DatasEntity.CommentDataEntity.PicEntity item) {
             //            Toast.makeText(mContext, "图片地址"+item.getUrl(), Toast.LENGTH_SHORT).show();
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -309,14 +289,14 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-    class CommentAdapter extends BaseQuickAdapter<CommentBean.DatasEntity, BaseViewHolder> {
+    class CommentAdapter extends BaseQuickAdapter<GoodDetailBean.DatasEntity.RecommendEntity, BaseViewHolder> {
 
-        public CommentAdapter(@LayoutRes int layoutResId, @Nullable List<CommentBean.DatasEntity> data) {
+        public CommentAdapter(@LayoutRes int layoutResId, @Nullable List<GoodDetailBean.DatasEntity.RecommendEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, CommentBean.DatasEntity item) {
+        protected void convert(BaseViewHolder helper, GoodDetailBean.DatasEntity.RecommendEntity item) {
             helper.setText(R.id.tv_name, item.getMain_title());
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -330,40 +310,35 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     }
 
     private boolean isCollected;
-    private String collect_id;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_share:
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
-                UMShareActivity.shareWebUrl("",mDatas.getMain_title(),mDatas.getPro_pic().get(0).getUrl()
-                ,mDatas.getSub_title(),mActivity);
+                UMShareActivity.shareWebUrl("", mDatas.getMain_title(), mDatas.getPro_pic().get(0).getUrl()
+                        , mDatas.getSub_title(), mActivity);
                 break;
             case R.id.ll_collect:
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
-                if (isCollected) {
-                    collect(true);
-                } else {
-                    collect(false);
-                }
+                collect();
                 break;
             case R.id.tv_lijizulin:
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 showCarDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion, 1);
                 break;
             case R.id.tv_jiaruzulin:
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 showCarDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion, 2);
@@ -371,24 +346,16 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    private void collect(boolean yijingshoucang) {
+    private void collect() {
         ArrayMap arrayMap2 = new ArrayMap();
-        if (yijingshoucang) {
-            //取消收藏
-            arrayMap2.put("token", MyUtils.getToken());
-            arrayMap2.put("collect_id", collect_id);
-        } else {
-            //收藏
-            arrayMap2.put("pro_id", mId);
-            arrayMap2.put("token", MyUtils.getToken());
-            arrayMap2.put("user_id", SpUtils.getString(mContext, "user_id", ""));
-        }
+        arrayMap2.put("user_id", SpUtils.getString(mContext, "user_id", ""));
+        arrayMap2.put("pro_id", mId);
+        arrayMap2.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL + "s=User/editCollect", arrayMap2, new BaseObserver1<EditCollectBean>("") {
             @Override
             public void onSuccess(EditCollectBean result, String tag) {
                 if (result.getCode() == 200) {
                     isCollected = !isCollected;
-                    collect_id = result.getDatas().getCollect_id();
                     refreshCollect();
                 } else {
                     //101是没有数据
@@ -417,6 +384,15 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                 .isOnTouchCanceled(true)
                 //设置监听事件
                 .builder();
+        ImageView iv_tipian = dialog.getView(R.id.iv_tupian);
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(mContext).load(mDatas.getSingle_pic())
+                .apply(options)
+                .into(iv_tipian);
         final SnappingStepper stepper = dialog.getView(R.id.stepper);
         SnappingStepper ssp = dialog.getView(R.id.stepper);
         ssp.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
@@ -434,10 +410,10 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     intent.putExtra("duration", stepper.getValue() + "");
                     intent.putExtra("imgUrl", mDatas.getPro_pic().get(0).getUrl());
                     intent.putExtra("name", mDatas.getMain_title());
-                    intent.putExtra("price", mDatas.getSale_price().equals("0") ?
+                    intent.putExtra("price", mDatas.getSale_price().equals("0")?
                             mDatas.getPro_price() : mDatas.getSale_price());
-                    intent.putExtra("yajin",mDatas.getPro_deposit());
-                    intent.putExtra("peisongfei",mDatas.getExpress_money());
+                    intent.putExtra("yajin", mDatas.getPro_deposit());
+                    intent.putExtra("peisongfei", mDatas.getExpress_money());
                     startActivity(intent);
                 } else if (type == 2) {
                     insertCar();
@@ -458,10 +434,10 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         } else {
             LitePalHelper.add(new ShopCarBean(mDatas.getPro_id(),
                     mDatas.getMain_title(),
-                    mDatas.getSale_price().equals("0") ? mDatas.getPro_price() : mDatas.getSale_price(),
+                    mDatas.getSale_price().equals("0")? mDatas.getPro_price() : mDatas.getSale_price(),
                     mDatas.getPro_pic().get(0).getUrl(),
-                    duration,mDatas.getPro_deposit(),mDatas.getExpress_money()
-                    ));
+                    duration, mDatas.getPro_deposit(), mDatas.getExpress_money()
+            ));
         }
     }
 }
