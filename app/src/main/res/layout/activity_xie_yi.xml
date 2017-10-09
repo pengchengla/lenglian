@@ -34,4 +34,8 @@
             android:textColor="@color/white"
             android:textSize="17sp"/>
     </RelativeLayout>
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
 </LinearLayout>

@@ -374,9 +374,11 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     private void collect(boolean yijingshoucang) {
         ArrayMap arrayMap2 = new ArrayMap();
         if (yijingshoucang) {
+            //取消收藏
             arrayMap2.put("token", MyUtils.getToken());
             arrayMap2.put("collect_id", collect_id);
         } else {
+            //收藏
             arrayMap2.put("pro_id", mId);
             arrayMap2.put("token", MyUtils.getToken());
             arrayMap2.put("user_id", SpUtils.getString(mContext, "user_id", ""));

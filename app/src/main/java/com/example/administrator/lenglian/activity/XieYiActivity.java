@@ -2,6 +2,8 @@ package com.example.administrator.lenglian.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
@@ -10,6 +12,8 @@ import com.umeng.analytics.MobclickAgent;
 
 public class XieYiActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back;
+    private String url = "http://114.215.83.139/cfc/userAgree.html";
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +21,9 @@ public class XieYiActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_xie_yi);
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_back.setOnClickListener(this);
+        webView= (WebView) findViewById(R.id.webView);
+        webView.loadUrl(url);
+        webView.setWebChromeClient(new WebChromeClient());
     }
 
     @Override

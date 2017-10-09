@@ -7,6 +7,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     private TitleAdapter mTitleAdapter;
     private ContentAdapter mContentAdapter;
     private List<GoodTypeBean.DatasEntity> mTitleDatas;
+    private LinearLayoutManager mTitleLayoutManager;
 
     @Override
     protected View initView() {
@@ -87,8 +89,8 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
         recycler_content.setLayoutManager(new GridLayoutManager(mContext, 2));
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext);
-        recycler_title.setLayoutManager(mLinearLayoutManager);
+        mTitleLayoutManager = new LinearLayoutManager(mContext);
+        recycler_title.setLayoutManager(mTitleLayoutManager);
 
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("", "");
@@ -98,14 +100,33 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
 
                 //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
+                    mTitleDatas = result.getDatas();
                     if (mTitleAdapter == null) {
-                        mTitleDatas = result.getDatas();
                         mTitleAdapter = new TitleAdapter(R.layout.good_title_item, mTitleDatas);
                         recycler_title.setAdapter(mTitleAdapter);
                         mTitleAdapter.getData().get(0).setChecked(true);
                         mTitleAdapter.notifyDataSetChanged();//默认选中第一个
                         switchData(mTitleAdapter.getData().get(0).getClass_id());
                     }
+                   /* mTitleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            Toast.makeText(mContext, " " + position, Toast.LENGTH_SHORT).show();
+                            mTitleAdapter.getData().get(scrollPosition).setChecked(false);
+                            //                    mTitleAdapter.notifyItemChanged(scrollPosition);///////
+                            scrollPosition = position;
+                            mTitleAdapter.getData().get(scrollPosition).setChecked(true);
+                            switchData(mTitleAdapter.getData().get(scrollPosition).getClass_id());
+                            mTitleAdapter.notifyDataSetChanged();
+                            //                    mTitleAdapter.notifyItemChanged(scrollPosition);///////
+
+                            //                    Toast.makeText(mContext, " "+scrollPosition, Toast.LENGTH_SHORT).show();
+                            //                    recycler_title.smoothScrollToPosition(scrollPosition);
+                            mTitleLayoutManager.scrollToPositionWithOffset(scrollPosition, 0);
+                            smoothMoveToPosition(scrollPosition);
+                            moveToCenter(scrollPosition);
+                        }
+                    });*/
                 }
             }
 
@@ -166,7 +187,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         });
     }
 
-    private int scrollPosition;
+    private int scrollPosition = 0;
 
     class TitleAdapter extends BaseQuickAdapter<GoodTypeBean.DatasEntity, BaseViewHolder> {
 
@@ -183,24 +204,22 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
             } else {
                 helper.getView(R.id.title_left_view).setBackgroundResource(R.color.white);
             }
+            //直接在外层用adapter的点击事件就不管用，真是邪门
             helper.getView(R.id.rb_title).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //直接在外层用adapter的点击事件就不管用，真是邪门
-                    for (int i = 0; i < mTitleAdapter.getData().size(); i++) {
-                        if (helper.getAdapterPosition() == i) {
-                            mTitleAdapter.getData().get(i).setChecked(true);
-                            switchData(mTitleAdapter.getData().get(i).getClass_id());
-                            scrollPosition = i;
-                        } else {
-                            mTitleAdapter.getData().get(i).setChecked(false);
-                        }
-                    }
-//                    mTitleAdapter.notifyDataSetChanged();
+                    mTitleAdapter.getData().get(scrollPosition).setChecked(false);
+                    //                    mTitleAdapter.notifyItemChanged(scrollPosition);///////
+                    scrollPosition = helper.getAdapterPosition();
+                    mTitleAdapter.getData().get(scrollPosition).setChecked(true);
+                    switchData(mTitleAdapter.getData().get(scrollPosition).getClass_id());
+                    mTitleAdapter.notifyDataSetChanged();
+                    //                    mTitleAdapter.notifyItemChanged(scrollPosition);///////
 
-                    //                    Toast.makeText(mContext, " "+scrollPosition, Toast.LENGTH_SHORT).show();
                     //                    recycler_title.smoothScrollToPosition(scrollPosition);
-                    ((LinearLayoutManager) recycler_title.getLayoutManager()).scrollToPositionWithOffset(scrollPosition, 0);
+                    //                    mTitleLayoutManager.scrollToPositionWithOffset(scrollPosition, 0);
+//                                        smoothMoveToPosition(scrollPosition);
+                    //                    moveToCenter(scrollPosition);
 
                 }
             });
@@ -238,4 +257,32 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+
+    private void smoothMoveToPosition(int n) {
+        int firstItem = mTitleLayoutManager.findFirstVisibleItemPosition();
+        int lastItem = mTitleLayoutManager.findLastVisibleItemPosition();
+        Log.e("first--->", String.valueOf(firstItem));
+        Log.e("last--->", String.valueOf(lastItem));
+        if (n <= firstItem) {
+            recycler_title.scrollToPosition(n);
+        } else if (n <= lastItem) {
+            Log.e("pos---->", String.valueOf(n) + " VS " + firstItem);
+            int top = recycler_title.getChildAt(n - firstItem).getTop();
+            Log.e("top---->", String.valueOf(top));
+            recycler_title.scrollBy(0, top);
+        } else {
+            recycler_title.scrollToPosition(n);
+        }
+    }
+
+    //将当前选中的item居中
+    private void moveToCenter(int position) {
+        //将点击的position转换为当前屏幕上可见的item的位置以便于计算距离顶部的高度，从而进行移动居中
+        View childAt = recycler_title.getChildAt(position - mTitleLayoutManager.findFirstVisibleItemPosition());
+        if (childAt != null) {
+            int y = (childAt.getTop() - recycler_title.getHeight() / 2);
+            recycler_title.smoothScrollBy(0, y);
+        }
+    }
+
 }

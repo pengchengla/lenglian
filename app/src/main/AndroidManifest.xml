@@ -106,6 +106,7 @@
         <activity android:name=".utils.pictureutils.PlusImageActivity"/>
         <activity android:name=".fragment.order.activity.ReceiptActivity"></activity>
         <activity android:name=".fragment.order.activity.AppraiseActivity"></activity>
+        <activity android:name=".pay.PaySuccessActivity"></activity>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -186,7 +187,11 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
         <!--支付宝支付配置end-->
-
+        <!--微信支付-->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <activity android:name=".fragment.good.QueRenOrderActivity">
         </activity>
         <!--解决7.0照相机崩溃问题-->
