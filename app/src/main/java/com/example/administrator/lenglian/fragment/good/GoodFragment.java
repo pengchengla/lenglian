@@ -209,15 +209,13 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onClick(View v) {
                     mTitleAdapter.getData().get(scrollPosition).setChecked(false);
-                    //                    mTitleAdapter.notifyItemChanged(scrollPosition);///////
                     scrollPosition = helper.getAdapterPosition();
                     mTitleAdapter.getData().get(scrollPosition).setChecked(true);
                     switchData(mTitleAdapter.getData().get(scrollPosition).getClass_id());
                     mTitleAdapter.notifyDataSetChanged();
-                    //                    mTitleAdapter.notifyItemChanged(scrollPosition);///////
 
-                    //                    recycler_title.smoothScrollToPosition(scrollPosition);
-                    //                    mTitleLayoutManager.scrollToPositionWithOffset(scrollPosition, 0);
+                                        recycler_title.smoothScrollToPosition(scrollPosition);
+//                                        mTitleLayoutManager.scrollToPositionWithOffset(scrollPosition, 0);
 //                                        smoothMoveToPosition(scrollPosition);
                     //                    moveToCenter(scrollPosition);
 
