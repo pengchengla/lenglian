@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,14 +16,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.SearchBean;
 import com.example.administrator.lenglian.bean.SearchHistoryEntity;
 import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -147,12 +158,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(et_search.getText().toString())) {
-                    ll_root_view.setBackgroundResource(R.color.huise);
-                    ll_lishiandhot.setVisibility(View.GONE);
-                    recycler_result.setVisibility(View.VISIBLE);
-                    mResultAdapter = new ResultAdapter(R.layout.item_search_result, hotList);
-                    recycler_result.setAdapter(mResultAdapter);
-                    doSavehistory(et_search.getText().toString());
+                    doSearch(et_search.getText().toString());
                 } else {
                     ll_root_view.setBackgroundResource(R.color.white);
                     ll_lishiandhot.setVisibility(View.VISIBLE);
@@ -172,6 +178,42 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         });
     }
 
+    private void doSearch(final String content) {
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("key", content);
+        arrayMap.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=Search/search", arrayMap, new BaseObserver1<SearchBean>("") {
+            @Override
+            public void onSuccess(SearchBean result, String tag) {
+
+                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                if (result.getCode() == 200) {
+                    ll_root_view.setBackgroundResource(R.color.huise);
+                    ll_lishiandhot.setVisibility(View.GONE);
+                    recycler_result.setVisibility(View.VISIBLE);
+                    mResultAdapter = new ResultAdapter(R.layout.item_search_result, result.getDatas());
+                    recycler_result.setAdapter(mResultAdapter);
+                    doSavehistory(content);
+                    mResultAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            Intent intent = new Intent(SearchActivity.this, GoodDetailActivity.class);
+                            intent.putExtra("id", mResultAdapter.getData().get(position).getPro_id());
+                            startActivity(intent);
+                        }
+                    });
+                } else {
+                    Toast.makeText(SearchActivity.this, "没有找到该商品", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                Toast.makeText(SearchActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void initData() {
         recycler_lishi.setLayoutManager(new GridLayoutManager(this, 4));
         recycler_lishi.setNestedScrollingEnabled(false);
@@ -183,6 +225,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         if (mHistoryList != null && mHistoryList.size() > 0) {
             mHistoryAdapter = new RecyclerHistoryAdapter(R.layout.history_item, mHistoryList);
             recycler_lishi.setAdapter(mHistoryAdapter);
+            mHistoryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    doSearch(mHistoryAdapter.getData().get(position).getContent());
+                }
+            });
         } else {
             iv_delete.setVisibility(View.GONE);
         }
@@ -229,15 +277,24 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    class ResultAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    class ResultAdapter extends BaseQuickAdapter<SearchBean.DatasEntity, BaseViewHolder> {
 
-        public ResultAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
+        public ResultAdapter(@LayoutRes int layoutResId, @Nullable List<SearchBean.DatasEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, String item) {
-
+        protected void convert(BaseViewHolder helper, SearchBean.DatasEntity item) {
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+            Glide.with(mContext).load(item.getSingle_pic())
+                    .apply(options)
+                    .into((ImageView) helper.getView(R.id.iv_tupian));
+            helper.setText(R.id.tv_title,item.getMain_title())
+                    .setText(R.id.tv_price,"￥"+item.getPro_price());
         }
     }
 

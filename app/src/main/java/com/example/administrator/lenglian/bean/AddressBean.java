@@ -9,35 +9,34 @@ import java.util.List;
 
 public class AddressBean {
 
+
     /**
-     * msg : success
      * code : 200
-     * datas : [{"address_detail":"详细地址","express_id":"28","recieve_name":"aaa","address":"bbb","mobile":"18888888888","is_default":"1"}]
+     * success : success
+     * datas : [{"address_detail":"老六","express_id":"98","user_id":"79","receive_name":"弄","mobile":"15811337458","is_del":"0","area_id":"北京市北京市东城区","is_default":"1"}]
      */
-
-    private Long id;
-    private String msg;
     private int code;
+    private String success;
     private List<DatasEntity> datas;
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
     }
 
     public void setDatas(List<DatasEntity> datas) {
         this.datas = datas;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
     public int getCode() {
         return code;
+    }
+
+    public String getSuccess() {
+        return success;
     }
 
     public List<DatasEntity> getDatas() {
@@ -46,18 +45,22 @@ public class AddressBean {
 
     public static class DatasEntity {
         /**
-         * address_detail : 详细地址
-         * express_id : 28
-         * recieve_name : aaa
-         * address : bbb
-         * mobile : 18888888888
+         * address_detail : 老六
+         * express_id : 98
+         * user_id : 79
+         * receive_name : 弄
+         * mobile : 15811337458
+         * is_del : 0
+         * area_id : 北京市北京市东城区
          * is_default : 1
          */
         private String address_detail;
         private String express_id;
+        private String user_id;
         private String receive_name;
-        private String address;
         private String mobile;
+        private String is_del;
+        private String area_id;
         private String is_default;
 
         public void setAddress_detail(String address_detail) {
@@ -68,16 +71,24 @@ public class AddressBean {
             this.express_id = express_id;
         }
 
-        public void setRecieve_name(String receive_name) {
-            this.receive_name = receive_name;
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
         }
 
-        public void setAddress(String address) {
-            this.address = address;
+        public void setReceive_name(String receive_name) {
+            this.receive_name = receive_name;
         }
 
         public void setMobile(String mobile) {
             this.mobile = mobile;
+        }
+
+        public void setIs_del(String is_del) {
+            this.is_del = is_del;
+        }
+
+        public void setArea_id(String area_id) {
+            this.area_id = area_id;
         }
 
         public void setIs_default(String is_default) {
@@ -92,16 +103,24 @@ public class AddressBean {
             return express_id;
         }
 
-        public String getRecieve_name() {
-            return receive_name;
+        public String getUser_id() {
+            return user_id;
         }
 
-        public String getAddress() {
-            return address;
+        public String getReceive_name() {
+            return receive_name;
         }
 
         public String getMobile() {
             return mobile;
+        }
+
+        public String getIs_del() {
+            return is_del;
+        }
+
+        public String getArea_id() {
+            return area_id;
         }
 
         public String getIs_default() {

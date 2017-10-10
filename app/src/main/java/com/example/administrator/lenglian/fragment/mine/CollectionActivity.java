@@ -161,7 +161,8 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         }
         ArrayMap arrayMap2 = new ArrayMap();
         arrayMap2.put("token", MyUtils.getToken());
-        arrayMap2.put("collect_id", getAllDeleteCollectIds());
+        arrayMap2.put("user_id", SpUtils.getString(CollectionActivity.this, "user_id", ""));
+        arrayMap2.put("pro_id", getAllDeleteProIds());
         RetrofitManager.get(MyContants.BASEURL + "s=User/editCollect", arrayMap2, new BaseObserver1<EditCollectBean>("") {
             @Override
             public void onSuccess(EditCollectBean result, String tag) {
@@ -214,11 +215,11 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         mCollectionadapter.notifyDataSetChanged();
     }
 
-    private String getAllDeleteCollectIds() {
+    private String getAllDeleteProIds() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < mDatas.size(); i++) {
             if (mDatas.get(i).isChecked()) {
-                builder.append(mDatas.get(i).getCollect_id() + ",");
+                builder.append(mDatas.get(i).getPro_id() + ",");
             }
         }
         String substring = builder.substring(builder.toString().length() - 1);

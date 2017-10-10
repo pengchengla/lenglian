@@ -121,4 +121,9 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

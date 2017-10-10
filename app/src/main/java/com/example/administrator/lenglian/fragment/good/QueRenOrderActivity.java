@@ -124,9 +124,9 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                 if (result.getCode() == 200) {
                     ll_hasAddress.setVisibility(View.VISIBLE);
                     rl_noaddress.setVisibility(View.GONE);
-                    tv_name.setText(result.getDatas().get(0).getRecieve_name());
+                    tv_name.setText(result.getDatas().get(0).getReceive_name());
                     tv_phone.setText(result.getDatas().get(0).getMobile());
-                    tv_address.setText(result.getDatas().get(0).getAddress()
+                    tv_address.setText(result.getDatas().get(0).getArea_id()
                             + result.getDatas().get(0).getAddress_detail());
                     express_id = result.getDatas().get(0).getExpress_id();
                 } else {

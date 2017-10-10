@@ -319,7 +319,8 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
-                UMShareActivity.shareWebUrl("", mDatas.getMain_title(), mDatas.getPro_pic().get(0).getUrl()
+                UMShareActivity.shareWebUrl("http://114.215.83.139/cfc_share/index.html?id="+mDatas.getPro_id()
+                        , mDatas.getMain_title(), mDatas.getSingle_pic()
                         , mDatas.getSub_title(), mActivity);
                 break;
             case R.id.ll_collect:

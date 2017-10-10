@@ -91,7 +91,7 @@ public class UMLoginActivity extends BaseActivity {
 
     /*
     * 最后在登录所在的Activity里复写onActivityResult方法,注意不可在fragment中实现，如果在fragment中调用登录，
-    * 在fragment依赖的Activity中实现，如果不实现onActivityResult方法，会导致登录或回调无法正常进行
+    * 就在fragment依赖的Activity中实现，如果不实现onActivityResult方法，会导致登录或回调无法正常进行
     * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -89,15 +89,14 @@ public class MyApplication extends LitePalApplication {
                 //                Toast.makeText(MyApplication.this, "注册失败", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void initUMShare() {
         Config.DEBUG = true;
         UMShareAPI.get(this);
-        PlatformConfig.setWeixin("wx2f0f3b150b457b03", "84bb35acc8c7079fe54d09da51a20cbe");
-        PlatformConfig.setQQZone("1106246171", "5OMohRuc3o91MmIZ");
-        PlatformConfig.setSinaWeibo("1700472282", "85366df267954cde02996780035223b4", "https://sns.whalecloud.com/sina2/callback");
+        PlatformConfig.setWeixin("wx76c60c8c929e5061", "9b4a4e4380a6012cf84956415af46523");
+        PlatformConfig.setQQZone("1106303149", "xhxcwesbSLrse2xS");
+        PlatformConfig.setSinaWeibo("557964441", "b52b29e8a5393bd34e2315e509fb5842", "http://www.baidu.com");//回调地址要跟微博开放平台的一样
     }
 
     public static Application getInstance() {

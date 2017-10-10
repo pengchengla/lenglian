@@ -108,25 +108,6 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                         mTitleAdapter.notifyDataSetChanged();//默认选中第一个
                         switchData(mTitleAdapter.getData().get(0).getClass_id());
                     }
-                   /* mTitleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            Toast.makeText(mContext, " " + position, Toast.LENGTH_SHORT).show();
-                            mTitleAdapter.getData().get(scrollPosition).setChecked(false);
-                            //                    mTitleAdapter.notifyItemChanged(scrollPosition);///////
-                            scrollPosition = position;
-                            mTitleAdapter.getData().get(scrollPosition).setChecked(true);
-                            switchData(mTitleAdapter.getData().get(scrollPosition).getClass_id());
-                            mTitleAdapter.notifyDataSetChanged();
-                            //                    mTitleAdapter.notifyItemChanged(scrollPosition);///////
-
-                            //                    Toast.makeText(mContext, " "+scrollPosition, Toast.LENGTH_SHORT).show();
-                            //                    recycler_title.smoothScrollToPosition(scrollPosition);
-                            mTitleLayoutManager.scrollToPositionWithOffset(scrollPosition, 0);
-                            smoothMoveToPosition(scrollPosition);
-                            moveToCenter(scrollPosition);
-                        }
-                    });*/
                 }
             }
 
@@ -138,16 +119,17 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void switchTitleOne(String msg) {
-        //直接在外层用adapter的点击事件就不管用，真是邪门
         for (int i = 0; i < mTitleAdapter.getData().size(); i++) {
             if (mTitleAdapter.getData().get(i).getClass_id().equals(msg)) {
                 mTitleAdapter.getData().get(i).setChecked(true);
                 switchData(mTitleAdapter.getData().get(i).getClass_id());
+                scrollPosition = i;
             } else {
                 mTitleAdapter.getData().get(i).setChecked(false);
             }
         }
         mTitleAdapter.notifyDataSetChanged();
+        //        recycler_title.smoothScrollToPosition(scrollPosition);/////////////
     }
 
 
@@ -214,9 +196,9 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                     switchData(mTitleAdapter.getData().get(scrollPosition).getClass_id());
                     mTitleAdapter.notifyDataSetChanged();
 
-//                                        recycler_title.smoothScrollToPosition(scrollPosition);
-//                                        mTitleLayoutManager.scrollToPositionWithOffset(scrollPosition, 0);
-//                                        smoothMoveToPosition(scrollPosition);
+                    //                    recycler_title.smoothScrollToPosition(scrollPosition);
+                    //                    mTitleLayoutManager.scrollToPositionWithOffset(scrollPosition, 0);
+                    //                    smoothMoveToPosition(scrollPosition);
                     //                    moveToCenter(scrollPosition);
 
                 }
@@ -282,5 +264,4 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
             recycler_title.smoothScrollBy(0, y);
         }
     }
-
 }

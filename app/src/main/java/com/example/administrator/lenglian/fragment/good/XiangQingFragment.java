@@ -3,14 +3,12 @@ package com.example.administrator.lenglian.fragment.good;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -36,11 +34,9 @@ import java.util.List;
 
 public class XiangQingFragment extends BaseFragment {
     private RadioGroup rgp;
-    private NestedScrollView ll_shouhou;
+    private LinearLayout ll_shouhou;
     private LinearLayout ll_canshu, ll_tuwen;
-    private TextView tv_color, tv_zhileng, tv_kongwen, tv_dianliang, tv_goodname, tv_pinpai, tv_xinghao, tv_type;
-    private TextView tv_baozhuang, tv_fuwu, tv_jiage, tv_nengxiao;
-    private RecyclerView recycler_photo;
+    private RecyclerView recycler_photo, recycler_shouhou, recycler_canshu;
     private PhotoAdapter mPhotoAdapter;
     private String mId;
     private GoodDetailBean.DatasEntity mDatas;
@@ -50,21 +46,11 @@ public class XiangQingFragment extends BaseFragment {
         View view = View.inflate(mContext, R.layout.fragment_xiangqing, null);
         rgp = (RadioGroup) view.findViewById(R.id.rgp);
         ll_canshu = (LinearLayout) view.findViewById(R.id.ll_canshu);
-        ll_shouhou = (NestedScrollView) view.findViewById(R.id.ll_shouhou);
+        ll_shouhou = (LinearLayout) view.findViewById(R.id.ll_shouhou);
         ll_tuwen = (LinearLayout) view.findViewById(R.id.ll_tuwen);
-        tv_color = (TextView) view.findViewById(R.id.tv_color);
-        tv_zhileng = (TextView) view.findViewById(R.id.tv_zhileng);
-        tv_kongwen = (TextView) view.findViewById(R.id.tv_kongwen);
-        tv_dianliang = (TextView) view.findViewById(R.id.tv_dianliang);
-        tv_goodname = (TextView) view.findViewById(R.id.tv_goodname);
-        tv_pinpai = (TextView) view.findViewById(R.id.tv_pinpai);
-        tv_xinghao = (TextView) view.findViewById(R.id.tv_xinghao);
-        tv_type = (TextView) view.findViewById(R.id.tv_type);
-        tv_baozhuang = (TextView) view.findViewById(R.id.tv_baozhuang);
-        tv_fuwu = (TextView) view.findViewById(R.id.tv_fuwu);
-        tv_jiage = (TextView) view.findViewById(R.id.tv_jiage);
-        tv_nengxiao = (TextView) view.findViewById(R.id.tv_nengxiao);
         recycler_photo = (RecyclerView) view.findViewById(R.id.recycler_photo);
+        recycler_shouhou = (RecyclerView) view.findViewById(R.id.recycler_shouhou);
+        recycler_canshu = (RecyclerView) view.findViewById(R.id.recycler_canshu);
         return view;
     }
 
@@ -102,7 +88,7 @@ public class XiangQingFragment extends BaseFragment {
         mId = getActivity().getIntent().getStringExtra("id");
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("pro_id", mId);
-        arrayMap.put("user_id", SpUtils.getString(mContext,"user_id",""));
+        arrayMap.put("user_id", SpUtils.getString(mContext, "user_id", ""));
         RetrofitManager.get(MyContants.BASEURL + "s=Product/profileProduct", arrayMap, new BaseObserver1<GoodDetailBean>("") {
             @Override
             public void onSuccess(GoodDetailBean result, String tag) {
@@ -132,21 +118,15 @@ public class XiangQingFragment extends BaseFragment {
     }
 
     private void initShouhou() {
-        tv_baozhuang.setText(mDatas.getPro_list());
-        tv_fuwu.setText(mDatas.getPro_rent());
-        tv_jiage.setText(mDatas.getPrice_introduce());
-        tv_nengxiao.setText(mDatas.getPower_introduce());
+        recycler_shouhou.setLayoutManager(new LinearLayoutManager(mContext));
+        ShouHouAdapter shouHouAdapter = new ShouHouAdapter(R.layout.item_shouhou, mDatas.getIntroduce());
+        recycler_shouhou.setAdapter(shouHouAdapter);
     }
 
     private void initRule() {
-        tv_color.setText(mDatas.getPro_color());
-        tv_zhileng.setText(mDatas.getCool_type());
-        tv_kongwen.setText(mDatas.getControl_type());
-        tv_dianliang.setText(mDatas.getPro_power());
-        tv_xinghao.setText(mDatas.getPro_model());
-        tv_goodname.setText(mDatas.getPro_name());
-        tv_pinpai.setText(mDatas.getPro_brand());
-        tv_type.setText(mDatas.getClass_name());
+        recycler_canshu.setLayoutManager(new LinearLayoutManager(mContext));
+        CanshuAdapter canshuAdapter = new CanshuAdapter(R.layout.item_guige, mDatas.getTech());
+        recycler_canshu.setAdapter(canshuAdapter);
     }
 
     class PhotoAdapter extends BaseQuickAdapter<GoodDetailBean.DatasEntity.ProfilePicEntity, BaseViewHolder> {
@@ -166,6 +146,32 @@ public class XiangQingFragment extends BaseFragment {
             Glide.with(mContext).load(item.getUrl())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_photo));
+        }
+    }
+
+    class ShouHouAdapter extends BaseQuickAdapter<GoodDetailBean.DatasEntity.IntroduceEntity, BaseViewHolder> {
+
+        public ShouHouAdapter(@LayoutRes int layoutResId, @Nullable List<GoodDetailBean.DatasEntity.IntroduceEntity> data) {
+            super(layoutResId, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, GoodDetailBean.DatasEntity.IntroduceEntity item) {
+            helper.setText(R.id.tv_title, item.getKey())
+                    .setText(R.id.tv_content, item.getValue());
+        }
+    }
+
+    class CanshuAdapter extends BaseQuickAdapter<GoodDetailBean.DatasEntity.TechEntity, BaseViewHolder> {
+
+        public CanshuAdapter(@LayoutRes int layoutResId, @Nullable List<GoodDetailBean.DatasEntity.TechEntity> data) {
+            super(layoutResId, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, GoodDetailBean.DatasEntity.TechEntity item) {
+            helper.setText(R.id.tv_title, item.getKey())
+                    .setText(R.id.tv_content, item.getValue());
         }
     }
 }
