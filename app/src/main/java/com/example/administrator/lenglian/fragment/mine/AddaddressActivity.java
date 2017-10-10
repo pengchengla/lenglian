@@ -42,6 +42,12 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
     private TextView ad_address;
     boolean bool;
     private boolean aBoolean;
+    private String ad_name;
+    private String ad_phone;
+    private String ad_city;
+    private String ad_citydetail;
+    private String ad_default;
+    private String express_id;
 
 
     @Override
@@ -64,8 +70,35 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
         adress_save.setOnClickListener(this);
         eted_city.setOnClickListener(this);
         edimg_guanli.setOnClickListener(this);
+        //得到数据
         Intent it=getIntent();
         aBoolean = it.getBooleanExtra("boolean", true);
+        ad_name = it.getStringExtra("ad_name");
+        ad_phone = it.getStringExtra("ad_phone");
+        ad_city = it.getStringExtra("ad_city");
+        ad_citydetail = it.getStringExtra("ad_citydetail");
+        ad_default = it.getStringExtra("ad_default");
+        express_id = it.getStringExtra("express_id");
+        if(aBoolean){
+    /*
+      走编辑网络请求
+
+     */
+            //加载数据
+            etad_name.setText(ad_name);
+            eted_phone.setText(ad_phone);
+            ad_address.setText(ad_city);
+            eted_xianq.setText(ad_citydetail);
+             if( "1".equals(ad_default)){
+                 edimg_guanli.setImageResource(R.drawable.select_true);
+
+             }
+            else {
+                 edimg_guanli.setImageResource(R.drawable.sleect_false);
+             }
+
+        }
+
     }
 
     private void submit() {
@@ -105,7 +138,8 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
       走编辑网络请求
 
      */
-        ininbianji();
+
+       ininbianji();
    }
         else {
        inindata();
@@ -121,10 +155,8 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
         map.put("token",MyUtils.getToken());
         map.put("receive_name",etad_name.getText().toString());
         map.put("mobile",eted_phone.getText().toString());
-        map.put("express_id","");//传过来的--------------
-        /*
-          ------------差一个地区----------------
-         */
+        map.put("express_id",express_id);//传过来的--------------
+        map.put("area_id",ad_address.getText().toString());
         map.put("address_detail",eted_xianq.getText().toString());
         if(bool){
             map.put("is_default","1");
@@ -159,9 +191,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
         map.put("token",MyUtils.getToken());
         map.put("recieve_name", etad_name.getText().toString());
         map.put("mobile",eted_phone.getText().toString());
-        /*
-          ------------差一个地区----------------
-         */
+        map.put("area_id",ad_address.getText().toString());
         map.put("address_detail",eted_xianq.getText().toString());
         if(bool){
             map.put("is_default","1");
@@ -176,6 +206,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 int code = result.getCode();
                 if(code==200){
                    ToastUtils.showShort(AddaddressActivity.this,"添加成功");
+                    finish();
                 }
             }
 

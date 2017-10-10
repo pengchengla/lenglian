@@ -184,21 +184,20 @@
             />
     </LinearLayout>
     <RelativeLayout
-        android:id="@+id/receving"
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
+            android:layout_marginTop="1dp"
             android:text="确认收货"
             android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:textSize="14sp"
             android:gravity="center"
+            android:layout_marginRight="10dp"
             android:background="@drawable/shape_redline"
-            android:id="@+id/recying_btn"
+            android:id="@+id/receving"
             android:textColor="@color/redd"
-            android:layout_margin="5dp"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
     <View

@@ -54,7 +54,6 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             public void onSuccess(Addressbean result, String tag) {
                 int code = result.getCode();
                 if (code==200){
-                    ToastUtils.showShort(AddressActivity.this,result.getSuccess());
                     List<Addressbean.DatasBean> datas = result.getDatas();
                     Addressadapter addressadapter=new Addressadapter(AddressActivity.this,datas);
                     list_address.setAdapter(addressadapter);
@@ -93,7 +92,6 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             case R.id.adress_add:
                 Intent it=new Intent(AddressActivity.this,AddaddressActivity.class);
                 startActivity(it);
-                finish();
                 break;
         }
     }

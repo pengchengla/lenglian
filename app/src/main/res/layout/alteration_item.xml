@@ -11,8 +11,8 @@
         <ImageView
             android:layout_margin="8dp"
             android:id="@+id/alteration_tupian"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:src="@drawable/binggui"/>
 
         <LinearLayout

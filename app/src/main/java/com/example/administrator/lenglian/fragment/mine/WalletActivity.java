@@ -15,6 +15,7 @@ import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,12 +49,24 @@ public class WalletActivity extends BaseActivity {
 
     private void inindata() {
         Map<String,String> map=new HashMap<>();
-        map.put("user_id","76");//传过来的--------------------
+        map.put("user_id", SpUtils.getString(this,"user_id",""));//传过来的--------------------
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL + "s=User/viewWallet", map, new BaseObserver1<Walletbean>("") {
             @Override
             public void onSuccess(Walletbean result, String tag) {
-                Toast.makeText(WalletActivity.this,"成功"+result.getMsg(),Toast.LENGTH_SHORT).show();
+                  if(result.getCode()==200){
+                      Walletbean.DatasBean datas = result.getDatas();
+                      //加载数据
+                      wallet_date.setText(datas.getStart_time()+"至"+datas.getEnd_time());
+                      //押金
+                      cash_num.setText(datas.getPro_deposit()+"");
+                      //余额
+                      balance.setText(datas.getBalance()+"");
+
+
+                  }
+                
+
             }
 
             @Override

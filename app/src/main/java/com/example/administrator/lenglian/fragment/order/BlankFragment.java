@@ -120,9 +120,13 @@ public class BlankFragment extends BaseFragment {
                 if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
                     if ("1".equals(datas.get(position).getOrder_status())) {
                         Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                         intent.putExtra("order_id",datas.get(position).getOrder_id());
+                        String order_id = datas.get(position).getOrder_id();
+                        KLog.a(order_id);
                         startActivity(intent);
                     } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status())) {
                         Intent it = new Intent(getActivity(), ReceiptActivity.class);
+                        it.putExtra("order_id",datas.get(position).getOrder_id());
                         startActivity(it);
                     } else {
                         Intent intent = new Intent(getActivity(), AppraiseActivity.class);
@@ -160,16 +164,25 @@ public class BlankFragment extends BaseFragment {
                         }
                         else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
                             //待支付
-                          payadapter.notifyDataSetChanged();
+                            if(datasf!=null){
+                                payadapter.notifyDataSetChanged();
+                            }
+
 
                         } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
 
                             //待收货
-                          deliveryadapter.notifyDataSetChanged();
+                            if(datash!=null){
+                                deliveryadapter.notifyDataSetChanged();
+                            }
+
 
                         } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
                             //待评价
-                       evaluateadapyer.notifyDataSetChanged();
+                            if(datasp!=null){
+                                evaluateadapyer.notifyDataSetChanged();
+                            }
+
 
                         }
                         springview.onFinishFreshAndLoad();

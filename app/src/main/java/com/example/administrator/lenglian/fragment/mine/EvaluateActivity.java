@@ -19,6 +19,7 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,8 +53,6 @@ public class EvaluateActivity extends BaseActivity {
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL + "s=User/listComment",map,new BaseObserver1<Evaluatebean>("") {
 
-
-
             @Override
             public void onSuccess(Evaluatebean result, String tag) {
              /*
@@ -70,20 +69,12 @@ public class EvaluateActivity extends BaseActivity {
 
             @Override
             public void onFailed(int code) {
-
+                ToastUtils.showShort(EvaluateActivity.this,code+"");
             }
         });
     }
 
     private void inindata() {
-//        Indexbean indexbean=new Indexbean();
-//        for (int i = 0; i < 5; i++) {
-//            indexbean.setDuration("冷链冰柜你知道的太多了。你值得拥有还在等什么拿起电话加入吧");
-//            list.add(indexbean);
-//        }
-//
-//        Evaiuateadapter evauateradapter=new Evaiuateadapter(this,list);
-//        list_evaluate.setAdapter(evauateradapter);
           list_evaluate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
               @Override
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

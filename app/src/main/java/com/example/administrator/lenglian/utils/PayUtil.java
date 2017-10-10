@@ -81,6 +81,8 @@ public class PayUtil {
                   if(list.get(position).getName().equals("支付宝支付")){
 
                       ToastUtils.showShort(context,list.get(position).getName());
+                      //调用支付宝
+
                   }
                 else if("微信支付".equals(list.get(position).getName())){
                       ToastUtils.showShort(context,list.get(position).getName());

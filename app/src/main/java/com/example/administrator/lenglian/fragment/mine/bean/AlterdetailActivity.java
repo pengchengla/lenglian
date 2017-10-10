@@ -3,6 +3,7 @@ package com.example.administrator.lenglian.fragment.mine.bean;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -107,7 +109,7 @@ public class AlterdetailActivity extends BaseActivity {
 
             @Override
             public void onFailed(int code) {
-
+                ToastUtils.showShort(AlterdetailActivity.this,code+"");
             }
         });
     }

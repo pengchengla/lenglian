@@ -3,6 +3,7 @@ package com.example.administrator.lenglian.fragment.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -22,6 +23,7 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyGradeview;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.view.MyGridView;
 import com.example.administrator.lenglian.view.MyRatingBar;
 
@@ -53,7 +55,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluate_xiangq);
         initView();
-        inindata();
+        //inindata();
         //加载网络请求
         ininnetwork();
 
@@ -89,8 +91,8 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
                      ratingbar.setStar(i);//设置显示的星星个数
                      evate_zhuip.setText(datas.getAdd_content());
                      List<Evaluatedetailbean.DatasBean.PicBean> pic = datas.getPic();
-//                     Gradeadapter gradeadapter=new Gradeadapter(this,pic);
-//                     evate_grade.setAdapter(gradeadapter);
+                    Gradeadapter gradeadapter=new Gradeadapter(EvaluatedetailActivity.this,pic);
+                  evate_grade.setAdapter(gradeadapter);
 
 
                  }
@@ -105,25 +107,25 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
 
     }
 
-    private void inindata() {
-        photobean ph=new photobean();
-        ph.setPhoto(R.drawable.binggui);
-        photobean ph2=new photobean();
-        ph2.setPhoto(R.drawable.binggui);
-        photobean ph3=new photobean();
-        ph3.setPhoto(R.drawable.binggui);
-        photobean pho4=new photobean();
-        pho4.setPhoto(R.drawable.binggui);
-        photobean pho5=new photobean();
-        pho5.setPhoto(R.drawable.binggui);
-        list.add(ph);
-        list.add(ph2);
-        list.add(ph3);
-        list.add(pho4);
-        list.add(pho5);
-        Gradeadapter gradeadapter=new Gradeadapter(this,list);
-        evate_grade.setAdapter(gradeadapter);
-    }
+//    private void inindata() {
+//        photobean ph=new photobean();
+//        ph.setPhoto(R.drawable.binggui);
+//        photobean ph2=new photobean();
+//        ph2.setPhoto(R.drawable.binggui);
+//        photobean ph3=new photobean();
+//        ph3.setPhoto(R.drawable.binggui);
+//        photobean pho4=new photobean();
+//        pho4.setPhoto(R.drawable.binggui);
+//        photobean pho5=new photobean();
+//        pho5.setPhoto(R.drawable.binggui);
+//        list.add(ph);
+//        list.add(ph2);
+//        list.add(ph3);
+//        list.add(pho4);
+//        list.add(pho5);
+//        Gradeadapter gradeadapter=new Gradeadapter(this,list);
+//        evate_grade.setAdapter(gradeadapter);
+//    }
 
     private void initView() {
         tv_back = (TextView) findViewById(R.id.tv_back);
@@ -139,7 +141,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         Intent intent = getIntent();
         comment_id = intent.getStringExtra("comment_id");
         image = intent.getStringExtra("image");
-       Intent s= getIntent();
+        Intent s= getIntent();
         String count = s.getStringExtra("count");
         evate_zhuip.setText(count);
 
@@ -150,9 +152,15 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.zhuijia:
                  //跳转
-                Intent intent=new Intent(EvaluatedetailActivity.this,ZhijiaActivity.class);
-                 intent.putExtra("comment_id", comment_id);
-                startActivity(intent);
+                if(!TextUtils.isEmpty(evate_zhuip.getText().toString())){
+                    ToastUtils.showShort(this,"您已追加评论，不能在评论");
+
+                }
+                else {
+                    Intent intent = new Intent(EvaluatedetailActivity.this, ZhijiaActivity.class);
+                    intent.putExtra("comment_id", comment_id);
+                    startActivity(intent);
+                }
                 finish();
                 break;
             case R.id.tv_back:

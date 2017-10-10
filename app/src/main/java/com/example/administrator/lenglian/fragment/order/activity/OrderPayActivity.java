@@ -1,5 +1,7 @@
 package com.example.administrator.lenglian.fragment.order.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -9,17 +11,25 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.adapter.Gradeadapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.mine.bean.photobean;
 import com.example.administrator.lenglian.fragment.order.adapter.Order_gride;
+import com.example.administrator.lenglian.fragment.order.bean.Xiangqingbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyGradeview;
+import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.PayUtil;
+import com.example.administrator.lenglian.utils.SpUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,11 +60,14 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
     private TextView order_pause;
     private TextView order_zhifi;
     private List<photobean> list=new ArrayList<>();
+    private String order_id;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_detail);
+
         initView();
         inindata();
         //网络请求
@@ -63,16 +76,47 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
 
     private void network() {
         Map<String,String> map=new HashMap<>();
-        RetrofitManager.post(MyContants.BASEURL + "", map, new BaseObserver1<Resultbean>("") {
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("order_id", order_id);
+        RetrofitManager.get(MyContants.BASEURL+"s=Order/profileOrder", map, new BaseObserver1<Xiangqingbean>("") {
             @Override
-            public void onSuccess(Resultbean result, String tag) {
-                  if(result.getCode()==200){
-
-
-                     //合计之后的价格=押金+配送费+商品价格x月份
+            public void onSuccess(Xiangqingbean result, String tag) {
+                if(result.getCode()==200){
+                    //合计之后的价格=押金+配送费+商品价格x月份
                     //  total_price.setText("");
-                }
+                    //加载数据
+                    List<Xiangqingbean.DatasBean> datas = result.getDatas();
 
+                    detail_number.setText(datas.get(0).getOrder_num());
+                    detail_name.setText(datas.get(0).getReceive_name());
+                    detail_phone.setText(datas.get(0).getMobile());
+                    detail_addres.setText(datas.get(0).getAddress_detail());
+                   /*
+                  加载图片
+                   */
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .error(R.drawable.default_square)
+                            .priority(Priority.NORMAL)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                    Glide.with(MyApplication.getApplication()).load(datas.get(0).getSingle_pic())
+                            .apply(options)
+                            .into( shop_tupian );
+                    //内容
+                    shop_describe.setText(datas.get(0).getMain_title());
+                    buy_price.setText(datas.get(0).getOrder_price());
+                    //z租期
+                    buy_num.setText("x"+datas.get(0).getDuration());
+                    jie_yanjin.setText("¥"+datas.get(0).getPro_deposit());
+                    delivery_cost.setText("¥"+datas.get(0).getExpress_money());
+                    //合计
+                    int s =Integer.parseInt(datas.get(0).getPro_deposit().toString())+Integer.parseInt(datas.get(0).getExpress_money().toString())  + Integer.parseInt(datas.get(0).getOrder_price().toString())*Integer.parseInt(datas.get(0).getDuration().toString());
+                    total_price.setText("¥"+s);
+
+
+
+                }
             }
 
             @Override
@@ -122,6 +166,9 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         order_pause = (TextView) findViewById(R.id.order_pause);
         order_zhifi = (TextView) findViewById(R.id.order_zhifi);
         tv_back.setOnClickListener(this);
+        //得到数据
+        Intent intent = getIntent();
+        order_id = intent.getStringExtra("order_id");
     }
 
     @Override

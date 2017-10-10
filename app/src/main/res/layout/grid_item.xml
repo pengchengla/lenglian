@@ -3,12 +3,24 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     >
-<ImageView
-android:id="@+id/pic_iv"
-android:layout_width="70dp"
-android:layout_height="70dp"
-android:src="@drawable/photoshangchuan"
-android:scaleType="centerCrop">
-</ImageView>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+    <ImageView
+        android:id="@+id/pic_iv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/photoshangchuan"
+        android:scaleType="centerCrop"/>
+    <ImageView
+        android:id="@+id/delete_pho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/delete_pho"/>
+    </FrameLayout>
 
     </LinearLayout>

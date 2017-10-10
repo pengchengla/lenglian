@@ -56,7 +56,7 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
      ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
@@ -105,8 +105,16 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
         });
         holder.order_tuihuan.setOnClickListener(this);
         holder.order_repairs.setOnClickListener(this);
-        holder.order_evaluation.setOnClickListener(this);
-
+      //评价
+        holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte=new Intent(context,ShopdetailActivity.class);
+                 inte.putExtra("pro_id",list.get(position).getPro_id());
+                inte.putExtra("order_id",list.get(position).getOrder_id());
+                context.startActivity(inte);
+            }
+        });
 
         return convertView;
     }
@@ -121,10 +129,6 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
             case R.id.order_repairs:
                 Intent inten=new Intent(context,BaoxiuActivity.class);
                 context.startActivity(inten);
-                break;
-            case R.id.order_evaluation:
-                Intent inte=new Intent(context,ShopdetailActivity.class);
-                context.startActivity(inte);
                 break;
         }
     }

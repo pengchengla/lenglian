@@ -25,6 +25,7 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onFailed(int code) {
-
+                ToastUtils.showShort(CollectionActivity.this,code+"");
             }
         });
 

@@ -69,6 +69,10 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
                     //加载数据
                     details_number.setText(datas.get(0).getOrder_num());
                    // details_person.setText(datas.get(0).);
+                    /*
+                      合计=押金+配送费+商品价格
+                     */
+
 
 
                 }

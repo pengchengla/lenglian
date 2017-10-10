@@ -47,6 +47,15 @@ public class ManualActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+         //售后服务
+        shservice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //订购
+                Intent intent=new Intent(ManualActivity.this,ShouhouActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Upphotobean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
@@ -85,6 +86,8 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
     private GridViewAdapter mGridViewAddImgAdapter; //展示上传的图片的适配器
     private Bitmap photo;
     private File file;
+    Boolean bool =false;
+     ArrayList<String>  list=new ArrayList<>();
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -94,6 +97,9 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
 
         }
     };
+    private String pro_id;
+    private String oder_id;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +111,9 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
 
 
 
+
+
+
     }
    //加载网络请求
     private void inintwork() {
@@ -112,37 +121,43 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         Map<String,String> map=new HashMap<>();
         map.put("user_id", SpUtils.getString(this,"user_id",""));
         map.put("token", MyUtils.getToken());
-        map.put("pro_id","");             //商品id
+        map.put("pro_id",   pro_id);             //商品id
         map.put("pro_score", setbar+"");//商品评分
         map.put("express_score",peisongatingbar.getSetbar()+"");
         map.put("service_score",shopfuratingbar.getSetbar()+"");
         map.put("content",warantu_edtext.getText().toString());
+        map.put("order_id",oder_id);
         /*
          图片------------------------------
          */
-     // RetrofitManager.postphoto();
-    }
+        String photo="";
+        for (int i = 0; i <list.size() ; i++) {
+             photo+= list.get(i)+",";
+        }
+        String substring = photo.substring(0, photo.length() - 1);
+        map.put("pic_url",substring);
 
-    private void network(File files) {
-        String [] arr = file.getAbsolutePath().split("/");
-
-        RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), files);
-        MultipartBody body = new MultipartBody.Builder()
-                .addFormDataPart("sfile",arr[arr.length-1],requestFile)
-                .build();
-        RetrofitManager.uploadPhoto(body, new BaseObserver1<Resultbean>("") {
+         //网络请求
+        RetrofitManager.post(MyContants.BASEURL + "s=User/commitComment", map, new BaseObserver1<Resultbean>("") {
             @Override
             public void onSuccess(Resultbean result, String tag) {
+                 if(result.getCode()==200){
+                       ToastUtils.showShort(ShopdetailActivity.this,"提交成功");
+                     list.clear();
+                     finish();
 
+                 }
             }
 
             @Override
             public void onFailed(int code) {
+                list.clear();
 
             }
         });
+
     }
+
 
 
     //初始化展示上传图片的GridView
@@ -157,14 +172,14 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                     //如果“增加按钮形状的”图片的位置是最后一张，且添加了的图片的数量不超过5张，才能点击
                     if (mPicList.size() == MainConstant.MAX_SELECT_PIC_NUM) {
                         //最多添加5张图片
-                        viewPluImg(position);
+                    //    viewPluImg(position);
                     } else {
                         showphoto(R.style.Alpah_aniamtion, Gravity.CENTER_VERTICAL);
                         //添加凭证图片
                         //   selectPic(MainConstant.MAX_SELECT_PIC_NUM - mPicList.size());
                     }
                 } else {
-                    viewPluImg(position);
+                  //  viewPluImg(position);
                 }
             }
         });
@@ -205,13 +220,13 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
     }
 
 
-    //查看大图
-    private void viewPluImg(int position) {
-        Intent intent = new Intent(mContext, PlusImageActivity.class);
-        intent.putStringArrayListExtra(MainConstant.IMG_LIST, mPicList);
-        intent.putExtra(MainConstant.POSITION, position);
-        startActivityForResult(intent, MainConstant.REQUEST_CODE_MAIN);
-    }
+//    //查看大图
+//    private void viewPluImg(int position) {
+//        Intent intent = new Intent(mContext, PlusImageActivity.class);
+//        intent.putStringArrayListExtra(MainConstant.IMG_LIST, mPicList);
+//        intent.putExtra(MainConstant.POSITION, position);
+//        startActivityForResult(intent, MainConstant.REQUEST_CODE_MAIN);
+//    }
 
     /**
      * 打开相册或者照相机选择凭证图片，最多5张
@@ -229,6 +244,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
             if (localMedia.isCompressed()) {
                 String compressPath = localMedia.getCompressPath(); //压缩后的图片路径
                 mPicList.add(compressPath); //把图片添加到将要上传的图片数组中
+
                 mGridViewAddImgAdapter.notifyDataSetChanged();
             }
         }
@@ -297,28 +313,6 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                     Log.e("TAG", "---------" + FileProvider.getUriForFile(this, "com.xykj.customview.fileprovider", file));
                     String absolutePath = file.getAbsolutePath();
                     mPicList.add(absolutePath); //把图片添加到将要上传的图片数组中
-                    Thread thred=new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Map<String,File> files=new HashMap<>();
-                            files.put("sfile",file);
-                            s = UploadUtil.uploadFile(files, MyContants.BASEURL + "s=Upload/upload");
-                            Gson gson=new Gson();
-                 //           gson.fromJson(s,)
-
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    KLog.a("Tag",s);
-                                    ToastUtils.showShort(mContext,s);
-                                }
-                            });
-
-                        }
-                    });
-                    thred.start();
-
-
                     mGridViewAddImgAdapter.notifyDataSetChanged();
                     break;
            // }
@@ -354,6 +348,10 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         tv_back.setOnClickListener(this);
         warantu_edtext.setOnClickListener(this);
         shop_tijiao.setOnClickListener(this);
+        //得到数据
+        Intent intent = getIntent();
+        pro_id = intent.getStringExtra("pro_id");
+        oder_id = intent.getStringExtra("order_id");
     }
 
     private void submit() {
@@ -380,7 +378,46 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.shop_tijiao:
                 ToastUtils.showShort(mContext,"hahah");
-                inintwork();
+                Thread thred=new Thread(new Runnable() {
+
+                    private File f;
+
+                    @Override
+                    public void run() {
+                        Map<String,File> files=new HashMap<>();
+                        for (int i = 0; i <mPicList.size() ; i++) {
+                            f = new File(mPicList.get(i));
+                            files.put("sfile", f);
+                            s = UploadUtil.uploadFile(files, MyContants.BASEURL + "s=Upload/upload");
+                            Gson gson=new Gson();
+                            Upphotobean upphotobean = gson.fromJson(s, Upphotobean.class);
+                            if(upphotobean.getCode()==200) {
+                                List<Upphotobean.DatasBean> datas = upphotobean.getDatas();
+
+                                list.add(datas.get(0).getUrl());
+                                KLog.a("aaa",list.toString());
+
+                            }
+
+                        }
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                KLog.a("Tag",s);
+                                ToastUtils.showShort(mContext,s);
+                                ToastUtils.showShort(mContext,list.toString());
+                                inintwork();
+                            }
+                        });
+
+                    }
+                });
+                thred.start();
+
+
+
+
+
                 break;
         }
     }

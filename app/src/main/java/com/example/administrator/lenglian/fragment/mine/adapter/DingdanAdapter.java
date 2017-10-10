@@ -79,7 +79,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
             holder.order_zhifi = (TextView)  convertView .findViewById(R.id.order_zhifi);
             holder.pay = (LinearLayout)  convertView .findViewById(R.id.pay);
             holder.recying_btn = (TextView)  convertView .findViewById(R.id.recying_btn);
-            holder.receving = (RelativeLayout)  convertView .findViewById(R.id.receving);
+            holder.receving = (TextView)  convertView .findViewById(R.id.receving);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -179,27 +179,28 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
                 holder.evaluate.setVisibility(View.GONE);
                 holder.pay.setVisibility(View.VISIBLE);
                 holder.receving.setVisibility(View.GONE);
-            }
+            //支付
+            holder.order_zhifi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,context);
+                }
+            });
+            //取消订单
+
+            holder.order_pause.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    list.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
+        }
 
         /*
           监听--------------------------
          */
-         //取消订单
 
-          holder.order_pause.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  list.remove(position);
-                  notifyDataSetChanged();
-              }
-          });
-         //支付
-         holder.order_zhifi.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,context);
-             }
-         });
 
         holder.order_evaluation.setOnClickListener(this);
 
@@ -234,7 +235,7 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
         public TextView order_zhifi;
         public LinearLayout pay;
         public TextView recying_btn;
-        public RelativeLayout receving;
+        public TextView receving;
 
     }
 }

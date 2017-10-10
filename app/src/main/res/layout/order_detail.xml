@@ -5,65 +5,6 @@
     android:orientation="vertical"
     android:background="#f5f5f5">
 
-    <LinearLayout
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#6798e7"
-        android:padding="5dp"
-        android:weightSum="3"
-        >
-        <RelativeLayout
-            android:id="@+id/tv_back"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:gravity="center_vertical"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerVertical="true"
-                android:id="@+id/fan"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_back_white"
-                android:layout_width="15dp"
-                android:layout_height="14dp" />
-            <TextView
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/fan"
-                android:layout_marginLeft="5dp"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="返回"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                />
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="订单详情"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_weight="1"
-            android:gravity="left"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
     <ScrollView
         android:scrollbars="none"
         android:layout_width="match_parent"
@@ -73,13 +14,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/zhifutitle">
 
             </RelativeLayout>
     <RelativeLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/zhifu3x">
@@ -88,7 +29,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
         <TextView
-
             android:layout_margin="5dp"
             android:padding="10dp"
             android:textSize="16sp"
@@ -226,6 +166,7 @@
 
             </LinearLayout>
         <LinearLayout
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:background="@color/white"
             android:layout_width="match_parent"
@@ -233,6 +174,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_marginLeft="5dp"
                 android:layout_margin="5dp"
                 android:id="@+id/shop_tupian"
                 android:layout_width="100dp"
@@ -540,5 +482,65 @@
       </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6798e7"
+        android:padding="5dp"
+        android:weightSum="3"
+        >
+        <RelativeLayout
+            android:id="@+id/tv_back"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/fan"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_back_white"
+                android:layout_width="15dp"
+                android:layout_height="14dp" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/fan"
+                android:layout_marginLeft="5dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="返回"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="订单详情"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
 </LinearLayout>
 

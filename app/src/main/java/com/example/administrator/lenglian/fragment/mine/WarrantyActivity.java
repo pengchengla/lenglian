@@ -18,6 +18,7 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,20 +67,12 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onFailed(int code) {
-
+                ToastUtils.showShort(WarrantyActivity.this,code);
             }
         });
     }
 
     private void initdata() {
-//          Indexbean indexbean=new Indexbean();
-//        for (int i = 0; i < 5; i++) {
-//            indexbean.setDuration("阿拉阿发发发 阿达阿达啊大大啊大大啊啊啊阿达"+i);
-//            list.add(indexbean);
-//        }
-//
-//        Warrantyadapter warrantyadapter = new Warrantyadapter(this,list);
-//        warranty_list.setAdapter(warrantyadapter);
         //listview点击
         warranty_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

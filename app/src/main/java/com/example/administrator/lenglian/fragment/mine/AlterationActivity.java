@@ -19,6 +19,7 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,20 +67,12 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
 
              @Override
              public void onFailed(int code) {
-
+                 ToastUtils.showShort(AlterationActivity.this,code+"");
              }
          });
     }
 
     private void inindata() {
-//        Indexbean index=new Indexbean();
-//        for (int i = 0; i < 5; i++) {
-//               index.setDuration("豪华的冰柜，你值得拥有。爱不释手无与伦比哈哈哈"+i);
-//            list.add(index);
-//        }
-
-
-
         list_alteration.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

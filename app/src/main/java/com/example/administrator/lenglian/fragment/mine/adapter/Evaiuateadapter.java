@@ -8,6 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.bean.Evaluatebean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
@@ -58,7 +62,21 @@ public class Evaiuateadapter extends BaseAdapter {
         else {
             holder= (ViewHolder) convertView.getTag();
         }
+        //添加数据
         holder.alteration_count.setText(list.get(position).getMain_title());
+        /*
+          加载图片
+         */
+        RequestOptions options=new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(context).load(list.get(position).getPro_pic())
+                .apply(options)
+                .into( holder.alteration_img);
+        holder.alteration_money.setText(list.get(position).getPro_price());
+
         return convertView;
     }
     class ViewHolder{

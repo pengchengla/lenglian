@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -81,7 +82,7 @@ public class Addressadapter extends BaseAdapter {
         holder.ad_name.setText(list.get(position).getReceive_name());
         holder.ad_phone.setText(list.get(position).getMobile());
         holder.ad_adress.setText(list.get(position).getAddress_detail());
-        String is_default = list.get(position).getIs_default();
+        final String is_default = list.get(position).getIs_default();
         if(is_default.equals("1")){
             holder.ad_text.setText("默认地址");
             holder.ad_text.setTextColor(Color.RED);
@@ -99,13 +100,14 @@ public class Addressadapter extends BaseAdapter {
              public void onClick(View v) {
                  Intent it=new Intent(context,AddaddressActivity.class);
                    it.putExtra("boolean",true);
-                 /*
-                   传递数据----------------------
-                  */
-           //      it.putExtra("ad_name",list.get(position))
-
-
-                 context.startActivity(it);
+                   it.putExtra("ad_name",list.get(position).getReceive_name());
+                   it.putExtra("ad_phone",list.get(position).getMobile());
+                   it.putExtra("ad_city",list.get(position).getArea_id());
+                   it.putExtra("ad_citydetail",list.get(position).getAddress_detail());
+                   it.putExtra("ad_default",list.get(position).getIs_default());
+                   it.putExtra("express_id",list.get(position).getExpress_id());
+                     context.startActivity(it);
+                 ((Activity)context).finish();
              }
          });
         holder.ad_delete.setOnClickListener(new View.OnClickListener() {

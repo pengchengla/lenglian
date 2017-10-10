@@ -52,7 +52,7 @@ public class Warrantyadapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder=null;
         if(convertView==null){
             holder=new ViewHolder();
@@ -80,10 +80,14 @@ public class Warrantyadapter extends BaseAdapter {
 
         holder.warranty_money.setText(list.get(position).getPro_price());
            holder.warranty_pinjia.setFocusable(false);
+        //评价
         holder.warranty_pinjia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //带数据穿送过去
                 Intent it=new Intent(context,MaintenanceActivity.class);
+                 it.putExtra("pro_id",list.get(position).getPro_id());//商品id
+                 it.putExtra("order_id",list.get(position).getOrder_id());//订单id
                 context.startActivity(it);
                 Toast.makeText(context,"haha",Toast.LENGTH_SHORT).show();
             }

@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.bean.Evaluatedetailbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
@@ -24,9 +28,9 @@ import java.util.List;
 
 public class Gradeadapter extends BaseAdapter {
     private Context context;
-    private List<photobean> list;
-   // private List<Evaluatedetailbean.DatasBean.PicBean> list;
-    public Gradeadapter(Context context, List<photobean> list) {
+   // private List<photobean> list;
+    private List<Evaluatedetailbean.DatasBean.PicBean> list;
+    public Gradeadapter(Context context, List<Evaluatedetailbean.DatasBean.PicBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -60,7 +64,17 @@ public class Gradeadapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
       //  Toast.makeText(context,list.get(position).getPhoto()+"",Toast.LENGTH_SHORT).show();
-        holder.image.setImageResource(list.get(position).getPhoto());
+         /*
+          加载图片
+         */
+        RequestOptions options=new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(context).load(list.get(position).getUrl())
+                .apply(options)
+                .into( holder.image);
         return convertView;
     }
       class  ViewHolder{
