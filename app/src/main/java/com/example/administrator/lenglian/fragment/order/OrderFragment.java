@@ -13,9 +13,14 @@ import android.widget.RelativeLayout;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.SpUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,17 +42,19 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected View initView() {
+        EventBus.getDefault().register(this);
         View view=View.inflate(mContext, R.layout.activity_mineorder,null);
         tab = (TabLayout) view.findViewById(R.id.tab);
         pager = (FrameLayout) view.findViewById(R.id.container);
         liner_tab = (LinearLayout) view.findViewById(R.id.liner_tab);
         view_btn = (Button) view.findViewById(R.id.view_btn);
-        real_login = (RelativeLayout) view.findViewById(R.id.real_login);
+        real_login = (RelativeLayout)view.findViewById(R.id.real_login);
 
         view_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
+                intent.putExtra("gologin", "gologin");
                 startActivity(intent);
 
             }
@@ -61,17 +68,31 @@ public class OrderFragment extends BaseFragment {
         return view;
 
     }
-
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden){
-            if (!TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
-                real_login.setVisibility(View.GONE);
-                liner_tab.setVisibility(View.VISIBLE);
-            }
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void myEvent(EventMessage eventMessage) {
+        if (eventMessage.getMsg().equals("bbb")) {
+            bbb();
         }
     }
+      private void bbb(){
+          if (!TextUtils.isEmpty( SpUtils.getString(mContext,"user_id",""))){
+              real_login.setVisibility(View.GONE);
+              liner_tab.setVisibility(View.VISIBLE);
+
+          }
+          else {
+              real_login.setVisibility(View.VISIBLE);
+              liner_tab.setVisibility(View.GONE);
+
+          }
+
+      }
 
     @Override
     protected void initData() {

@@ -17,6 +17,7 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.activity.MessageActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Personbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -24,7 +25,12 @@ import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.view.CircleImageView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -93,65 +99,109 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mine_login.setVisibility(View.GONE);
             mine_name.setVisibility(View.VISIBLE);
             mine_phone.setVisibility(View.VISIBLE);
-
-
         }
-        if (!TextUtils.isEmpty(SpUtils.getString(getActivity(), "nick_name", ""))) {
-            mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
 
-        }
-        //取头像
-        String photo = SpUtils.getString(getActivity(), "photo", "");
-        //加载数据
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .error(R.drawable.default_square)
-                .priority(Priority.NORMAL)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        Glide.with(mContext).load(photo)
-                .apply(options)
-                .into(mine_head);
+
+
+
         return rootView;
     }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            if (!TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
-                mine_login.setVisibility(View.GONE);
-                mine_name.setVisibility(View.VISIBLE);
-                mine_phone.setVisibility(View.VISIBLE);
-                //加载数据
-                RequestOptions options = new RequestOptions()
-                        .centerCrop()
-                        .error(R.drawable.default_square)
-                        .priority(Priority.NORMAL)
-                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-                Glide.with(mContext).load(datas.get(0).getHead())
-                        .apply(options)
-                        .into(mine_head);
-                //昵称
-                mine_name.setText(datas.get(0).getUser_name());
-                //手机号
-                String phone = SpUtils.getString(getActivity(), "phone", "");
-                mine_phone.setText(phone);
-            }else {
+    private void ppp() {
+        if (!TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+            mine_login.setVisibility(View.GONE);
+            mine_name.setVisibility(View.VISIBLE);
+            mine_phone.setVisibility(View.VISIBLE);
+            //取头像
+            String photo = SpUtils.getString(getActivity(), "photo", "");
+            //加载数据
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+            Glide.with(mContext).load(photo)
+                    .apply(options)
+                    .into(mine_head);
+            if (!TextUtils.isEmpty(SpUtils.getString(getActivity(), "nick_name", ""))) {
+                mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
 
             }
         }
     }
 
+    private void xxx(){
+        if (!TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
+            mine_login.setVisibility(View.GONE);
+            Map<String, String> map = new HashMap<>();
+            map.put("user_id", SpUtils.getString(getActivity(), "user_id", ""));
+            map.put("token", MyUtils.getToken());
+            RetrofitManager.get(MyContants.BASEURL + "s=User/viewProfile", map, new BaseObserver1<Personbean>("") {
+
+                @Override
+                public void onSuccess(Personbean result, String tag) {
+
+                    if (result.getCode() == 200) {
+                        datas = result.getDatas();
+                        //加载数据
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()
+                                .error(R.drawable.default_square)
+                                .priority(Priority.NORMAL)
+                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                        Glide.with(mContext).load(datas.get(0).getHead())
+                                .apply(options)
+                                .into(mine_head);
+                        //昵称
+                        mine_name.setText(datas.get(0).getUser_name());
+                        //手机号
+                        String phone = SpUtils.getString(getActivity(), "phone", "");
+                        mine_phone.setText(phone);
+
+                        mine_name.setVisibility(View.VISIBLE);
+                        mine_phone.setVisibility(View.VISIBLE);
+
+                    }
+                }
+
+                @Override
+                public void onFailed(int code) {
+
+                }
+            });
+        }else {
+            mine_head.setImageResource(R.drawable.default_circle);
+            mine_login.setVisibility(View.VISIBLE);
+            mine_name.setVisibility(View.GONE);
+            mine_phone.setVisibility(View.GONE);
+
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void myEvent(EventMessage eventMessage) {
+        if (eventMessage.getMsg().equals("xxx")) {
+            xxx();
+        }
+        else  if(eventMessage.getMsg().equals("ppp")){
+           ppp();
+                }
+    }
+
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         tv_msg_number.setText("11");
         //网络请求
         Map<String, String> map = new HashMap<>();
         map.put("user_id", SpUtils.getString(getActivity(), "user_id", ""));
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL + "s=User/viewProfile", map, new BaseObserver1<Personbean>("") {
-
-
 
             @Override
             public void onSuccess(Personbean result, String tag) {
@@ -269,8 +319,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 showDialog(Gravity.CENTER, R.style.Alpah_aniamtion);
                 break;
             case R.id.mine_set:
-                Intent set = new Intent(getActivity(), SetActivity.class);
-                startActivity(set);
+                if (!MyUtils.islogin(mContext)) {
+                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    return;
+                }else {
+                    Intent set = new Intent(getActivity(), SetActivity.class);
+                    startActivity(set);
+                }
+
                 break;
             case R.id.mine_head:
                 if (!MyUtils.islogin(mContext)) {

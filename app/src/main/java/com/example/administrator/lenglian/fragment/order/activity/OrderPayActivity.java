@@ -111,8 +111,8 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                     jie_yanjin.setText("¥"+datas.get(0).getPro_deposit());
                     delivery_cost.setText("¥"+datas.get(0).getExpress_money());
                     //合计
-                    int s =Integer.parseInt(datas.get(0).getPro_deposit().toString())+Integer.parseInt(datas.get(0).getExpress_money().toString())  + Integer.parseInt(datas.get(0).getOrder_price().toString())*Integer.parseInt(datas.get(0).getDuration().toString());
-                    total_price.setText("¥"+s);
+                    total_price.setText("¥"+datas.get(0).getOrder_price());
+
 
 
 

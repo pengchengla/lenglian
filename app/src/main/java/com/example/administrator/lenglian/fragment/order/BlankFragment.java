@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
+import android.text.TextUtils;
 import android.text.util.Rfc822Token;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,25 +92,29 @@ public class BlankFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         //  接口
-        api = getArguments().getString("api");
-        if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
-            //网络请求
-            ininjson();
+         if(!TextUtils.isEmpty(SpUtils.getString(getActivity(),"user_id",""))) {
 
-        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
-            //待支付
-            Zhifu();
 
-        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
+             api = getArguments().getString("api");
+             if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
+                 //网络请求
+                 ininjson();
 
-            //待收货
-            delivery();
+             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
+                 //待支付
+                 Zhifu();
 
-        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
-            //待评价
-            evaluate();
+             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
 
-        }
+                 //待收货
+                 delivery();
+
+             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
+                 //待评价
+                 evaluate();
+
+             }
+         }
 
         /*
           -----------------------点击跳转
@@ -137,6 +142,7 @@ public class BlankFragment extends BaseFragment {
                     //跳支付
                 } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
                     Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                    intent.putExtra("order_id",datasf.get(position).getOrder_id());
                     startActivity(intent);
                 }
                 //跳收货
@@ -160,7 +166,10 @@ public class BlankFragment extends BaseFragment {
                     @Override
                     public void run() {
                         if(api.equals(MyContants.BASEURL + "s=Order/listOrder")){
-                            dindanadapter.notifyDataSetChanged();
+                             if(datas!=null){
+                                 dindanadapter.notifyDataSetChanged();
+                             }
+
                         }
                         else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
                             //待支付
@@ -213,7 +222,6 @@ public class BlankFragment extends BaseFragment {
         map.put("user_id", SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
         map.put("order_status","0");
-
         RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
 
 
@@ -231,7 +239,6 @@ public class BlankFragment extends BaseFragment {
 
             @Override
             public void onFailed(int code) {
-                Toast.makeText(getActivity(), "注册失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -258,7 +265,6 @@ public class BlankFragment extends BaseFragment {
 
             @Override
             public void onFailed(int code) {
-                Toast.makeText(getActivity(), "注册失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -283,7 +289,6 @@ public class BlankFragment extends BaseFragment {
             }
             @Override
             public void onFailed(int code) {
-                Toast.makeText(getActivity(), "注册失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -310,7 +315,6 @@ public class BlankFragment extends BaseFragment {
 
             @Override
             public void onFailed(int code) {
-                Toast.makeText(getActivity(), "注册失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }

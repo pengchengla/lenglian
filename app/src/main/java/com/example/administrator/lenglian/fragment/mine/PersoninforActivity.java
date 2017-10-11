@@ -3,12 +3,14 @@ package com.example.administrator.lenglian.fragment.mine;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -16,7 +18,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.util.Base64;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -29,6 +33,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Personbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Upphotobean;
@@ -46,6 +51,9 @@ import com.example.administrator.lenglian.view.CircleImageView;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
@@ -210,9 +218,9 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(Personbean result, String tag) {
                 if(result.getCode()==200) {
-                    ToastUtils.showShort(PersoninforActivity.this, "修改成功");
+                //    ToastUtils.showShort(PersoninforActivity.this, "修改成功");
 
-                    ToastUtils.show(PersoninforActivity.this, result.getCode() + "成功", 1);
+                  //  ToastUtils.show(PersoninforActivity.this, result.getCode() + "成功", 1);
                     List<Personbean.DatasBean> datas = result.getDatas();
                     person_name.setText(datas.get(0).getUser_name());
                     person_nick.setText(datas.get(0).getNick_name());
@@ -232,8 +240,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                     Glide.with(PersoninforActivity.this).load(datas.get(0).getHead())
                             .apply(options)
                             .into(person_pho);
-                    //sp存头像
-                    SpUtils.putString(PersoninforActivity.this,"photo",datas.get(0).getHead());
+
                 }
             }
 
@@ -280,7 +287,6 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id. person_nickname:
                 showCarDialog( R.style.Alpah_aniamtion,2);
-
                 break;
             case R.id.person_birth:
                 showBirthdayDialog();
@@ -291,6 +297,10 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.tv_back:
+                //调用Eventbus
+                //调用Eventbus
+                EventMessage eventMessage = new EventMessage("ppp");
+                EventBus.getDefault().postSticky(eventMessage);
                 finish();
                 break;
         }
@@ -508,6 +518,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
             switch (requestCode) {
                 case CODE_CAMERA_REQUEST://拍照完成回调
                     cropImageUri = Uri.fromFile(fileCropUri);
+
                     KLog.a(cropImageUri);
                     PhotoUtils.cropImageUri(this, imageUri, cropImageUri, 1, 1, output_X, output_Y, CODE_RESULT_REQUEST);
 
@@ -527,17 +538,22 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                     break;
                 case CODE_RESULT_REQUEST:
                     Bitmap bitmap = PhotoUtils.getBitmapFromUri(cropImageUri, this);
+                    String s = cropImageUri.toString();
+                    //sp存头像
+                    SpUtils.putString(PersoninforActivity.this,"photo",s);
                     KLog.a(cropImageUri);
                      //将URl上传到服务器
                      photowork();
-                    ToastUtils.showShort(PersoninforActivity.this,cropImageUri.toString());
+               //     ToastUtils.showShort(PersoninforActivity.this,cropImageUri.toString());
                     if (bitmap != null) {
+
                         showImages(bitmap);
                     }
                     break;
             }
         }
     }
+
 
     private void photowork() {
         final Thread thred=new Thread(new Runnable() {
@@ -557,6 +573,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                 map.put("user_id",SpUtils.getString(PersoninforActivity.this,"user_id",""));
                 map.put("token",MyUtils.getToken());
                 map.put("head",datas.get(0).getUrl());
+
               RetrofitManager.post(MyContants.BASEURL + "s=User/editProfile", map, new BaseObserver1<Resultbean>("") {
                   @Override
                   public void onSuccess(Resultbean result, String tag) {
@@ -576,7 +593,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void run() {
                         KLog.a("Tag", s);
-                        ToastUtils.showShort(PersoninforActivity.this, s);
+                       // ToastUtils.showShort(PersoninforActivity.this, s);
                     }
                 });
 
@@ -590,6 +607,8 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
     private void showImages(Bitmap bitmap) {
       //设置图片到页面
         person_pho.setImageBitmap(bitmap);
+      //  String s = bitmaptoString(bitmap);
+
     }
     private void autoObtainStoragePermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -597,6 +616,27 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         } else {
             PhotoUtils.openPic(this, CODE_GALLERY_REQUEST);
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        EventMessage eventMessage = new EventMessage("ppp");
+        EventBus.getDefault().postSticky(eventMessage);
+        super.onBackPressed();
+    }
+
+
+    // 将Bitmap转换成字符串
+    public static String bitmaptoString(Bitmap bitmap) {
+        String string = null;
+        ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 40, bStream);
+        byte[] bytes = bStream.toByteArray();
+        string = Base64.encodeToString(bytes, Base64.DEFAULT);
+
+        return string;
+
 
     }
 }

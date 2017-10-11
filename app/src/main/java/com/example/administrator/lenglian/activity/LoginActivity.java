@@ -14,12 +14,15 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.UMLoginActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.bean.LoginBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Administrator on 2017/8/24.
@@ -105,6 +108,10 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
 //                    SpUtils.putString(LoginActivity.this, "password", edt_mima.getText().toString().trim());
                     if (getIntent().getStringExtra("gologin").equals("gologin")) {
                         finish();
+                        EventMessage eventMessage = new EventMessage("xxx");
+                        EventBus.getDefault().postSticky(eventMessage);
+                        EventMessage eventMessages = new EventMessage("bbb");
+                        EventBus.getDefault().postSticky(eventMessages);
                     } else {
                         Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent1);

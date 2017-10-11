@@ -15,9 +15,12 @@ import android.widget.Toast;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.CacheDataManager;
 import com.example.administrator.lenglian.utils.SpUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * date : ${Date}
@@ -88,9 +91,11 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_exit:
                 //退出登录
                 SpUtils.putString(this,"user_id","");
-                Intent inten=new Intent(SetActivity.this, LoginActivity.class);
-                startActivity(inten);
                 finish();
+                EventMessage eventMessage = new EventMessage("xxx");
+                EventBus.getDefault().postSticky(eventMessage);
+                EventMessage eventMessages = new EventMessage("bbb");
+                EventBus.getDefault().postSticky(eventMessages);
                 break;
             case R.id.set_zhanhao:
                 Intent intent=new Intent(this,AccountActivity.class);

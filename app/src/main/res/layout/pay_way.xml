@@ -3,18 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
-    >
+    android:background="@color/hui">
     <LinearLayout
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6798e7"
-        android:padding="5dp"
         android:weightSum="3"
         >
         <RelativeLayout
+            android:id="@+id/tv_back"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:gravity="center_vertical"
@@ -30,10 +29,8 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/fan"
                 android:layout_marginLeft="5dp"
-                android:id="@+id/tv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="返回"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -46,29 +43,27 @@
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="我的地址"
+            android:text="选择支付方式"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
             android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/adress_add"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="添加地址"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
     </LinearLayout>
-
-    <ListView
-        android:scrollbars="none"
-        android:divider="@color/white"
-        android:dividerHeight="0dp"
-        android:id="@+id/list_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+     <ListView
+         android:layout_marginTop="10dp"
+         android:id="@+id/pay_list"
+         android:dividerHeight="1dp"
+         android:divider="@color/white"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"></ListView>
 </LinearLayout>

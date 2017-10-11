@@ -54,7 +54,7 @@
             android:textColor="@color/textblack"/>
         <com.example.administrator.lenglian.view.CircleImageView
             android:id="@+id/person_pho"
-            android:src="@drawable/icon_weibo"
+            android:src="@drawable/default_circle"
             android:layout_gravity="center"
             android:layout_width="55dp"
             android:layout_height="55dp" />

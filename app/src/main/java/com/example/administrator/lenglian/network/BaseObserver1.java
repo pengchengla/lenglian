@@ -54,8 +54,6 @@ public abstract class BaseObserver1<T> implements Observer<String> {
             Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
             Class entityClass = (Class) params[0];
             T t = (T) JSON.parseObject(s, entityClass);
-            //            BaseBean baseBean = (BaseBean) t;
-            // Toast.makeText(.getApplication(), ""+baseBean.getResult_code(), Toast.LENGTH_SHORT).show();
             KLog.e(s);
             onSuccess(t, tag);
         } catch (Exception e) {

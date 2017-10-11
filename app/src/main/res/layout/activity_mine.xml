@@ -99,7 +99,7 @@
                         android:id="@+id/mine_head"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/icon_weibo"
+                        android:src="@drawable/default_circle"
                         android:layout_marginTop="35dp"
                         android:layout_centerHorizontal="true" />
                     <TextView
