@@ -108,6 +108,7 @@
         <activity android:name=".fragment.order.activity.AppraiseActivity"></activity>
         <activity android:name=".pay.PaySuccessActivity"></activity>
         <activity android:name=".fragment.mine.ShouhouActivity"></activity>
+        <activity android:name=".fragment.mine.GoPayActivity"></activity>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"

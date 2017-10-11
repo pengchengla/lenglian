@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
-                android:text="啦啦啦展示柜"
+                android:text=""
                 android:textColor="@color/textblack"
                 android:textSize="16sp"
             />
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="10dp"
-                android:text="￥1777元/月"
+                android:text=""
                 android:textColor="@color/text_red_dark2"
                 android:textSize="16sp"
             />

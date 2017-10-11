@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.home;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
@@ -36,6 +37,9 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BannerUtils;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.view.CustomProgressDialog;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -64,6 +68,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private int mDistanceY;
     private ImageView iv_msg, iv_changxiao_big;
     private MiddleAdapter mMiddleAdapter;
+    private SpringView springview;
+        private CustomProgressDialog mDialog;
 
     @Override
     protected View initView() {
@@ -97,6 +103,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         iv_msg = (ImageView) view.findViewById(R.id.iv_msg);
         iv_changxiao_big = (ImageView) view.findViewById(R.id.iv_changxiao_big);
         recycler_class = (RecyclerView) view.findViewById(R.id.recycler_class);
+        springview = (SpringView) view.findViewById(R.id.springview);
         return view;
     }
 
@@ -113,6 +120,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
         //        Toast.makeText(mContext, " "+ SpUtils.getString(mContext,"user_id",""), Toast.LENGTH_SHORT).show();
+        mDialog = new CustomProgressDialog(mContext, R.style.myprogressdialog);
+        mDialog.show();
+        initToolbar();
+        loadData();
+        tv_msg_number.setText("11");
+        initListener();
+    }
+
+    private void initToolbar() {
         nestView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -138,6 +154,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 }
             }
         });
+    }
+
+    private void loadData() {
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("", "");
         RetrofitManager.get(MyContants.BASEURL + "s=Home/home", arrayMap, new BaseObserver1<HomeBean>("") {
@@ -237,6 +256,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             EventBus.getDefault().postSticky(eventMessage2);
                         }
                     });
+                    mDialog.dismiss();
                 }
             }
 
@@ -245,7 +265,27 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 Toast.makeText(mContext, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
-        tv_msg_number.setText("11");
+    }
+
+    private void initListener() {
+        springview.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadData();
+                    }
+                }, 1500);//动画延时1500毫秒
+            }
+
+            @Override
+            public void onLoadmore() {
+
+            }
+        });
+        springview.setHeader(new DefaultHeader(getActivity()));
+//        springview.setFooter(new DefaultFooter(getActivity()));
     }
 
     @Override
@@ -257,7 +297,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.ll_msg:
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
                 Intent intent2 = new Intent(mContext, MessageActivity.class);
@@ -290,7 +330,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
-
 
 
     class CuxiaoAdapter extends BaseQuickAdapter<HomeBean.DatasEntity.SaleEntity, BaseViewHolder> {

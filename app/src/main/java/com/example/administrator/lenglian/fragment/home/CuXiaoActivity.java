@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
@@ -28,6 +29,9 @@ import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.view.CustomProgressDialog;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
@@ -37,6 +41,9 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
     private TextView tv_back;
     private RecyclerView recycler_cuxiao;
     private CuXiaoAdapter mCuXiaoAdapter;
+    private SpringView springview;
+    private boolean isFirst = true;
+    private CustomProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,30 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_back.setOnClickListener(this);
         recycler_cuxiao = (RecyclerView) findViewById(R.id.recycler_cuxiao);
+        springview = (SpringView) findViewById(R.id.springview);
         initData();
+    }
+
+    private void initListener() {
+        springview.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        initData();
+                    }
+                }, 1500);//动画延时1500毫秒
+            }
+
+            @Override
+            public void onLoadmore() {
+
+            }
+        });
+        springview.setHeader(new DefaultHeader(this));
+        //        springview.setFooter(new DefaultFooter(getActivity()));
+        isFirst = false;
     }
 
     @Override
@@ -64,33 +94,43 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initData() {
-        recycler_cuxiao.setLayoutManager(new LinearLayoutManager(this));
-        ArrayMap arrayMap = new ArrayMap<String, String>();
-        arrayMap.put("pro_id", "");
-        RetrofitManager.get(MyContants.BASEURL + "s=Product/listSale", arrayMap, new BaseObserver1<CuXiaoBean>("") {
+        mDialog = new CustomProgressDialog(this, R.style.myprogressdialog);
+        mDialog.show();
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onSuccess(CuXiaoBean result, String tag) {
+            public void run() {
+                recycler_cuxiao.setLayoutManager(new LinearLayoutManager(CuXiaoActivity.this));
+                ArrayMap arrayMap = new ArrayMap<String, String>();
+                arrayMap.put("pro_id", "");
+                RetrofitManager.get(MyContants.BASEURL + "s=Product/listSale", arrayMap, new BaseObserver1<CuXiaoBean>("") {
+                    @Override
+                    public void onSuccess(CuXiaoBean result, String tag) {
 
-                //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
-                if (result.getCode() == 200) {
-                    mCuXiaoAdapter = new CuXiaoAdapter(R.layout.cuxiao_item, result.getDatas());
-                    recycler_cuxiao.setAdapter(mCuXiaoAdapter);
-                    mCuXiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            Intent intent = new Intent(CuXiaoActivity.this, GoodDetailActivity.class);
-                            intent.putExtra("id", mCuXiaoAdapter.getData().get(position).getPro_id());
-                            startActivity(intent);
+                        //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
+                        if (result.getCode() == 200) {
+                            mCuXiaoAdapter = new CuXiaoAdapter(R.layout.cuxiao_item, result.getDatas());
+                            recycler_cuxiao.setAdapter(mCuXiaoAdapter);
+                            mCuXiaoAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    Intent intent = new Intent(CuXiaoActivity.this, GoodDetailActivity.class);
+                                    intent.putExtra("id", mCuXiaoAdapter.getData().get(position).getPro_id());
+                                    startActivity(intent);
+                                }
+                            });
                         }
-                    });
-                }
-            }
+                        if (isFirst)
+                            initListener();//放在这里是为了让代码同步，要不一进去界面总是会闪一下Springview
+                        mDialog.dismiss();
+                    }
 
-            @Override
-            public void onFailed(int code) {
-                Toast.makeText(CuXiaoActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onFailed(int code) {
+                        Toast.makeText(CuXiaoActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        });
+        },1000);
     }
 
     class CuXiaoAdapter extends BaseQuickAdapter<CuXiaoBean.DatasEntity, BaseViewHolder> {
@@ -101,12 +141,12 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         protected void convert(BaseViewHolder helper, CuXiaoBean.DatasEntity item) {
-            SpannableString spannableString = new SpannableString("原价:￥"+item.getPro_price());
+            SpannableString spannableString = new SpannableString("原价:￥" + item.getPro_price());
             StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
             spannableString.setSpan(strikethroughSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             helper.setText(R.id.tv_price_pro, spannableString)
-            .setText(R.id.tv_title,item.getMain_title())
-            .setText(R.id.tv_price_now,"￥"+item.getSale_price());
+                    .setText(R.id.tv_title, item.getMain_title())
+                    .setText(R.id.tv_price_now, "￥" + item.getSale_price());
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .error(R.drawable.default_square)

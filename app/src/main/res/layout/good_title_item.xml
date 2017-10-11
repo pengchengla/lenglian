@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/ll_root_view"
               xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              android:layout_width="80dp"
               android:layout_height="wrap_content"
               android:orientation="vertical">
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <View
             android:id="@+id/title_left_view"
             android:layout_width="3dp"
             android:layout_height="match_parent"
             android:background="@color/blue"></View>
-        <RadioButton
-            android:id="@+id/rb_title"
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/rb_bg_selector"
-            android:button="@null"
             android:gravity="center"
-            android:padding="10dp"
-            android:textColor="@drawable/rb_text_selector"
+            android:padding="8dp"
             android:textSize="13sp"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:background="@color/huise"></View>
 </LinearLayout>

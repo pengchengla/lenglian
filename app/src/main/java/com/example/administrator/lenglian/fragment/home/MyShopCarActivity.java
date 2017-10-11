@@ -77,6 +77,12 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
         initData();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initData();
+    }
+
     private void initData() {
         mData = LitePalHelper.search();
         if (mData != null && mData.size() > 0) {

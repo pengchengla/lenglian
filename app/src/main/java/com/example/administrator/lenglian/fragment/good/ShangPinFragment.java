@@ -120,7 +120,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             canshunameList.add("日耗电量");
         }
         mId = getActivity().getIntent().getStringExtra("id");
-//        Toast.makeText(mContext, " "+mId+"  "+SpUtils.getString(mContext, "user_id", ""), Toast.LENGTH_SHORT).show();
+        //        Toast.makeText(mContext, " "+mId+"  "+SpUtils.getString(mContext, "user_id", ""), Toast.LENGTH_SHORT).show();
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("pro_id", mId);
         arrayMap.put("user_id", SpUtils.getString(mContext, "user_id", ""));
@@ -319,7 +319,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 }
-                UMShareActivity.shareWebUrl("http://114.215.83.139/cfc_share/index.html?id="+mDatas.getPro_id()
+                UMShareActivity.shareWebUrl("http://114.215.83.139/cfc_share/index.html?id=" + mDatas.getPro_id()
                         , mDatas.getMain_title(), mDatas.getSingle_pic()
                         , mDatas.getSub_title(), mActivity);
                 break;
@@ -391,38 +391,48 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                 .error(R.drawable.default_square)
                 .priority(Priority.NORMAL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        Glide.with(mContext).load(mDatas.getSingle_pic())
-                .apply(options)
-                .into(iv_tipian);
-        final SnappingStepper stepper = dialog.getView(R.id.stepper);
-        SnappingStepper ssp = dialog.getView(R.id.stepper);
-        ssp.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
-            @Override
-            public void onValueChange(View view, int value) {
-                duration = value;
-            }
-        });
-        dialog.getView(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (type == 1) {
-                    Intent intent = new Intent(mContext, QueRenOrderActivity.class);
-                    intent.putExtra("id", mId);
-                    intent.putExtra("duration", stepper.getValue() + "");
-                    intent.putExtra("imgUrl", mDatas.getPro_pic().get(0).getUrl());
-                    intent.putExtra("name", mDatas.getMain_title());
-                    intent.putExtra("price", mDatas.getSale_price().equals("0")?
-                            mDatas.getPro_price() : mDatas.getSale_price());
-                    intent.putExtra("yajin", mDatas.getPro_deposit());
-                    intent.putExtra("peisongfei", mDatas.getExpress_money());
-                    startActivity(intent);
-                } else if (type == 2) {
-                    insertCar();
+        if (mDatas != null) {
+            Glide.with(mContext).load(mDatas.getSingle_pic())
+                    .apply(options)
+                    .into(iv_tipian);
+            final SnappingStepper stepper = dialog.getView(R.id.stepper);
+            SnappingStepper ssp = dialog.getView(R.id.stepper);
+            ssp.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
+                @Override
+                public void onValueChange(View view, int value) {
+                    duration = value;
                 }
-                dialog.dismiss();
+            });
+            TextView tv_title = dialog.getView(R.id.tv_title);
+            tv_title.setText(mDatas.getMain_title());
+            TextView tv_price_pro = dialog.getView(R.id.tv_price_pro);
+            if (mDatas.getSale_price().equals("0")) {
+                tv_price_pro.setText("￥" + mDatas.getPro_price() + "元/月");
+            } else {
+                tv_price_pro.setText("￥" + mDatas.getSale_price() + "元/月");
             }
-        });
-        dialog.show();
+            dialog.getView(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (type == 1) {
+                        Intent intent = new Intent(mContext, QueRenOrderActivity.class);
+                        intent.putExtra("id", mId);
+                        intent.putExtra("duration", stepper.getValue() + "");
+                        intent.putExtra("imgUrl", mDatas.getPro_pic().get(0).getUrl());
+                        intent.putExtra("name", mDatas.getMain_title());
+                        intent.putExtra("price", mDatas.getSale_price().equals("0") ?
+                                mDatas.getPro_price() : mDatas.getSale_price());
+                        intent.putExtra("yajin", mDatas.getPro_deposit());
+                        intent.putExtra("peisongfei", mDatas.getExpress_money());
+                        startActivity(intent);
+                    } else if (type == 2) {
+                        insertCar();
+                    }
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
     }
 
     private void insertCar() {
@@ -435,7 +445,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         } else {
             LitePalHelper.add(new ShopCarBean(mDatas.getPro_id(),
                     mDatas.getMain_title(),
-                    mDatas.getSale_price().equals("0")? mDatas.getPro_price() : mDatas.getSale_price(),
+                    mDatas.getSale_price().equals("0") ? mDatas.getPro_price() : mDatas.getSale_price(),
                     mDatas.getPro_pic().get(0).getUrl(),
                     duration, mDatas.getPro_deposit(), mDatas.getExpress_money()
             ));

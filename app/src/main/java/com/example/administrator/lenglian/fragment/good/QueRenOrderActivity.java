@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.good;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,13 +21,15 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.AddressBean;
 import com.example.administrator.lenglian.bean.OrderPushBean;
+import com.example.administrator.lenglian.db.LitePalHelper;
 import com.example.administrator.lenglian.fragment.mine.AddressActivity;
-import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
+import com.example.administrator.lenglian.fragment.mine.GoPayActivity;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.view.CustomProgressDialog;
 
 
 public class QueRenOrderActivity extends BaseActivity implements View.OnClickListener {
@@ -46,6 +49,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     private String yajin;
     private String peisongfei;
     private String total_price;
+    private CustomProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
+        mDialog = new CustomProgressDialog(this, R.style.myprogressdialog);
         mId = getIntent().getStringExtra("id");
         duration = getIntent().getStringExtra("duration");
         img_url = getIntent().getStringExtra("imgUrl");
@@ -113,8 +118,8 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
 
     private void initAddress() {
         ArrayMap arrayMap = new ArrayMap();
-//        Toast.makeText(this, " " + SpUtils.getString(QueRenOrderActivity.this, "user_id", "")
-//                , Toast.LENGTH_SHORT).show();
+        //        Toast.makeText(this, " " + SpUtils.getString(QueRenOrderActivity.this, "user_id", "")
+        //                , Toast.LENGTH_SHORT).show();
         arrayMap.put("user_id", SpUtils.getString(QueRenOrderActivity.this, "user_id", ""));
         arrayMap.put("token", MyUtils.getToken());
         arrayMap.put("is_default", "1");
@@ -162,34 +167,43 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void pushOrder() {
-        ArrayMap arrayMap2 = new ArrayMap();
-        arrayMap2.put("pro_id", mId);
-        arrayMap2.put("token", MyUtils.getToken());
-        arrayMap2.put("user_id", SpUtils.getString(QueRenOrderActivity.this, "user_id", ""));
-        arrayMap2.put("duration", duration);
-        arrayMap2.put("express_id", express_id);
-        arrayMap2.put("order_note", edt_liuyan.getText().toString());
-        //        Toast.makeText(this, "id::" + mId + "   时长::" + duration, Toast.LENGTH_SHORT).show();
-        RetrofitManager.post(MyContants.BASEURL + "s=Order/newOrder", arrayMap2, new BaseObserver1<OrderPushBean>("") {
+        mDialog.show();
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onSuccess(OrderPushBean result, String tag) {
-                if (result.getCode() == 200) {
-//                    Toast.makeText(QueRenOrderActivity.this, "成功", Toast.LENGTH_SHORT).show();
-                    mOrder_id = result.getDatas().getOrder_id();
-                    Toast.makeText(QueRenOrderActivity.this, " " + mOrder_id, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(QueRenOrderActivity.this, OrderPayActivity.class);
-                    intent.putExtra("orderid",mOrder_id);
-                    startActivity(intent);
-                } else {
-                    //101是没有数据
-                    Toast.makeText(QueRenOrderActivity.this, "提交失败" + result.getError(), Toast.LENGTH_SHORT).show();
-                }
-            }
+            public void run() {
+                ArrayMap arrayMap2 = new ArrayMap();
+                arrayMap2.put("pro_id", mId);
+                arrayMap2.put("token", MyUtils.getToken());
+                arrayMap2.put("user_id", SpUtils.getString(QueRenOrderActivity.this, "user_id", ""));
+                arrayMap2.put("duration", duration);
+                arrayMap2.put("express_id", express_id);
+                arrayMap2.put("order_note", edt_liuyan.getText().toString());
+                //        Toast.makeText(this, "id::" + mId + "   时长::" + duration, Toast.LENGTH_SHORT).show();
+                RetrofitManager.post(MyContants.BASEURL + "s=Order/newOrder", arrayMap2, new BaseObserver1<OrderPushBean>("") {
+                    @Override
+                    public void onSuccess(OrderPushBean result, String tag) {
+                        if (result.getCode() == 200) {
+                            //                    Toast.makeText(QueRenOrderActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                            mOrder_id = result.getDatas().getOrder_id();
+                            //                    Toast.makeText(QueRenOrderActivity.this, " " + mOrder_id, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(QueRenOrderActivity.this, GoPayActivity.class);
+                            intent.putExtra("orderid", mOrder_id);
+                            startActivity(intent);
+                            finish();
+                            LitePalHelper.deleteOne(mId);//数据库中删除这个商品
+                            mDialog.dismiss();
+                        } else {
+                            //101是没有数据
+                            Toast.makeText(QueRenOrderActivity.this, "提交失败" + result.getError(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-            @Override
-            public void onFailed(int code) {
+                    @Override
+                    public void onFailed(int code) {
 
+                    }
+                });
             }
-        });
+        }, 1000);
     }
 }

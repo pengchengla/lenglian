@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:id="@+id/liner"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:layout_margin="15dp"
-        android:id="@+id/pay_image"
-        android:src="@drawable/zhifubao"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
-    <TextView
-        android:textSize="16sp"
-        android:padding="5dp"
-        android:layout_marginTop="20dp"
-        android:text="支付宝"
-        android:textColor="@color/textblack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+<RelativeLayout android:id="@+id/rl_root_view"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_alignParentRight="true"
+        android:id="@+id/liner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-       <CheckBox
-          android:layout_toLeftOf="@id/liner"
-          android:gravity="center"
-         android:layout_marginTop="20dp"
-        android:button="@null"
-
-        android:background="@drawable/payflase"
+        <ImageView
+            android:id="@+id/pay_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/zhifubao"/>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="5dp"
+            android:text="支付宝"
+            android:textColor="@color/textblack"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    <CheckBox
+        android:id="@+id/pay_cb"
         android:layout_width="20dp"
         android:layout_height="20dp"
-          android:checked="false"
-          android:clickable="false"/>
-    </LinearLayout>
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@id/liner"
+        android:background="@drawable/payflase_selector"
+        android:button="@null"
+        android:checked="false"
+        android:clickable="false"
+        android:gravity="center"/>
 </RelativeLayout>

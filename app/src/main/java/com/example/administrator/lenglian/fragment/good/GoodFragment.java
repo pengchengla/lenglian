@@ -44,7 +44,6 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     private RecyclerView recycler_title;
     private RecyclerView recycler_content;
     private TextView tv_search;
-    //    private List<TitleBean> titleList = new ArrayList<>();
     private TitleAdapter mTitleAdapter;
     private ContentAdapter mContentAdapter;
     private List<GoodTypeBean.DatasEntity> mTitleDatas;
@@ -58,6 +57,9 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         tv_search = (TextView) view.findViewById(R.id.tv_search);
         tv_search.setOnClickListener(this);
         EventBus.getDefault().register(this);  //注册
+        recycler_content.setLayoutManager(new GridLayoutManager(mContext, 2));
+        mTitleLayoutManager = new LinearLayoutManager(mContext);
+        recycler_title.setLayoutManager(mTitleLayoutManager);
         return view;
     }
 
@@ -88,10 +90,6 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        recycler_content.setLayoutManager(new GridLayoutManager(mContext, 2));
-        mTitleLayoutManager = new LinearLayoutManager(mContext);
-        recycler_title.setLayoutManager(mTitleLayoutManager);
-
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("", "");
         RetrofitManager.get(MyContants.BASEURL + "s=Product/listClass", arrayMap, new BaseObserver1<GoodTypeBean>("") {
@@ -102,11 +100,10 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                 if (result.getCode() == 200) {
                     mTitleDatas = result.getDatas();
                     if (mTitleAdapter == null) {
+                        mTitleDatas.get(0).setChecked(true);//默认选中第一个
                         mTitleAdapter = new TitleAdapter(R.layout.good_title_item, mTitleDatas);
                         recycler_title.setAdapter(mTitleAdapter);
-                        mTitleAdapter.getData().get(0).setChecked(true);
-                        mTitleAdapter.notifyDataSetChanged();//默认选中第一个
-                        switchData(mTitleAdapter.getData().get(0).getClass_id());
+                        switchData(mTitleDatas.get(0).getClass_id());
                     }
                 }
             }
@@ -130,6 +127,8 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         }
         mTitleAdapter.notifyDataSetChanged();
         //        recycler_title.smoothScrollToPosition(scrollPosition);/////////////
+        smoothMoveToPosition(scrollPosition);
+        moveToCenter(scrollPosition);
     }
 
 
@@ -159,6 +158,8 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                     });
                 } else {
                     //没数据的时候返回的code是101
+                    mContentAdapter.getData().clear();
+                    mContentAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -169,7 +170,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         });
     }
 
-    private int scrollPosition = 0;
+    private int scrollPosition;
 
     class TitleAdapter extends BaseQuickAdapter<GoodTypeBean.DatasEntity, BaseViewHolder> {
 
@@ -179,27 +180,26 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
 
         @Override
         protected void convert(final BaseViewHolder helper, final GoodTypeBean.DatasEntity item) {
-            helper.setText(R.id.rb_title, item.getClass_name());
-            helper.setChecked(R.id.rb_title, item.isChecked());
+            helper.setText(R.id.tv_title, item.getClass_name());
+            TextView tv = helper.getView(R.id.tv_title);
             if (item.isChecked()) {
                 helper.getView(R.id.title_left_view).setBackgroundResource(R.color.blue);
+                tv.setBackgroundColor(getResources().getColor(R.color.huise));
+                tv.setTextColor(getResources().getColor(R.color.blue));
             } else {
                 helper.getView(R.id.title_left_view).setBackgroundResource(R.color.white);
+                tv.setBackgroundColor(getResources().getColor(R.color.white));
+                tv.setTextColor(getResources().getColor(R.color.textblack));
             }
             //直接在外层用adapter的点击事件就不管用，真是邪门
-            helper.getView(R.id.rb_title).setOnClickListener(new View.OnClickListener() {
+            tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mTitleAdapter.getData().get(scrollPosition).setChecked(false);
                     scrollPosition = helper.getAdapterPosition();
                     mTitleAdapter.getData().get(scrollPosition).setChecked(true);
+                    notifyDataSetChanged();
                     switchData(mTitleAdapter.getData().get(scrollPosition).getClass_id());
-                    mTitleAdapter.notifyDataSetChanged();
-
-                    //                    recycler_title.smoothScrollToPosition(scrollPosition);
-                    //                    mTitleLayoutManager.scrollToPositionWithOffset(scrollPosition, 0);
-                    //                    smoothMoveToPosition(scrollPosition);
-                    //                    moveToCenter(scrollPosition);
 
                 }
             });
@@ -244,14 +244,14 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         Log.e("first--->", String.valueOf(firstItem));
         Log.e("last--->", String.valueOf(lastItem));
         if (n <= firstItem) {
-            recycler_title.scrollToPosition(n);
+            recycler_title.smoothScrollToPosition(n);
         } else if (n <= lastItem) {
             Log.e("pos---->", String.valueOf(n) + " VS " + firstItem);
             int top = recycler_title.getChildAt(n - firstItem).getTop();
             Log.e("top---->", String.valueOf(top));
             recycler_title.scrollBy(0, top);
         } else {
-            recycler_title.scrollToPosition(n);
+            recycler_title.smoothScrollToPosition(n);
         }
     }
 
@@ -264,4 +264,5 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
             recycler_title.smoothScrollBy(0, y);
         }
     }
+
 }

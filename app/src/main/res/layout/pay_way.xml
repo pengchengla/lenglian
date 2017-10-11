@@ -1,69 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/hui">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/hui"
+              android:orientation="vertical">
     <LinearLayout
-        android:gravity="center"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="#6798e7"
+        android:gravity="center"
         android:weightSum="3"
-        >
+    >
         <RelativeLayout
             android:id="@+id/tv_back"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:gravity="center_vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
             <ImageView
-                android:layout_centerVertical="true"
                 android:id="@+id/fan"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_back_white"
                 android:layout_width="15dp"
-                android:layout_height="14dp" />
-            <TextView
+                android:layout_height="14dp"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/fan"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_back_white"/>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/fan"
                 android:text="返回"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                />
-
+            />
         </RelativeLayout>
 
         <TextView
-            android:layout_weight="1"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="选择支付方式"
+            android:layout_weight="1.1"
+            android:gravity="center"
             android:padding="10dp"
+            android:text="选择支付方式"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="17sp"/>
 
         <TextView
-            android:layout_weight="1"
-            android:gravity="left"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text=""
+            android:layout_weight="1"
+            android:gravity="left"
             android:padding="10dp"
+            android:text=""
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
     </LinearLayout>
-     <ListView
-         android:layout_marginTop="10dp"
-         android:id="@+id/pay_list"
-         android:dividerHeight="1dp"
-         android:divider="@color/white"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"></ListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/huise"></View>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></android.support.v7.widget.RecyclerView>
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="30dp"
+            android:background="@drawable/circle_red"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+    </FrameLayout>
 </LinearLayout>

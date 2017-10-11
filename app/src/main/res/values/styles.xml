@@ -56,5 +56,20 @@
         <!-- 遮罩层 -->
         <item name="android:backgroundDimAmount">0.5</item>
     </style>
-
+    <!--首先我们自定义style，继承于Theme.AppCompat.Dialog，重写俩个属性，其中
+    android:backgroundDimEnabled：表示页面时候变暗，我们设置false，不变暗
+    android:windowBackground：表示背景颜色，我们这种为透明，因为我们给布局文件背景设置了圆角，
+    如果不设置对话框为透明的话，圆角部分会留白
+    创建好自定义样式后，我们只要在创建对话框的时候调用另外重载构造方法设置样式就可以
+    new CustomDialog(this, R.style.CustomDialog)解决宽度不适配问题。
+    如何修改进度条颜色呢，当时我也在这个地方卡了半个多小时，
+    后来一层一层的点安卓资源文件才发现在主题下有个colorAccent值控制对话框颜色，
+    其实他的意思是着重色，像按钮，toolbar都是默认采用这个颜色。我们在自定义样式中加上这个就行。
+    这里需要注意的是使用colorAccent兼容低版本，而不是android:colorAccent。
+    -->
+    <style name="myprogressdialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 </resources>

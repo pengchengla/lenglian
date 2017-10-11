@@ -6,12 +6,22 @@ package com.example.administrator.lenglian.fragment.mine.bean;
  */
 
 public class Paybean {
-     private String image;
-     private String name;
+    private String image;
+    private String name;
+    private boolean isChecked;
+
 
     public Paybean(String image, String name) {
         this.image = image;
         this.name = name;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public String getImage() {
