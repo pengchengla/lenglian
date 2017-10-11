@@ -62,7 +62,7 @@ public class Payadapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+    ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
             //填充布局
@@ -73,6 +73,7 @@ public class Payadapter extends BaseAdapter {
             holder.order_pause = (TextView)  convertView.findViewById(R.id.order_pau);
             holder.order_zhifi = (TextView)  convertView.findViewById(R.id.order_zhi);
             convertView.setTag(holder);
+            holder.order_pause.setTag(position);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -95,12 +96,14 @@ public class Payadapter extends BaseAdapter {
         holder.textView.setText(list.get(position).getPro_price());
 
 
+        final ViewHolder finalHolder = holder;
         holder.order_pause.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
                      //取消
+                    int i=(int) finalHolder.order_pause.getTag();
                      pausevoid(position);
-                     list.remove(position);
+                     list.remove(i);
                      notifyDataSetChanged();
 
                  }

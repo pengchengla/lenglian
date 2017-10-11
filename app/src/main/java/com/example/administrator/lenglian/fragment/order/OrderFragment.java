@@ -85,6 +85,7 @@ public class OrderFragment extends BaseFragment {
               real_login.setVisibility(View.GONE);
               liner_tab.setVisibility(View.VISIBLE);
 
+
           }
           else {
               real_login.setVisibility(View.VISIBLE);
