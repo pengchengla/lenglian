@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.adapter.Gradeadapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.mine.bean.photobean;
@@ -30,6 +31,9 @@ import com.example.administrator.lenglian.utils.MyGradeview;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.PayUtil;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,7 +73,7 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.order_detail);
 
         initView();
-        inindata();
+    //    inindata();
         //网络请求
         network();
     }
@@ -112,7 +116,14 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                     delivery_cost.setText("¥"+datas.get(0).getExpress_money());
                     //合计
                     total_price.setText("¥"+datas.get(0).getOrder_price());
+                    //发票
+                    ususally_invoice.setText("");
+                    //下单时间
+                    order_data.setText(datas.get(0).getOrder_time());
+                    List<Xiangqingbean.DatasBean.ProPicBean> pro_pic = datas.get(0).getPro_pic();
 
+                    Order_gride gradeadapter=new  Order_gride(OrderPayActivity.this,pro_pic);
+                    odetail_recy.setAdapter(gradeadapter);
 
 
 
@@ -142,8 +153,7 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         list.add(ph3);
         list.add(pho4);
         list.add(pho5);
-        Order_gride gradeadapter=new  Order_gride(this,list);
-        odetail_recy.setAdapter(gradeadapter);
+
 
     }
 
@@ -166,9 +176,11 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         order_pause = (TextView) findViewById(R.id.order_pause);
         order_zhifi = (TextView) findViewById(R.id.order_zhifi);
         tv_back.setOnClickListener(this);
+        order_pause.setOnClickListener(this);
         //得到数据
         Intent intent = getIntent();
         order_id = intent.getStringExtra("order_id");
+        order_zhifi.setOnClickListener(this);
     }
 
     @Override
@@ -183,9 +195,37 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                   break;
               case R.id. order_pause:
                   //取消
+                pausevoid();
+
 
                   break;
           }
+
+    }
+    public void pausevoid(){
+          /*
+       向服务器传送取消的订单
+      */
+        Map<String,String> map=new HashMap<>();
+        map.put("order_id",  order_id);
+        map.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=Order/cancelOrder", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200)  {
+                    ToastUtils.showShort(OrderPayActivity.this,"取消成功");
+                    finish();
+                    //Eventbus发送告知刷新
+                    EventMessage eventMessage = new EventMessage("fff");
+                    EventBus.getDefault().postSticky(eventMessage);
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
 
     }
 }

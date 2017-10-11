@@ -19,6 +19,7 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.activity.RegisterActivity;
 import com.example.administrator.lenglian.activity.ZiLiaoActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.bean.RegisterBean;
 import com.example.administrator.lenglian.fragment.mine.adapter.DingdanAdapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
@@ -41,6 +42,10 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.socks.library.KLog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,6 +82,8 @@ public class BlankFragment extends BaseFragment {
 
     @Override
     protected View initView() {
+        //注册
+        EventBus.getDefault().register(this);
         View view = View.inflate(mContext, R.layout.order_recying, null);
         this.tv_back = (TextView) view.findViewById(R.id.tv_back);
         this.list_recying = (ListView) view.findViewById(R.id.list_recying);
@@ -324,6 +331,41 @@ public class BlankFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void myEvent(EventMessage eventMessage) {
+        if (eventMessage.getMsg().equals("fff")) {
+            fff();
+        }
+    }
+    public void fff(){
+        ArrayMap map = new ArrayMap<String, String>();
+        map.put("user_id",SpUtils.getString(mContext,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("order_status","1");
+        KLog.a(api);
+        RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Zhifubean>("zhifu") {
 
 
+
+            @Override
+            public void onSuccess(Zhifubean result, String tag) {
+
+                if  (tag.equals("zhifu")) {
+                    datasf = result.getDatas();
+                    payadapter = new Payadapter(getActivity(), datasf);
+                    list_recying.setAdapter(payadapter);
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+            }
+        });
+    }
 }

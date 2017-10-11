@@ -8,9 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.adapter.Gradeadapter;
 import com.example.administrator.lenglian.fragment.mine.bean.photobean;
+import com.example.administrator.lenglian.fragment.order.bean.Xiangqingbean;
 
 import java.util.List;
 
@@ -22,9 +28,9 @@ import java.util.List;
 public class Order_gride extends BaseAdapter {
 
     private Context context;
-    private List<photobean> list;
+    List<Xiangqingbean.DatasBean.ProPicBean> list;
     // private List<Evaluatedetailbean.DatasBean.PicBean> list;
-    public  Order_gride(Context context, List<photobean> list) {
+    public  Order_gride(Context context,  List<Xiangqingbean.DatasBean.ProPicBean>list) {
         this.context = context;
         this.list = list;
     }
@@ -58,8 +64,17 @@ public class Order_gride extends BaseAdapter {
         else {
             holder= (ViewHolder) convertView.getTag();
         }
-        //  Toast.makeText(context,list.get(position).getPhoto()+"",Toast.LENGTH_SHORT).show();
-        holder.image.setImageResource(list.get(position).getPhoto());
+        /*
+                  加载图片
+                   */
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(MyApplication.getApplication()).load(list.get(position).getUrl())
+                .apply(options)
+                .into(holder.image);
         return convertView;
     }
     class  ViewHolder{
