@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.order.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,19 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -61,9 +71,11 @@ public class Deliveryadapter extends BaseAdapter {
             holder.textView = (TextView)  convertView.findViewById(R.id.receving_price);
             holder.reying_btn= (TextView) convertView.findViewById(R.id.recying_btn);
             convertView.setTag(holder);
+            holder.reying_btn.setTag(position);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
         holder.reying_btn.setFocusable(false);
         /*
           加载图片
@@ -78,12 +90,15 @@ public class Deliveryadapter extends BaseAdapter {
                 .into(holder.iv_tupian);
         holder.orderlist_count.setText(list.get(position).getMain_title());
         holder.textView.setText(list.get(position).getPro_price());
+        final ViewHolder finalHolder = holder;
         holder.reying_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int i=(int) finalHolder.reying_btn.getTag();
                 //确认收货
-                 list.remove(position);
-                notifyDataSetChanged();
+                recycing(i);
+
+
             }
         });
 
@@ -100,4 +115,28 @@ public class Deliveryadapter extends BaseAdapter {
         public TextView reying_btn;
 
     }
+     //确认收货
+      private void recycing(final int position){
+            //网络请求
+          Map<String,String> map=new HashMap<>();
+           map.put("user_id", SpUtils.getString(context,"user_id",""));
+          map.put("token", MyUtils.getToken());
+          map.put("order_id",list.get(position).getOrder_id());
+          RetrofitManager.post(MyContants.BASEURL +"s=User/commitOrder", map, new BaseObserver1<Resultbean>("") {
+              @Override
+              public void onSuccess(Resultbean result, String tag) {
+                      if(result.getCode()==200){
+                          ToastUtils.showShort(context,"确认收货");
+                          list.remove(position);
+                          notifyDataSetChanged();
+                      }
+              }
+
+              @Override
+              public void onFailed(int code) {
+
+              }
+          });
+
+      }
 }

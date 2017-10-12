@@ -112,7 +112,7 @@ public class OrderFragment extends BaseFragment {
         //支付
         apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=1");
         //收货
-        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=2,3");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=2,3,4");
         //评价
         apiList.add(MyContants.BASEURL+"s=Order/listOrder/is_comment=0");
         for (int i = 0; i < list.size(); i++) {
@@ -152,5 +152,11 @@ public class OrderFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
 
+        }
+    }
 }

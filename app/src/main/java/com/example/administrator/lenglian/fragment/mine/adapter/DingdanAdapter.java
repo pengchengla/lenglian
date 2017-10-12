@@ -17,14 +17,22 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
 import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
 import com.example.administrator.lenglian.fragment.order.activity.ShopdetailActivity;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.PayUtil;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * date : ${Date}
@@ -168,6 +176,13 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.GONE);
             holder.receving.setVisibility(View.VISIBLE);
+             //收货按钮
+              holder.receving.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      recycing( position);
+                  }
+              });
         } else if ("1".equals(list.get(position).getOrder_status())) {
 
             holder.evaluate.setVisibility(View.GONE);
@@ -185,8 +200,8 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
             holder.order_pause.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    list.remove(position);
-                    notifyDataSetChanged();
+                    pausevoid(position);
+
                 }
             });
         }
@@ -213,7 +228,60 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
                 break;
         }
     }
+      /*
+         收货
+       */
+       private void recycing(final int position){
+           Map<String,String> map=new HashMap<>();
+           map.put("user_id", SpUtils.getString(context,"user_id",""));
+           map.put("token", MyUtils.getToken());
+           map.put("order_id",list.get(position).getOrder_id());
+           RetrofitManager.get(MyContants.BASEURL + "s=User/commitOrder", map, new BaseObserver1<Resultbean>("") {
+               @Override
+               public void onSuccess(Resultbean result, String tag) {
+                 if(result.getCode()==200) {
+                     ToastUtils.showShort(context,"确认收货");
+                     list.remove(position);
+                     notifyDataSetChanged();
 
+                 }
+               }
+
+               @Override
+               public void onFailed(int code) {
+
+               }
+           });
+
+       }
+    /*
+      取消订单
+     */
+
+    public void pausevoid(final int position){
+          /*
+       向服务器传送取消的订单
+      */
+        Map<String,String> map=new HashMap<>();
+        map.put("order_id",list.get(position).getOrder_id());
+        map.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=Order/cancelOrder", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200)  {
+                    ToastUtils.showShort(context,"订单已取消");
+                    list.remove(position);
+                    notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+
+    }
     class ViewHolder {
         public ImageView order_tupian;
         public TextView order_count;

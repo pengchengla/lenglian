@@ -9,9 +9,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.fragment.order.bean.Xiangqingbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
@@ -19,6 +25,7 @@ import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,20 +69,66 @@ public class ReceiptActivity extends BaseActivity implements View.OnClickListene
           map.put("user_id", SpUtils.getString(this,"user_id",""));
           map.put("token", MyUtils.getToken());
           map.put("order_id",order_id);
-        RetrofitManager.get(MyContants.BASEURL + "", map, new BaseObserver1<Resultbean>("") {
+        RetrofitManager.get(MyContants.BASEURL +"s=Order/profileOrder", map, new BaseObserver1<Xiangqingbean>("") {
             @Override
-            public void onSuccess(Resultbean result, String tag) {
+            public void onSuccess(Xiangqingbean result, String tag) {
+
                 if(result.getCode()==200){
+                    Xiangqingbean.DatasBean datas = result.getDatas();
 
                     //加载数据
-                    peisong_number.setText("");//订单号
+                    peisong_number.setText(datas.getOrder_num());//订单号
                     distribution_state.setText("");//订单状态
-                    consignee_person.setText("");//收货人
-
-
-
-
-
+                    consignee_person.setText(datas.getReceive_name());//收货人
+                    //联系电话
+                    peisong_number.setText(datas.getMobile());
+                    consignee_address.setText(datas.getAddress_detail());
+                  /*
+                  加载图片
+                   */
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .error(R.drawable.default_square)
+                            .priority(Priority.NORMAL)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                    Glide.with(MyApplication.getApplication()).load(datas.getSingle_pic())
+                            .apply(options)
+                            .into( distribution_tupian );
+                    //内容
+                    distribution_miaoshu.setText(datas.getMain_title());
+                    distribution_price.setText("¥ "+datas.getPro_price());
+                    jie_yanjin.setText("¥ "+datas.getPro_deposit());
+                    distribution_cost.setText("¥ "+datas.getExpress_money());
+                    //合计
+                    distribution_zprice.setText("¥ "+datas.getOrder_price());
+                    //发票
+                    ususally_invoice.setText("");
+                    //xiadanshijian
+                    //下单时间
+                    distribution_data.setText(datas.getOrder_time());
+                      //预计送达时间、
+                    distribution_songdadata.setText(datas.getExp_time());
+                    distribution_sum.setText("¥ "+datas.getOrder_price());
+                     //返回状态
+                    String order_status = datas.getOrder_status();
+                     if("2".equals(order_status)){
+                         distribution_state.setText("待配送");
+                     }
+                    else if("3".equals(order_status)){
+                         distribution_state.setText("配送中");
+                     }
+                     else if("4".equals(order_status)){
+                         distribution_state.setText("配送完成");
+                     }
+                     else if("8".equals(order_status)){
+                         distribution_state.setText("维修中");
+                     }
+                     else if("9".equals(order_status)){
+                         distribution_state.setText("待取回");
+                     }
+                     else if("10".equals(order_status)){
+                         distribution_state.setText("取回中");
+                     }
                 }
             }
 
@@ -120,10 +173,15 @@ public class ReceiptActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.btn_receiving:
 
+
                 break;
             case R.id. tv_back:
                 finish();
                 break;
         }
     }
+      private void recycing(){
+
+
+      }
 }

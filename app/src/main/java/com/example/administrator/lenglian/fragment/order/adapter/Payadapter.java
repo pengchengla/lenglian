@@ -77,21 +77,31 @@ public class Payadapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
            //加载数据
 
             holder.order_pause.setFocusable(false);
             holder.order_zhifi.setFocusable(false);
+         if(list.get(position).getPro_pic().get(0).getUrl().equals(holder.iv_tupian.getTag())){
+
+         }
+        else {
            /*
-             加载图片
+
             */
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .error(R.drawable.default_square)
-                .priority(Priority.NORMAL)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
-                .apply(options)
-                .into(  holder.iv_tupian);
+             if (list.get(position).getPro_pic().get(0).getUrl() != null&&list.get(position).getPro_pic().get(0).getUrl().length()>0) {
+
+
+                 RequestOptions options = new RequestOptions()
+                         .centerCrop()
+                         .error(R.drawable.default_square)
+                         .priority(Priority.NORMAL)
+                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                 Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
+                         .apply(options)
+                         .into(holder.iv_tupian);
+             }
+         }
             holder.orderlist_count.setText(list.get(position).getMain_title());
         holder.textView.setText(list.get(position).getPro_price());
 
@@ -102,9 +112,8 @@ public class Payadapter extends BaseAdapter {
                  public void onClick(View v) {
                      //取消
                     int i=(int) finalHolder.order_pause.getTag();
-                     pausevoid(position);
-                     list.remove(i);
-                     notifyDataSetChanged();
+                     pausevoid(i);
+
 
                  }
              });
@@ -133,7 +142,7 @@ public class Payadapter extends BaseAdapter {
     }
 
 
-      public void pausevoid( int position){
+      public void pausevoid(final int position){
           /*
        向服务器传送取消的订单
       */
@@ -144,7 +153,9 @@ public class Payadapter extends BaseAdapter {
               @Override
               public void onSuccess(Resultbean result, String tag) {
                   if(result.getCode()==200)  {
-                      ToastUtils.showShort(context,"删除成功");
+                      ToastUtils.showShort(context,"订单已取消");
+                      list.remove(position);
+                      notifyDataSetChanged();
                   }
               }
 

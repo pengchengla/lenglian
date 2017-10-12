@@ -28,9 +28,9 @@ import java.util.List;
 public class Order_gride extends BaseAdapter {
 
     private Context context;
-    List<Xiangqingbean.DatasBean.ProPicBean> list;
+    List<Xiangqingbean.DatasBean.RentAgainBean> list;
     // private List<Evaluatedetailbean.DatasBean.PicBean> list;
-    public  Order_gride(Context context,  List<Xiangqingbean.DatasBean.ProPicBean>list) {
+    public  Order_gride(Context context,   List<Xiangqingbean.DatasBean.RentAgainBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -72,9 +72,11 @@ public class Order_gride extends BaseAdapter {
                 .error(R.drawable.default_square)
                 .priority(Priority.NORMAL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        Glide.with(MyApplication.getApplication()).load(list.get(position).getUrl())
+        Glide.with(MyApplication.getApplication()).load(list.get(position).getSingle_pic())
                 .apply(options)
                 .into(holder.image);
+        //加载数据
+        holder.order_gradetext.setText(list.get(position).getPro_name());
         return convertView;
     }
     class  ViewHolder{

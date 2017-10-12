@@ -8,10 +8,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.bean.Detailbean;
+import com.example.administrator.lenglian.fragment.order.bean.Xiangqingbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
@@ -61,21 +67,49 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
         map.put("user_id", SpUtils.getString(this,"user_id",""));
         map.put("token", MyUtils.getToken());
         map.put("order_id",order_id);
-        RetrofitManager.get(MyContants.BASEURL + "s=Order/profileOrder", map, new BaseObserver1<Detailbean>("") {
+        RetrofitManager.get(MyContants.BASEURL + "s=Order/profileOrder", map, new BaseObserver1<Xiangqingbean>("") {
+            
             @Override
-            public void onSuccess(Detailbean result, String tag) {
-                if(result.getCode()==200){
-                    List<Detailbean.DatasBean> datas =result.getDatas();
-                    //加载数据
-                    details_number.setText(datas.get(0).getOrder_num());
-                   // details_person.setText(datas.get(0).);
+            public void onSuccess(Xiangqingbean result, String tag) {
+            if(result.getCode()==200) {
+                Xiangqingbean.DatasBean datas = result.getDatas();
+                //加载数据
+                details_number.setText(datas.getOrder_num());
+                //收货人
+                details_person.setText(datas.getReceive_name());
+                //电话
+
+                details_num.setText(datas.getMobile());
+                details_address.setText(datas.getAddress_detail());
+                 /*
+                  加载图片
+                   */
+                RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .error(R.drawable.default_square)
+                        .priority(Priority.NORMAL)
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                Glide.with(MyApplication.getApplication()).load(datas.getSingle_pic())
+                        .apply(options)
+                        .into(details_tupian  );
+                //内容
+                details_miaoshu .setText(datas.getMain_title());
+                details_price .setText("¥ "+datas.getPro_price());
+                jie_yanjin.setText("¥ "+datas.getPro_deposit());
+                details_cost.setText("¥ "+datas.getExpress_money());
+                //合计
+                details_zprice.setText("¥ "+datas.getOrder_price());
+                //发票
+                details_invoice.setText("");
+                //下单时间
+                details_data.setText(datas.getOrder_time());
+                details_songdadata.setText("¥ "+datas.getExpress_money());
+                distribution_sum.setText("¥ "+datas.getOrder_price());
+                // details_person.setText(datas.get(0).);
                     /*
                       合计=押金+配送费+商品价格
                      */
-
-
-
-                }
+            }
             }
 
             @Override

@@ -111,7 +111,7 @@ public class BlankFragment extends BaseFragment {
                  //待支付
                  Zhifu();
 
-             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
+             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3,4")) {
 
                  //待收货
                  delivery();
@@ -136,7 +136,7 @@ public class BlankFragment extends BaseFragment {
                         String order_id = datas.get(position).getOrder_id();
                         KLog.a(order_id);
                         startActivity(intent);
-                    } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status())) {
+                    } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status())||"4".equals(datas.get(position).getOrder_status())) {
                         Intent it = new Intent(getActivity(), ReceiptActivity.class);
                         it.putExtra("order_id",datas.get(position).getOrder_id());
                         startActivity(it);
@@ -153,13 +153,15 @@ public class BlankFragment extends BaseFragment {
                     startActivity(intent);
                 }
                 //跳收货
-                else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
+                else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3,4")) {
                     Intent it = new Intent(getActivity(), ReceiptActivity.class);
+                    it.putExtra("order_id",datash.get(position).getOrder_id());
                     startActivity(it);
                 }
                 //跳评价
                 else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
                     Intent intent = new Intent(getActivity(), AppraiseActivity.class);
+                    intent.putExtra("order_id",datasp.get(position).getOrder_id());
                     startActivity(intent);
                 }
             }
@@ -180,24 +182,27 @@ public class BlankFragment extends BaseFragment {
                         }
                         else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
                             //待支付
-                            if(datasf!=null){
-                                payadapter.notifyDataSetChanged();
-                            }
+//                            if(datasf!=null){
+//                                payadapter.notifyDataSetChanged();
+//                            }
+                            Zhifu();
 
 
-                        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3")) {
+                        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3,4")) {
 
-                            //待收货
-                            if(datash!=null){
-                                deliveryadapter.notifyDataSetChanged();
-                            }
+//                            //待收货
+//                            if(datash!=null){
+//                                deliveryadapter.notifyDataSetChanged();
+//                            }
+                            delivery();
 
 
                         } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
-                            //待评价
-                            if(datasp!=null){
-                                evaluateadapyer.notifyDataSetChanged();
-                            }
+//                            //待评价
+//                            if(datasp!=null){
+//                                evaluateadapyer.notifyDataSetChanged();
+//                            }
+                            evaluate();
 
 
                         }
@@ -255,7 +260,7 @@ public class BlankFragment extends BaseFragment {
         Map<String,String> map=new HashMap<>();
         map.put("user_id",SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
-        map.put("order_status","2,3");
+        map.put("order_status","2,3,4");
         RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
 
 

@@ -13,12 +13,12 @@ public class Xiangqingbean {
     /**
      * code : 200
      * success : success
-     * datas : [{"order_id":"23","order_num":"aaabbb","order_price":"","order_status":"1","vendor_id":"4","user_id":"71","exp_time":"0000-00-00 00:00:00","order_time":"0000-00-00 00:00:00","ok_time":"0000-00-00 00:00:00","express_id":"13","receive_time":"0000-00-00 00:00:00","note":"","pro_id":"1","duration":"1","start_time":"0000-00-00 00:00:00","end_time":"0000-00-00 00:00:00","is_comment":"0","receive_name":"哈哈","mobile":"18863894005","area_id":"北京","address_detail":"海淀桥头","is_default":"2","is_del":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00","expired_time":0}]
+     * datas : {"order_id":"140","order_num":"20171011172335","order_price":"5051.000000","order_status":"1","vendor_id":"0","user_id":"74","exp_time":"0000-00-00 00:00:00","order_time":"2017-10-11 17:23:35","ok_time":"0000-00-00 00:00:00","express_id":"22","receive_time":"0000-00-00 00:00:00","note":"","pro_id":"1","duration":"1","start_time":"0000-00-00 00:00:00","end_time":"0000-00-00 00:00:00","is_comment":"0","receive_name":"测试版","mobile":"18863894005","area_id":"北京市北京市崇文区","address_detail":"北京市北京市崇文区中关村孵化器","is_default":"1","is_del":"0","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00","expired_time":0,"rent_again":[{"pro_id":"1","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"3","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"平面操作台","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"6","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"7","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"8","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"9","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]}
      */
 
     private int code;
     private String success;
-    private List<DatasBean> datas;
+    private DatasBean datas;
 
     public int getCode() {
         return code;
@@ -36,26 +36,26 @@ public class Xiangqingbean {
         this.success = success;
     }
 
-    public List<DatasBean> getDatas() {
+    public DatasBean getDatas() {
         return datas;
     }
 
-    public void setDatas(List<DatasBean> datas) {
+    public void setDatas(DatasBean datas) {
         this.datas = datas;
     }
 
     public static class DatasBean {
         /**
-         * order_id : 23
-         * order_num : aaabbb
-         * order_price :
+         * order_id : 140
+         * order_num : 20171011172335
+         * order_price : 5051.000000
          * order_status : 1
-         * vendor_id : 4
-         * user_id : 71
+         * vendor_id : 0
+         * user_id : 74
          * exp_time : 0000-00-00 00:00:00
-         * order_time : 0000-00-00 00:00:00
+         * order_time : 2017-10-11 17:23:35
          * ok_time : 0000-00-00 00:00:00
-         * express_id : 13
+         * express_id : 22
          * receive_time : 0000-00-00 00:00:00
          * note :
          * pro_id : 1
@@ -63,12 +63,12 @@ public class Xiangqingbean {
          * start_time : 0000-00-00 00:00:00
          * end_time : 0000-00-00 00:00:00
          * is_comment : 0
-         * receive_name : 哈哈
+         * receive_name : 测试版
          * mobile : 18863894005
-         * area_id : 北京
-         * address_detail : 海淀桥头
-         * is_default : 2
-         * is_del : 1
+         * area_id : 北京市北京市崇文区
+         * address_detail : 北京市北京市崇文区中关村孵化器
+         * is_default : 1
+         * is_del : 0
          * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
          * main_title : 啊啊啊啊啊
          * pro_price : 1
@@ -78,6 +78,7 @@ public class Xiangqingbean {
          * pro_deposit : 5000.00
          * express_money : 50.00
          * expired_time : 0
+         * rent_again : [{"pro_id":"1","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"3","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"平面操作台","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"6","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"7","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"8","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"9","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
          */
 
         private String order_id;
@@ -112,6 +113,7 @@ public class Xiangqingbean {
         private String express_money;
         private int expired_time;
         private List<ProPicBean> pro_pic;
+        private List<RentAgainBean> rent_again;
 
         public String getOrder_id() {
             return order_id;
@@ -369,6 +371,14 @@ public class Xiangqingbean {
             this.pro_pic = pro_pic;
         }
 
+        public List<RentAgainBean> getRent_again() {
+            return rent_again;
+        }
+
+        public void setRent_again(List<RentAgainBean> rent_again) {
+            this.rent_again = rent_again;
+        }
+
         public static class ProPicBean {
             /**
              * url : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
@@ -382,6 +392,52 @@ public class Xiangqingbean {
 
             public void setUrl(String url) {
                 this.url = url;
+            }
+        }
+
+        public static class RentAgainBean {
+            /**
+             * pro_id : 1
+             * url : /cfc/uploads/file1/20170912/59b78365b13b4.png
+             * pro_name : fdsafdg
+             * single_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+             */
+
+            private String pro_id;
+            private String url;
+            private String pro_name;
+            private String single_pic;
+
+            public String getPro_id() {
+                return pro_id;
+            }
+
+            public void setPro_id(String pro_id) {
+                this.pro_id = pro_id;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getPro_name() {
+                return pro_name;
+            }
+
+            public void setPro_name(String pro_name) {
+                this.pro_name = pro_name;
+            }
+
+            public String getSingle_pic() {
+                return single_pic;
+            }
+
+            public void setSingle_pic(String single_pic) {
+                this.single_pic = single_pic;
             }
         }
     }

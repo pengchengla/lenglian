@@ -66,6 +66,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -238,7 +240,7 @@
                 android:src="@drawable/binggui"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -253,35 +255,38 @@
                     android:text="阿拉阿发发发 阿达阿达啊大大啊大大啊啊啊阿达"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/redd"
-                        android:textSize="14dp"
-                        android:padding="6dp"
-                        android:text="¥"/>
-                    <TextView
-                        android:layout_width="wrap_content"
+
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textColor="@color/redd"
                         android:textSize="16dp"
-                        android:text="1389.00"
+                        android:text="¥1389.00"
                         android:layout_weight="1"
                         android:id="@+id/buy_price" />
 
-                      <TextView
-                          android:layout_marginRight="20dp"
-                          android:gravity="right"
-                          android:layout_weight="1"
-                          android:textSize="16dp"
-                          android:id="@+id/buy_num"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="x1"
-                          android:textColor="@color/yellow"/>
+                    <TextView
+                        android:textSize="16dp"
+                        android:id="@+id/buy_num"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="x1"
+                        android:gravity="right"
+                        android:paddingRight="20dp"
+                        android:textColor="@color/yellow"
+                        />
                 </LinearLayout>
+                <RelativeLayout
 
+                    android:layout_alignLeft="@id/buy_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </RelativeLayout>
 
             </LinearLayout>
             </LinearLayout>

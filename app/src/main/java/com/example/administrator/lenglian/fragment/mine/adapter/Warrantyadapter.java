@@ -80,6 +80,7 @@ public class Warrantyadapter extends BaseAdapter {
 
         holder.warranty_money.setText(list.get(position).getPro_price());
            holder.warranty_pinjia.setFocusable(false);
+
         //评价
         holder.warranty_pinjia.setOnClickListener(new View.OnClickListener() {
             @Override

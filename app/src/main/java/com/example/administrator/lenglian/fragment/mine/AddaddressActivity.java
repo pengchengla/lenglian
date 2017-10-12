@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -22,6 +23,8 @@ import com.example.administrator.lenglian.utils.SoftKeyboardTool;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.utils.provice.AddressUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +75,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
         edimg_guanli.setOnClickListener(this);
         //得到数据
         Intent it=getIntent();
-        aBoolean = it.getBooleanExtra("boolean", true);
+        aBoolean = it.getBooleanExtra("boolean", false);
         ad_name = it.getStringExtra("ad_name");
         ad_phone = it.getStringExtra("ad_phone");
         ad_city = it.getStringExtra("ad_city");
@@ -189,7 +192,7 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
         Map<String,String> map=new HashMap<>();
         map.put("user_id", SpUtils.getString(this,"user_id",""));
         map.put("token",MyUtils.getToken());
-        map.put("recieve_name", etad_name.getText().toString());
+        map.put("receive_name", etad_name.getText().toString());
         map.put("mobile",eted_phone.getText().toString());
         map.put("area_id",ad_address.getText().toString());
         map.put("address_detail",eted_xianq.getText().toString());
@@ -230,6 +233,9 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.adress_save:
                 submit();
+                 //发送Eventbus
+                EventMessage eventMessage = new EventMessage("ddd");
+                EventBus.getDefault().postSticky(eventMessage);
                 break;
             case R.id. eted_city:
                 showAddressDialog();

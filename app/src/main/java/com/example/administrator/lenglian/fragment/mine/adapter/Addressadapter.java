@@ -35,7 +35,7 @@ import java.util.Map;
  * author:衣鹏宇(ypu)
  */
 
-public class Addressadapter extends BaseAdapter {
+public class  Addressadapter extends BaseAdapter {
     private Context context;
 //    private List<Indexbean> list;
     private List<Addressbean.DatasBean>list;

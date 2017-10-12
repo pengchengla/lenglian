@@ -90,12 +90,12 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                     //合计之后的价格=押金+配送费+商品价格x月份
                     //  total_price.setText("");
                     //加载数据
-                    List<Xiangqingbean.DatasBean> datas = result.getDatas();
+                    Xiangqingbean.DatasBean datas = result.getDatas();
 
-                    detail_number.setText(datas.get(0).getOrder_num());
-                    detail_name.setText(datas.get(0).getReceive_name());
-                    detail_phone.setText(datas.get(0).getMobile());
-                    detail_addres.setText(datas.get(0).getAddress_detail());
+                    detail_number.setText(datas.getOrder_num());
+                    detail_name.setText(datas.getReceive_name());
+                    detail_phone.setText(datas.getMobile());
+                    detail_addres.setText(datas.getAddress_detail());
                    /*
                   加载图片
                    */
@@ -104,27 +104,31 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                             .error(R.drawable.default_square)
                             .priority(Priority.NORMAL)
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-                    Glide.with(MyApplication.getApplication()).load(datas.get(0).getSingle_pic())
+                    Glide.with(MyApplication.getApplication()).load(datas.getSingle_pic())
                             .apply(options)
                             .into( shop_tupian );
                     //内容
-                    shop_describe.setText(datas.get(0).getMain_title());
-                    buy_price.setText(datas.get(0).getOrder_price());
+                    shop_describe.setText(datas.getMain_title());
+                    buy_price.setText("¥ "+datas.getPro_price());
                     //z租期
-                    buy_num.setText("x"+datas.get(0).getDuration());
-                    jie_yanjin.setText("¥"+datas.get(0).getPro_deposit());
-                    delivery_cost.setText("¥"+datas.get(0).getExpress_money());
+                    buy_num.setText("x"+datas.getDuration());
+                    jie_yanjin.setText("¥ "+datas.getPro_deposit());
+                    delivery_cost.setText("¥ "+datas.getExpress_money());
                     //合计
-                    total_price.setText("¥"+datas.get(0).getOrder_price());
+                    total_price.setText("¥ "+datas.getOrder_price());
                     //发票
                     ususally_invoice.setText("");
+                    //收货人
+                    detail_name.setText(datas.getReceive_name());
                     //下单时间
-                    order_data.setText(datas.get(0).getOrder_time());
-                    List<Xiangqingbean.DatasBean.ProPicBean> pro_pic = datas.get(0).getPro_pic();
+                    order_data.setText(datas.getOrder_time());
+                     /*
+                  加载租了又租图片
+                   */
+                    List<Xiangqingbean.DatasBean.RentAgainBean> rent_again = datas.getRent_again();
 
-                    Order_gride gradeadapter=new  Order_gride(OrderPayActivity.this,pro_pic);
+                    Order_gride gradeadapter=new  Order_gride(OrderPayActivity.this, rent_again);
                     odetail_recy.setAdapter(gradeadapter);
-
 
 
                 }

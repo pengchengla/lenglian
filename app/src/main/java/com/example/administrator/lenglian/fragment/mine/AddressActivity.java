@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.adapter.Addressadapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Addressbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
@@ -18,6 +19,10 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,10 +77,26 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         finish();
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void myEvent(EventMessage eventMessage) {
+        if (eventMessage.getMsg().equals("ddd")) {
+            ddd();
+        }
+    }
+     /*
+       调用eventbus方法
+      */
+public void ddd(){
+    //加载网络请求
+    ininnetwork();
 
+}
     private void initView() {
+        //注册
+        EventBus.getDefault().register(this);
         tv_back = (TextView) findViewById(R.id.tv_back);
         adress_add = (TextView) findViewById(R.id.adress_add);
         list_address = (ListView) findViewById(R.id.list_address);
@@ -91,6 +112,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.adress_add:
                 Intent it=new Intent(AddressActivity.this,AddaddressActivity.class);
+
                 startActivity(it);
                 break;
         }
