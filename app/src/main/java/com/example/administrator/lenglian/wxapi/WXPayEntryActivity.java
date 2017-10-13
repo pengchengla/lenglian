@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -12,7 +11,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import static com.tencent.mm.sdk.constants.ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX;
+import static com.tencent.mm.sdk.constants.ConstantsAPI.COMMAND_PAY_BY_WX;
 
 
 /**
@@ -21,12 +20,12 @@ import static com.tencent.mm.sdk.constants.ConstantsAPI.COMMAND_GETMESSAGE_FROM_
 public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
     private static final String TAG = "WXPayEntryActivity";
     private IWXAPI api;// IWXAPI 是第三方app和微信通信的openapi接口
-    private static final String APP_ID = "your app id";
+    private static final String APP_ID = "wx76c60c8c929e5061";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pay_result);
+//        setContentView(R.layout.pay_result);
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
         api = WXAPIFactory.createWXAPI(this, APP_ID);//第二个参数是微信appid
         api.handleIntent(getIntent(), this);
@@ -41,7 +40,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
     @Override
     public void onReq(BaseReq req) {
-
+        Toast.makeText(this, "正在请求微信支付", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -55,7 +54,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         * -2 用户取消 发生场景：用户不支付了，点击取消，返回APP。
         * */
         //        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);// 支付结果码
-        if (baseResp.getType() == COMMAND_GETMESSAGE_FROM_WX) {
+        if (baseResp.getType() == COMMAND_PAY_BY_WX) {
             if (baseResp.errCode == 0) {
                 Toast.makeText(this, "微信支付成功", Toast.LENGTH_SHORT).show();
             }

@@ -53,6 +53,16 @@ public class OrderPushBean {
          * order_id : 14
          */
         private String order_id;
+        private String order_num;
+
+        public String getOrder_num() {
+            return order_num;
+        }
+
+        public void setOrder_num(String order_num) {
+            this.order_num = order_num;
+        }
+
 
         public void setOrder_id(String order_id) {
             this.order_id = order_id;

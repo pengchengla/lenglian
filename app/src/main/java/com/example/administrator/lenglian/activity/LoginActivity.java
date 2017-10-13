@@ -86,6 +86,7 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
     }
 
     private void login() {
+        btn_login.setClickable(false);
         if (TextUtils.isEmpty(edt_phone.getText().toString())) {
             Toast.makeText(this, "请填写您的手机号", Toast.LENGTH_SHORT).show();
             return;
@@ -105,7 +106,7 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
                     Toast.makeText(LoginActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
                     SpUtils.putString(LoginActivity.this, "user_id", result.getDatas().getUser_id());
                     SpUtils.putString(LoginActivity.this, "phone", edt_phone.getText().toString().trim());
-//                    SpUtils.putString(LoginActivity.this, "password", edt_mima.getText().toString().trim());
+                    //                    SpUtils.putString(LoginActivity.this, "password", edt_mima.getText().toString().trim());
                     if (getIntent().getStringExtra("gologin").equals("gologin")) {
                         finish();
                         EventMessage eventMessage = new EventMessage("xxx");
@@ -119,12 +120,14 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
                     //                    Toast.makeText(LoginActivity.this, result.getDatas().getUser_id(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LoginActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
+                    btn_login.setClickable(true);
                 }
             }
 
             @Override
             public void onFailed(int code) {
                 Toast.makeText(LoginActivity.this, "登录失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+                btn_login.setClickable(true);
             }
         });
     }

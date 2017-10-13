@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
@@ -40,6 +40,7 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         initData();
+//        startActivity(new Intent(this, PaySuccessActivity.class));
     }
 
     @Override
@@ -66,9 +67,10 @@ public class GoodDetailActivity extends BaseActivity implements View.OnClickList
         mAdapter = new GoodDetailAdapter(getSupportFragmentManager(), mBaseFragmentList);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(3);//缓存3个界面，要不1界面和3界面来回切换会重走网络，点快了就不行了
     }
 
-    public class GoodDetailAdapter extends FragmentStatePagerAdapter {
+    public class GoodDetailAdapter extends FragmentPagerAdapter {
         private final List<BaseFragment> mFragmentList;
         private String[] title = {"商品", "详情", "评价"};
 

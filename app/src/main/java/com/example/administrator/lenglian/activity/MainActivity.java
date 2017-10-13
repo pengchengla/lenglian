@@ -92,39 +92,36 @@ public class MainActivity extends BaseActivity {
                         position = 0;
                         break;
                 }
+//                Toast.makeText(MainActivity.this, " " + position, Toast.LENGTH_SHORT).show();
                 switchFragment(preFragment, mBaseFragmentList.get(position));
             }
         });
-//        rgp.check(R.id.rb_good);//因为向商品fragment发eventbus的时候，商品fragment没创建出来，所以就加这么一个狠招
+        //        rgp.check(R.id.rb_good);//因为向商品fragment发eventbus的时候，商品fragment没创建出来，所以就加这么一个狠招
         rgp.check(R.id.rb_home);//默认选中首页
     }
 
     private void switchFragment(BaseFragment from, BaseFragment to) {
-        if (from == to) {
+        if (to == null || from == to) {
             return;
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (from == null) {
+            ft.replace(R.id.fl_content, to).commit();
+            return;
+        }
         //判断有没有被添加
         if (!to.isAdded()) {
             //to没有被添加
             //from隐藏
-            if (from != null) {
-                ft.hide(from);
-            }
+            ft.hide(from);
             //添加to
-            if (to != null) {
-                ft.add(R.id.fl_content, to).commit();//不要忘记commit
-            }
+            ft.add(R.id.fl_content, to).commit();//不要忘记commit
         } else {
             //to已经被添加
             // from隐藏
-            if (from != null) {
-                ft.hide(from);
-            }
+            ft.hide(from);
             //显示to
-            if (to != null) {
-                ft.show(to).commit();//不要忘记commit
-            }
+            ft.show(to).commit();//不要忘记commit
         }
         preFragment = to;//将要显示的fragment当然就成为了下一次切换的preFragment
     }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
 
@@ -13,6 +14,7 @@ import com.example.administrator.lenglian.R;
 
 public class CustomProgressDialog extends ProgressDialog {
 
+    private TextView tv_load_dialog;
 
     public CustomProgressDialog(Context context) {
         super(context);
@@ -36,8 +38,8 @@ public class CustomProgressDialog extends ProgressDialog {
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         getWindow().setAttributes(params);
+        tv_load_dialog= (TextView) findViewById(R.id.tv_load_dialog);
     }
-
 
     @Override
     public void show() {

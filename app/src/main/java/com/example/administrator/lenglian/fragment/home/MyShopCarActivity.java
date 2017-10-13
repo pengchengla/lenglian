@@ -199,7 +199,9 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
 //                EventMessage eventMessage = new EventMessage("allgoods");
 //                EventBus.getDefault().postSticky(eventMessage);
 //                finish();
-
+                Intent intent=new Intent(MyShopCarActivity.this,CuXiaoActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

@@ -71,7 +71,6 @@ public class UMShareActivity extends BaseActivity {
         shareAction.setCallback(umShareListener);
     }
 
-
     public static UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onStart(SHARE_MEDIA platform) {

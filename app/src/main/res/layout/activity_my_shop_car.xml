@@ -172,7 +172,7 @@
             android:background="@drawable/bg_blue"
             android:gravity="center"
             android:padding="10dp"
-            android:text="购物车空的呢"
+            android:text="快去挑选商品吧~"
             android:textColor="@color/white"
             android:textSize="18sp"/>
     </RelativeLayout>
