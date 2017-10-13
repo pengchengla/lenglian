@@ -101,27 +101,29 @@ public class MainActivity extends BaseActivity {
     }
 
     private void switchFragment(BaseFragment from, BaseFragment to) {
-        if (to == null || from == to) {
+        if (from == to) {
             return;
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (from == null) {
-            ft.replace(R.id.fl_content, to).commit();
-            return;
-        }
         //判断有没有被添加
         if (!to.isAdded()) {
             //to没有被添加
             //from隐藏
-            ft.hide(from);
+            if (from != null) {
+                ft.hide(from);
+            }
             //添加to
             ft.add(R.id.fl_content, to).commit();//不要忘记commit
         } else {
             //to已经被添加
             // from隐藏
-            ft.hide(from);
+            if (from != null) {
+                ft.hide(from);
+            }
             //显示to
-            ft.show(to).commit();//不要忘记commit
+            if (to != null) {
+                ft.show(to).commit();//不要忘记commit
+            }
         }
         preFragment = to;//将要显示的fragment当然就成为了下一次切换的preFragment
     }
