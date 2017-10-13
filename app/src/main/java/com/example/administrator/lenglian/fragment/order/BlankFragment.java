@@ -116,7 +116,7 @@ public class BlankFragment extends BaseFragment {
                  //待收货
                  delivery();
 
-             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
+             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0/order_status=5,6,7,8,9,10")) {
                  //待评价
                  evaluate();
 
@@ -159,7 +159,7 @@ public class BlankFragment extends BaseFragment {
                     startActivity(it);
                 }
                 //跳评价
-                else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
+                else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0/order_status=5,6,7,8,9,10")) {
                     Intent intent = new Intent(getActivity(), AppraiseActivity.class);
                     intent.putExtra("order_id",datasp.get(position).getOrder_id());
                     startActivity(intent);
@@ -197,7 +197,7 @@ public class BlankFragment extends BaseFragment {
                             delivery();
 
 
-                        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0")) {
+                        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=5,6,7,8,9,10")) {
 //                            //待评价
 //                            if(datasp!=null){
 //                                evaluateadapyer.notifyDataSetChanged();
@@ -233,7 +233,8 @@ public class BlankFragment extends BaseFragment {
         Map<String,String> map=new HashMap<>();
         map.put("user_id", SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
-        map.put("order_status","0");
+        map.put("order_status","5,6,7,8,9,10");
+        map.put("is_comment","0");
         RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
 
 

@@ -1,19 +1,24 @@
 package com.example.administrator.lenglian.fragment.mine;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
@@ -54,6 +59,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(Resultbean result, String tag) {
                 if(result.getCode()==200){
                     ToastUtils.showShort(AmendpwdActivity.this,"修改成功");
+
                     finish();
                 }
             }
@@ -92,7 +98,33 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
-
+    private void showDialog(int grary, int animationStyle) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(this);
+        final BaseDialog dialog = builder.setViewId(R.layout.daglog_pwd)
+                //设置dialogpadding
+                .setPaddingdp(10, 0, 10, 0)
+                //设置显示位置
+                .setGravity(grary)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.show();
+        TextView tv_content = dialog.getView(R.id.tv_content);
+        tv_content.setText("您的账号密码已修改请重新登录。");
+        TextView tv_yes = dialog.getView(R.id.tv_yes);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent dialIntent = new Intent(AmendpwdActivity.this, LoginActivity.class);
+                startActivity(dialIntent);
+            }
+        });
+    }
     private void submit() {
         // validate
         String initialpwd = set_initialpwd.getText().toString().trim();

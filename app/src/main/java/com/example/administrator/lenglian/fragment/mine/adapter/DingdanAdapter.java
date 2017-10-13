@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.mine.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ import java.util.Map;
  * author:衣鹏宇(ypu)
  */
 
-public class DingdanAdapter extends BaseAdapter implements View.OnClickListener {
+public class DingdanAdapter extends BaseAdapter {
     private Context context;
     private List<Dingdanbean.DatasBean> list;
 
@@ -166,6 +167,24 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
                         context.startActivity(inten);
                     }
                 });
+                //评价
+                final ViewHolder finalHolder = holder;
+                holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                          //判断评价是否评价过
+                          if("0".equals(list.get(position).getIs_comment())){
+                              Intent inte = new Intent(context, ShopdetailActivity.class);
+                              inte.putExtra("pro_id",list.get(position).getPro_id());
+                              inte.putExtra("order_id",list.get(position).getOrder_id());
+                              context.startActivity(inte);
+                          }
+                        else {
+                              finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+                          }
+
+                    }
+                });
 
             }
         }
@@ -205,28 +224,8 @@ public class DingdanAdapter extends BaseAdapter implements View.OnClickListener 
                 }
             });
         }
-
-        /*
-          监听--------------------------
-         */
-
-
-        holder.order_evaluation.setOnClickListener(this);
-
-
         return convertView;
-    }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            //评价
-            case R.id.order_evaluation:
-                Intent inte = new Intent(context, ShopdetailActivity.class);
-                context.startActivity(inte);
-                break;
-        }
     }
       /*
          收货

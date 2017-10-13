@@ -85,6 +85,8 @@ public class Warrantyadapter extends BaseAdapter {
         holder.warranty_pinjia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                 //状态判断
+
                 //带数据穿送过去
                 Intent it=new Intent(context,MaintenanceActivity.class);
                  it.putExtra("pro_id",list.get(position).getPro_id());//商品id

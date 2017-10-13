@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.order.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,7 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
                 .error(R.drawable.default_square)
                 .priority(Priority.NORMAL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
+        Glide.with(context).load(list.get(position).getSingle_pic())
                 .apply(options)
                 .into(  holder.order_tupian);
         holder.order_count.setText(list.get(position).getMain_title());
@@ -106,13 +107,21 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
         holder.order_tuihuan.setOnClickListener(this);
         holder.order_repairs.setOnClickListener(this);
       //评价
+        final ViewHolder finalHolder = holder;
         holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte=new Intent(context,ShopdetailActivity.class);
-                 inte.putExtra("pro_id",list.get(position).getPro_id());
-                inte.putExtra("order_id",list.get(position).getOrder_id());
-                context.startActivity(inte);
+                  if("0".equals(list.get(position).getIs_comment())){
+                      Intent inte=new Intent(context,ShopdetailActivity.class);
+                      inte.putExtra("pro_id",list.get(position).getPro_id());
+                      inte.putExtra("order_id",list.get(position).getOrder_id());
+                      context.startActivity(inte);
+                  }
+                else {
+                      finalHolder.order_evaluation.setBackgroundResource(R.drawable.shape_line);
+                      finalHolder.order_evaluation.setTextColor(Color.BLACK);
+                  }
+
             }
         });
 

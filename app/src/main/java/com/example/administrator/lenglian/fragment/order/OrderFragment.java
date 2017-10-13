@@ -114,7 +114,7 @@ public class OrderFragment extends BaseFragment {
         //收货
         apiList.add(MyContants.BASEURL+"s=Order/listOrder/order_status=2,3,4");
         //评价
-        apiList.add(MyContants.BASEURL+"s=Order/listOrder/is_comment=0");
+        apiList.add(MyContants.BASEURL+"s=Order/listOrder/is_comment=0/order_status=5,6,7,8,9,10");
         for (int i = 0; i < list.size(); i++) {
             tab.addTab(tab.newTab().setText(list.get(i)));
         }

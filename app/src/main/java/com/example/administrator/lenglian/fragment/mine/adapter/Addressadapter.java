@@ -114,9 +114,7 @@ public class  Addressadapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 deleteaadres(position);
-             list.remove(position);
 
-                notifyDataSetChanged();
             }
         });
         final ViewHolder finalHolder = holder;
@@ -146,6 +144,7 @@ public class  Addressadapter extends BaseAdapter {
                     finalHolder.ad_text.setTextColor(Color.BLACK);
 
                 }
+                aBoolean=!aBoolean;
                  RetrofitManager.get(MyContants.BASEURL + "s=User/editExpress", map, new BaseObserver1<Resultbean>("") {
                      @Override
                      public void onSuccess(Resultbean result, String tag) {
@@ -189,7 +188,7 @@ public class  Addressadapter extends BaseAdapter {
         return convertView;
     }
 
-    private void deleteaadres( int position){
+    private void deleteaadres(final int position){
         Map<String,String> map=new HashMap<>();
            map.put("user_id", SpUtils.getString(context,"user_id",""));
            map.put("token", MyUtils.getToken());
@@ -201,6 +200,9 @@ public class  Addressadapter extends BaseAdapter {
             public void onSuccess(Resultbean result, String tag) {
               if(result.getCode()==200)  {
                   ToastUtils.showShort(context,"删除成功");
+                  list.remove(position);
+
+                  notifyDataSetChanged();
               }
             }
 

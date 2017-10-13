@@ -64,6 +64,7 @@
                 android:textSize="12sp"/>
         </LinearLayout>
     </RelativeLayout>
+
     <com.liaoinstan.springview.widget.SpringView
         android:id="@+id/springview"
         android:layout_width="match_parent"
