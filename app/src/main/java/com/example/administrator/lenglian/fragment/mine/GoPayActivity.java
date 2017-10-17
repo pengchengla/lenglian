@@ -33,17 +33,13 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.pay.AliPayBean;
 import com.example.administrator.lenglian.pay.PayResult;
 import com.example.administrator.lenglian.pay.PaySuccessActivity;
+import com.example.administrator.lenglian.pay.WXPayBean;
 import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +82,7 @@ public class GoPayActivity extends BaseActivity {
                         Toast.makeText(GoPayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         //自己写的跳转到自定义的支付宝支付成功界面
                         Intent intent = new Intent(GoPayActivity.this, PaySuccessActivity.class);
-                        intent.putExtra("price",payPrice);
+                        intent.putExtra("price", payPrice);
                         startActivity(intent);
                         finish();
                     } else {
@@ -101,6 +97,7 @@ public class GoPayActivity extends BaseActivity {
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
                             Toast.makeText(GoPayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                            btn_yes.setClickable(true);
                         }
                     }
                     break;
@@ -139,6 +136,7 @@ public class GoPayActivity extends BaseActivity {
     }
 
     private void doPay() {
+        btn_yes.setClickable(false);
         String payStyle = getPayStyle();
         if (TextUtils.isEmpty(payStyle)) {
             return;
@@ -162,8 +160,9 @@ public class GoPayActivity extends BaseActivity {
         RetrofitManager.get(MyContants.BASEURL + "s=Payment/pay", arrayMap, new BaseObserver1<AliPayBean>("") {
             @Override
             public void onSuccess(AliPayBean result, String tag) {
-                payPrice=result.getPay_price();
-                final String orderStr = result.getOrderStr();
+                AliPayBean.DatasEntity datas = result.getDatas();
+                payPrice = datas.getPay_price();
+                final String orderStr = datas.getOrderStr();
                 Runnable payRunnable = new Runnable() {
 
                     @Override
@@ -184,6 +183,7 @@ public class GoPayActivity extends BaseActivity {
 
             @Override
             public void onFailed(int code) {
+                btn_yes.setClickable(true);
                 Toast.makeText(GoPayActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
@@ -191,41 +191,34 @@ public class GoPayActivity extends BaseActivity {
 
     //-------------------------------------微信支付---------------------------------------------
     private void weixinPay() {
-        new Thread() {
-            public void run() {
-                try {
-                    URL url = new URL(MyContants.BASEURL+"");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    StringBuilder sb = new StringBuilder();
-                    String str = null;
-                    while ((str = br.readLine()) != null) {
-                        sb.append(str);
-                    }
-                    br.close();
-                    conn.disconnect();
-                    // 拿到数据做解析
-                    JSONObject json = new JSONObject(sb.toString());
-                    if (null != json) {// && !json.has("retcode")
-                        PayReq req = new PayReq();
-                        req.appId = json.getString(WX_APPID);// 微信开放平台审核通过的应用APPID
-                        req.partnerId = json.getString("partnerid");// 微信支付分配的商户号
-                        req.prepayId = json.getString("prepayid");// 预支付订单号，app服务器调用“统一下单”接口获取
-                        req.nonceStr = json.getString("noncestr");// 随机字符串，不长于32位，服务器小哥会给咱生成
-                        req.timeStamp = json.getString("timestamp");// 时间戳，app服务器小哥给出
-                        req.packageValue = json.getString("package");// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
-                        req.sign = json.getString("sign");// 签名，服务器小哥给出
-                        //                        req.extData = "app data"; // optional
-                        // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-                        api.sendReq(req);//调起支付
-                        finish();
-                    }
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        ArrayMap arrayMap = new ArrayMap<String, String>();
+        arrayMap.put("type", "wx");
+        arrayMap.put("order_num", mOrder_num);
+        RetrofitManager.get(MyContants.BASEURL + "s=Payment/pay", arrayMap, new BaseObserver1<WXPayBean>("") {
+            @Override
+            public void onSuccess(WXPayBean result, String tag) {
+                PayReq req = new PayReq();
+                WXPayBean.DatasEntity datas = result.getDatas();
+                req.appId = datas.getAppid();// 微信开放平台审核通过的应用APPID
+                req.partnerId = datas.getPartnerid();// 微信支付分配的商户号
+                req.prepayId = datas.getPrepayid();// 预支付订单号，app服务器调用“统一下单”接口获取
+                req.nonceStr = datas.getNoncestr();// 随机字符串，不长于32位，服务器小哥会给咱生成
+                req.timeStamp = datas.getTimestamp();// 时间戳，app服务器小哥给出
+                req.packageValue = datas.getPackage1();// 固定值Sign=WXPay，可以直接写死，服务器返回的也是这个固定值
+                req.sign = datas.getSign();// 签名，服务器小哥给出
+                //                        req.extData = "app data"; // optional
+                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                api.sendReq(req);//调起支付
+                //微信支付的金额我用sp存的，之前用eventbus不管用
+                SpUtils.putString(GoPayActivity.this,"wxprice",datas.getPay_price());
             }
-        }.start();
+
+            @Override
+            public void onFailed(int code) {
+                btn_yes.setClickable(true);
+                Toast.makeText(GoPayActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private String getPayStyle() {

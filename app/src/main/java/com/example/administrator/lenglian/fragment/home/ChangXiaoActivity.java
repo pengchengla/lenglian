@@ -124,6 +124,7 @@ public class ChangXiaoActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public void onFailed(int code) {
                         Toast.makeText(ChangXiaoActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+                        mDialog.dismiss();
                     }
                 });
             }

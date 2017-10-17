@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.pay.PaySuccessActivity;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -21,15 +23,17 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     private static final String TAG = "WXPayEntryActivity";
     private IWXAPI api;// IWXAPI 是第三方app和微信通信的openapi接口
     private static final String APP_ID = "wx76c60c8c929e5061";
+    private String mPayprice;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.pay_result);
+        //        setContentView(R.layout.pay_result);
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
         api = WXAPIFactory.createWXAPI(this, APP_ID);//第二个参数是微信appid
         api.handleIntent(getIntent(), this);
     }
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -57,6 +61,10 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         if (baseResp.getType() == COMMAND_PAY_BY_WX) {
             if (baseResp.errCode == 0) {
                 Toast.makeText(this, "微信支付成功", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, PaySuccessActivity.class);
+                intent.putExtra("price", SpUtils.getString(WXPayEntryActivity.this,"wxprice",""));
+                startActivity(intent);
+                finish();
             }
             if (baseResp.errCode == -1) {
                 Toast.makeText(this, "微信支付失败", Toast.LENGTH_SHORT).show();

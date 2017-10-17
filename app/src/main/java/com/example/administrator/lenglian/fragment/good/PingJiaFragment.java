@@ -24,6 +24,7 @@ import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
+import com.example.administrator.lenglian.view.CustomProgressDialog;
 import com.example.administrator.lenglian.view.MyRatingBar;
 import com.umeng.analytics.MobclickAgent;
 
@@ -38,6 +39,7 @@ public class PingJiaFragment extends BaseFragment {
     private PingjiaAdapter mPingjiaAdapter;
     private String mId;
     private TextView tv_pingjia_count;
+    private CustomProgressDialog mDialog;
 
     @Override
     protected View initView() {
@@ -59,6 +61,8 @@ public class PingJiaFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        mDialog = new CustomProgressDialog(mContext, R.style.myprogressdialog);
+        mDialog.show();
         recycler_pingjia.setLayoutManager(new LinearLayoutManager(mContext));
         recycler_pingjia.setNestedScrollingEnabled(false);
         mId = getActivity().getIntent().getStringExtra("id");
@@ -73,18 +77,19 @@ public class PingJiaFragment extends BaseFragment {
                     if (result.getDatas().getComment_data().size() > 99) {
                         tv_pingjia_count.setText("99+");
                     } else {
-                        tv_pingjia_count.setText(result.getDatas().getComment_num() + "");
+                        tv_pingjia_count.setText(result.getDatas().getComment_data().size()+ "");
                     }
                     mPingjiaAdapter = new PingjiaAdapter(R.layout.item_pingjia, result.getDatas().getComment_data());
                     recycler_pingjia.setAdapter(mPingjiaAdapter);
                 }else {
                     //101是没有数据
                 }
+                mDialog.dismiss();
             }
 
             @Override
             public void onFailed(int code) {
-
+                mDialog.dismiss();
             }
         });
     }

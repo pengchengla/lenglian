@@ -2,6 +2,9 @@ package com.example.administrator.lenglian.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -21,12 +24,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RadioGroup rgp;
     private int position;
-    private List<BaseFragment> mBaseFragmentList = new ArrayList<>();
+    private List<BaseFragment> mBaseFragmentList = new ArrayList<>(4);
     private BaseFragment preFragment;
     private long preTime;
+    private BaseFragment[] mBaseFragments;
+    private RadioButton rb_home, rb_good, rb_order, rb_mine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +39,48 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         rgp = (RadioGroup) findViewById(R.id.rgp);
-        initData();
-        initListener();
+        //        initData();
+        //        initListener();
+        rb_mine = (RadioButton) findViewById(R.id.rb_mine);
+        rb_good = (RadioButton) findViewById(R.id.rb_good);
+        rb_home = (RadioButton) findViewById(R.id.rb_home);
+        rb_order = (RadioButton) findViewById(R.id.rb_order);
+        initData1();
+        initListener1();
+    }
+
+    private void initListener1() {
+        rb_mine.setOnClickListener(this);
+        rb_good.setOnClickListener(this);
+        rb_home.setOnClickListener(this);
+        rb_order.setOnClickListener(this);
+        String pay = getIntent().getStringExtra("pay");
+        if (!TextUtils.isEmpty(pay)&& pay.equals("success")){
+            rgp.check(R.id.rb_order);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.show(mBaseFragments[2]);
+            fragmentTransaction.hide(mBaseFragments[0]).hide(mBaseFragments[1]).hide(mBaseFragments[3]);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    }
+
+    private void initData1() {
+        mBaseFragments = new BaseFragment[4];
+        mBaseFragments[0] = new HomeFragment();
+        mBaseFragments[1] = new GoodFragment();
+        mBaseFragments[2] = new OrderFragment();
+        mBaseFragments[3] = new MineFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fl_content, mBaseFragments[0]);
+        fragmentTransaction.add(R.id.fl_content, mBaseFragments[1]);
+        fragmentTransaction.add(R.id.fl_content, mBaseFragments[2]);
+        fragmentTransaction.add(R.id.fl_content, mBaseFragments[3]);
+        fragmentTransaction.show(mBaseFragments[0]);
+        fragmentTransaction.hide(mBaseFragments[1]);
+        fragmentTransaction.hide(mBaseFragments[2]);
+        fragmentTransaction.hide(mBaseFragments[3]);
+        rgp.check(R.id.rb_home);//刷新radiobutton的状态
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -51,12 +96,22 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void myEvent(EventMessage eventMessage) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (eventMessage.getMsg().equals("allgoods")) {
             rgp.check(R.id.rb_good);
+            fragmentTransaction.show(mBaseFragments[1]);
+            fragmentTransaction.hide(mBaseFragments[0]).hide(mBaseFragments[2]).hide(mBaseFragments[3]);
+            fragmentTransaction.commitAllowingStateLoss();
         } else if (eventMessage.getMsg().equals("order")) {
             rgp.check(R.id.rb_order);
+            fragmentTransaction.show(mBaseFragments[2]);
+            fragmentTransaction.hide(mBaseFragments[0]).hide(mBaseFragments[1]).hide(mBaseFragments[3]);
+            fragmentTransaction.commitAllowingStateLoss();
         } else if (eventMessage.getMsg().equals("class_id")) {
             rgp.check(R.id.rb_good);
+            fragmentTransaction.show(mBaseFragments[1]);
+            fragmentTransaction.hide(mBaseFragments[0]).hide(mBaseFragments[2]).hide(mBaseFragments[3]);
+            fragmentTransaction.commitAllowingStateLoss();
             EventMessage eventMessage2 = new EventMessage("good_title", eventMessage.getMsg2());
             EventBus.getDefault().postSticky(eventMessage2);
         }
@@ -92,7 +147,7 @@ public class MainActivity extends BaseActivity {
                         position = 0;
                         break;
                 }
-//                Toast.makeText(MainActivity.this, " " + position, Toast.LENGTH_SHORT).show();
+                //                Toast.makeText(MainActivity.this, " " + position, Toast.LENGTH_SHORT).show();
                 switchFragment(preFragment, mBaseFragmentList.get(position));
             }
         });
@@ -137,6 +192,33 @@ public class MainActivity extends BaseActivity {
         } else {
             super.onBackPressed();//相当于finish()
             realBack();//删除所有引用
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        switch (v.getId()) {
+            case R.id.rb_home:
+                fragmentTransaction.show(mBaseFragments[0]);
+                fragmentTransaction.hide(mBaseFragments[1]).hide(mBaseFragments[2]).hide(mBaseFragments[3]);
+                fragmentTransaction.commitAllowingStateLoss();
+                break;
+            case R.id.rb_good:
+                fragmentTransaction.show(mBaseFragments[1]);
+                fragmentTransaction.hide(mBaseFragments[0]).hide(mBaseFragments[2]).hide(mBaseFragments[3]);
+                fragmentTransaction.commitAllowingStateLoss();
+                break;
+            case R.id.rb_order:
+                fragmentTransaction.show(mBaseFragments[2]);
+                fragmentTransaction.hide(mBaseFragments[1]).hide(mBaseFragments[0]).hide(mBaseFragments[3]);
+                fragmentTransaction.commitAllowingStateLoss();
+                break;
+            case R.id.rb_mine:
+                fragmentTransaction.show(mBaseFragments[3]);
+                fragmentTransaction.hide(mBaseFragments[1]).hide(mBaseFragments[2]).hide(mBaseFragments[0]);
+                fragmentTransaction.commitAllowingStateLoss();
+                break;
         }
     }
 }

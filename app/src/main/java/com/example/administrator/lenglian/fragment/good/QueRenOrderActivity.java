@@ -80,6 +80,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
         tv_peisongfei = (TextView) findViewById(R.id.tv_peisongfei);
         tv_total_price = (TextView) findViewById(R.id.tv_total_price);
         tv_total_price_bottom = (TextView) findViewById(R.id.tv_total_price_bottom);
+        mDialog.show();
         initAddress();
         initData();
     }
@@ -144,11 +145,12 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                     ll_hasAddress.setVisibility(View.GONE);
                     rl_noaddress.setVisibility(View.VISIBLE);
                 }
+                mDialog.dismiss();
             }
 
             @Override
             public void onFailed(int code) {
-
+                mDialog.dismiss();
             }
         });
     }

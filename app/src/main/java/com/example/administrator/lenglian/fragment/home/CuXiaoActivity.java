@@ -127,6 +127,7 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
                     @Override
                     public void onFailed(int code) {
                         Toast.makeText(CuXiaoActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+                        mDialog.dismiss();
                     }
                 });
             }

@@ -40,6 +40,7 @@ import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.view.CustomProgressDialog;
 import com.example.administrator.lenglian.view.MyRatingBar;
 import com.example.administrator.lenglian.view.SnappingStepper;
 import com.umeng.analytics.MobclickAgent;
@@ -69,6 +70,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     private ImageView iv_isSale;
     private GoodDetailBean.DatasEntity mDatas;
     private int duration = 1;
+    private CustomProgressDialog mDialog;
 
     @Override
     protected View initView() {
@@ -107,6 +109,8 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
+        mDialog = new CustomProgressDialog(mContext, R.style.myprogressdialog);
+        mDialog.show();
         recycler_canshu.setLayoutManager(new GridLayoutManager(mContext, 2));
         recycler_canshu.setNestedScrollingEnabled(false);
         recycler_pingjia.setLayoutManager(new LinearLayoutManager(mContext));
@@ -199,18 +203,19 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     if (result.getDatas().getComment_data().size() > 99) {
                         tv_pingjia_count.setText("99+");
                     } else {
-                        tv_pingjia_count.setText(result.getDatas().getComment_num() + "");
+                        tv_pingjia_count.setText(result.getDatas().getComment_data().size()+ "");
                     }
                     mPingjiaAdapter = new PingjiaAdapter(R.layout.item_pingjia, result.getDatas().getComment_data());
                     recycler_pingjia.setAdapter(mPingjiaAdapter);
                 } else {
                     //101是没有数据
                 }
+                mDialog.dismiss();
             }
 
             @Override
             public void onFailed(int code) {
-
+                mDialog.dismiss();
             }
         });
     }

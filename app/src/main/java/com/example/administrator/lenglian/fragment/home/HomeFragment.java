@@ -69,7 +69,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private ImageView iv_msg, iv_changxiao_big;
     private MiddleAdapter mMiddleAdapter;
     private SpringView springview;
-        private CustomProgressDialog mDialog;
+    private CustomProgressDialog mDialog;
 
     @Override
     protected View initView() {
@@ -263,6 +263,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onFailed(int code) {
                 Toast.makeText(mContext, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+                mDialog.dismiss();
             }
         });
     }
@@ -285,7 +286,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }
         });
         springview.setHeader(new DefaultHeader(getActivity()));
-//        springview.setFooter(new DefaultFooter(getActivity()));
+        //        springview.setFooter(new DefaultFooter(getActivity()));
     }
 
     @Override

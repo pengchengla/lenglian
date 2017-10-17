@@ -105,6 +105,16 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                         recycler_title.setAdapter(mTitleAdapter);
                         switchData(mTitleDatas.get(0).getClass_id());
                     }
+                    mTitleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            mTitleAdapter.getData().get(scrollPosition).setChecked(false);
+                            scrollPosition = position;
+                            mTitleAdapter.getData().get(scrollPosition).setChecked(true);
+                            mTitleAdapter.notifyDataSetChanged();
+                            switchData(mTitleAdapter.getData().get(scrollPosition).getClass_id());
+                        }
+                    });
                 }
             }
 
@@ -191,18 +201,6 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
                 tv.setBackgroundColor(getResources().getColor(R.color.white));
                 tv.setTextColor(getResources().getColor(R.color.textblack));
             }
-            //直接在外层用adapter的点击事件就不管用，真是邪门
-            tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mTitleAdapter.getData().get(scrollPosition).setChecked(false);
-                    scrollPosition = helper.getAdapterPosition();
-                    mTitleAdapter.getData().get(scrollPosition).setChecked(true);
-                    notifyDataSetChanged();
-                    switchData(mTitleAdapter.getData().get(scrollPosition).getClass_id());
-
-                }
-            });
         }
     }
 

@@ -201,7 +201,6 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
 //                finish();
                 Intent intent=new Intent(MyShopCarActivity.this,CuXiaoActivity.class);
                 startActivity(intent);
-                finish();
                 break;
         }
     }

@@ -30,7 +30,7 @@
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="都是撒大家看撒谎大手机客户端哈撒打算看电话卡四大皆空撒"
+                android:text=""
                 android:textSize="16sp"
             />
             <LinearLayout
@@ -67,7 +67,7 @@
                         android:id="@+id/tv_price_now"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥1777"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                     />
                 </LinearLayout>
             </LinearLayout>
