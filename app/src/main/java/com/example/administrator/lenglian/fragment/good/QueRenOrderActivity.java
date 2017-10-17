@@ -80,13 +80,13 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
         tv_peisongfei = (TextView) findViewById(R.id.tv_peisongfei);
         tv_total_price = (TextView) findViewById(R.id.tv_total_price);
         tv_total_price_bottom = (TextView) findViewById(R.id.tv_total_price_bottom);
-        mDialog.show();
         initAddress();
         initData();
     }
 
     private void initData() {
         mDialog = new CustomProgressDialog(this, R.style.myprogressdialog);
+        mDialog.show();
         mId = getIntent().getStringExtra("id");
         duration = getIntent().getStringExtra("duration");
         img_url = getIntent().getStringExtra("imgUrl");

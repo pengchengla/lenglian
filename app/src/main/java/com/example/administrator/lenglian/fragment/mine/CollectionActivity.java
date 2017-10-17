@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.EditCollectBean;
+import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.CollectListBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -65,10 +67,16 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
             public void onSuccess(CollectListBean result, String tag) {
                 if (result.getCode() == 200) {
                     mDatas = result.getDatas();
+                    if (mDatas == null || mDatas.size() == 0) {
+                        collect_bianji.setVisibility(View.GONE);
+                    } else {
+                        collect_bianji.setVisibility(View.VISIBLE);
+                    }
                     mCollectionadapter = new CollectionAdapter(R.layout.collect_item, mDatas);
                     recycler_collect.setAdapter(mCollectionadapter);
                 } else {
                     //101是没有数据
+                    collect_bianji.setVisibility(View.GONE);
                     if (mCollectionadapter != null) {
                         mDatas.clear();
                         mCollectionadapter.notifyDataSetChanged();
@@ -80,13 +88,20 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                 mCollectionadapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        mDatas.get(position).setChecked(!mDatas.get(position).isChecked());
-                        mCollectionadapter.notifyDataSetChanged();
-                        if (isAllItemChecked()) {
-                            //如果所有item都选中了，就让全选按钮变红
-                            cb_checkAll.setChecked(true);
-                        }else {
-                            cb_checkAll.setChecked(false);
+                        if (!isEditing) {
+                            //进入商品详情
+                            Intent intent = new Intent(CollectionActivity.this, GoodDetailActivity.class);
+                            intent.putExtra("id", mCollectionadapter.getData().get(position).getPro_id());
+                            startActivity(intent);
+                        } else {
+                            mDatas.get(position).setChecked(!mDatas.get(position).isChecked());
+                            mCollectionadapter.notifyDataSetChanged();
+                            if (isAllItemChecked()) {
+                                //如果所有item都选中了，就让全选按钮变红
+                                cb_checkAll.setChecked(true);
+                            } else {
+                                cb_checkAll.setChecked(false);
+                            }
                         }
                     }
                 });
@@ -94,7 +109,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onFailed(int code) {
-                ToastUtils.showShort(CollectionActivity.this,code+"");
+                ToastUtils.showShort(CollectionActivity.this, code + "");
             }
         });
 
@@ -109,11 +124,17 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         rl_select_delete = (RelativeLayout) findViewById(R.id.select_delte);
         cb_checkAll = (CheckBox) findViewById(R.id.collect_check);
         btn_delete = (Button) findViewById(R.id.collect_btn);
+        btn_delete.setOnClickListener(this);
         tv_back.setOnClickListener(this);
         collect_bianji.setOnClickListener(this);
-        btn_delete.setOnClickListener(this);
         ll_checkall = (LinearLayout) findViewById(R.id.ll_checkall);
         ll_checkall.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initdata();
     }
 
     @Override
@@ -160,6 +181,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
             return;
         }
         ArrayMap arrayMap2 = new ArrayMap();
+        //        arrayMap2.put("collect_id", getAllDeleteCollectIds());
         arrayMap2.put("token", MyUtils.getToken());
         arrayMap2.put("user_id", SpUtils.getString(CollectionActivity.this, "user_id", ""));
         arrayMap2.put("pro_id", getAllDeleteProIds());
@@ -176,7 +198,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onFailed(int code) {
-
+                Toast.makeText(CollectionActivity.this, "删除失败，请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -220,6 +242,22 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         for (int i = 0; i < mDatas.size(); i++) {
             if (mDatas.get(i).isChecked()) {
                 builder.append(mDatas.get(i).getPro_id() + ",");
+            }
+        }
+        String substring = builder.substring(builder.toString().length() - 1);
+        if (substring.equals(",")) {//如果最后一个字符是逗号就去掉最后的那个逗号
+            String substring1 = builder.substring(0, builder.toString().length() - 1);
+            return substring1;
+        } else {
+            return builder.toString();
+        }
+    }
+
+    private String getAllDeleteCollectIds() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (mDatas.get(i).isChecked()) {
+                builder.append(mDatas.get(i).getCollect_id() + ",");
             }
         }
         String substring = builder.substring(builder.toString().length() - 1);
