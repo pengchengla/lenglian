@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mBaseFragments[2] = new OrderFragment();
         mBaseFragments[3] = new MineFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        //注意add方法会走fragment的生命周期方法，相当于加载了一遍数据
         fragmentTransaction.add(R.id.fl_content, mBaseFragments[0]);
         fragmentTransaction.add(R.id.fl_content, mBaseFragments[1]);
         fragmentTransaction.add(R.id.fl_content, mBaseFragments[2]);

@@ -175,7 +175,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
 
             @Override
             public void onFailed(int code) {
-                Toast.makeText(mContext, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
             }
         });
     }

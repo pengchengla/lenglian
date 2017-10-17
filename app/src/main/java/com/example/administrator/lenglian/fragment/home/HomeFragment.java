@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -157,9 +156,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void loadData() {
-        ArrayMap arrayMap = new ArrayMap<String, String>();
-        arrayMap.put("", "");
-        RetrofitManager.get(MyContants.BASEURL + "s=Home/home", arrayMap, new BaseObserver1<HomeBean>("") {
+        RetrofitManager.get(MyContants.BASEURL +"s=Home/home", new BaseObserver1<HomeBean>("") {
             @Override
             public void onSuccess(final HomeBean result, String tag) {
 

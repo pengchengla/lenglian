@@ -181,10 +181,10 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
             return;
         }
         ArrayMap arrayMap2 = new ArrayMap();
-        //        arrayMap2.put("collect_id", getAllDeleteCollectIds());
-        arrayMap2.put("token", MyUtils.getToken());
-        arrayMap2.put("user_id", SpUtils.getString(CollectionActivity.this, "user_id", ""));
-        arrayMap2.put("pro_id", getAllDeleteProIds());
+        arrayMap2.put("collect_id", getAllDeleteCollectIds());
+        //        arrayMap2.put("token", MyUtils.getToken());
+        //        arrayMap2.put("user_id", SpUtils.getString(CollectionActivity.this, "user_id", ""));
+        //        arrayMap2.put("pro_id", getAllDeleteProIds());
         RetrofitManager.get(MyContants.BASEURL + "s=User/editCollect", arrayMap2, new BaseObserver1<EditCollectBean>("") {
             @Override
             public void onSuccess(EditCollectBean result, String tag) {
