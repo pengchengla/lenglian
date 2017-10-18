@@ -21,7 +21,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.AddressBean;
-import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.bean.OrderPushBean;
 import com.example.administrator.lenglian.db.LitePalHelper;
 import com.example.administrator.lenglian.fragment.mine.AddressActivity;
@@ -32,8 +31,6 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.view.CustomProgressDialog;
-
-import org.greenrobot.eventbus.EventBus;
 
 
 public class QueRenOrderActivity extends BaseActivity implements View.OnClickListener {
@@ -199,9 +196,6 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                             finish();
                             LitePalHelper.deleteOne(mId);//数据库中删除这个商品
                             mDialog.dismiss();
-                            //发个eventbus，让订单界面更新
-                            EventMessage eventMessage = new EventMessage("pushOrder");
-                            EventBus.getDefault().postSticky(eventMessage);
                         } else {
                             //101是没有数据
                             Toast.makeText(QueRenOrderActivity.this, "提交失败" + result.getError(), Toast.LENGTH_SHORT).show();

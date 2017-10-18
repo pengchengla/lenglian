@@ -9,6 +9,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -69,6 +70,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private MiddleAdapter mMiddleAdapter;
     private SpringView springview;
     private CustomProgressDialog mDialog;
+    private TransitionSet mSet;
 
     @Override
     protected View initView() {
