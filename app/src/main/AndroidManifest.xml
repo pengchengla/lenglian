@@ -31,9 +31,12 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.CAMERA"/>
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+
     <uses-feature android:name="android.hardware.camera.autofocus"/>
     <uses-feature android:name="android.hardware.camera"/>
-
 
     <application
         android:name=".MyApplication"
@@ -42,8 +45,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"
-                  android:launchMode="singleTask">
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -80,8 +84,9 @@
         <activity android:name=".fragment.mine.EvaluateActivity"/>
         <activity android:name=".fragment.mine.CollectionActivity"/>
         <activity android:name=".fragment.mine.AlterationActivity"/>
-        <activity android:name=".fragment.mine.AboutweActivity"
-                  android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".fragment.mine.AboutweActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".fragment.mine.AmendpwdActivity"/>
         <activity android:name=".fragment.mine.SetActivity"/>
         <activity android:name=".fragment.mine.AccountActivity"/>
@@ -103,11 +108,11 @@
         <activity android:name=".fragment.mine.ZhijiaActivity"/>
         <activity android:name=".fragment.mine.DinggouActivity"/>
         <activity android:name=".utils.pictureutils.PlusImageActivity"/>
-        <activity android:name=".fragment.order.activity.ReceiptActivity"></activity>
-        <activity android:name=".fragment.order.activity.AppraiseActivity"></activity>
-        <activity android:name=".pay.PaySuccessActivity"></activity>
-        <activity android:name=".fragment.mine.ShouhouActivity"></activity>
-        <activity android:name=".fragment.mine.GoPayActivity"></activity>
+        <activity android:name=".fragment.order.activity.ReceiptActivity"/>
+        <activity android:name=".fragment.order.activity.AppraiseActivity"/>
+        <activity android:name=".pay.PaySuccessActivity"/>
+        <activity android:name=".fragment.mine.ShouhouActivity"/>
+        <activity android:name=".fragment.mine.GoPayActivity"/>
         <!-- 友盟第三方登录及分享start -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -172,26 +177,29 @@
             android:theme="@style/Theme.UMDefault"/>
         <!-- 友盟第三方登录及分享end -->
 
-        <!--支付宝支付配置start-->
-        <activity android:name="com.alipay.sdk.app.H5PayActivity"
-                  android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-                  android:exported="false"
-                  android:screenOrientation="behind"
-                  android:windowSoftInputMode="adjustResize|stateHidden"></activity>
-        <activity android:name="com.alipay.sdk.app.H5AuthActivity"
-                  android:configChanges="orientation|keyboardHidden|navigation"
-                  android:exported="false"
-                  android:screenOrientation="behind"
-                  android:windowSoftInputMode="adjustResize|stateHidden"></activity>
-        <!--支付宝支付配置end-->
-        <!--微信支付-->
+
+        <!-- 支付宝支付配置start -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <!-- 支付宝支付配置end -->
+        <!-- 微信支付 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>
         <activity android:name=".fragment.good.QueRenOrderActivity">
         </activity>
-        <!--解决7.0照相机崩溃问题-->
+        <!-- 解决7.0照相机崩溃问题 -->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -205,6 +213,9 @@
 
         <activity android:name=".fragment.home.WebActivity">
         </activity>
+        <activity android:name=".blue.BlueActivity">
+        </activity>
+        <service android:name=".blue.BluetoothService"></service>
     </application>
 
 </manifest>
