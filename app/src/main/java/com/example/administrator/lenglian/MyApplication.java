@@ -103,7 +103,7 @@ public class MyApplication extends LitePalApplication {
         return  application;
     }
 
-    public static Context getGloableContext() {
+    public static Context getGloableContext()    {
         return  application.getApplicationContext();
     }
 }

@@ -11,12 +11,15 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,9 +54,9 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onSuccess(Resultbean result, String tag) {
                 if(result.getCode()==200){
-                    Intent it=new Intent(ZhijiaActivity.this,EvaluatedetailActivity.class);
-                   it.putExtra("count",edt_pin.getText().toString());
-                    startActivity(it);
+                      SpUtils.putString(ZhijiaActivity.this,"count",edt_pin.getText().toString());
+                    EventMessage eventMessage = new EventMessage("zzz");
+                    EventBus.getDefault().postSticky(eventMessage);
                     finish();
 
 

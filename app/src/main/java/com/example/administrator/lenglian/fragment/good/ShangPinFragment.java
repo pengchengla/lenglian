@@ -73,6 +73,11 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     private CustomProgressDialog mDialog;
 
     @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.fragment_shangpin, null);
         recycler_canshu = (RecyclerView) view.findViewById(R.id.recycler_canshu);

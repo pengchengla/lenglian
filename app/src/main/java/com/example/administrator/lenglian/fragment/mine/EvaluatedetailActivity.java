@@ -8,12 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.adapter.Gradeadapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Evaluatedetailbean;
 import com.example.administrator.lenglian.fragment.mine.bean.photobean;
@@ -26,6 +31,10 @@ import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.view.MyGridView;
 import com.example.administrator.lenglian.view.MyRatingBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,15 +58,22 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
     private String comment_id;
     private ImageView evaluate_img;
     private String image;
+    private LinearLayout liner_zhuijia;
+    private View liner_zhui;
+    private Evaluatedetailbean.DatasBean datas;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluate_xiangq);
         initView();
-        //inindata();
+        inindata();
         //加载网络请求
         ininnetwork();
+
+    }
+
+    private void inindata() {
 
     }
 
@@ -68,6 +84,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         map.put("comment_id",comment_id);
         RetrofitManager.get(MyContants.BASEURL + "s=User/profileComment", map,new BaseObserver1<Evaluatedetailbean>("") {
 
+
             private int i;
             /*
               网络请求 ------------------------
@@ -76,11 +93,29 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
             public void onSuccess(Evaluatedetailbean result, String tag) {
                 int code = result.getCode();
                  if(code==200){
-                     Evaluatedetailbean.DatasBean datas = result.getDatas();
+                     datas = result.getDatas();
 
-                    Glide.with(EvaluatedetailActivity.this)
-                            .load(image).into(evaluate_img);
-                     evate_ping.setText(datas.getContent());
+                    /*
+          加载图片
+         */
+                     RequestOptions options=new RequestOptions()
+                             .centerCrop()
+                             .error(R.drawable.default_square)
+                             .priority(Priority.NORMAL)
+                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                     Glide.with(EvaluatedetailActivity.this).load(image)
+                             .apply(options)
+                             .into( evaluate_img);
+                         if("2".equals(datas.getAdd_status())){
+                             liner_zhuijia.setVisibility(View.VISIBLE);
+                             liner_zhui.setVisibility(View.VISIBLE);
+                             evate_ping.setText(datas.getContent());
+                         }
+                     else {
+                             liner_zhuijia.setVisibility(View.GONE);
+                             liner_zhui.setVisibility(View.GONE);
+                         }
+
                      ratingbar.setClickable(false);//设置可否点击
                      String pro_score = datas.getPro_score();
                      try {
@@ -107,27 +142,10 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
 
     }
 
-//    private void inindata() {
-//        photobean ph=new photobean();
-//        ph.setPhoto(R.drawable.binggui);
-//        photobean ph2=new photobean();
-//        ph2.setPhoto(R.drawable.binggui);
-//        photobean ph3=new photobean();
-//        ph3.setPhoto(R.drawable.binggui);
-//        photobean pho4=new photobean();
-//        pho4.setPhoto(R.drawable.binggui);
-//        photobean pho5=new photobean();
-//        pho5.setPhoto(R.drawable.binggui);
-//        list.add(ph);
-//        list.add(ph2);
-//        list.add(ph3);
-//        list.add(pho4);
-//        list.add(pho5);
-//        Gradeadapter gradeadapter=new Gradeadapter(this,list);
-//        evate_grade.setAdapter(gradeadapter);
-//    }
 
     private void initView() {
+        //注册EventBus
+        EventBus.getDefault().register(this);
         tv_back = (TextView) findViewById(R.id.tv_back);
         collect_title = (RelativeLayout) findViewById(R.id.collect_title);
         ratingbar = (MyRatingBar) findViewById(R.id.ratingbar);
@@ -136,6 +154,8 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         evate_zhuip = (TextView) findViewById(R.id.evate_zhuip);
         zhuijia = (Button) findViewById(R.id.zhuijia);
         evaluate_img = (ImageView) findViewById(R.id.evaluate_img);
+        liner_zhuijia = (LinearLayout) findViewById(R.id.liner_zhuijia);
+        liner_zhui = (View)findViewById(R.id.liner_zhui);
         zhuijia.setOnClickListener(this);
         tv_back.setOnClickListener(this);
         Intent intent = getIntent();
@@ -148,20 +168,56 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void myEvent(EventMessage eventMessage) {
+        if (eventMessage.getMsg().equals("zzz")) {
+            zzz();
+        }
+    }
+
+    private void zzz() {
+          //获取数据
+        String count = SpUtils.getString(EvaluatedetailActivity.this, "count", "");
+        liner_zhuijia.setVisibility(View.VISIBLE);
+        liner_zhui.setVisibility(View.VISIBLE);
+        evate_zhuip.setText(count);
+        //跳转
+        if(!TextUtils.isEmpty(evate_zhuip.getText().toString())){
+            ToastUtils.showShort(this,"您已追加评论，不能在评论");
+
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.zhuijia:
-                 //跳转
-                if(!TextUtils.isEmpty(evate_zhuip.getText().toString())){
-                    ToastUtils.showShort(this,"您已追加评论，不能在评论");
+                /*
+            判断评价状态值
 
-                }
-                else {
+           */
+                if("1".equals(datas.getAdd_status())){
                     Intent intent = new Intent(EvaluatedetailActivity.this, ZhijiaActivity.class);
                     intent.putExtra("comment_id", comment_id);
                     startActivity(intent);
+
+
                 }
-                finish();
+                  else if("2".equals(datas.getAdd_status())){
+                    liner_zhuijia.setVisibility(View.VISIBLE);
+                    liner_zhui.setVisibility(View.VISIBLE);
+                    //跳转
+                    if(!TextUtils.isEmpty(evate_zhuip.getText().toString())){
+                        ToastUtils.showShort(this,"您已追加评论，不能在评论");
+
+                    }
+                  }
+
+
                 break;
             case R.id.tv_back:
                  finish();

@@ -41,6 +41,11 @@ public class OrderFragment extends BaseFragment {
     private RelativeLayout real_login;
 
     @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
     protected View initView() {
         EventBus.getDefault().register(this);
         View view=View.inflate(mContext, R.layout.activity_mineorder,null);

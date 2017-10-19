@@ -42,6 +42,11 @@ public class XiangQingFragment extends BaseFragment {
     private GoodDetailBean.DatasEntity mDatas;
 
     @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.fragment_xiangqing, null);
         rgp = (RadioGroup) view.findViewById(R.id.rgp);

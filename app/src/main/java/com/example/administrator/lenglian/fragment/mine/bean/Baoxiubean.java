@@ -13,7 +13,7 @@ public class Baoxiubean {
     /**
      * code : 200
      * success : success
-     * datas : [{"repair_id":"1","pro_id":"1","order_id":"10","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg"}]
+     * datas : [{"repair_id":"2","pro_id":"1","order_id":"1","is_comment":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"}]
      */
 
     private int code;
@@ -46,23 +46,31 @@ public class Baoxiubean {
 
     public static class DatasBean {
         /**
-         * repair_id : 1
+         * repair_id : 2
          * pro_id : 1
-         * order_id : 10
+         * order_id : 1
+         * is_comment : 1
          * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
          * main_title : 啊啊啊啊啊
          * pro_price : 1
          * sub_title : 广泛的是第三方
          * pro_name : fdsafdg
+         * single_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+         * pro_deposit : 5000.00
+         * express_money : 50.00
          */
 
         private String repair_id;
         private String pro_id;
         private String order_id;
+        private String is_comment;
         private String main_title;
         private String pro_price;
         private String sub_title;
         private String pro_name;
+        private String single_pic;
+        private String pro_deposit;
+        private String express_money;
         private List<ProPicBean> pro_pic;
 
         public String getRepair_id() {
@@ -87,6 +95,14 @@ public class Baoxiubean {
 
         public void setOrder_id(String order_id) {
             this.order_id = order_id;
+        }
+
+        public String getIs_comment() {
+            return is_comment;
+        }
+
+        public void setIs_comment(String is_comment) {
+            this.is_comment = is_comment;
         }
 
         public String getMain_title() {
@@ -119,6 +135,30 @@ public class Baoxiubean {
 
         public void setPro_name(String pro_name) {
             this.pro_name = pro_name;
+        }
+
+        public String getSingle_pic() {
+            return single_pic;
+        }
+
+        public void setSingle_pic(String single_pic) {
+            this.single_pic = single_pic;
+        }
+
+        public String getPro_deposit() {
+            return pro_deposit;
+        }
+
+        public void setPro_deposit(String pro_deposit) {
+            this.pro_deposit = pro_deposit;
+        }
+
+        public String getExpress_money() {
+            return express_money;
+        }
+
+        public void setExpress_money(String express_money) {
+            this.express_money = express_money;
         }
 
         public List<ProPicBean> getPro_pic() {

@@ -73,6 +73,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private TransitionSet mSet;
 
     @Override
+    protected void lazyLoad() {
+        loadData();
+    }
+
+    @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.fragment_home, null);
         tv_search = (TextView) view.findViewById(R.id.tv_search);
@@ -124,7 +129,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         mDialog = new CustomProgressDialog(mContext, R.style.myprogressdialog);
         mDialog.show();
         initToolbar();
-        loadData();
+
         tv_msg_number.setText("11");
         initListener();
     }

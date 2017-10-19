@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,8 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +39,7 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
     private ListView list_alteration;
     private List<Indexbean> list=new ArrayList<>();
     private List<Returnbean.DatasBean> datas;
+    private SpringView springView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
         //加载网络请求
         initnetwork();
         inindata();
+        springView.setType(SpringView.Type.FOLLOW);
 
     }
 
@@ -81,11 +86,37 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
                 startActivity(it);
             }
         });
+          springView.setListener(new SpringView.OnFreshListener() {
+              @Override
+              public void onRefresh() {
+                  new Handler().postDelayed(new Runnable() {
+                      @Override
+                      public void run() {
+                          initnetwork();
+                          springView.onFinishFreshAndLoad();
+                      }
+                  },1000);
+              }
+
+              @Override
+              public void onLoadmore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Alterationadapter(AlterationActivity.this, datas).notifyDataSetChanged();
+                        springView.onFinishFreshAndLoad();
+                    }
+                },1000);
+              }
+          });
+        springView.setHeader(new DefaultHeader(this));
+        springView.setFooter(new DefaultHeader(this));
     }
 
     private void initView() {
         tv_back = (TextView) findViewById(R.id.tv_back);
         list_alteration = (ListView) findViewById(R.id.list_alteration);
+        springView = (SpringView) findViewById(R.id.springview);
         tv_back.setOnClickListener(this);
 
     }
