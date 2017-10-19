@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     compileSdkVersion 23
     buildToolsVersion "25.0.0"
     defaultConfig {
@@ -41,12 +44,15 @@ android {
 }
 
 dependencies {
+
     //解决655536
     compile 'com.android.support:multidex:1.0.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
-//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    })
+    //    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+
+    //        exclude group: 'com.android.support', module: 'support-annotations'
+
+    //    })
     compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:23.4.0'
@@ -60,7 +66,7 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.2.6'
     compile files('libs/gson-2.7.jar')
     compile 'com.nineoldandroids:library:2.4.0'
-   compile 'com.github.sd6352051.niftydialogeffects:niftydialogeffects:1.0.0@aar'
+    compile 'com.github.sd6352051.niftydialogeffects:niftydialogeffects:1.0.0@aar'
     compile 'com.squareup.picasso:picasso:2.5.2'
     //友盟分享
     compile files('libs/SocialSDK_QQ_Simplify.jar')
@@ -90,12 +96,19 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //日志
     compile 'com.github.zhaokaiqiang.klog:library:1.6.0'
-   //fastjson
+    //fastjson
     compile 'com.alibaba:fastjson:1.1.62.android'
     //图片选择器
     compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.1'
     //Springview
     compile 'com.liaoinstan.springview:library:1.2.6'
     compile files('libs/litepal-1.5.1.jar')
-    compile 'com.clj.fastble:FastBleLib:1.2.1'//蓝牙框架
+  //  compile files('libs/android_api_3.7.1.1.jar')
+    compile 'com.clj.fastble:FastBleLib:1.2.1'
+    //蓝牙框架
+//    compile 'com.github.iwgang:countdownview:2.1.6'
+    //倒计时
+    //compile project(':library')
+    //
+   compile 'com.github.iwgang:countdownview:2.1.6'
 }
