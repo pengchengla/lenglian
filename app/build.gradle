@@ -110,5 +110,6 @@ dependencies {
     //倒计时
     //compile project(':library')
     //
+
    compile 'com.github.iwgang:countdownview:2.1.6'
 }
