@@ -9,7 +9,7 @@
            android:scrollbars="none"
            android:id="@+id/pay_listview"
            android:layout_width="match_parent"
-           android:layout_height="200dp"
+           android:layout_height="wrap_content"
            android:divider="@color/huise"
            android:dividerHeight="2dip">
        </ListView>

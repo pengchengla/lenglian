@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ListView;
@@ -19,6 +20,8 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +43,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private TextView adress_add;
     private ListView list_address;
     private List<Indexbean> list=new ArrayList<>();
-
+    private SpringView springView;
+    private List<Addressbean.DatasBean> datas;
+    private Addressadapter addressadapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +53,8 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         initView();
         //加载网络请求
         ininnetwork();
+         //设置类型
+        springView.setType(SpringView.Type.FOLLOW);
     }
 
     private void ininnetwork() {
@@ -55,12 +62,16 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
           map.put("user_id", SpUtils.getString(this,"user_id",""));//传过来的--------------
           map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL +"s=User/listExpress",map, new BaseObserver1<Addressbean>("") {
+
+
+
+
             @Override
             public void onSuccess(Addressbean result, String tag) {
                 int code = result.getCode();
                 if (code==200){
-                    List<Addressbean.DatasBean> datas = result.getDatas();
-                    Addressadapter addressadapter=new Addressadapter(AddressActivity.this,datas);
+                    datas = result.getDatas();
+                    addressadapter = new Addressadapter(AddressActivity.this, datas);
                     list_address.setAdapter(addressadapter);
 
 
@@ -100,8 +111,39 @@ public void ddd(){
         tv_back = (TextView) findViewById(R.id.tv_back);
         adress_add = (TextView) findViewById(R.id.adress_add);
         list_address = (ListView) findViewById(R.id.list_address);
+        springView = (SpringView) findViewById(R.id.springview);
         tv_back.setOnClickListener(this);
         adress_add.setOnClickListener(this);
+         /*
+           刷新数据
+          */
+           springView.setListener(new SpringView.OnFreshListener() {
+               @Override
+               public void onRefresh() {
+                   new Handler().postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+                           ininnetwork();
+                           springView.onFinishFreshAndLoad();
+                       }
+                   }, 1000);
+               }
+
+               @Override
+               public void onLoadmore() {
+                 new Handler().postDelayed(new Runnable() {
+                     @Override
+                     public void run() {
+                         addressadapter.notifyDataSetChanged();
+                         springView.onFinishFreshAndLoad();
+                     }
+                 }, 1000);
+               }
+
+
+           });
+        springView.setHeader(new DefaultHeader(this));
+        springView.setFooter(new DefaultHeader(this));
     }
 
     @Override

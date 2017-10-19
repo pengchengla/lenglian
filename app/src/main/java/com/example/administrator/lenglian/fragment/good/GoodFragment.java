@@ -50,6 +50,11 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayoutManager mTitleLayoutManager;
 
     @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.fragment_good, null);
         recycler_title = (RecyclerView) view.findViewById(R.id.recycler_title);

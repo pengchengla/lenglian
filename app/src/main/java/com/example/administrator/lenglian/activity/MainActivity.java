@@ -33,6 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private BaseFragment[] mBaseFragments;
     private RadioButton rb_home, rb_good, rb_order, rb_mine;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

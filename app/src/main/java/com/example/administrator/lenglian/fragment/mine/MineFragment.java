@@ -60,8 +60,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_back;
     private TextView mine_login;
     private List<Personbean.DatasBean> datas;
+
+    @Override
+    protected void lazyLoad() {
+
+    }
+
     @Override
     protected View initView() {
+        EventBus.getDefault().register(this);
         View rootView = View.inflate(mContext, R.layout.activity_mine, null);
         tv_msg_number = (TextView) rootView.findViewById(R.id.tv_msg_number);
         ll_msg = (LinearLayout) rootView.findViewById(R.id.ll_msg);
@@ -112,7 +119,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mine_name.setVisibility(View.VISIBLE);
             mine_phone.setVisibility(View.VISIBLE);
             //取头像
-            String photo = SpUtils.getString(getActivity(), "photo", "");
+            String photo = SpUtils.getString(getActivity(), "photos", "");
             //加载数据
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -126,6 +133,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
 
             }
+            initData();
         }
     }
 
@@ -195,7 +203,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        EventBus.getDefault().register(this);
+
         tv_msg_number.setText("11");
         //网络请求
         Map<String, String> map = new HashMap<>();

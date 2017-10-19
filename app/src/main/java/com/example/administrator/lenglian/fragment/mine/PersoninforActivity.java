@@ -186,7 +186,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         Map<String, String> map = new HashMap<>();
         map.put("user_id", SpUtils.getString(this,"user_id",""));
         map.put("token", MyUtils.getToken());
-        map.put("nick_name",  person_name.getText().toString());
+        map.put("user_name",  person_name.getText().toString());
         String token = MyUtils.getToken();
         System.out.print(token);
         KLog.d(token + "-----------------------");
@@ -540,7 +540,9 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                     Bitmap bitmap = PhotoUtils.getBitmapFromUri(cropImageUri, this);
                     String s = cropImageUri.toString();
                     //sp存头像
-                    SpUtils.putString(PersoninforActivity.this,"photo",s);
+                    SpUtils.putString(PersoninforActivity.this,"photos",s);
+                    EventMessage eventMessage = new EventMessage("ppp");
+                    EventBus.getDefault().postSticky(eventMessage);
                     KLog.a(cropImageUri);
                      //将URl上传到服务器
                      photowork();

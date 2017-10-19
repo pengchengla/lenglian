@@ -81,6 +81,11 @@ public class BlankFragment extends BaseFragment {
     }
 
     @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
     protected View initView() {
         //注册
         EventBus.getDefault().register(this);
@@ -348,6 +353,9 @@ public class BlankFragment extends BaseFragment {
         if (eventMessage.getMsg().equals("fff")) {
             fff();
         }
+       else   if(eventMessage.getMsg().equals("unPayOrder")){
+             Zhifu();
+         }
     }
     public void fff(){
         ArrayMap map = new ArrayMap<String, String>();

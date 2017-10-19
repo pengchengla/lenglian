@@ -40,6 +40,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.iwgang.countdownview.CountdownView;
+
 /**
  * date : ${Date}
  * author:衣鹏宇(ypu)
@@ -65,7 +67,8 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
     private TextView order_zhifi;
     private List<photobean> list=new ArrayList<>();
     private String order_id;
-
+    private Xiangqingbean.DatasBean datas;
+    private CountdownView countdownView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,13 +87,16 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         map.put("token", MyUtils.getToken());
         map.put("order_id", order_id);
         RetrofitManager.get(MyContants.BASEURL+"s=Order/profileOrder", map, new BaseObserver1<Xiangqingbean>("") {
+
+
+
             @Override
             public void onSuccess(Xiangqingbean result, String tag) {
                 if(result.getCode()==200){
                     //合计之后的价格=押金+配送费+商品价格x月份
                     //  total_price.setText("");
                     //加载数据
-                    Xiangqingbean.DatasBean datas = result.getDatas();
+                    datas = result.getDatas();
 
                     detail_number.setText(datas.getOrder_num());
                     detail_name.setText(datas.getReceive_name());
@@ -109,13 +115,13 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                             .into( shop_tupian );
                     //内容
                     shop_describe.setText(datas.getMain_title());
-                    buy_price.setText("¥ "+datas.getPro_price());
+                    buy_price.setText("¥ "+ datas.getPro_price());
                     //z租期
-                    buy_num.setText("x"+datas.getDuration());
-                    jie_yanjin.setText("¥ "+datas.getPro_deposit());
-                    delivery_cost.setText("¥ "+datas.getExpress_money());
+                    buy_num.setText("x"+ datas.getDuration());
+                    jie_yanjin.setText("¥ "+ datas.getPro_deposit());
+                    delivery_cost.setText("¥ "+ datas.getExpress_money());
                     //合计
-                    total_price.setText("¥ "+datas.getOrder_price());
+                    total_price.setText("¥ "+ datas.getOrder_price());
                     //发票
                     ususally_invoice.setText("");
                     //收货人
@@ -129,6 +135,9 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
 
                     Order_gride gradeadapter=new  Order_gride(OrderPayActivity.this, rent_again);
                     odetail_recy.setAdapter(gradeadapter);
+                     //倒计时
+                    long time1 = (long)datas.getExpired_time();
+                    countdownView.start(time1);
 
 
                 }
@@ -179,6 +188,7 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
         odetail_recy = (MyGradeview) findViewById(R.id.odetail_recy);
         order_pause = (TextView) findViewById(R.id.order_pause);
         order_zhifi = (TextView) findViewById(R.id.order_zhifi);
+        countdownView = (CountdownView) findViewById(R.id.cv_countdownView);
         tv_back.setOnClickListener(this);
         order_pause.setOnClickListener(this);
         //得到数据
@@ -195,7 +205,8 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                   break;
               case R.id.order_zhifi:
                   //支付
-                  PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,OrderPayActivity.this);
+                  PayUtil payUtil=new PayUtil(this,datas.getOrder_num());
+                  payUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,this);
                   break;
               case R.id. order_pause:
                   //取消

@@ -42,6 +42,11 @@ public class PingJiaFragment extends BaseFragment {
     private CustomProgressDialog mDialog;
 
     @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
     protected View initView() {
         View view = View.inflate(mContext, R.layout.fragment_pingjia, null);
         recycler_pingjia = (RecyclerView) view.findViewById(R.id.recycler_pingjia);

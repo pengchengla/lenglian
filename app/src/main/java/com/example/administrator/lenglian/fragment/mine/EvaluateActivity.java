@@ -2,6 +2,7 @@ package com.example.administrator.lenglian.fragment.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,9 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.liaoinstan.springview.container.DefaultFooter;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +41,8 @@ public class EvaluateActivity extends BaseActivity {
     private ListView list_evaluate;
     private List<Indexbean> list=new ArrayList<>();
     private List<Evaluatebean.DatasBean> datas;
+    private SpringView springview;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,8 @@ public class EvaluateActivity extends BaseActivity {
         inindata();
         //加载网络请求
         inintwork();
+        //设置类型
+        springview.setType(SpringView.Type.FOLLOW);
     }
 
     private void inintwork() {
@@ -85,12 +93,45 @@ public class EvaluateActivity extends BaseActivity {
                   startActivity(it);
               }
           });
+         /*
+            上拉加载，下拉刷新
+          */
+         springview.setListener(new SpringView.OnFreshListener() {
+             @Override
+             public void onRefresh() {
+                //刷新数据
+               new Handler().postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+
+                       inintwork();
+
+                       springview.onFinishFreshAndLoad();
+
+                   }
+               },1000);
+             }
+
+             @Override
+             public void onLoadmore() {
+                  new Handler().postDelayed(new Runnable() {
+                      @Override
+                      public void run() {
+                          springview.onFinishFreshAndLoad();
+                      }
+                  },1000);
+
+             }
+         });
+        springview.setHeader(new DefaultHeader(this));
+        springview.setFooter(new DefaultFooter(this));
     }
 
     private void initView() {
         tv_back = (TextView) findViewById(R.id.tv_back);
         collect_title = (RelativeLayout) findViewById(R.id.collect_title);
         list_evaluate = (ListView) findViewById(R.id.list_evaluate);
+        springview = (SpringView) findViewById(R.id.springview);
         tv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -63,7 +63,10 @@
             android:textSize="16sp" />
 
     </LinearLayout>
-
+    <com.liaoinstan.springview.widget.SpringView
+        android:id="@+id/springview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:scrollbars="none"
         android:divider="@color/white"
@@ -71,4 +74,5 @@
         android:id="@+id/list_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
+    </com.liaoinstan.springview.widget.SpringView>
 </LinearLayout>

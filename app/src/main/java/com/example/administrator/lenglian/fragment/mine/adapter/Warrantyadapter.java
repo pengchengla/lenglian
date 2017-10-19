@@ -86,13 +86,25 @@ public class Warrantyadapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                  //状态判断
+                /*
+                 0待评价
+                 */
+                 if("0".equals(list.get(position).getIs_comment())){
 
-                //带数据穿送过去
-                Intent it=new Intent(context,MaintenanceActivity.class);
-                 it.putExtra("pro_id",list.get(position).getPro_id());//商品id
-                 it.putExtra("order_id",list.get(position).getOrder_id());//订单id
-                context.startActivity(it);
-                Toast.makeText(context,"haha",Toast.LENGTH_SHORT).show();
+                     //带数据穿送过去
+                     Intent it=new Intent(context,MaintenanceActivity.class);
+                     it.putExtra("pro_id",list.get(position).getPro_id());//商品id
+                     it.putExtra("order_id",list.get(position).getOrder_id());//订单id
+                     context.startActivity(it);
+                 }
+                 /*
+                   追加评价
+                  */
+                else if("1".equals(list.get(position).getIs_comment())){
+
+
+                 }
+
             }
         });
         return convertView;
