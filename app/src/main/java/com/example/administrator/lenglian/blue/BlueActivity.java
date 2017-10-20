@@ -11,6 +11,7 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -218,7 +219,13 @@ public class BlueActivity extends AppCompatActivity {
         @Override
         public void onServicesDiscovered() {
             refreshState("连接设备成功");
-            writeData();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(1000);
+                    writeData();
+                }
+            });
         }
     };
     UUID service_uuid = null;
@@ -226,8 +233,11 @@ public class BlueActivity extends AppCompatActivity {
 
     private void writeData() {
         refreshData("ffe2");//设置密码
-        String psw = string2HexString("1111111111111111");
-        String hex = "0x0203"+psw;
+        //        String psw = string2HexString("123");
+        //        Toast.makeText(this, "密码" + psw, Toast.LENGTH_SHORT).show();
+        //        String hex = "0x0203" + psw;
+        //        String hex = "0x02030x01";
+        String hex = "0203313233";
         mBluetoothService.write(
                 //                characteristic.getService().getUuid().toString(),
                 //                characteristic.getUuid().toString(),
@@ -295,12 +305,13 @@ public class BlueActivity extends AppCompatActivity {
             }
         }
     }
+
     /**
-     * @Title:string2HexString
-     * @Description:字符串转16进制字符串
      * @param strPart 字符串
      * @return 16进制字符串
      * @throws
+     * @Title:string2HexString
+     * @Description:字符串转16进制字符串
      */
     public static String string2HexString(String strPart) {
         StringBuffer hexString = new StringBuffer();

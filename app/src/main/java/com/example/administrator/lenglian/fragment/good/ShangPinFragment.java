@@ -180,7 +180,9 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     mCommentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            startActivity(new Intent(mContext, GoodDetailActivity.class));
+                            Intent intent = new Intent(mContext, GoodDetailActivity.class);
+                            intent.putExtra("id", mCommentAdapter.getData().get(position).getPro_id());
+                            startActivity(intent);
                         }
                     });
                 } else {
