@@ -137,6 +137,7 @@ public class MyBlueActivity extends AppCompatActivity {
                     connectAndWrite();
                 }
             });
+
         }
     }
 
