@@ -46,7 +46,7 @@ public class Deliveryadapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list != null ? list.size() : 0;
+        return list .size();
     }
 
     @Override
@@ -63,53 +63,65 @@ public class Deliveryadapter extends BaseAdapter {
     public View getView(final int position, View convertView, final ViewGroup parent) {
       ViewHolder holder = null;
         if (convertView == null) {
-             holder=new ViewHolder();
-            //填充布局
-            convertView = LayoutInflater.from(context).inflate(R.layout.recying_item, null);
-            holder.iv_tupian = (ImageView)  convertView.findViewById(R.id.receving_tupian);
-            holder.orderlist_count = (TextView)  convertView.findViewById(R.id.receving_count);
-            holder.textView = (TextView)  convertView.findViewById(R.id.receving_price);
-            holder.reying_btn= (TextView) convertView.findViewById(R.id.recying_btn);
-            convertView.setTag(holder);
-            holder.reying_btn.setTag(position);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+            holder = new ViewHolder();
+               if(list!=null){
+                convertView = LayoutInflater.from(context).inflate(R.layout.recying_item, null);
+                holder.iv_tupian = (ImageView) convertView.findViewById(R.id.receving_tupian);
+                holder.orderlist_count = (TextView) convertView.findViewById(R.id.receving_count);
+                holder.textView = (TextView) convertView.findViewById(R.id.receving_price);
+                holder.reying_btn = (TextView) convertView.findViewById(R.id.recying_btn);
+                convertView.setTag(holder);
+                holder.reying_btn.setTag(position);
+               }
+            else {
+                   //填充布局
+                   convertView = LayoutInflater.from(context).inflate(R.layout.activity_noding, null);
+                   holder.no_tu = (ImageView) convertView.findViewById(R.id.no_tu);
+               }
+            }
+            else{
+                holder = (ViewHolder) convertView.getTag();
 
-        holder.reying_btn.setFocusable(false);
+            }
+
+            holder.reying_btn.setFocusable(false);
         /*
           加载图片
          */
-        RequestOptions options=new RequestOptions()
-                .centerCrop()
-                .error(R.drawable.default_square)
-                .priority(Priority.NORMAL)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
-                .apply(options)
-                .into(holder.iv_tupian);
-        holder.orderlist_count.setText(list.get(position).getMain_title());
-        holder.textView.setText(list.get(position).getPro_price());
-        final ViewHolder finalHolder = holder;
-        holder.reying_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int i=(int) finalHolder.reying_btn.getTag();
-                //确认收货
-                recycing(i);
+         if(list!=null) {
+             RequestOptions options = new RequestOptions()
+                     .centerCrop()
+                     .error(R.drawable.default_square)
+                     .priority(Priority.NORMAL)
+                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+             Glide.with(context).load(list.get(position).getPro_pic().get(0).getUrl())
+                     .apply(options)
+                     .into(holder.iv_tupian);
+             holder.orderlist_count.setText(list.get(position).getMain_title());
+             holder.textView.setText(list.get(position).getPro_price());
+             final ViewHolder finalHolder = holder;
+             holder.reying_btn.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     int i = (int) finalHolder.reying_btn.getTag();
+                     //确认收货
+                     recycing(i);
 
 
-            }
-        });
+                 }
+             });
 
-
+         }
+        else {
+             holder.no_tu.setImageResource(R.drawable.nodingdan);
+         }
         return convertView;
     }
 
 
     class ViewHolder {
         public TextView tv_back;
-        public ImageView iv_tupian;
+        public ImageView iv_tupian,no_tu;
         public TextView orderlist_count;
         public TextView textView;
         public TextView reying_btn;
@@ -130,6 +142,7 @@ public class Deliveryadapter extends BaseAdapter {
                           list.remove(position);
                           notifyDataSetChanged();
                       }
+
               }
 
               @Override

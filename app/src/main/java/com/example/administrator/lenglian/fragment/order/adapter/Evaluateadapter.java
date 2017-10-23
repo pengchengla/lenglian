@@ -32,7 +32,7 @@ import java.util.List;
  * author:衣鹏宇(ypu)
  */
 
-public class Evaluateadapter extends BaseAdapter implements View.OnClickListener {
+public class Evaluateadapter extends BaseAdapter {
     private Context context;
     private List<Dingdanbean.DatasBean> list;
 
@@ -101,11 +101,11 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context,RenewActivity.class);
+                intent.putExtra("xiu_img",list.get(position).getPro_pic().get(0).getUrl());
+                intent.putExtra("order_id",list.get(position).getOrder_id());
                 context.startActivity(intent);
             }
         });
-        holder.order_tuihuan.setOnClickListener(this);
-        holder.order_repairs.setOnClickListener(this);
       //评价
         final ViewHolder finalHolder = holder;
         holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
@@ -124,22 +124,31 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
 
             }
         });
+        //退换
 
+        holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ReturnActivity.class);
+                intent.putExtra("order_id", list.get(position).getOrder_id());
+                context.startActivity(intent);
+            }
+        });
+        //报修
+
+        holder.order_repairs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inten = new Intent(context, BaoxiuActivity.class);
+                inten.putExtra("order_id", list.get(position).getOrder_id());
+                context.startActivity(inten);
+
+            }
+        });
         return convertView;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.order_tuihuan:
-                Intent intent=new Intent(context,ReturnActivity.class);
-                context.startActivity(intent);
-                break;
-            case R.id.order_repairs:
-                Intent inten=new Intent(context,BaoxiuActivity.class);
-                context.startActivity(inten);
-                break;
-        }
+
     }
 
     class ViewHolder {
@@ -159,4 +168,4 @@ public class Evaluateadapter extends BaseAdapter implements View.OnClickListener
         public RelativeLayout receving;
 
     }
-}
+

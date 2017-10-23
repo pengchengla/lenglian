@@ -28,6 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
@@ -99,6 +103,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
     };
     private String pro_id;
     private String oder_id;
+    private String pin_img;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,6 +132,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         map.put("service_score",shopfuratingbar.getSetbar()+"");
         map.put("content",warantu_edtext.getText().toString());
         map.put("order_id",oder_id);
+        map.put("comment_type","1");
         /*
          图片------------------------------
          */
@@ -352,6 +358,19 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         Intent intent = getIntent();
         pro_id = intent.getStringExtra("pro_id");
         oder_id = intent.getStringExtra("order_id");
+        pin_img = intent.getStringExtra("pin_img");
+        /*
+         photo
+         */
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(this).load(pin_img)
+                .apply(options)
+                .into(shop_img);
+
     }
 
     private void submit() {
@@ -377,7 +396,6 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                 warantu_edtext.setCursorVisible(true);
                 break;
             case R.id.shop_tijiao:
-                ToastUtils.showShort(mContext,"hahah");
                 Thread thred=new Thread(new Runnable() {
 
                     private File f;
@@ -404,8 +422,6 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                             @Override
                             public void run() {
                                 KLog.a("Tag",s);
-                                ToastUtils.showShort(mContext,s);
-                                ToastUtils.showShort(mContext,list.toString());
                                 inintwork();
                             }
                         });

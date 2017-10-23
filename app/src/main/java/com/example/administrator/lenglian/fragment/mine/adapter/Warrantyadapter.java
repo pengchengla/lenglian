@@ -95,6 +95,7 @@ public class Warrantyadapter extends BaseAdapter {
                      Intent it=new Intent(context,MaintenanceActivity.class);
                      it.putExtra("pro_id",list.get(position).getPro_id());//商品id
                      it.putExtra("order_id",list.get(position).getOrder_id());//订单id
+                     it.putExtra("weixiu_img",list.get(position).getPro_pic().get(0).getUrl());
                      context.startActivity(it);
                  }
                  /*

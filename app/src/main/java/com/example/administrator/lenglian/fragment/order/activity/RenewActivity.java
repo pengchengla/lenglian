@@ -9,8 +9,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -20,6 +25,8 @@ import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.PayUtil;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.view.SnappingStepper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,16 +55,8 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.order_renew);
         initView();
         //加载网络请求
-
-        initdata();
     }
 
-    private void initdata() {
-        Intent intent = getIntent();
-        order_id = intent.getStringExtra("order_id");
-
-
-    }
     //网络请求
     private void network() {
         Map<String,String> map=new HashMap<>();
@@ -71,6 +70,10 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
                     if(result.getCode()==200) {
 
                         ToastUtils.showShort(RenewActivity.this,"续费成功");
+                        //Eventbus刷新数据
+                        EventMessage eventMessage = new EventMessage("xufei");
+                        EventBus.getDefault().postSticky(eventMessage);
+                        finish();
                     }
 
             }
@@ -98,6 +101,21 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
         renew_btn = (TextView) findViewById(R.id.renew_btn);
         tv_back.setOnClickListener(this);
         renew_btn.setOnClickListener(this);
+        //获得数据
+        Intent intent = getIntent();
+        order_id = intent.getStringExtra("order_id");
+        String xiu_img = intent.getStringExtra("xiu_img");
+          /*
+          加载图片
+         */
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(this).load( xiu_img)
+                .apply(options)
+                .into( renew_tupian);
     }
 
     @Override

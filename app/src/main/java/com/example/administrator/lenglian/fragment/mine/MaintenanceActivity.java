@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,9 +28,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Upphotobean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyGradeview;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
@@ -36,10 +47,13 @@ import com.example.administrator.lenglian.utils.pictureutils.GridViewAdapter;
 import com.example.administrator.lenglian.utils.pictureutils.MainConstant;
 import com.example.administrator.lenglian.utils.pictureutils.PictureSelectorConfig;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.example.administrator.lenglian.utils.pictureutils.UploadUtil;
 import com.example.administrator.lenglian.view.MyRatingBar;
+import com.google.gson.Gson;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.socks.library.KLog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -69,7 +83,19 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
     private Context mContext;
     private GridViewAdapter   mGridViewAddImgAdapter;
     private File file;
-    private ArrayList<String> mPicList = new ArrayList<>(); //上传的图片凭证的数据源
+    private ArrayList<String> mPicList = new ArrayList<>();
+    ArrayList<String>list=new ArrayList<>();//上传的图片凭证的数据源
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+
+
+        }
+    };
+    private String weixiu_img;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +105,7 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
         //网络请求
         //初始化grideview
         ingrideview();
-         //网络请求
-        network();
+
 
     }
 
@@ -91,11 +116,29 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
         map.put("token", MyUtils.getToken());
         map.put("pro_id",pro_id);
         map.put("order_id",order_id);
+        map.put("comment_type","3");
+        map.put("content",warantu_edtext.getText().toString());
+        map.put("service_score",furatingbar.getSetbar()+"");
+        map.put("repair_score",ratingbar.getSetbar()+"");
         /*
            维修打分
 
          */
       //  map.put("service_score")
+        RetrofitManager.post(MyContants.BASEURL + "s=User/commitComment", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200){
+                    ToastUtils.showShort(MaintenanceActivity.this,"提交成功");
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
 
 
     }
@@ -287,6 +330,16 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
         Intent intent = getIntent();
         pro_id = intent.getStringExtra("pro_id");
         order_id = intent.getStringExtra("order_id");
+        weixiu_img = intent.getStringExtra("weixiu_img");
+        //加载图片
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.default_square)
+                .priority(Priority.NORMAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(this).load(weixiu_img)
+                .apply(options)
+                .into(waranty_img);
     }
 
     private void submit() {
@@ -313,6 +366,43 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.tijiao:
+                Thread thred=new Thread(new Runnable() {
+
+                    private File f;
+
+                    @Override
+                    public void run() {
+                        Map<String,File> files=new HashMap<>();
+                        for (int i = 0; i <mPicList.size() ; i++) {
+                            f = new File(mPicList.get(i));
+                            files.put("sfile", f);
+                            s = UploadUtil.uploadFile(files, MyContants.BASEURL + "s=Upload/upload");
+                            Gson gson=new Gson();
+                            Upphotobean upphotobean = gson.fromJson(s, Upphotobean.class);
+                            if(upphotobean.getCode()==200) {
+                                List<Upphotobean.DatasBean> datas = upphotobean.getDatas();
+
+                                list.add(datas.get(0).getUrl());
+                                KLog.a("aaa",list.toString());
+
+                            }
+
+                        }
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                KLog.a("Tag",s);
+                                //网络请求
+                                network();
+                            }
+                        });
+
+                    }
+                });
+                thred.start();
+
+
+
                 break;
             case R.id. warantu_edtext:
                 warantu_edtext.setCursorVisible(true);

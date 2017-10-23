@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,8 +71,10 @@ public class BlankFragment extends BaseFragment {
     Payadapter payadapter;
     Deliveryadapter deliveryadapter;
     private Evaluateadapter evaluateadapyer;
+    private LinearLayout mLl_parent;
 
     private DingdanAdapter dindanadapter;
+
     public static BlankFragment newInstance(String text) {
         Bundle bundle = new Bundle();
         bundle.putString("api", text);
@@ -104,29 +107,29 @@ public class BlankFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         //  接口
-         if(!TextUtils.isEmpty(SpUtils.getString(getActivity(),"user_id",""))) {
+        if (!TextUtils.isEmpty(SpUtils.getString(getActivity(), "user_id", ""))) {
 
 
-             api = getArguments().getString("api");
-             if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
-                 //网络请求
-                 ininjson();
+            api = getArguments().getString("api");
+            if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
+                //网络请求
+                ininjson();
 
-             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
-                 //待支付
-                 Zhifu();
+            } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
+                //待支付
+                Zhifu();
 
-             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3,4")) {
+            } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3,4")) {
 
-                 //待收货
-                 delivery();
+                //待收货
+                delivery();
 
-             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0/order_status=5,6,7,8,9,10")) {
-                 //待评价
-                 evaluate();
+            } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0/order_status=5,6,7,8,9,10")) {
+                //待评价
+                evaluate();
 
-             }
-         }
+            }
+        }
 
         /*
           -----------------------点击跳转
@@ -137,36 +140,36 @@ public class BlankFragment extends BaseFragment {
                 if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
                     if ("1".equals(datas.get(position).getOrder_status())) {
                         Intent intent = new Intent(getActivity(), OrderPayActivity.class);
-                         intent.putExtra("order_id",datas.get(position).getOrder_id());
+                        intent.putExtra("order_id", datas.get(position).getOrder_id());
                         String order_id = datas.get(position).getOrder_id();
                         KLog.a(order_id);
                         startActivity(intent);
-                    } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status())||"4".equals(datas.get(position).getOrder_status())) {
+                    } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status()) || "4".equals(datas.get(position).getOrder_status())) {
                         Intent it = new Intent(getActivity(), ReceiptActivity.class);
-                        it.putExtra("order_id",datas.get(position).getOrder_id());
+                        it.putExtra("order_id", datas.get(position).getOrder_id());
                         startActivity(it);
                     } else {
                         Intent intent = new Intent(getActivity(), AppraiseActivity.class);
-                        intent.putExtra("order_id",datas.get(position).getOrder_id());
+                        intent.putExtra("order_id", datas.get(position).getOrder_id());
                         startActivity(intent);
                     }
                     //    Intent inetn=new Intent(this,class);
                     //跳支付
                 } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
                     Intent intent = new Intent(getActivity(), OrderPayActivity.class);
-                    intent.putExtra("order_id",datasf.get(position).getOrder_id());
+                    intent.putExtra("order_id", datasf.get(position).getOrder_id());
                     startActivity(intent);
                 }
                 //跳收货
                 else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3,4")) {
                     Intent it = new Intent(getActivity(), ReceiptActivity.class);
-                    it.putExtra("order_id",datash.get(position).getOrder_id());
+                    it.putExtra("order_id", datash.get(position).getOrder_id());
                     startActivity(it);
                 }
                 //跳评价
                 else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=0/order_status=5,6,7,8,9,10")) {
                     Intent intent = new Intent(getActivity(), AppraiseActivity.class);
-                    intent.putExtra("order_id",datasp.get(position).getOrder_id());
+                    intent.putExtra("order_id", datasp.get(position).getOrder_id());
                     startActivity(intent);
                 }
             }
@@ -179,13 +182,12 @@ public class BlankFragment extends BaseFragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(api.equals(MyContants.BASEURL + "s=Order/listOrder")){
-                             if(datas!=null){
-                                 dindanadapter.notifyDataSetChanged();
-                             }
+                        if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
+                            if (datas != null) {
+                                dindanadapter.notifyDataSetChanged();
+                            }
 
-                        }
-                        else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
+                        } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
                             //待支付
 //                            if(datasf!=null){
 //                                payadapter.notifyDataSetChanged();
@@ -230,53 +232,25 @@ public class BlankFragment extends BaseFragment {
         springview.setFooter(new DefaultFooter(getActivity()));
 
 
-}
+    }
 
 
     private void evaluate() {
         //评价
-        Map<String,String> map=new HashMap<>();
-        map.put("user_id", SpUtils.getString(mContext,"user_id",""));
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(mContext, "user_id", ""));
         map.put("token", MyUtils.getToken());
-        map.put("order_status","5,6,7,8,9,10");
-        map.put("is_comment","0");
-        RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
-
-
+        map.put("order_status", "5,6,7,8,9,10");
+        map.put("is_comment", "0");
+        RetrofitManager.get(MyContants.BASEURL + "s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
 
 
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
-                    if(result.getCode()==200){
-                        datasp = result.getDatas();
-                        evaluateadapyer = new Evaluateadapter(getActivity(),datasp );
-                        list_recying.setAdapter(evaluateadapyer);
-                    }
-
-            }
-
-            @Override
-            public void onFailed(int code) {
-            }
-        });
-    }
-    //收货
-    private void delivery() {
-
-        Map<String,String> map=new HashMap<>();
-        map.put("user_id",SpUtils.getString(mContext,"user_id",""));
-        map.put("token", MyUtils.getToken());
-        map.put("order_status","2,3,4");
-        RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
-
-
-
-            @Override
-            public void onSuccess(Dingdanbean result, String tag) {
-                if(result.getCode()==200){
-                    datash = result.getDatas();
-                     deliveryadapter=new Deliveryadapter(getActivity(), datash);
-                    list_recying.setAdapter(deliveryadapter);
+                if (result.getCode() == 200) {
+                    datasp = result.getDatas();
+                    evaluateadapyer = new Evaluateadapter(getActivity(), datasp);
+                    list_recying.setAdapter(evaluateadapyer);
                 }
 
             }
@@ -286,6 +260,40 @@ public class BlankFragment extends BaseFragment {
             }
         });
     }
+
+    //收货
+    private void delivery() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(mContext, "user_id", ""));
+        map.put("token", MyUtils.getToken());
+        map.put("order_status", "2,3,4");
+        RetrofitManager.get(MyContants.BASEURL + "s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
+
+            @Override
+            public void onSuccess(Dingdanbean result, String tag) {
+                if (result.getCode() == 200) {
+                    datash = result.getDatas();
+                    deliveryadapter = new Deliveryadapter(getActivity(), datash);
+                    list_recying.setAdapter(deliveryadapter);
+                } else if (result.getCode() == 101) {
+                    deliveryadapter = new Deliveryadapter(getActivity(), datash);
+                    list_recying.setAdapter(deliveryadapter);
+                 //   ToastUtils.showShort(getContext(), result.getCode()+"");
+
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                KLog.a(code);
+                ToastUtils.showShort(getContext(), code+"");
+            }
+        });
+    }
+
+
+
    //全部订单
     private void ininjson() {
 
@@ -299,9 +307,10 @@ public class BlankFragment extends BaseFragment {
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                     if (result.getCode() == 200) {
-                        datas = result.getDatas();
-                        dindanadapter = new DingdanAdapter(getActivity(), datas);
-                        list_recying.setAdapter(dindanadapter);
+
+                            datas = result.getDatas();
+                            dindanadapter = new DingdanAdapter(getActivity(), datas);
+                            list_recying.setAdapter(dindanadapter);
 
                 }
             }
@@ -356,6 +365,10 @@ public class BlankFragment extends BaseFragment {
        else   if(eventMessage.getMsg().equals("unPayOrder")){
              Zhifu();
          }
+        else if(eventMessage.getMsg().equals("xufei")){
+            evaluate();
+
+        }
     }
     public void fff(){
         ArrayMap map = new ArrayMap<String, String>();

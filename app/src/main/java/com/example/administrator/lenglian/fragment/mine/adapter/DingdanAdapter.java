@@ -30,6 +30,7 @@ import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.PayUtil;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.socks.library.KLog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,10 +44,14 @@ import java.util.Map;
 public class DingdanAdapter extends BaseAdapter {
     private Context context;
     private List<Dingdanbean.DatasBean> list;
+    // 用来记录按钮状态的Map
+    public static Map<Integer, Boolean> isChecked;
 
     public DingdanAdapter(Context context, List<Dingdanbean.DatasBean> list) {
         this.context = context;
         this.list = list;
+
+
     }
 
     @Override
@@ -70,6 +75,9 @@ public class DingdanAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             //填充布局
+            if(list.size()<=0&&list==null){
+         convertView = LayoutInflater.from(context).inflate(R.layout.activity_noding, null);
+            }
             convertView = LayoutInflater.from(context).inflate(R.layout.ding_order, null);
             holder.order_tupian = (ImageView) convertView.findViewById(R.id.order_tupian);
             holder.order_count = (TextView) convertView.findViewById(R.id.order_count);
@@ -86,6 +94,7 @@ public class DingdanAdapter extends BaseAdapter {
             holder.recying_btn = (TextView) convertView.findViewById(R.id.recying_btn);
             holder.receving = (TextView) convertView.findViewById(R.id.receving);
             convertView.setTag(holder);
+            holder.order_evaluation.setTag(position);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -169,23 +178,31 @@ public class DingdanAdapter extends BaseAdapter {
                 });
                 //评价
                 final ViewHolder finalHolder = holder;
-                holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                          //判断评价是否评价过
-                          if("0".equals(list.get(position).getIs_comment())){
-                              Intent inte = new Intent(context, ShopdetailActivity.class);
-                              inte.putExtra("pro_id",list.get(position).getPro_id());
-                              inte.putExtra("order_id",list.get(position).getOrder_id());
-                              context.startActivity(inte);
-                          }
-                        else {
-                              finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
-                          }
+             final    int positions= (int) holder.order_evaluation.getTag();
+                KLog.d("tag",positions);
+                if("0".equals(list.get(positions).getIs_comment())) {
 
-                    }
-                });
+                    holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //判断评价是否评价
+                                Intent inte = new Intent(context, ShopdetailActivity.class);
+                                inte.putExtra("pro_id", list.get(positions).getPro_id());
+                                inte.putExtra("order_id", list.get(positions).getOrder_id());
+                                inte.putExtra("pin_img",list.get(position).getPro_pic().get(0).getUrl());
+                                context.startActivity(inte);
+                            }
 
+
+                        });
+
+                }
+                else {
+                    holder.order_evaluation.setFocusable(true);
+
+                    finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+
+                }
             }
         }
         //收货

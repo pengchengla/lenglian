@@ -99,29 +99,6 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         initView();
         inindata();//下拉个人信息
     }
-//修改地址
-    private void ininaddress() {
-        Map<String, String> map = new HashMap<>();
-        map.put("user_id", SpUtils.getString(this,"user_id",""));
-        map.put("token", MyUtils.getToken());
-        map.put("sex",   person_data.getText().toString());
-        String token = MyUtils.getToken();
-        System.out.print(token);
-        KLog.d(token + "-----------------------");
-        RetrofitManager.post(MyContants.BASEURL + "s=User/editProfile", map, new BaseObserver1<Resultbean>("") {
-            @Override
-            public void onSuccess(Resultbean result, String tag) {
-                if(result.getCode()==200){
-                    ToastUtils.showShort(PersoninforActivity.this,"修改成功");
-                }
-            }
-
-            @Override
-            public void onFailed(int code) {
-                ToastUtils.showShort(PersoninforActivity.this,"修改失败");
-            }
-        });
-    }
 
     //修改性别
     private void ininsex() {
@@ -230,7 +207,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                         person_exselect.setText("女");
                     }
 
-                    person_data.setText(datas.get(0).getBirth());
+                    person_data.setText(datas.get(0).getBirth().toString());
                     //修改头像
                     RequestOptions options = new RequestOptions()
                             .centerCrop()
@@ -242,6 +219,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                             .into(person_pho);
 
                 }
+                
             }
 
             @Override
@@ -352,22 +330,53 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
         TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                person_data .setText(MyUtils.dateToString(date, "MEDIUM"));
-                ininaddress();
+                person_data.setText(MyUtils.dateToString(date, "MEDIUM"));
+                Map<String, String> map = new HashMap<>();
+                map.put("user_id", SpUtils.getString(PersoninforActivity.this,"user_id",""));
+                map.put("token", MyUtils.getToken());
+                map.put("birth", person_data.getText().toString());
+                String s = person_data.getText().toString();
+                KLog.a(s);
+                RetrofitManager.post(MyContants.BASEURL + "s=User/editProfile", map, new BaseObserver1<Resultbean>("") {
+                    @Override
+                    public void onSuccess(Resultbean result, String tag) {
+                        if(result.getCode()==200){
+                            ToastUtils.showShort(PersoninforActivity.this,"修改成功");
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int code) {
+
+                    }
+                });
+
             }
+
+
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
                 .setType(new boolean[]{true, true, true, false, false, false})
                 .build();
         pvTime.setDate(Calendar.getInstance());
         pvTime.show();
+
+
+        //出生如期
+      //  inintbirth();
         //注：根据需求来决定是否使用该方法（一般是精确到秒的情况），
         // 此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，
         // 导致选中时间与当前时间不匹配的问题。
         //修改地址
 
     }
-      //头像选取
+    //修改出生日期
+    private void inintbirth() {
+
+    }
+
+
+    //头像选取
     private void showphoto(int animationStyle,int gr){
         BaseDialog.Builder builder = new BaseDialog.Builder(this);
         final BaseDialog dialog = builder.setViewId(R.layout.photo_dialg)

@@ -392,6 +392,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tv_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //关闭dialog
+                dialog.close();
                 Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "010-12345674"));
                 //跳转到拨号界面，同时传递电话号码
                 startActivity(dialIntent);

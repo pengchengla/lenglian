@@ -95,6 +95,7 @@
             android:padding="5dp"
             android:textColorHint="@color/font_black_4"
             android:textSize="15sp"/>
+
         <TextView
             android:id="@+id/tv_getcode"
             android:layout_width="wrap_content"
