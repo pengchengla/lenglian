@@ -147,6 +147,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
                     intent1.putExtra("userid",result.getDatas().getUser_id());
                     startActivity(intent1);
+                }else {
+                    Toast.makeText(RegisterActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
                 }
             }
 

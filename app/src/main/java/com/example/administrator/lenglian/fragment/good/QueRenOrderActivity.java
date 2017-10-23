@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
             tv_peisongfei, tv_total_price, tv_total_price_bottom;
     private ImageView iv_address, iv_tupian;
     private String mId, duration;
-    private EditText edt_liuyan;
+    private EditText edt_liuyan, edt_fapiao1, edt_fapiao2;
     private LinearLayout ll_hasAddress;
     private RelativeLayout rl_noaddress;
     private String express_id;
@@ -50,6 +51,11 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     private String peisongfei;
     private String total_price;
     private ProgressDialog mDialog;
+    private RadioGroup rgp;
+    private int fapiao = 0;
+    private TextView tv_fapiao_no;
+    private ImageView iv_fapiao_no;
+    private LinearLayout ll_root_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,14 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
         tv_peisongfei = (TextView) findViewById(R.id.tv_peisongfei);
         tv_total_price = (TextView) findViewById(R.id.tv_total_price);
         tv_total_price_bottom = (TextView) findViewById(R.id.tv_total_price_bottom);
+        rgp = (RadioGroup) findViewById(R.id.rgp);
+        edt_fapiao1 = (EditText) findViewById(R.id.edt_fapiao1);
+        edt_fapiao2 = (EditText) findViewById(R.id.edt_fapiao2);
+        tv_fapiao_no = (TextView) findViewById(R.id.tv_fapiao_no);
+        tv_fapiao_no.setOnClickListener(this);
+        iv_fapiao_no = (ImageView) findViewById(R.id.iv_fapiao_no);
+        iv_fapiao_no.setOnClickListener(this);
+        ll_root_view = (LinearLayout) findViewById(R.id.ll_root_view);
         initAddress();
         initData();
     }
@@ -110,6 +124,44 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
         tv_total_price.setText("￥" + total_price);
         tv_total_price_bottom.setText("￥" + total_price);
         tv_tijiao.setClickable(true);
+        rgp.check(R.id.rb_fapiao_no);
+        edt_fapiao1.setVisibility(View.GONE);
+        edt_fapiao2.setVisibility(View.GONE);
+        rgp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_fapiao_no:
+                        fapiao = 0;
+                        break;
+                    case R.id.rb_fapiao_geren:
+                        fapiao = 1;
+                        break;
+                    case R.id.rb_fapiao_danwei:
+                        fapiao = 2;
+                        break;
+                }
+                refreshFapiao();
+            }
+        });
+    }
+
+    private void refreshFapiao() {
+        if (fapiao == 0) {
+            edt_fapiao1.setVisibility(View.GONE);
+            edt_fapiao2.setVisibility(View.GONE);
+            tv_fapiao_no.setText("不开发票");
+        } else if (fapiao == 1) {
+            edt_fapiao1.setVisibility(View.VISIBLE);
+            edt_fapiao1.setHint("请填写收票人姓名");
+            edt_fapiao2.setVisibility(View.GONE);
+            tv_fapiao_no.setText("个人");
+        } else if (fapiao == 2) {
+            edt_fapiao1.setVisibility(View.VISIBLE);
+            edt_fapiao1.setHint("请填写单位名称");
+            edt_fapiao2.setVisibility(View.VISIBLE);
+            tv_fapiao_no.setText("单位");
+        }
     }
 
     @Override
@@ -166,6 +218,10 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.rl_noaddress:
                 startActivity(new Intent(this, AddressActivity.class));
+                break;
+            case R.id.tv_fapiao_no:
+            case R.id.iv_fapiao_no:
+                ll_root_view.setVisibility(ll_root_view.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
                 break;
         }
     }

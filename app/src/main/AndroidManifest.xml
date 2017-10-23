@@ -45,7 +45,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LancherActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -55,7 +55,7 @@
         </activity>
         <activity android:name=".activity.ForgetpswActivity"/>
         <activity android:name=".activity.GuidePageActivity"/>
-        <activity android:name=".activity.LancherActivity"/>
+        <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.RegisterActivity"/>
         <activity android:name=".activity.SearchActivity">
@@ -218,6 +218,10 @@
         <service android:name=".blue.BluetoothService"/>
 
         <activity android:name=".blue.MyBlueActivity">
+        </activity>
+        <activity android:name=".activity.BindMobileActivity">
+        </activity>
+        <activity android:name=".activity.InputPswActivity">
         </activity>
     </application>
 

@@ -1,7 +1,5 @@
 package com.example.administrator.lenglian.network;
 
-import android.widget.Toast;
-
 import com.alibaba.fastjson.JSON;
 import com.socks.library.KLog;
 
@@ -84,8 +82,6 @@ public abstract class BaseObserver1<T> implements Observer<String> {
             onFailed(UNKNOW_ERROR);
             e1.printStackTrace();
         }
-
-
     }
 
     @Override

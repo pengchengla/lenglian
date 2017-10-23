@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +43,12 @@ public class MyBlueActivity extends AppCompatActivity {
     private BluetoothGattCharacteristic notifyCharacteristic;
     //发送队列，提供一种简单的处理方式，实际项目场景需要根据需求优化
     private Queue<byte[]> dataInfoQueue = new LinkedList<>();
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +62,7 @@ public class MyBlueActivity extends AppCompatActivity {
 
     private void notifyData() {
         getNotifyGattCharacteristic("0000ffe5-0000-1000-8000-00805f9b34fb");
-        ViseBluetooth.getInstance().enableCharacteristicNotification(notifyCharacteristic, mICharacteristicCallback, true);
+        ViseBluetooth.getInstance().enableCharacteristicNotification(notifyCharacteristic, mICharacteristicCallback, false);
     }
 
     private ICharacteristicCallback mICharacteristicCallback = new ICharacteristicCallback() {
@@ -127,17 +135,20 @@ public class MyBlueActivity extends AppCompatActivity {
         }
     }
 
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            connectAndWrite();
+        }
+    };
+
     private void send(byte[] data) {
         if (dataInfoQueue != null) {
             dataInfoQueue.clear();
             dataInfoQueue = splitPacketFor20Byte(data);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    connectAndWrite();
-                }
-            });
-
+            if (dataInfoQueue.peek() != null) {
+                handler.postDelayed(runnable, 100);
+            }
         }
     }
 
@@ -146,25 +157,32 @@ public class MyBlueActivity extends AppCompatActivity {
         * 连接指定Mac地址的设备，该方式使用前不需要进行扫描，该方式直接将扫描和连接放到一起，
         * 在扫描到指定设备后自动进行连接，使用方式如下：
         * */
+
         ViseBluetooth.getInstance().connectByMac(mac, true, new IConnectCallback() {
             @Override
             public void onConnectSuccess(BluetoothGatt gatt, int status) {
                 Toast.makeText(MyBlueActivity.this, "连接成功", Toast.LENGTH_SHORT).show();
-                byte[] bytes={0x02,0x03,0x31,0x32,0x33};
-                ViseBluetooth.getInstance().writeCharacteristic(getGattCharacteristic("0000ffe2-0000-1000-8000-00805f9b34fb"),
-                        bytes, new ICharacteristicCallback() {
-                            @Override
-                            public void onSuccess(BluetoothGattCharacteristic bluetoothGattCharacteristic) {
-                                Toast.makeText(MyBlueActivity.this, "write成功", Toast.LENGTH_SHORT).show();
-                                notifyData();
-                            }
+                if (dataInfoQueue != null && !dataInfoQueue.isEmpty()) {
+                    if (dataInfoQueue.peek() != null) {
+                        ViseBluetooth.getInstance().writeCharacteristic(getGattCharacteristic("0000ffe2-0000-1000-8000-00805f9b34fb"),
+                                dataInfoQueue.poll(), new ICharacteristicCallback() {
+                                    @Override
+                                    public void onSuccess(BluetoothGattCharacteristic bluetoothGattCharacteristic) {
+                                        Toast.makeText(MyBlueActivity.this, "write成功", Toast.LENGTH_SHORT).show();
+                                        notifyData();
+                                    }
 
-                            @Override
-                            public void onFailure(BleException exception) {
-                                Toast.makeText(MyBlueActivity.this, "write失败" + exception.getDescription(), Toast.LENGTH_SHORT).show();
-                                notifyData();
-                            }
-                        });
+                                    @Override
+                                    public void onFailure(BleException exception) {
+                                        Toast.makeText(MyBlueActivity.this, "write失败" + exception.getDescription(), Toast.LENGTH_SHORT).show();
+                                        notifyData();
+                                    }
+                                });
+                        if (dataInfoQueue.peek() != null) {
+                            handler.postDelayed(runnable, 100);
+                        }
+                    }
+                }
             }
 
             @Override

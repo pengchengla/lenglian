@@ -15,6 +15,7 @@ public class RegisterBean {
 
     private int code;
     private String success;
+    private String error;
     private DatasBean datas;
 
     public int getCode() {
@@ -31,6 +32,14 @@ public class RegisterBean {
 
     public void setSuccess(String success) {
         this.success = success;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public DatasBean getDatas() {

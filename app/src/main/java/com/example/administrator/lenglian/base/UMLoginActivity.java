@@ -4,22 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.util.ArrayMap;
 import android.widget.Toast;
 
 import com.example.administrator.lenglian.MyApplication;
-import com.example.administrator.lenglian.activity.MainActivity;
-import com.example.administrator.lenglian.bean.EventMessage;
-import com.example.administrator.lenglian.bean.ThreeLoginBean;
-import com.example.administrator.lenglian.network.BaseObserver1;
-import com.example.administrator.lenglian.network.RetrofitManager;
-import com.example.administrator.lenglian.utils.MyContants;
-import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.activity.BindMobileActivity;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
@@ -70,7 +61,7 @@ public class UMLoginActivity extends BaseActivity {
         * 因此为了便于开发者使用，我们将一些常用的字段做了统一封装，开发者可以直接获取，
         * 不再需要对不同平台的不同字段名做转换，这里列出我们封装的字段及含义
         * */
-            Toast.makeText(MyApplication.getGloableContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MyApplication.getGloableContext(), "登陆成功", Toast.LENGTH_SHORT).show();
             final String username = data.get("name");
             final String userhead = data.get("iconurl");
             final String uid = data.get("uid");
@@ -85,36 +76,10 @@ public class UMLoginActivity extends BaseActivity {
                 type = "weibo";
             }
             //            SpUtils.putString(MyApplication.getGloableContext(), "threetype", type);
-            ArrayMap arrayMap2 = new ArrayMap();
-            arrayMap2.put("openid", uid);
-            arrayMap2.put("type", type);
-//            arrayMap2.put("mobile", "");
-            RetrofitManager.post(MyContants.BASEURL + "s=User/nt_login", arrayMap2, new BaseObserver1<ThreeLoginBean>("") {
-                @Override
-                public void onSuccess(ThreeLoginBean result, String tag) {
-                    if (result.getCode() == 200) {
-                        SpUtils.putString(mContext, "user_id", result.getData().getUser_id());
-                        SpUtils.putString(mContext, "phone", result.getData().getMobile());
-                        if (mContext.getIntent().getStringExtra("gologin").equals("gologin")) {
-                            mContext.finish();
-                            EventMessage eventMessage = new EventMessage("xxx");
-                            EventBus.getDefault().postSticky(eventMessage);
-                            EventMessage eventMessages = new EventMessage("bbb");
-                            EventBus.getDefault().postSticky(eventMessages);
-                        } else {
-                            Intent intent1 = new Intent(mContext, MainActivity.class);
-                            mContext.startActivity(intent1);
-                        }
-                    } else {
-                        //101是没有数据
-                    }
-                }
-
-                @Override
-                public void onFailed(int code) {
-                    Toast.makeText(mContext, "登录失败"+code, Toast.LENGTH_SHORT).show();
-                }
-            });
+            Intent intent = new Intent(mContext, BindMobileActivity.class);
+            intent.putExtra("type",type);
+            intent.putExtra("openid",uid);
+            mContext.startActivity(intent);
         }
 
         @Override
