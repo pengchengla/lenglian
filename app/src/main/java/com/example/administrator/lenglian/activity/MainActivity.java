@@ -1,6 +1,5 @@
 package com.example.administrator.lenglian.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -13,7 +12,6 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.EventMessage;
-import com.example.administrator.lenglian.blue.MyBlueActivity;
 import com.example.administrator.lenglian.fragment.good.GoodFragment;
 import com.example.administrator.lenglian.fragment.home.HomeFragment;
 import com.example.administrator.lenglian.fragment.mine.MineFragment;
@@ -35,7 +33,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private BaseFragment[] mBaseFragments;
     private RadioButton rb_home, rb_good, rb_order, rb_mine;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         rb_order = (RadioButton) findViewById(R.id.rb_order);
         initData1();
         initListener1();
+
 //        startActivity(new Intent(this, MyBlueActivity.class));
     }
 
