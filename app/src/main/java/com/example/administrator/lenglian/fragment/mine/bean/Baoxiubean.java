@@ -13,7 +13,7 @@ public class Baoxiubean {
     /**
      * code : 200
      * success : success
-     * datas : [{"repair_id":"2","pro_id":"1","order_id":"1","is_comment":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"}]
+     * datas : [{"repair_id":"1","pro_id":"1","order_id":"10","is_comment":"0","comment_id":"0","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"},{"repair_id":"2","pro_id":"1","order_id":"1","is_comment":"0","comment_id":"0","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"}]
      */
 
     private int code;
@@ -46,16 +46,17 @@ public class Baoxiubean {
 
     public static class DatasBean {
         /**
-         * repair_id : 2
+         * repair_id : 1
          * pro_id : 1
-         * order_id : 1
-         * is_comment : 1
-         * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
-         * main_title : 啊啊啊啊啊
+         * order_id : 10
+         * is_comment : 0
+         * comment_id : 0
+         * pro_pic : [{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}]
+         * main_title : 威王
          * pro_price : 1
-         * sub_title : 广泛的是第三方
+         * sub_title : 点菜柜
          * pro_name : fdsafdg
-         * single_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+         * single_pic : http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png
          * pro_deposit : 5000.00
          * express_money : 50.00
          */
@@ -64,6 +65,7 @@ public class Baoxiubean {
         private String pro_id;
         private String order_id;
         private String is_comment;
+        private String comment_id;
         private String main_title;
         private String pro_price;
         private String sub_title;
@@ -103,6 +105,14 @@ public class Baoxiubean {
 
         public void setIs_comment(String is_comment) {
             this.is_comment = is_comment;
+        }
+
+        public String getComment_id() {
+            return comment_id;
+        }
+
+        public void setComment_id(String comment_id) {
+            this.comment_id = comment_id;
         }
 
         public String getMain_title() {
@@ -171,7 +181,7 @@ public class Baoxiubean {
 
         public static class ProPicBean {
             /**
-             * url : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+             * url : http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg
              */
 
             private String url;

@@ -49,6 +49,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
     private CollectionAdapter mCollectionadapter;
     private List<CollectListBean.DatasEntity> mDatas;
     private LinearLayout ll_checkall;
+    private LinearLayout kong;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +67,8 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(CollectListBean result, String tag) {
                 if (result.getCode() == 200) {
+                    recycler_collect.setVisibility(View.VISIBLE);
+                    kong.setVisibility(View.GONE);
                     mDatas = result.getDatas();
                     if (mDatas == null || mDatas.size() == 0) {
                         collect_bianji.setVisibility(View.GONE);
@@ -77,6 +80,9 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                 } else {
                     //101是没有数据
                     collect_bianji.setVisibility(View.GONE);
+                    recycler_collect.setVisibility(View.GONE);
+                    kong.setVisibility(View.VISIBLE);
+
                     if (mCollectionadapter != null) {
                         mDatas.clear();
                         mCollectionadapter.notifyDataSetChanged();
@@ -124,6 +130,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         rl_select_delete = (RelativeLayout) findViewById(R.id.select_delte);
         cb_checkAll = (CheckBox) findViewById(R.id.collect_check);
         btn_delete = (Button) findViewById(R.id.collect_btn);
+        kong = (LinearLayout) findViewById(R.id.kong);
         btn_delete.setOnClickListener(this);
         tv_back.setOnClickListener(this);
         collect_bianji.setOnClickListener(this);

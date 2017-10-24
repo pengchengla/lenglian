@@ -174,8 +174,10 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 int code = result.getCode();
                 if(code==200){
                     ToastUtils.showShort(AddaddressActivity.this,"添加成功");
-                     Intent intent=new Intent(AddaddressActivity.this,AddressActivity.class);
-                    startActivity(intent);
+//                     Intent intent=new Intent(AddaddressActivity.this,AddressActivity.class);
+//                    startActivity(intent);
+                    EventMessage eventMessage = new EventMessage("ddd");
+                    EventBus.getDefault().postSticky(eventMessage);
                     finish();
                 }
             }
@@ -209,6 +211,8 @@ public class AddaddressActivity extends BaseActivity implements View.OnClickList
                 int code = result.getCode();
                 if(code==200){
                    ToastUtils.showShort(AddaddressActivity.this,"添加成功");
+                    EventMessage eventMessage = new EventMessage("ddd");
+                    EventBus.getDefault().postSticky(eventMessage);
                     finish();
                 }
             }

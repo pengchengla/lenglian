@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +76,9 @@ public class BlankFragment extends BaseFragment {
     private LinearLayout mLl_parent;
 
     private DingdanAdapter dindanadapter;
+    private TextView textView;
+    private RelativeLayout relativeLayout;
+    private ImageView imageView;
 
     public static BlankFragment newInstance(String text) {
         Bundle bundle = new Bundle();
@@ -98,6 +103,9 @@ public class BlankFragment extends BaseFragment {
         this.springview = (SpringView) view.findViewById(R.id.springview);
         //设置类型
         springview.setType(SpringView.Type.FOLLOW);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.kong);
+        textView = (TextView) view.findViewById(R.id.kong_text);
+        imageView = (ImageView) view.findViewById(R.id.imageView);
 
         return view;
     }
@@ -248,9 +256,18 @@ public class BlankFragment extends BaseFragment {
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                 if (result.getCode() == 200) {
+                    relativeLayout.setVisibility(View.GONE);
+                    list_recying.setVisibility(View.VISIBLE);
                     datasp = result.getDatas();
                     evaluateadapyer = new Evaluateadapter(getActivity(), datasp);
                     list_recying.setAdapter(evaluateadapyer);
+                }
+                else if (result.getCode() == 101) {
+                    relativeLayout.setVisibility(View.VISIBLE);
+                    list_recying.setVisibility(View.GONE);
+                    textView.setVisibility(View.GONE);
+                    imageView.setImageResource(R.drawable.nodingdan);
+
                 }
 
             }
@@ -273,13 +290,16 @@ public class BlankFragment extends BaseFragment {
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                 if (result.getCode() == 200) {
+                    relativeLayout.setVisibility(View.GONE);
+                    list_recying.setVisibility(View.VISIBLE);
                     datash = result.getDatas();
                     deliveryadapter = new Deliveryadapter(getActivity(), datash);
                     list_recying.setAdapter(deliveryadapter);
                 } else if (result.getCode() == 101) {
-                    deliveryadapter = new Deliveryadapter(getActivity(), datash);
-                    list_recying.setAdapter(deliveryadapter);
-                 //   ToastUtils.showShort(getContext(), result.getCode()+"");
+                    relativeLayout.setVisibility(View.VISIBLE);
+                    list_recying.setVisibility(View.GONE);
+                    textView.setVisibility(View.GONE);
+                    imageView.setImageResource(R.drawable.nodingdan);
 
                 }
             }
@@ -307,12 +327,20 @@ public class BlankFragment extends BaseFragment {
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                     if (result.getCode() == 200) {
-
+                        relativeLayout.setVisibility(View.GONE);
+                        list_recying.setVisibility(View.VISIBLE);
                             datas = result.getDatas();
                             dindanadapter = new DingdanAdapter(getActivity(), datas);
                             list_recying.setAdapter(dindanadapter);
 
                 }
+                    else if (result.getCode() == 101) {
+                        relativeLayout.setVisibility(View.VISIBLE);
+                        list_recying.setVisibility(View.GONE);
+                        textView.setVisibility(View.GONE);
+                        imageView.setImageResource(R.drawable.nodingdan);
+
+                    }
             }
             @Override
             public void onFailed(int code) {
@@ -332,12 +360,23 @@ public class BlankFragment extends BaseFragment {
 
             @Override
             public void onSuccess(Zhifubean result, String tag) {
+                 if(result.getCode()==200) {
+                     relativeLayout.setVisibility(View.GONE);
+                     list_recying.setVisibility(View.VISIBLE);
 
-              if  (tag.equals("zhifu")) {
-                  datasf = result.getDatas();
-                    payadapter = new Payadapter(getActivity(), datasf);
-                    list_recying.setAdapter(payadapter);
-                }
+                     if (tag.equals("zhifu")) {
+                         datasf = result.getDatas();
+                         payadapter = new Payadapter(getActivity(), datasf);
+                         list_recying.setAdapter(payadapter);
+                     }
+                 }
+                 else if (result.getCode() == 101) {
+                     relativeLayout.setVisibility(View.VISIBLE);
+                     list_recying.setVisibility(View.GONE);
+                     textView.setVisibility(View.GONE);
+                     imageView.setImageResource(R.drawable.nodingdan);
+
+                 }
             }
 
             @Override
@@ -368,6 +407,9 @@ public class BlankFragment extends BaseFragment {
         else if(eventMessage.getMsg().equals("xufei")){
             evaluate();
 
+        }
+        else if(eventMessage.getMsg().equals("ping")){
+            evaluate();
         }
     }
     public void fff(){

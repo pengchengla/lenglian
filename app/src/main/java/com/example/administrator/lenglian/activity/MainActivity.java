@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         rb_order = (RadioButton) findViewById(R.id.rb_order);
         initData1();
         initListener1();
-        startActivity(new Intent(this, MyBlueActivity.class));
+//        startActivity(new Intent(this, MyBlueActivity.class));
     }
 
     private void initListener1() {

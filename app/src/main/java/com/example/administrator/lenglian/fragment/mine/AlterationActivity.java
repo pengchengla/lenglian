@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
@@ -40,6 +42,8 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
     private List<Indexbean> list=new ArrayList<>();
     private List<Returnbean.DatasBean> datas;
     private SpringView springView;
+    private RelativeLayout linearLayout;
+    private TextView kong_text;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,9 +68,17 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
              @Override
              public void onSuccess(Returnbean result, String tag) {
                    if(result.getCode()==200){
+                       linearLayout.setVisibility(View.GONE);
+                       list_alteration.setVisibility(View.VISIBLE);
                        datas = result.getDatas();
                        //加载适配器
                        list_alteration.setAdapter(new Alterationadapter(AlterationActivity.this, datas));
+                   }
+                 else {
+                       linearLayout.setVisibility(View.VISIBLE);
+                       list_alteration.setVisibility(View.GONE);
+                       kong_text.setText("我的退换    空空如也~");
+
                    }
              }
 
@@ -117,6 +129,8 @@ public class AlterationActivity extends BaseActivity implements View.OnClickList
         tv_back = (TextView) findViewById(R.id.tv_back);
         list_alteration = (ListView) findViewById(R.id.list_alteration);
         springView = (SpringView) findViewById(R.id.springview);
+        linearLayout = (RelativeLayout) findViewById(R.id.kong);
+        kong_text = (TextView) findViewById(R.id.kong_text);
         tv_back.setOnClickListener(this);
 
     }

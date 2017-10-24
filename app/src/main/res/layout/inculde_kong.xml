@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+
+        android:id="@+id/kong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+        <ImageView
+            android:src="@drawable/kongkong"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/imageView" />
+        <TextView
+            android:id="@+id/kong_text"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/kog"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:text="我的收藏    空空如也~"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

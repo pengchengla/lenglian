@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
@@ -19,6 +21,8 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +38,9 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
     private TextView tv_back;
     private ListView warranty_list;
     private List<Baoxiubean.DatasBean> datas;
+    private RelativeLayout linearLayout;
+    private TextView textView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +68,11 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
                             Warrantyadapter warrantyadapter = new Warrantyadapter(WarrantyActivity.this, datas);
                             warranty_list.setAdapter(warrantyadapter);
 
-
+                        }
+                else if(result.getCode()==200){
+                            linearLayout.setVisibility(View.VISIBLE);
+                            warranty_list.setVisibility(View.GONE);
+                            textView.setText("我的报修    空空如也~");
                         }
             }
 
@@ -87,6 +98,8 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
     private void initView() {
         tv_back = (TextView) findViewById(R.id.tv_back);
         warranty_list = (ListView) findViewById(R.id.warranty_list);
+        linearLayout = (RelativeLayout) findViewById(R.id.kong);
+        textView = (TextView) findViewById(R.id.kong_text);
         tv_back.setOnClickListener(this);
     }
 

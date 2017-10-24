@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.AddaddressActivity;
 import com.example.administrator.lenglian.fragment.mine.AddressActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Addressbean;
@@ -25,6 +26,8 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -201,7 +204,11 @@ public class  Addressadapter extends BaseAdapter {
               if(result.getCode()==200)  {
                   ToastUtils.showShort(context,"删除成功");
                   list.remove(position);
+                   if(list.size()==0||list==null){
+                       EventMessage eventMessage = new EventMessage("add");
+                       EventBus.getDefault().postSticky(eventMessage);
 
+                   }
                   notifyDataSetChanged();
               }
             }

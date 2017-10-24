@@ -135,74 +135,111 @@ public class DingdanAdapter extends BaseAdapter {
                     ToastUtils.showShort(context, "激活设备");
                 }
             });
-            if ("6".equals(list.get(position).getOrder_status()) || "7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status())) {
-                //续费
-                holder.order_renew.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, RenewActivity.class);
-                        intent.putExtra("order_id", list.get(position).getOrder_id());
-                        context.startActivity(intent);
-                    }
-                });
+            //退换
 
-            } else {
-                //退换
-
-                holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, ReturnActivity.class);
-                        intent.putExtra("order_id", list.get(position).getOrder_id());
-                        context.startActivity(intent);
-                    }
-                });
-                //续费
-                holder.order_renew.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, RenewActivity.class);
-                        intent.putExtra("order_id", list.get(position).getOrder_id());
-                        context.startActivity(intent);
-                    }
-                });
-                //报修
-
-                holder.order_repairs.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent inten = new Intent(context, BaoxiuActivity.class);
-                        inten.putExtra("order_id", list.get(position).getOrder_id());
-                        context.startActivity(inten);
-                    }
-                });
-                //评价
-                final ViewHolder finalHolder = holder;
-             final    int positions= (int) holder.order_evaluation.getTag();
-                KLog.d("tag",positions);
-                if("0".equals(list.get(positions).getIs_comment())) {
-
-                    holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //判断评价是否评价
-                                Intent inte = new Intent(context, ShopdetailActivity.class);
-                                inte.putExtra("pro_id", list.get(positions).getPro_id());
-                                inte.putExtra("order_id", list.get(positions).getOrder_id());
-                                inte.putExtra("pin_img",list.get(position).getPro_pic().get(0).getUrl());
-                                context.startActivity(inte);
-                            }
-
-
-                        });
-
+            holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ReturnActivity.class);
+                    intent.putExtra("order_id", list.get(position).getOrder_id());
+                    context.startActivity(intent);
                 }
-                else {
-                    holder.order_evaluation.setFocusable(true);
+            });
+            //报修
 
-                    finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
-
+            holder.order_repairs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent inten = new Intent(context, BaoxiuActivity.class);
+                    inten.putExtra("order_id", list.get(position).getOrder_id());
+                    context.startActivity(inten);
                 }
+            });
+            //评价
+            final ViewHolder finalHolder = holder;
+            final int positions= (int) holder.order_evaluation.getTag();
+            KLog.d("tag",positions);
+            if("0".equals(list.get(positions).getIs_comment())) {
+
+                holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //判断评价是否评价
+                        Intent inte = new Intent(context, ShopdetailActivity.class);
+                        inte.putExtra("pro_id", list.get(positions).getPro_id());
+                        inte.putExtra("order_id", list.get(positions).getOrder_id());
+                        inte.putExtra("pin_img",list.get(position).getPro_pic().get(0).getUrl());
+                        context.startActivity(inte);
+                    }
+
+
+                });
+
+            }
+            else {
+                holder.order_evaluation.setFocusable(true);
+
+                finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+
+            }
+        }
+
+       else if ("6".equals(list.get(position).getOrder_status()) || "7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status())) {
+            //续费
+            holder.order_renew.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RenewActivity.class);
+                    intent.putExtra("order_id", list.get(position).getOrder_id());
+                    context.startActivity(intent);
+                }
+            });
+            //退换
+
+            holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ReturnActivity.class);
+                    intent.putExtra("order_id", list.get(position).getOrder_id());
+                    context.startActivity(intent);
+                }
+            });
+            //报修
+
+            holder.order_repairs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent inten = new Intent(context, BaoxiuActivity.class);
+                    inten.putExtra("order_id", list.get(position).getOrder_id());
+                    context.startActivity(inten);
+                }
+            });
+            //评价
+            final ViewHolder finalHolder = holder;
+            final    int positions= (int) holder.order_evaluation.getTag();
+            KLog.d("tag",positions);
+            if("0".equals(list.get(positions).getIs_comment())) {
+
+                holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //判断评价是否评价
+                        Intent inte = new Intent(context, ShopdetailActivity.class);
+                        inte.putExtra("pro_id", list.get(positions).getPro_id());
+                        inte.putExtra("order_id", list.get(positions).getOrder_id());
+                        inte.putExtra("pin_img",list.get(position).getPro_pic().get(0).getUrl());
+                        context.startActivity(inte);
+                    }
+
+
+                });
+
+            }
+            else {
+                holder.order_evaluation.setFocusable(true);
+
+                finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+
             }
         }
         //收货

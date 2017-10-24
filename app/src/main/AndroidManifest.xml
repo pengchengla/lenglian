@@ -63,7 +63,9 @@
         <activity android:name=".activity.XieYiActivity">
         </activity>
         <activity android:name=".activity.ZiLiaoActivity">
+
         </activity>
+        <activity android:name=".fragment.mine.UserDetailActivity"></activity>
         <activity android:name=".fragment.home.MyShopCarActivity">
         </activity>
         <activity android:name=".activity.MessageActivity">

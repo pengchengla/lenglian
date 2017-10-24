@@ -49,78 +49,10 @@
             android:textSize="18sp" />
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_below="@id/title_back"
+    <ListView
+        android:dividerHeight="1dp"
+        android:divider="@color/hui"
+        android:id="@+id/list_user"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
-
-        <RelativeLayout
-            android:id="@+id/about_ding"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            >
-
-            <TextView
-                android:id="@+id/dinggou"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:padding="5dp"
-                android:text="关于订购..."
-                android:textSize="16dp"
-                android:textColor="@color/textblack"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/callback"
-                android:layout_gravity="center_vertical"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:padding="10dp"
-
-
-                />
-        </RelativeLayout>
-</LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="0.5dp">
-
-        <RelativeLayout
-            android:id="@+id/shservice"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:padding="5dp"
-                android:text="售后服务..."
-                android:textSize="16dp"
-                android:textColor="@color/textblack"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/callback"
-                android:layout_gravity="center_vertical"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:padding="10dp"
-
-
-                />
-        </RelativeLayout>
-    </LinearLayout>
+        android:layout_height="wrap_content"></ListView>
 </LinearLayout>

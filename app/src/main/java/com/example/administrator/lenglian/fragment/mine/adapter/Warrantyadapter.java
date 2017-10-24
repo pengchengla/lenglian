@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.MaintenanceActivity;
+import com.example.administrator.lenglian.fragment.mine.ZhijiaActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Baoxiubean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 
@@ -63,11 +64,22 @@ public class Warrantyadapter extends BaseAdapter {
             holder.warranty_money= (TextView) convertView.findViewById(R.id.warranty_price);
             holder.warranty_pinjia=(TextView) convertView.findViewById(R.id.warranty_pinjia);
             convertView.setTag(holder);
+            holder.warranty_pinjia.setTag(position);
         }
         else {
             holder= (ViewHolder) convertView.getTag();
         }
          holder.warranty_count.setText(list.get(position).getMain_title());
+        if("0".equals(list.get(position).getIs_comment())){
+           holder.warranty_pinjia.setText("评价");
+        }
+        else if("1".equals(list.get(position).getIs_comment())){
+            holder.warranty_pinjia.setText("追加评价");
+        }
+         else {
+            holder.warranty_pinjia.setFocusable(true);
+        }
+
         //加载图片
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -82,6 +94,8 @@ public class Warrantyadapter extends BaseAdapter {
            holder.warranty_pinjia.setFocusable(false);
 
         //评价
+        final ViewHolder finalHolder = holder;
+        final int  tag = (int) finalHolder.warranty_pinjia.getTag();
         holder.warranty_pinjia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +103,7 @@ public class Warrantyadapter extends BaseAdapter {
                 /*
                  0待评价
                  */
-                 if("0".equals(list.get(position).getIs_comment())){
+                 if("0".equals(list.get(tag).getIs_comment())){
 
                      //带数据穿送过去
                      Intent it=new Intent(context,MaintenanceActivity.class);
@@ -101,8 +115,11 @@ public class Warrantyadapter extends BaseAdapter {
                  /*
                    追加评价
                   */
-                else if("1".equals(list.get(position).getIs_comment())){
+                else if("1".equals(list.get(tag).getIs_comment())){
 
+                      Intent intent=new Intent(context, ZhijiaActivity.class);
+                        intent.putExtra("comment_id",list.get(position).getComment_id());
+                       context.startActivity(intent);
 
                  }
 

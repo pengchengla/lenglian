@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +43,8 @@ public class EvaluateActivity extends BaseActivity {
     private List<Indexbean> list=new ArrayList<>();
     private List<Evaluatebean.DatasBean> datas;
     private SpringView springview;
+    private RelativeLayout linearLayout;
+    private TextView textView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,9 +71,16 @@ public class EvaluateActivity extends BaseActivity {
               */
                 int code = result.getCode();
                 if(code==200){
+                    linearLayout.setVisibility(View.GONE);
+                    list_evaluate.setVisibility(View.VISIBLE);
                     datas = result.getDatas();
                     Evaiuateadapter evauateradapter=new Evaiuateadapter(EvaluateActivity.this,datas);
                     list_evaluate.setAdapter(evauateradapter);
+                }
+                else if(code==101){
+                    linearLayout.setVisibility(View.VISIBLE);
+                    list_evaluate.setVisibility(View.GONE);
+                    textView.setText("我的评价    空空如也~");
                 }
 
             }
@@ -132,6 +142,8 @@ public class EvaluateActivity extends BaseActivity {
         collect_title = (RelativeLayout) findViewById(R.id.collect_title);
         list_evaluate = (ListView) findViewById(R.id.list_evaluate);
         springview = (SpringView) findViewById(R.id.springview);
+        linearLayout = (RelativeLayout) findViewById(R.id.kong);
+        textView = (TextView) findViewById(R.id.kong_text);
         tv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

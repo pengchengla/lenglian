@@ -185,7 +185,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     });
                     if (mChangxiaoAdapter == null) {
                         RequestOptions options = new RequestOptions()
-                                .centerCrop()
+                                .fitCenter()
                                 .error(R.drawable.default_banner)
                                 .priority(Priority.NORMAL)
                                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

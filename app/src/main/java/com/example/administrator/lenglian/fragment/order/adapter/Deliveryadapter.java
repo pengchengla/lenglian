@@ -46,7 +46,7 @@ public class Deliveryadapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list .size();
+        return list !=null?list.size():0;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Deliveryadapter extends BaseAdapter {
       ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-               if(list!=null){
+
                 convertView = LayoutInflater.from(context).inflate(R.layout.recying_item, null);
                 holder.iv_tupian = (ImageView) convertView.findViewById(R.id.receving_tupian);
                 holder.orderlist_count = (TextView) convertView.findViewById(R.id.receving_count);
@@ -72,12 +72,12 @@ public class Deliveryadapter extends BaseAdapter {
                 holder.reying_btn = (TextView) convertView.findViewById(R.id.recying_btn);
                 convertView.setTag(holder);
                 holder.reying_btn.setTag(position);
-               }
-            else {
+
+
                    //填充布局
                    convertView = LayoutInflater.from(context).inflate(R.layout.activity_noding, null);
                    holder.no_tu = (ImageView) convertView.findViewById(R.id.no_tu);
-               }
+
             }
             else{
                 holder = (ViewHolder) convertView.getTag();
@@ -88,7 +88,7 @@ public class Deliveryadapter extends BaseAdapter {
         /*
           加载图片
          */
-         if(list!=null) {
+
              RequestOptions options = new RequestOptions()
                      .centerCrop()
                      .error(R.drawable.default_square)
@@ -111,10 +111,6 @@ public class Deliveryadapter extends BaseAdapter {
                  }
              });
 
-         }
-        else {
-             holder.no_tu.setImageResource(R.drawable.nodingdan);
-         }
         return convertView;
     }
 

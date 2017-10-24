@@ -34,6 +34,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Upphotobean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -55,6 +56,8 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.socks.library.KLog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -429,6 +432,10 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                     }
                 });
                 thred.start();
+                //法送Eventbus刷新数据
+                EventMessage eventMessage = new EventMessage("ping");
+                EventBus.getDefault().postSticky(eventMessage);
+
 
 
 

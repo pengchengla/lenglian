@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
@@ -46,6 +48,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private SpringView springView;
     private List<Addressbean.DatasBean> datas;
     private Addressadapter addressadapter;
+    private TextView kong_text;
+    private RelativeLayout linearLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +75,19 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             public void onSuccess(Addressbean result, String tag) {
                 int code = result.getCode();
                 if (code==200){
+                    linearLayout.setVisibility(View.GONE);
+                    list_address.setVisibility(View.VISIBLE);
                     datas = result.getDatas();
                     addressadapter = new Addressadapter(AddressActivity.this, datas);
                     list_address.setAdapter(addressadapter);
 
+
+                }
+                else  if(code==101){
+                    kong_text.setText("我的地址    空空如也~");
+                    linearLayout.setVisibility(View.VISIBLE);
+                    list_address.setVisibility(View.GONE);
+                    addressadapter.notifyDataSetChanged();
 
                 }
             }
@@ -96,6 +110,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         if (eventMessage.getMsg().equals("ddd")) {
             ddd();
         }
+        else if(eventMessage.getMsg().equals("add")){
+            ininnetwork();
+        }
     }
      /*
        调用eventbus方法
@@ -112,6 +129,8 @@ public void ddd(){
         adress_add = (TextView) findViewById(R.id.adress_add);
         list_address = (ListView) findViewById(R.id.list_address);
         springView = (SpringView) findViewById(R.id.springview);
+        kong_text = (TextView) findViewById(R.id.kong_text);
+        linearLayout = (RelativeLayout) findViewById(R.id.kong);
         tv_back.setOnClickListener(this);
         adress_add.setOnClickListener(this);
          /*
