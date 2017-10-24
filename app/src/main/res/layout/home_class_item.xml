@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:maxEms="6"
+        android:maxEms="4"
         android:text=""/>
     <com.example.administrator.lenglian.view.CircleImageView
         android:id="@+id/iv_tupian"

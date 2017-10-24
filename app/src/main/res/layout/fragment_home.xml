@@ -79,7 +79,6 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical">
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
@@ -204,7 +203,7 @@
             <ImageView
                 android:id="@+id/iv_changxiao_big"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="130dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"

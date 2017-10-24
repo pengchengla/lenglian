@@ -12,7 +12,7 @@ import com.youth.banner.loader.ImageLoader;
 
 public class GlideImageLoader extends ImageLoader {
     @Override
-    public void displayImage(Context context, Object path, ImageView imageView) {
+    public void displayImage(Context context, Object path, final ImageView imageView) {
         /**
          注意：
          1.图片加载器由自己选择，这里不限制，只是提供几种使用方法
@@ -20,10 +20,15 @@ public class GlideImageLoader extends ImageLoader {
          传输的到的是什么格式，那么这种就使用Object接收和返回，你只需要强转成你传输的类型就行，
          切记不要胡乱强转！
          */
-
+//        RequestOptions options = new RequestOptions()
+//                .centerCrop()
+//                .error(R.drawable.default_square)
+//                .priority(Priority.NORMAL)
+//                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         //Glide 加载图片简单用法
+        imageView.setAdjustViewBounds(true);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(context).load(path).into(imageView);
-
     }
 
 }

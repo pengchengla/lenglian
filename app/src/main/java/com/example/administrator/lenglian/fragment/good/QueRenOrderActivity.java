@@ -56,6 +56,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_fapiao_no;
     private ImageView iv_fapiao_no;
     private LinearLayout ll_root_view;
+    private boolean isOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,7 +223,14 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
             case R.id.tv_fapiao_no:
             case R.id.iv_fapiao_no:
                 ll_root_view.setVisibility(ll_root_view.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+                if (isOpen){
+                    iv_fapiao_no.setImageResource(R.drawable.arrow_right);
+                }else {
+                    iv_fapiao_no.setImageResource(R.drawable.arrow_bottom);
+                }
+                isOpen=!isOpen;
                 break;
+
         }
     }
 

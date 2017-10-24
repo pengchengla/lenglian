@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+
 public class MyBlueActivity extends AppCompatActivity {
     private String mac = "FF:FF:50:00:00:91";
     private String serviceUUID;
@@ -128,6 +129,7 @@ public class MyBlueActivity extends AppCompatActivity {
 
     private void scanBluetooth() {
         if (BleUtil.isBleEnable(this)) {
+//            byte[] bytes = HexUtil.decodeHex("fefe17102402104010313233".toCharArray());
             byte[] bytes = HexUtil.decodeHex("0203313233".toCharArray());
             send(bytes);
         } else {
@@ -265,6 +267,7 @@ public class MyBlueActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
+//                byte[] bytes = HexUtil.decodeHex("fefe17102402104010313233".toCharArray());
                 byte[] bytes = HexUtil.decodeHex("0203313233".toCharArray());
                 send(bytes);
             }

@@ -155,7 +155,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        android:text=""
+                        android:maxEms="10"
+                        android:paddingLeft="10dp"
                         android:textColor="@color/textblack"
                         android:textSize="16sp"/>
                     <LinearLayout
@@ -291,7 +292,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="25dp"
+                        android:layout_marginRight="30dp"
                         android:text="不开发票"
                         android:textColor="@color/textblack"
                         android:textSize="15sp"/>

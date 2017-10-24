@@ -16,7 +16,6 @@ public class BannerUtils {
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);//注意这里的设置，设置不对容易报错
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
-
 //        List<Integer> list=new ArrayList<>();
 //        list.add(R.drawable.lunbo);
 //        list.add(R.drawable.lunbo);
@@ -24,7 +23,7 @@ public class BannerUtils {
 //        list.add(R.drawable.lunbo);
 //        list.add(R.drawable.lunbo);
 //        banner.setImages(list);
-
+        banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
         banner.setImages(imageurls);
         //设置banner动画效果

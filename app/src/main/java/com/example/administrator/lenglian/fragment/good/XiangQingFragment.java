@@ -144,7 +144,7 @@ public class XiangQingFragment extends BaseFragment {
         protected void convert(BaseViewHolder helper, GoodDetailBean.DatasEntity.ProfilePicEntity item) {
             //如果在布局中设置图片的高度是自适应的话，图片就加载不出来，除非给个固定的高度，这是为什么呢？
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+//                    .centerCrop()
                     .error(R.drawable.default_banner)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
