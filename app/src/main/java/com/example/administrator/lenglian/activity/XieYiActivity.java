@@ -12,7 +12,7 @@ import com.umeng.analytics.MobclickAgent;
 
 public class XieYiActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back;
-    private String url = "http://114.215.83.139/cfc/userAgree.html";
+    private String url = "http://59.110.213.63/cfcmobile/userAgree.html";
     private WebView webView;
 
     @Override

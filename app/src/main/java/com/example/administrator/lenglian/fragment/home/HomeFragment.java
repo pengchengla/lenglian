@@ -163,16 +163,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void loadData() {
-        RetrofitManager.get(MyContants.BASEURL +"s=Home/home", new BaseObserver1<HomeBean>("") {
+        RetrofitManager.get(MyContants.BASEURL + "s=Home/home", new BaseObserver1<HomeBean>("") {
             @Override
             public void onSuccess(final HomeBean result, String tag) {
 
                 //                Toast.makeText(RegisterActivity.this, result.getSuccess(), Toast.LENGTH_SHORT).show();
                 if (result.getCode() == 200) {
-                    if (picList.size() == 0) {
-                        for (int i = 0; i < result.getDatas().getBanner().size(); i++) {
-                            picList.add(result.getDatas().getBanner().get(i).getUrl());
-                        }
+                    picList.clear();
+                    for (int i = 0; i < result.getDatas().getBanner().size(); i++) {
+                        picList.add(result.getDatas().getBanner().get(i).getUrl());
                     }
                     BannerUtils.startBanner(banner, picList);
                     banner.setOnBannerListener(new OnBannerListener() {
@@ -183,30 +182,28 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             startActivity(intent);
                         }
                     });
-                    if (mChangxiaoAdapter == null) {
-                        RequestOptions options = new RequestOptions()
-                                .centerCrop()
-                                .error(R.drawable.default_banner)
-                                .priority(Priority.NORMAL)
-                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-                        //畅销那张大图
-                        Glide.with(mContext).load(result.getDatas().getBest().get(0).getSingle_pic())
-                                .apply(options)
-                                .into(iv_changxiao_big);
-                        iv_changxiao_big.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(mContext, GoodDetailActivity.class);
-                                intent.putExtra("id", result.getDatas().getBest().get(0).getPro_id());
-                                startActivity(intent);
-                            }
-                        });
-                        List<HomeBean.DatasEntity.BestEntity> bestEntityList = new ArrayList<HomeBean.DatasEntity.BestEntity>();
-                        for (int i = 1; i < result.getDatas().getBest().size(); i++) {
-                            bestEntityList.add(result.getDatas().getBest().get(i));
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .error(R.drawable.default_banner)
+                            .priority(Priority.NORMAL)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                    //畅销那张大图
+                    Glide.with(mContext).load(result.getDatas().getBest().get(0).getSingle_pic())
+                            .apply(options)
+                            .into(iv_changxiao_big);
+                    iv_changxiao_big.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, GoodDetailActivity.class);
+                            intent.putExtra("id", result.getDatas().getBest().get(0).getPro_id());
+                            startActivity(intent);
                         }
-                        mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.home_changxiao_item, bestEntityList);
+                    });
+                    List<HomeBean.DatasEntity.BestEntity> bestEntityList = new ArrayList<HomeBean.DatasEntity.BestEntity>();
+                    for (int i = 1; i < result.getDatas().getBest().size(); i++) {
+                        bestEntityList.add(result.getDatas().getBest().get(i));
                     }
+                    mChangxiaoAdapter = new ChangxiaoAdapter(R.layout.home_changxiao_item, bestEntityList);
                     recycler_changxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
                     recycler_changxiao.setNestedScrollingEnabled(false);
                     recycler_changxiao.setAdapter(mChangxiaoAdapter);
@@ -219,9 +216,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                     });
 
-                    if (mCuxiaoAdapter == null) {
-                        mCuxiaoAdapter = new CuxiaoAdapter(R.layout.home_cuxiao_item, result.getDatas().getSale());
-                    }
+                    mCuxiaoAdapter = new CuxiaoAdapter(R.layout.home_cuxiao_item, result.getDatas().getSale());
                     recycler_cuxiao.setLayoutManager(new GridLayoutManager(mContext, 3));
                     recycler_cuxiao.setNestedScrollingEnabled(false);
                     recycler_cuxiao.setAdapter(mCuxiaoAdapter);
@@ -234,9 +229,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                     });
 
-                    if (mCommentAdapter == null) {
-                        mCommentAdapter = new CommentAdapter(R.layout.home_comment_item, result.getDatas().getRecommend());
-                    }
+                    mCommentAdapter = new CommentAdapter(R.layout.home_comment_item, result.getDatas().getRecommend());
                     recycler_comment.setLayoutManager(new LinearLayoutManager(mContext));
                     recycler_comment.setNestedScrollingEnabled(false);
                     recycler_comment.setAdapter(mCommentAdapter);
