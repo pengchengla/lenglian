@@ -75,9 +75,6 @@ public class DingdanAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             //填充布局
-            if(list.size()<=0&&list==null){
-         convertView = LayoutInflater.from(context).inflate(R.layout.activity_noding, null);
-            }
             convertView = LayoutInflater.from(context).inflate(R.layout.ding_order, null);
             holder.order_tupian = (ImageView) convertView.findViewById(R.id.order_tupian);
             holder.order_count = (TextView) convertView.findViewById(R.id.order_count);
@@ -177,7 +174,7 @@ public class DingdanAdapter extends BaseAdapter {
 
             }
             else {
-                holder.order_evaluation.setFocusable(true);
+              //  holder.order_evaluation.setFocusable(true);
 
                 finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
 

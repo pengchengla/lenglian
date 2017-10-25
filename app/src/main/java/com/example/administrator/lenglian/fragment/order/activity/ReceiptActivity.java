@@ -91,7 +91,7 @@ public class ReceiptActivity extends BaseActivity implements View.OnClickListene
                             .error(R.drawable.default_square)
                             .priority(Priority.NORMAL)
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-                    Glide.with(MyApplication.getApplication()).load(datas.getSingle_pic())
+                    Glide.with(MyApplication.getApplication()).load(datas.getPro_pic().get(0).getUrl())
                             .apply(options)
                             .into( distribution_tupian );
                     //内容
