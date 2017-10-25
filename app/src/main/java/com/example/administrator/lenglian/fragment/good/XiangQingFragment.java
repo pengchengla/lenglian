@@ -6,6 +6,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -23,6 +24,7 @@ import com.example.administrator.lenglian.bean.GoodDetailBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -144,13 +146,18 @@ public class XiangQingFragment extends BaseFragment {
         protected void convert(BaseViewHolder helper, GoodDetailBean.DatasEntity.ProfilePicEntity item) {
             //如果在布局中设置图片的高度是自适应的话，图片就加载不出来，除非给个固定的高度，这是为什么呢？
             RequestOptions options = new RequestOptions()
-//                    .centerCrop()
+                    .centerCrop()
                     .error(R.drawable.default_banner)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+            ImageView imageView = (ImageView) helper.getView(R.id.iv_photo);
+            ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+            //动态设置imageview的高度
+            layoutParams.height=MyUtils.getScreenWidth(mContext)*item.getHeight()/item.getWidth();
+            imageView.setLayoutParams(layoutParams);
             Glide.with(mContext).load(item.getUrl())
                     .apply(options)
-                    .into((ImageView) helper.getView(R.id.iv_photo));
+                    .into(imageView);
         }
     }
 

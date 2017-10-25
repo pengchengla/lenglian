@@ -8,11 +8,10 @@ import java.util.List;
 
 public class GoodDetailBean {
 
-
     /**
      * code : 200
      * success : success
-     * datas : {"repair_fee":"","pro_temperature":"-18℃~10℃","recommend":[{"note":"1213","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"},{"note":"1213","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"},{"note":"1213","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"},{"note":"1213","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"}],"pro_model":"CF-1500F","price_introduce":"1","pro_list":"1","cool_type":"15225","pro_machine":"QD72H","pro_in_size":"1190*670*500mm","pro_color":"绿色","power_introduce":"1","class_name":"平面操作台","control_type":"5123","tech":[{"value":"绿色","key":"商品颜色"},{"value":"5123","key":"控温类型"},{"value":"2.1（kw.h/24h）","key":"能耗参数"},{"value":"","key":"品牌"},{"value":"CF-1500F","key":"型号"},{"value":"-18℃~10℃","key":"温度范围"},{"value":"1190*670*500mm","key":"内部尺寸"},{"value":"1500*800*800mm","key":"外部尺寸"},{"value":"370L","key":"容积"},{"value":"70","key":"体积"},{"value":"QD72H","key":"压缩机"},{"value":"R134a/108","key":"制冷剂"}],"brokerage":"","sub_title":"CF-1500F","introduce":[{"value":"1","key":"包装清单"},{"value":"1","key":"租赁说明"},{"value":"1","key":"价格介绍"},{"value":"1","key":"能耗说明"}],"profile_pic":[{"url":"http://114.215.83.139"}],"pro_type":"1","pro_deposit":"2000.00","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_class":"26","pro_cold":"R134a/108","express_money":"120.00","sale_price":"0","pro_out_size":"1500*800*800mm","pro_rent":"1","pro_price":"90.00","pro_pic":[{"url":"http://114.215.83.139"}],"pro_id":"2","pro_volume":"370L","pro_weight":"70","pro_brand":"","pro_power":"2.1（kw.h/24h）","collect":0,"main_title":"平面操作台","pro_name":"平面操作台","pro_status":"1"}
+     * datas : {"repair_fee":"","express_fee":"","pro_temperature":"0～10℃或≤-18℃","recommend":[{"note":"1","pro_price":"130","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f00b958603b.jpg"}],"sub_title":"超市组合岛柜","pro_id":"31","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f00b958603b.jpg","pro_deposit":"3400.00","express_money":"120.00","main_title":"CFC超市组合岛柜","pro_name":"超市组合岛柜"},{"note":"哈哈哈","pro_price":"110","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02a824f633.jpg"}],"sub_title":"多媒体展示柜","pro_id":"41","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02a824f633.jpg","pro_deposit":"3000.00","express_money":"120.00","main_title":"CFC多媒体展示柜系列","pro_name":"多媒体展示柜"}],"pro_model":"SR/SF-1086","price_introduce":"租费","pro_list":"说明书保修卡x1 整机x1","cool_type":"直冷","pro_machine":"QD110H*2","pro_in_size":"2304*804*610mm","pro_color":"白的","power_introduce":"一级能效","class_name":"深底前透明推拉门岛柜","control_type":"机械控温","tech":[{"value":"白的","key":"商品颜色"},{"value":"机械控温","key":"控温类型"},{"value":"5.35km.h/24h","key":"能耗参数"},{"value":"CFC冷链","key":"品牌"},{"value":"SR/SF-1086","key":"型号"},{"value":"0～10℃或≤-18℃","key":"温度范围"},{"value":"2304*804*610mm","key":"内部尺寸"},{"value":"2500*1010*845mm","key":"外部尺寸"},{"value":"964升 ","key":"容积"},{"value":"155","key":"体积"},{"value":"QD110H*2","key":"压缩机"},{"value":"R134a/215+195","key":"制冷剂"}],"brokerage":"","sub_title":"深底前透明推拉门岛柜","introduce":[{"value":"说明书保修卡x1 整机x1","key":"包装清单"},{"value":"年租","key":"租赁说明"},{"value":"租费","key":"价格介绍"},{"value":"一级能效","key":"能耗说明"}],"profile_pic":[{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0250ae5bd0.jpg","height":808},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f025113ca13.jpg","height":2500},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f025123420a.jpg","height":1799},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0252ca37a8.jpg","height":1680},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0252f14df4.jpg","height":808},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f025337f3eb.jpg","height":2500},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02534c9a6b.jpg","height":1799}],"pro_type":"0","pro_deposit":"4800.00","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0253c73846.jpg","pro_class":"47","control_class":"非智能","pro_cold":"R134a/215+195","express_money":"120.00","sale_price":"0","pro_out_size":"2500*1010*845mm","pro_rent":"年租","pro_price":"220","pro_pic":[{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0253c73846.jpg","height":800},{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0254067392.jpg","height":800},{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0254568415.jpg","height":800},{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02549693db.jpg","height":800},{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0254dcd3d7.jpg","height":800}],"pro_id":"35","pro_volume":"964升 ","pro_weight":"155","pro_brand":"CFC冷链","pro_power":"5.35km.h/24h","collect":0,"main_title":"CFC深底前透明推拉门岛柜系列","pro_name":"深底前透明推拉门岛柜","pro_status":"1"}
      */
     private int code;
     private String success;
@@ -45,45 +44,48 @@ public class GoodDetailBean {
     public static class DatasEntity {
         /**
          * repair_fee :
-         * pro_temperature : -18℃~10℃
-         * recommend : [{"note":"1213","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"},{"note":"1213","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"},{"note":"1213","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"},{"note":"1213","pro_price":"1","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"sub_title":"广泛的是第三方","pro_id":"1","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","main_title":"啊啊啊啊啊","pro_name":"fdsafdg"}]
-         * pro_model : CF-1500F
-         * price_introduce : 1
-         * pro_list : 1
-         * cool_type : 15225
-         * pro_machine : QD72H
-         * pro_in_size : 1190*670*500mm
-         * pro_color : 绿色
-         * power_introduce : 1
-         * class_name : 平面操作台
-         * control_type : 5123
-         * tech : [{"value":"绿色","key":"商品颜色"},{"value":"5123","key":"控温类型"},{"value":"2.1（kw.h/24h）","key":"能耗参数"},{"value":"","key":"品牌"},{"value":"CF-1500F","key":"型号"},{"value":"-18℃~10℃","key":"温度范围"},{"value":"1190*670*500mm","key":"内部尺寸"},{"value":"1500*800*800mm","key":"外部尺寸"},{"value":"370L","key":"容积"},{"value":"70","key":"体积"},{"value":"QD72H","key":"压缩机"},{"value":"R134a/108","key":"制冷剂"}]
+         * express_fee :
+         * pro_temperature : 0～10℃或≤-18℃
+         * recommend : [{"note":"1","pro_price":"130","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f00b958603b.jpg"}],"sub_title":"超市组合岛柜","pro_id":"31","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f00b958603b.jpg","pro_deposit":"3400.00","express_money":"120.00","main_title":"CFC超市组合岛柜","pro_name":"超市组合岛柜"},{"note":"哈哈哈","pro_price":"110","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02a824f633.jpg"}],"sub_title":"多媒体展示柜","pro_id":"41","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02a824f633.jpg","pro_deposit":"3000.00","express_money":"120.00","main_title":"CFC多媒体展示柜系列","pro_name":"多媒体展示柜"}]
+         * pro_model : SR/SF-1086
+         * price_introduce : 租费
+         * pro_list : 说明书保修卡x1 整机x1
+         * cool_type : 直冷
+         * pro_machine : QD110H*2
+         * pro_in_size : 2304*804*610mm
+         * pro_color : 白的
+         * power_introduce : 一级能效
+         * class_name : 深底前透明推拉门岛柜
+         * control_type : 机械控温
+         * tech : [{"value":"白的","key":"商品颜色"},{"value":"机械控温","key":"控温类型"},{"value":"5.35km.h/24h","key":"能耗参数"},{"value":"CFC冷链","key":"品牌"},{"value":"SR/SF-1086","key":"型号"},{"value":"0～10℃或≤-18℃","key":"温度范围"},{"value":"2304*804*610mm","key":"内部尺寸"},{"value":"2500*1010*845mm","key":"外部尺寸"},{"value":"964升 ","key":"容积"},{"value":"155","key":"体积"},{"value":"QD110H*2","key":"压缩机"},{"value":"R134a/215+195","key":"制冷剂"}]
          * brokerage :
-         * sub_title : CF-1500F
-         * introduce : [{"value":"1","key":"包装清单"},{"value":"1","key":"租赁说明"},{"value":"1","key":"价格介绍"},{"value":"1","key":"能耗说明"}]
-         * profile_pic : [{"url":"http://114.215.83.139"}]
-         * pro_type : 1
-         * pro_deposit : 2000.00
-         * single_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
-         * pro_class : 26
-         * pro_cold : R134a/108
+         * sub_title : 深底前透明推拉门岛柜
+         * introduce : [{"value":"说明书保修卡x1 整机x1","key":"包装清单"},{"value":"年租","key":"租赁说明"},{"value":"租费","key":"价格介绍"},{"value":"一级能效","key":"能耗说明"}]
+         * profile_pic : [{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0250ae5bd0.jpg","height":808},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f025113ca13.jpg","height":2500},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f025123420a.jpg","height":1799},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0252ca37a8.jpg","height":1680},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0252f14df4.jpg","height":808},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f025337f3eb.jpg","height":2500},{"width":750,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02534c9a6b.jpg","height":1799}]
+         * pro_type : 0
+         * pro_deposit : 4800.00
+         * single_pic : http://59.110.213.63/cfc/uploads/file1/20171025/59f0253c73846.jpg
+         * pro_class : 47
+         * control_class : 非智能
+         * pro_cold : R134a/215+195
          * express_money : 120.00
          * sale_price : 0
-         * pro_out_size : 1500*800*800mm
-         * pro_rent : 1
-         * pro_price : 90.00
-         * pro_pic : [{"url":"http://114.215.83.139"}]
-         * pro_id : 2
-         * pro_volume : 370L
-         * pro_weight : 70
-         * pro_brand :
-         * pro_power : 2.1（kw.h/24h）
+         * pro_out_size : 2500*1010*845mm
+         * pro_rent : 年租
+         * pro_price : 220
+         * pro_pic : [{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0253c73846.jpg","height":800},{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0254067392.jpg","height":800},{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0254568415.jpg","height":800},{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02549693db.jpg","height":800},{"width":800,"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0254dcd3d7.jpg","height":800}]
+         * pro_id : 35
+         * pro_volume : 964升
+         * pro_weight : 155
+         * pro_brand : CFC冷链
+         * pro_power : 5.35km.h/24h
          * collect : 0
-         * main_title : 平面操作台
-         * pro_name : 平面操作台
+         * main_title : CFC深底前透明推拉门岛柜系列
+         * pro_name : 深底前透明推拉门岛柜
          * pro_status : 1
          */
         private String repair_fee;
+        private String express_fee;
         private String pro_temperature;
         private List<RecommendEntity> recommend;
         private String pro_model;
@@ -105,6 +107,7 @@ public class GoodDetailBean {
         private String pro_deposit;
         private String single_pic;
         private String pro_class;
+        private String control_class;
         private String pro_cold;
         private String express_money;
         private String sale_price;
@@ -124,6 +127,10 @@ public class GoodDetailBean {
 
         public void setRepair_fee(String repair_fee) {
             this.repair_fee = repair_fee;
+        }
+
+        public void setExpress_fee(String express_fee) {
+            this.express_fee = express_fee;
         }
 
         public void setPro_temperature(String pro_temperature) {
@@ -210,6 +217,10 @@ public class GoodDetailBean {
             this.pro_class = pro_class;
         }
 
+        public void setControl_class(String control_class) {
+            this.control_class = control_class;
+        }
+
         public void setPro_cold(String pro_cold) {
             this.pro_cold = pro_cold;
         }
@@ -276,6 +287,10 @@ public class GoodDetailBean {
 
         public String getRepair_fee() {
             return repair_fee;
+        }
+
+        public String getExpress_fee() {
+            return express_fee;
         }
 
         public String getPro_temperature() {
@@ -362,6 +377,10 @@ public class GoodDetailBean {
             return pro_class;
         }
 
+        public String getControl_class() {
+            return control_class;
+        }
+
         public String getPro_cold() {
             return pro_cold;
         }
@@ -428,14 +447,16 @@ public class GoodDetailBean {
 
         public static class RecommendEntity {
             /**
-             * note : 1213
-             * pro_price : 1
-             * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
-             * sub_title : 广泛的是第三方
-             * pro_id : 1
-             * single_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
-             * main_title : 啊啊啊啊啊
-             * pro_name : fdsafdg
+             * note : 1
+             * pro_price : 130
+             * pro_pic : [{"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f00b958603b.jpg"}]
+             * sub_title : 超市组合岛柜
+             * pro_id : 31
+             * single_pic : http://59.110.213.63/cfc/uploads/file1/20171025/59f00b958603b.jpg
+             * pro_deposit : 3400.00
+             * express_money : 120.00
+             * main_title : CFC超市组合岛柜
+             * pro_name : 超市组合岛柜
              */
             private String note;
             private String pro_price;
@@ -443,6 +464,8 @@ public class GoodDetailBean {
             private String sub_title;
             private String pro_id;
             private String single_pic;
+            private String pro_deposit;
+            private String express_money;
             private String main_title;
             private String pro_name;
 
@@ -468,6 +491,14 @@ public class GoodDetailBean {
 
             public void setSingle_pic(String single_pic) {
                 this.single_pic = single_pic;
+            }
+
+            public void setPro_deposit(String pro_deposit) {
+                this.pro_deposit = pro_deposit;
+            }
+
+            public void setExpress_money(String express_money) {
+                this.express_money = express_money;
             }
 
             public void setMain_title(String main_title) {
@@ -502,6 +533,14 @@ public class GoodDetailBean {
                 return single_pic;
             }
 
+            public String getPro_deposit() {
+                return pro_deposit;
+            }
+
+            public String getExpress_money() {
+                return express_money;
+            }
+
             public String getMain_title() {
                 return main_title;
             }
@@ -512,7 +551,7 @@ public class GoodDetailBean {
 
             public static class ProPicEntity {
                 /**
-                 * url : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+                 * url : http://59.110.213.63/cfc/uploads/file1/20171025/59f00b958603b.jpg
                  */
                 private String url;
 
@@ -528,7 +567,7 @@ public class GoodDetailBean {
 
         public static class TechEntity {
             /**
-             * value : 绿色
+             * value : 白的
              * key : 商品颜色
              */
             private String value;
@@ -553,7 +592,7 @@ public class GoodDetailBean {
 
         public static class IntroduceEntity {
             /**
-             * value : 1
+             * value : 说明书保修卡x1 整机x1
              * key : 包装清单
              */
             private String value;
@@ -578,31 +617,71 @@ public class GoodDetailBean {
 
         public static class ProfilePicEntity {
             /**
-             * url : http://114.215.83.139
+             * width : 750
+             * url : http://59.110.213.63/cfc/uploads/file1/20171025/59f0250ae5bd0.jpg
+             * height : 808
              */
+            private int width;
             private String url;
+            private int height;
+
+            public void setWidth(int width) {
+                this.width = width;
+            }
 
             public void setUrl(String url) {
                 this.url = url;
             }
 
+            public void setHeight(int height) {
+                this.height = height;
+            }
+
+            public int getWidth() {
+                return width;
+            }
+
             public String getUrl() {
                 return url;
+            }
+
+            public int getHeight() {
+                return height;
             }
         }
 
         public static class ProPicEntity {
             /**
-             * url : http://114.215.83.139
+             * width : 800
+             * url : http://59.110.213.63/cfc/uploads/file1/20171025/59f0253c73846.jpg
+             * height : 800
              */
+            private int width;
             private String url;
+            private int height;
+
+            public void setWidth(int width) {
+                this.width = width;
+            }
 
             public void setUrl(String url) {
                 this.url = url;
             }
 
+            public void setHeight(int height) {
+                this.height = height;
+            }
+
+            public int getWidth() {
+                return width;
+            }
+
             public String getUrl() {
                 return url;
+            }
+
+            public int getHeight() {
+                return height;
             }
         }
     }

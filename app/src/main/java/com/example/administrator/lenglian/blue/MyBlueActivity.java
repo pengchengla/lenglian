@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -69,12 +70,18 @@ public class MyBlueActivity extends AppCompatActivity {
     private ICharacteristicCallback mICharacteristicCallback = new ICharacteristicCallback() {
         @Override
         public void onSuccess(BluetoothGattCharacteristic bluetoothGattCharacteristic) {
+            if (bluetoothGattCharacteristic == null || bluetoothGattCharacteristic.getValue() == null) {
+                return;
+            }
             byte[] value = bluetoothGattCharacteristic.getValue();
             Toast.makeText(MyBlueActivity.this, "notify成功" + HexUtil.encodeHexStr(value), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onFailure(BleException exception) {
+            if (exception == null) {
+                return;
+            }
             Toast.makeText(MyBlueActivity.this, "notify失败" + exception.toString(), Toast.LENGTH_SHORT).show();
         }
     };
@@ -129,8 +136,9 @@ public class MyBlueActivity extends AppCompatActivity {
 
     private void scanBluetooth() {
         if (BleUtil.isBleEnable(this)) {
-//            byte[] bytes = HexUtil.decodeHex("fefe17102402104010313233".toCharArray());
-            byte[] bytes = HexUtil.decodeHex("0203313233".toCharArray());
+                        byte[] bytes = HexUtil.decodeHex("04041710251540313233".toCharArray());//设置工作时间
+            //                        byte[] bytes = HexUtil.decodeHex("fefe1710251510313233".toCharArray());//同步时间
+//            byte[] bytes = HexUtil.decodeHex("0203313233".toCharArray());//设置密码
             send(bytes);
         } else {
             BleUtil.enableBluetooth(this, 1);
@@ -166,18 +174,16 @@ public class MyBlueActivity extends AppCompatActivity {
                 Toast.makeText(MyBlueActivity.this, "连接成功", Toast.LENGTH_SHORT).show();
                 if (dataInfoQueue != null && !dataInfoQueue.isEmpty()) {
                     if (dataInfoQueue.peek() != null) {
-                        ViseBluetooth.getInstance().writeCharacteristic(getGattCharacteristic("0000ffe2-0000-1000-8000-00805f9b34fb"),
+                        ViseBluetooth.getInstance().writeCharacteristic(getGattCharacteristic("0000ffe4-0000-1000-8000-00805f9b34fb"),
                                 dataInfoQueue.poll(), new ICharacteristicCallback() {
                                     @Override
                                     public void onSuccess(BluetoothGattCharacteristic bluetoothGattCharacteristic) {
                                         Toast.makeText(MyBlueActivity.this, "write成功", Toast.LENGTH_SHORT).show();
-                                        notifyData();
                                     }
 
                                     @Override
                                     public void onFailure(BleException exception) {
                                         Toast.makeText(MyBlueActivity.this, "write失败" + exception.getDescription(), Toast.LENGTH_SHORT).show();
-                                        notifyData();
                                     }
                                 });
                         if (dataInfoQueue.peek() != null) {
@@ -185,6 +191,8 @@ public class MyBlueActivity extends AppCompatActivity {
                         }
                     }
                 }
+                SystemClock.sleep(100);
+                notifyData();
             }
 
             @Override
@@ -267,8 +275,9 @@ public class MyBlueActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
-//                byte[] bytes = HexUtil.decodeHex("fefe17102402104010313233".toCharArray());
-                byte[] bytes = HexUtil.decodeHex("0203313233".toCharArray());
+                byte[] bytes = HexUtil.decodeHex("04041710251540313233".toCharArray());//设置工作时间
+                //                                byte[] bytes = HexUtil.decodeHex("fefe1710251510313233".toCharArray());//同步时间
+//                byte[] bytes = HexUtil.decodeHex("0203313233".toCharArray());//设置密码
                 send(bytes);
             }
         } else if (resultCode == RESULT_CANCELED) {

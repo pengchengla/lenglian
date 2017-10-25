@@ -219,7 +219,7 @@ public class GoodFragment extends BaseFragment implements View.OnClickListener {
         protected void convert(BaseViewHolder helper, GoodBean.DatasEntity item) {
             helper.setText(R.id.tv_title, item.getMain_title());
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+//                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
