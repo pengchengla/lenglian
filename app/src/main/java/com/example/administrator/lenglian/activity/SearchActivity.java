@@ -293,8 +293,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             Glide.with(mContext).load(item.getSingle_pic())
                     .apply(options)
                     .into((ImageView) helper.getView(R.id.iv_tupian));
-            helper.setText(R.id.tv_title,item.getMain_title())
-                    .setText(R.id.tv_price,"￥"+item.getPro_price());
+            helper.setText(R.id.tv_title, item.getMain_title())
+                    .setText(R.id.tv_price, "￥" + item.getPro_price());
         }
     }
 
