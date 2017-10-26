@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.bumptech.glide.load.data.ExifOrientationStream;
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.GoPayActivity;
 import com.example.administrator.lenglian.fragment.order.adapter.Diagpaydapter;
 import com.example.administrator.lenglian.fragment.order.bean.Bank;
@@ -29,6 +30,8 @@ import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,22 +118,6 @@ public class PayUtil {
                 .isOnTouchCanceled(true)
                 //设置监听事件
                 .builder();
-//        //支付宝
-//        dialog.getView(R.id.zhifu_zhifubao).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                dialog.dismiss();
-//            }
-//        });
-//        //微信
-//        dialog.getView(R.id.zhifu_weixin).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                dialog.dismiss();
-//            }
-//        });
         //Listview bank
        ListView viewById = (ListView) dialog.getView(R.id.pay_listview).findViewById(R.id.pay_listview);
          final List<Bank> list=new ArrayList<>();
@@ -201,6 +188,10 @@ public class PayUtil {
                         msg.what = SDK_PAY_FLAG;
                         msg.obj = result;
                         mHandler.sendMessage(msg);
+                         ((Activity) context).finish();
+                        EventMessage eventMessage = new EventMessage("pay");
+                        EventBus.getDefault().postSticky(eventMessage);
+
                     }
                 };
 
@@ -239,8 +230,10 @@ public class PayUtil {
                 api.sendReq(req);//调起支付
                 //微信支付的金额我用sp存的，之前用eventbus不管用
                 SpUtils.putString(context,"wxprice",datas.getPay_price());
+                ((Activity) context).finish();
+                EventMessage eventMessage = new EventMessage("pay");
+                EventBus.getDefault().postSticky(eventMessage);
             }
-
             @Override
             public void onFailed(int code) {
                 Toast.makeText(context, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();

@@ -96,12 +96,13 @@ public class DingdanAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         //加载数据
-        holder.order_evaluation.setFocusable(false);
-        holder.order_zhifi.setFocusable(false);
-        holder.order_pause.setFocusable(false);
-        holder.order_tuihuan.setFocusable(false);
-        holder.order_repairs.setFocusable(false);
-        holder.order_renew.setFocusable(false);
+//        holder.order_evaluation.setFocusable(false);
+//        holder.order_zhifi.setFocusable(false);
+//        holder.order_pause.setFocusable(false);
+//        holder.order_tuihuan.setFocusable(false);
+//        holder.order_repairs.setFocusable(false);
+//        holder.order_renew.setFocusable(false);
+//        holder.receving.setFocusable(false);
         holder.order_count.setText(list.get(position).getMain_title());
         holder.order_price.setText(list.get(position).getPro_price());
         /*
@@ -192,7 +193,6 @@ public class DingdanAdapter extends BaseAdapter {
                 }
             });
             //退换
-
             holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

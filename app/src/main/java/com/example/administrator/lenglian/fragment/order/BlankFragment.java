@@ -403,6 +403,7 @@ public class BlankFragment extends BaseFragment {
         }
        else   if(eventMessage.getMsg().equals("unPayOrder")){
              Zhifu();
+            ininjson();
          }
         else if(eventMessage.getMsg().equals("xufei")){
             evaluate();
@@ -410,6 +411,10 @@ public class BlankFragment extends BaseFragment {
         }
         else if(eventMessage.getMsg().equals("ping")){
             evaluate();
+        }
+        else if(eventMessage.getMsg().equals("pay")){
+                ininjson();
+                 Zhifu();
         }
     }
     public void fff(){

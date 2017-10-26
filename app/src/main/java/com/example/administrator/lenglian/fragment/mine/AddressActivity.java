@@ -83,7 +83,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
 
                 }
-                else  if(code==101){
+                else if(code==101){
                     kong_text.setText("我的地址    空空如也~");
                     linearLayout.setVisibility(View.VISIBLE);
                     list_address.setVisibility(View.GONE);
@@ -94,7 +94,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onFailed(int code) {
-            ToastUtils.showShort(AddressActivity.this,"网络失败,请检查网络");
+
             }
         });
     }
