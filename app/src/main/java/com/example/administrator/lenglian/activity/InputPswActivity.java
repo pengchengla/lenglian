@@ -16,6 +16,7 @@ import com.example.administrator.lenglian.bean.ThreeLoginBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.SpUtils;
 
 public class InputPswActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back;
@@ -62,7 +63,7 @@ public class InputPswActivity extends BaseActivity implements View.OnClickListen
         String openid = getIntent().getStringExtra("openid");
         String type = getIntent().getStringExtra("type");
         String code = getIntent().getStringExtra("code");
-        String phone = getIntent().getStringExtra("phone");
+        final String phone = getIntent().getStringExtra("phone");
         ArrayMap arrayMap2 = new ArrayMap();
         arrayMap2.put("openid", openid);
         arrayMap2.put("type", type);
@@ -73,6 +74,8 @@ public class InputPswActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(ThreeLoginBean result, String tag) {
                 if (result.getCode() == 200) {
+                    SpUtils.putString(InputPswActivity.this, "user_id", result.getData().getUser_id());
+                    SpUtils.putString(InputPswActivity.this, "phone", phone);
                     startActivity(new Intent(InputPswActivity.this,MainActivity.class));
                 } else {
                     //101是没有数据

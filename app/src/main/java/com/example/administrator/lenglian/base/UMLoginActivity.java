@@ -4,10 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.widget.Toast;
 
 import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.activity.BindMobileActivity;
+import com.example.administrator.lenglian.activity.MainActivity;
+import com.example.administrator.lenglian.bean.ThreeLoginBean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.MyContants;
+import com.example.administrator.lenglian.utils.SpUtils;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -61,7 +68,7 @@ public class UMLoginActivity extends BaseActivity {
         * 因此为了便于开发者使用，我们将一些常用的字段做了统一封装，开发者可以直接获取，
         * 不再需要对不同平台的不同字段名做转换，这里列出我们封装的字段及含义
         * */
-//            Toast.makeText(MyApplication.getGloableContext(), "登陆成功", Toast.LENGTH_SHORT).show();
+            //            Toast.makeText(MyApplication.getGloableContext(), "登陆成功", Toast.LENGTH_SHORT).show();
             final String username = data.get("name");
             final String userhead = data.get("iconurl");
             final String uid = data.get("uid");
@@ -75,11 +82,32 @@ public class UMLoginActivity extends BaseActivity {
             } else if (platform.equals(SHARE_MEDIA.SINA)) {
                 type = "weibo";
             }
-            //            SpUtils.putString(MyApplication.getGloableContext(), "threetype", type);
-            Intent intent = new Intent(mContext, BindMobileActivity.class);
-            intent.putExtra("type",type);
-            intent.putExtra("openid",uid);
-            mContext.startActivity(intent);
+            ArrayMap arrayMap2 = new ArrayMap();
+            arrayMap2.put("openid", uid);
+            arrayMap2.put("type", type);
+            final String finalType = type;
+            RetrofitManager.post(MyContants.BASEURL + "s=User/nt_login", arrayMap2, new BaseObserver1<ThreeLoginBean>("") {
+                @Override
+                public void onSuccess(ThreeLoginBean result, String tag) {
+                    if (result.getCode() == 200) {
+                        SpUtils.putString(mContext, "user_id", result.getData().getUser_id());
+                        SpUtils.putString(mContext, "phone", result.getData().getMobile());
+                        mContext.startActivity(new Intent(mContext, MainActivity.class));
+                    } else {
+                        //101是没有数据
+                        //            SpUtils.putString(MyApplication.getGloableContext(), "threetype", type);
+                        Intent intent = new Intent(mContext, BindMobileActivity.class);
+                        intent.putExtra("type", finalType);
+                        intent.putExtra("openid", uid);
+                        mContext.startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onFailed(int code) {
+                    Toast.makeText(MyApplication.getGloableContext(), "xxxxx", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         @Override

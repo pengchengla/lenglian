@@ -10,11 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
@@ -27,7 +32,6 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
-import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
 import java.util.List;
 
@@ -89,7 +93,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                         rl_select_delete.setVisibility(View.GONE);
                         collect_bianji.setText("编辑");
                     }
-                    Toast.makeText(CollectionActivity.this, "您还没有收藏商品，快去收藏吧", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CollectionActivity.this, "您还没有收藏商品，快去收藏吧", Toast.LENGTH_SHORT).show();
                 }
                 mCollectionadapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
@@ -115,7 +119,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onFailed(int code) {
-                ToastUtils.showShort(CollectionActivity.this, code + "");
+//                ToastUtils.showShort(CollectionActivity.this, code + "");
             }
         });
 
@@ -283,6 +287,15 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
 
         @Override
         protected void convert(final BaseViewHolder helper, CollectListBean.DatasEntity item) {
+            ImageView img = helper.getView(R.id.collect_tupian);
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+            Glide.with(mContext).load(item.getPro_pic())
+                    .apply(options)
+                    .into(img);
             if (isEditing) {
                 helper.setVisible(R.id.collect_check, true);
             } else if (!isEditing) {

@@ -224,12 +224,12 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
             case R.id.tv_fapiao_no:
             case R.id.iv_fapiao_no:
                 ll_root_view.setVisibility(ll_root_view.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-                if (isOpen){
+                if (isOpen) {
                     iv_fapiao_no.setImageResource(R.drawable.arrow_right);
-                }else {
+                } else {
                     iv_fapiao_no.setImageResource(R.drawable.arrow_bottom);
                 }
-                isOpen=!isOpen;
+                isOpen = !isOpen;
                 break;
 
         }
@@ -262,6 +262,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                             LitePalHelper.deleteOne(mId);//数据库中删除这个商品
                             mDialog.dismiss();
                         } else {
+                            mDialog.dismiss();
                             //101是没有数据
                             Toast.makeText(QueRenOrderActivity.this, "提交失败" + result.getError(), Toast.LENGTH_SHORT).show();
                             tv_tijiao.setClickable(true);
@@ -270,6 +271,8 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onFailed(int code) {
+                        Toast.makeText(QueRenOrderActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+                        mDialog.dismiss();
                         tv_tijiao.setClickable(true);
                     }
                 });
