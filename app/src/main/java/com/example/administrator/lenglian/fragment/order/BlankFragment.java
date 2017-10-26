@@ -280,12 +280,11 @@ public class BlankFragment extends BaseFragment {
 
     //收货
     private void delivery() {
-
         Map<String, String> map = new HashMap<>();
         map.put("user_id", SpUtils.getString(mContext, "user_id", ""));
         map.put("token", MyUtils.getToken());
-        map.put("order_status", "2,3,4");
-        RetrofitManager.get(MyContants.BASEURL + "s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
+        map.put("order_status","2,3,4");
+        RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
 
             @Override
             public void onSuccess(Dingdanbean result, String tag) {

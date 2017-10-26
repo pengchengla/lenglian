@@ -64,7 +64,6 @@ public class Deliveryadapter extends BaseAdapter {
       ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-
                 convertView = LayoutInflater.from(context).inflate(R.layout.recying_item, null);
                 holder.iv_tupian = (ImageView) convertView.findViewById(R.id.receving_tupian);
                 holder.orderlist_count = (TextView) convertView.findViewById(R.id.receving_count);
@@ -74,9 +73,6 @@ public class Deliveryadapter extends BaseAdapter {
                 holder.reying_btn.setTag(position);
 
 
-                   //填充布局
-                   convertView = LayoutInflater.from(context).inflate(R.layout.activity_noding, null);
-                   holder.no_tu = (ImageView) convertView.findViewById(R.id.no_tu);
 
             }
             else{

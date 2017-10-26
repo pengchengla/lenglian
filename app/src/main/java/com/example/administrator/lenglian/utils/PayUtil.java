@@ -148,6 +148,7 @@ public class PayUtil {
                   }
                 else if("微信支付".equals(list.get(position).getName())){
                       weixinPay();
+                      dialog.dismiss();
 
                   }
                   //银行卡支付
