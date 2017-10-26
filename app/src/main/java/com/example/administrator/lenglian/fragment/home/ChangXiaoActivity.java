@@ -143,7 +143,7 @@ public class ChangXiaoActivity extends BaseActivity implements View.OnClickListe
             helper.setText(R.id.tv_title, item.getMain_title())
                     .setText(R.id.tv_price, "￥" + item.getPro_price());
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+//                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

@@ -17,7 +17,7 @@ import com.example.administrator.lenglian.utils.SpUtils;
 
 public class LancherActivity extends BaseActivity {
     private Button btn_time;
-    private int time = 5;
+    private int time = 3;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

@@ -192,15 +192,16 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btn_login:
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
+                Intent intent=new Intent(this, LoginActivity.class);
+                intent.putExtra("gologin", "gologin");
+                startActivity(intent);
                 break;
             case R.id.btn_go:
 //                EventMessage eventMessage = new EventMessage("allgoods");
 //                EventBus.getDefault().postSticky(eventMessage);
 //                finish();
-                Intent intent=new Intent(MyShopCarActivity.this,CuXiaoActivity.class);
-                startActivity(intent);
+                Intent intent2=new Intent(MyShopCarActivity.this,CuXiaoActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package com.example.administrator.lenglian.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.view.CustomProgressDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,6 +35,7 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
     private Button btn_login;
     private TextView tv_forgetpsw, tv_zhuce;
     private ImageView iv_weixin, iv_qq, iv_weibo;
+    private static ProgressDialog mDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
         iv_qq.setOnClickListener(this);
         iv_weibo = (ImageView) findViewById(R.id.iv_weibo);
         iv_weibo.setOnClickListener(this);
+        mDialog = new CustomProgressDialog(this, R.style.myprogressdialog);
 
 
         //        edt_phone.setText(SpUtils.getString(LoginActivity.this,"phone",""));
@@ -74,12 +78,15 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
                 startActivity(intent3);
                 break;
             case R.id.iv_weibo:
+                mDialog.show();
                 loginBySina(this);
                 break;
             case R.id.iv_weixin:
+                mDialog.show();
                 loginByWeiXin(this);
                 break;
             case R.id.iv_qq:
+                mDialog.show();
                 loginByQQ(this);
                 break;
         }
@@ -107,6 +114,7 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
                     SpUtils.putString(LoginActivity.this, "user_id", result.getDatas().getUser_id());
                     SpUtils.putString(LoginActivity.this, "phone", edt_phone.getText().toString().trim());
                     //                    SpUtils.putString(LoginActivity.this, "password", edt_mima.getText().toString().trim());
+                    //在其他页面转到登录界面，finish掉登录界面即可
                     if (getIntent().getStringExtra("gologin").equals("gologin")) {
                         finish();
                         EventMessage eventMessage = new EventMessage("xxx");
@@ -130,6 +138,11 @@ public class LoginActivity extends UMLoginActivity implements View.OnClickListen
                 btn_login.setClickable(true);
             }
         });
+    }
+
+    public static void closeDialog(){
+        mDialog.dismiss();
+        mDialog=null;
     }
 
     @Override

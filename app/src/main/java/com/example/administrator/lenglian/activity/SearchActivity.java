@@ -35,6 +35,7 @@ import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.view.CustomProgressDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
@@ -57,6 +58,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private LinearLayout ll_lishiandhot, ll_root_view;
     private List<SearchHistoryEntity> mHistoryList = new ArrayList<>();
     private int position;
+    private CustomProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         recycler_result = (RecyclerView) findViewById(R.id.recycler_result);
         ll_lishiandhot = (LinearLayout) findViewById(R.id.ll_lishiandhot);
         ll_root_view = (LinearLayout) findViewById(R.id.ll_root_view);
+        mDialog = new CustomProgressDialog(SearchActivity.this, R.style.myprogressdialog);
         initData();
         initListener();
     }
@@ -144,6 +147,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initListener() {
+        //本来下面这几行代码是解决afterTextChanged反应太快，但是并不管用
+//        int inputType= InputType.TYPE_CLASS_TEXT |
+//                InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+//        et_search.setInputType(inputType);
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -179,6 +186,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void doSearch(final String content) {
+        mDialog.show();
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("key", content);
         arrayMap.put("token", MyUtils.getToken());
@@ -205,11 +213,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 } else {
                     Toast.makeText(SearchActivity.this, "没有找到该商品", Toast.LENGTH_SHORT).show();
                 }
+                mDialog.dismiss();
             }
 
             @Override
             public void onFailed(int code) {
                 Toast.makeText(SearchActivity.this, "请检查网络或重试" + code, Toast.LENGTH_SHORT).show();
+                mDialog.dismiss();
             }
         });
     }

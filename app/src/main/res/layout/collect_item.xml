@@ -27,7 +27,8 @@
             android:layout_width="100dp"
             android:layout_height="90dp"
             android:layout_margin="8dp"
-            android:src="@drawable/binggui"/>
+            android:scaleType="fitXY"
+            />
 
         <LinearLayout
             android:layout_gravity="center_vertical"
@@ -40,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="阿拉阿发发发"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="14sp"/>
 
@@ -59,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1389.00"
+                    android:text=""
                     android:textColor="@color/redd"
                     android:textSize="16dp"/>
             </LinearLayout>

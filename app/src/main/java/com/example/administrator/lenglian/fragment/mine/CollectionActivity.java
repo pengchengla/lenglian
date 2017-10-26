@@ -289,11 +289,11 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
         protected void convert(final BaseViewHolder helper, CollectListBean.DatasEntity item) {
             ImageView img = helper.getView(R.id.collect_tupian);
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+//                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(item.getPro_pic())
+            Glide.with(mContext).load(item.getPro_pic().get(0).getUrl())
                     .apply(options)
                     .into(img);
             if (isEditing) {
@@ -302,6 +302,7 @@ public class CollectionActivity extends BaseActivity implements View.OnClickList
                 helper.setVisible(R.id.collect_check, false);
             }
             helper.setText(R.id.collect_count, item.getMain_title())
+                    .setText(R.id.collect_price,item.getPro_price())
                     .setChecked(R.id.collect_check, item.isChecked());
         }
     }

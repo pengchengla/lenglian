@@ -2,13 +2,13 @@ package com.example.administrator.lenglian.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
@@ -32,31 +32,41 @@ public class GuidePageActivity extends BaseActivity {
             mGuidePagerAdapter = new GuidePagerAdapter();
         }
         vp.setAdapter(mGuidePagerAdapter);
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 2) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            SpUtils.putBoolean(GuidePageActivity.this, "guide", true);
+                            Intent intent = new Intent(GuidePageActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }, 1000);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private class GuidePagerAdapter extends PagerAdapter {
-
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            View view=View.inflate(GuidePageActivity.this,R.layout.item_guide,null);
+            View view = View.inflate(GuidePageActivity.this, R.layout.item_guide, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.iv_guide);
-            TextView tv_into= (TextView) view.findViewById(R.id.tv_into);
             imageView.setImageResource(imgurls[position]);
             container.addView(view);
-            if (position==2){
-                tv_into.setVisibility(View.VISIBLE);
-                tv_into.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SpUtils.putBoolean(GuidePageActivity.this, "guide", true);
-                        Intent intent = new Intent(GuidePageActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            }else {
-                tv_into.setVisibility(View.GONE);
-            }
             return view;
         }
 

@@ -7,12 +7,13 @@
         android:id="@+id/iv_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@drawable/guide3"
         />
     <TextView
         android:id="@+id/tv_into"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="60dp"/>
 </FrameLayout>

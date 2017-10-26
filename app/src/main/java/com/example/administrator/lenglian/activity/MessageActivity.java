@@ -7,6 +7,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     private TextView tv_back;
     private RecyclerView recycler_msg;
     private MsgAdapter mMsgAdapter;
+    private LinearLayout kong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         tv_back.setOnClickListener(this);
         recycler_msg = (RecyclerView) findViewById(R.id.recycler_msg);
         recycler_msg.setLayoutManager(new LinearLayoutManager(this));
+        kong= (LinearLayout) findViewById(R.id.kong);
         initData();
     }
 
@@ -54,7 +57,8 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
                     mMsgAdapter = new MsgAdapter(R.layout.item_msg, result.getDatas());
                     recycler_msg.setAdapter(mMsgAdapter);
                 }else {
-                    Toast.makeText(MessageActivity.this, "暂时没有消息", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MessageActivity.this, "暂时没有消息", Toast.LENGTH_SHORT).show();
+                    kong.setVisibility(View.VISIBLE);
                 }
             }
 

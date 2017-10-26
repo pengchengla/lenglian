@@ -183,7 +183,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                     });
                     RequestOptions options = new RequestOptions()
-                            .centerCrop()
+//                            .centerCrop()
                             .error(R.drawable.default_banner)
                             .priority(Priority.NORMAL)
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -341,7 +341,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             helper.setText(R.id.tv_main_title, item.getMain_title())
                     .setText(R.id.tv_sub_title, item.getSub_title());
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+//                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -362,7 +362,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             helper.setText(R.id.tv_main_title, item.getMain_title())
                     .setText(R.id.tv_sub_title, item.getSub_title());
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+//                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -386,7 +386,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     .setText(R.id.tv_sub_title, item.getSub_title())
                     .setText(R.id.tv_price, "￥" + item.getPro_price());
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+//                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

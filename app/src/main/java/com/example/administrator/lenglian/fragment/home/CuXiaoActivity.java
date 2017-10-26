@@ -149,7 +149,7 @@ public class CuXiaoActivity extends BaseActivity implements View.OnClickListener
                     .setText(R.id.tv_title, item.getMain_title())
                     .setText(R.id.tv_price_now, "￥" + item.getSale_price());
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
+//                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

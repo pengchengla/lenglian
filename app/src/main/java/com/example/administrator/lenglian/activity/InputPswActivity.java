@@ -70,22 +70,22 @@ public class InputPswActivity extends BaseActivity implements View.OnClickListen
         arrayMap2.put("password", edt_mima.getText().toString());
         arrayMap2.put("mobile", phone);
         arrayMap2.put("code", code);
-        RetrofitManager.post(MyContants.BASEURL + "s=User/nt_login", arrayMap2, new BaseObserver1<ThreeLoginBean>("") {
+        RetrofitManager.get(MyContants.BASEURL + "s=User/nt_login", arrayMap2, new BaseObserver1<ThreeLoginBean>("") {
             @Override
             public void onSuccess(ThreeLoginBean result, String tag) {
                 if (result.getCode() == 200) {
-                    SpUtils.putString(InputPswActivity.this, "user_id", result.getData().getUser_id());
+                    SpUtils.putString(InputPswActivity.this, "user_id", result.getDatas().getUser_id());
                     SpUtils.putString(InputPswActivity.this, "phone", phone);
-                    startActivity(new Intent(InputPswActivity.this,MainActivity.class));
+                    startActivity(new Intent(InputPswActivity.this, MainActivity.class));
                 } else {
                     //101是没有数据
-
+                    Toast.makeText(InputPswActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailed(int code) {
-
+                Toast.makeText(InputPswActivity.this, "请检查网络或重试"+code, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -136,9 +136,9 @@ public class MyBlueActivity extends AppCompatActivity {
 
     private void scanBluetooth() {
         if (BleUtil.isBleEnable(this)) {
-                        byte[] bytes = HexUtil.decodeHex("04041710251540313233".toCharArray());//设置工作时间
+            byte[] bytes = HexUtil.decodeHex("04041710261640313234".toCharArray());//设置工作时间
             //                        byte[] bytes = HexUtil.decodeHex("fefe1710251510313233".toCharArray());//同步时间
-//            byte[] bytes = HexUtil.decodeHex("0203313233".toCharArray());//设置密码
+            //            byte[] bytes = HexUtil.decodeHex("0203313234".toCharArray());//设置密码
             send(bytes);
         } else {
             BleUtil.enableBluetooth(this, 1);
@@ -275,9 +275,9 @@ public class MyBlueActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
-                byte[] bytes = HexUtil.decodeHex("04041710251540313233".toCharArray());//设置工作时间
+                byte[] bytes = HexUtil.decodeHex("04041710261640313234".toCharArray());//设置工作时间
                 //                                byte[] bytes = HexUtil.decodeHex("fefe1710251510313233".toCharArray());//同步时间
-//                byte[] bytes = HexUtil.decodeHex("0203313233".toCharArray());//设置密码
+                //                byte[] bytes = HexUtil.decodeHex("0203313234".toCharArray());//设置密码
                 send(bytes);
             }
         } else if (resultCode == RESULT_CANCELED) {

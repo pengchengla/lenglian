@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.activity.BindMobileActivity;
+import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.activity.MainActivity;
 import com.example.administrator.lenglian.bean.ThreeLoginBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -86,12 +87,14 @@ public class UMLoginActivity extends BaseActivity {
             arrayMap2.put("openid", uid);
             arrayMap2.put("type", type);
             final String finalType = type;
+            LoginActivity loginActivity = (LoginActivity) mContext;
+            loginActivity.closeDialog();
             RetrofitManager.post(MyContants.BASEURL + "s=User/nt_login", arrayMap2, new BaseObserver1<ThreeLoginBean>("") {
                 @Override
                 public void onSuccess(ThreeLoginBean result, String tag) {
                     if (result.getCode() == 200) {
-                        SpUtils.putString(mContext, "user_id", result.getData().getUser_id());
-                        SpUtils.putString(mContext, "phone", result.getData().getMobile());
+                        SpUtils.putString(mContext, "user_id", result.getDatas().getUser_id());
+                        SpUtils.putString(mContext, "phone", result.getDatas().getMobile());
                         mContext.startActivity(new Intent(mContext, MainActivity.class));
                     } else {
                         //101是没有数据
@@ -105,7 +108,7 @@ public class UMLoginActivity extends BaseActivity {
 
                 @Override
                 public void onFailed(int code) {
-                    Toast.makeText(MyApplication.getGloableContext(), "xxxxx", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getGloableContext(), "登陆失败", Toast.LENGTH_SHORT).show();
                 }
             });
         }
