@@ -13,7 +13,7 @@ public class Baoxiubean {
     /**
      * code : 200
      * success : success
-     * datas : [{"repair_id":"1","pro_id":"1","order_id":"10","is_comment":"0","comment_id":"0","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"},{"repair_id":"2","pro_id":"1","order_id":"1","is_comment":"0","comment_id":"0","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"}]
+     * datas : [{"repair_id":"1","pro_id":"1","order_id":"10","is_comment":"2","comment_id":"126","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"},{"repair_id":"2","pro_id":"1","order_id":"1","is_comment":"2","comment_id":"127","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"},{"repair_id":"12","pro_id":"1","order_id":"19","is_comment":"2","comment_id":"128","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"},{"repair_id":"13","pro_id":"1","order_id":"22","is_comment":"0","comment_id":"0","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"},{"repair_id":"14","pro_id":"1","order_id":"25","is_comment":"0","comment_id":"0","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"},{"repair_id":"15","pro_id":"1","order_id":"19","is_comment":"0","comment_id":"0","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}],"main_title":"威王","pro_price":"1","sub_title":"点菜柜","pro_name":"fdsafdg","single_pic":"http://59.110.213.63/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00"}]
      */
 
     private int code;
@@ -49,8 +49,8 @@ public class Baoxiubean {
          * repair_id : 1
          * pro_id : 1
          * order_id : 10
-         * is_comment : 0
-         * comment_id : 0
+         * is_comment : 2
+         * comment_id : 126
          * pro_pic : [{"url":"http://59.110.213.63/cfc/uploads/file1/20171018/59e6f70d5a22d.jpg"}]
          * main_title : 威王
          * pro_price : 1

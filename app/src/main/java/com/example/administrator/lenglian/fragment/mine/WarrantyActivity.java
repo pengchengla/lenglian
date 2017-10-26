@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.adapter.Warrantyadapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Baoxiubean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
@@ -22,6 +23,9 @@ import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -45,7 +49,10 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mine_warranty);
+
         initView();
+        //注册eventbus
+        EventBus.getDefault().register(this);
         //加载网络请求
         network();
         initdata();
@@ -109,6 +116,21 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
             case R.id.tv_back:
                 finish();
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void myEvent(EventMessage eventMessage) {
+        if (eventMessage.getMsg().equals("tijiao")) {
+            network();
+        }
+        else if(eventMessage.getMsg().equals("zzz")){
+            network();
         }
     }
 }

@@ -34,6 +34,7 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
     private TextView tijiao;
     private EditText edt_pin;
     private String comment_id;
+    private String repair_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
         map.put("user_id", SpUtils.getString(this,"user_id",""));
         map.put("token", MyUtils.getToken());
         map.put("comment_id",comment_id);
+        map.put("repair_id",repair_id);
         map.put("add_content",  edt_pin.getText().toString());
         RetrofitManager.post(MyContants.BASEURL+"s=User/addComment",map,new BaseObserver1<Resultbean>("") {
             @Override
@@ -85,6 +87,7 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
         edt_pin.setOnClickListener(this);
         Intent intent = getIntent();
         comment_id = intent.getStringExtra("comment_id");
+        repair_id = intent.getStringExtra("repair_id");
     }
 
 

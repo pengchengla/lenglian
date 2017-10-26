@@ -20,6 +20,8 @@ import com.example.administrator.lenglian.fragment.mine.MaintenanceActivity;
 import com.example.administrator.lenglian.fragment.mine.ZhijiaActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Baoxiubean;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ import java.util.List;
 public class Warrantyadapter extends BaseAdapter {
       private Context context;
      private List<Baoxiubean.DatasBean> list;
+    private int tag;
 
     public Warrantyadapter(Context context,List<Baoxiubean.DatasBean> list) {
         this.context = context;
@@ -68,7 +71,9 @@ public class Warrantyadapter extends BaseAdapter {
         }
         else {
             holder= (ViewHolder) convertView.getTag();
+
         }
+
          holder.warranty_count.setText(list.get(position).getMain_title());
         if("0".equals(list.get(position).getIs_comment())){
            holder.warranty_pinjia.setText("评价");
@@ -76,8 +81,9 @@ public class Warrantyadapter extends BaseAdapter {
         else if("1".equals(list.get(position).getIs_comment())){
             holder.warranty_pinjia.setText("追加评价");
         }
-         else {
-            holder.warranty_pinjia.setFocusable(true);
+        else if("2".equals(list.get(position).getIs_comment())){
+            holder.warranty_pinjia.setText("追加评价");
+           // holder.warranty_pinjia.setTextColor(context.getResources().getColor(R.color.font_black_6));
         }
 
         //加载图片
@@ -91,11 +97,10 @@ public class Warrantyadapter extends BaseAdapter {
                .into(holder.warranty_img);
 
         holder.warranty_money.setText(list.get(position).getPro_price());
-           holder.warranty_pinjia.setFocusable(false);
 
         //评价
         final ViewHolder finalHolder = holder;
-        final int  tag = (int) finalHolder.warranty_pinjia.getTag();
+        tag = (int) finalHolder.warranty_pinjia.getTag();
         holder.warranty_pinjia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,24 +108,30 @@ public class Warrantyadapter extends BaseAdapter {
                 /*
                  0待评价
                  */
-                 if("0".equals(list.get(tag).getIs_comment())){
+                String is_comment = list.get(tag).getIs_comment();
+                KLog.a(is_comment);
+                if("0".equals(list.get(position).getIs_comment())){
 
                      //带数据穿送过去
                      Intent it=new Intent(context,MaintenanceActivity.class);
                      it.putExtra("pro_id",list.get(position).getPro_id());//商品id
-                     it.putExtra("order_id",list.get(position).getOrder_id());//订单id
+                     it.putExtra("repair_id",list.get(position).getRepair_id());//订单id
                      it.putExtra("weixiu_img",list.get(position).getPro_pic().get(0).getUrl());
                      context.startActivity(it);
                  }
                  /*
                    追加评价
                   */
-                else if("1".equals(list.get(tag).getIs_comment())){
+                else if("1".equals(list.get(position).getIs_comment())){
 
                       Intent intent=new Intent(context, ZhijiaActivity.class);
                         intent.putExtra("comment_id",list.get(position).getComment_id());
+                     intent.putExtra("repair_id",list.get(position).getRepair_id());
                        context.startActivity(intent);
 
+                 }
+                else if("2".equals(list.get(position).getIs_comment())){
+                     ToastUtils.showShort(context,"你已追加评论不能在评论");
                  }
 
             }

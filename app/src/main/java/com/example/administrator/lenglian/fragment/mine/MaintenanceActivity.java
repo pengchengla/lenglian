@@ -34,6 +34,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Upphotobean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -54,6 +55,8 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.socks.library.KLog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -79,7 +82,7 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
     private TextView tijiao;
     private MyGradeview myGradeview;
     private String pro_id;
-    private String order_id;
+    private String repair_id;
     private Context mContext;
     private GridViewAdapter   mGridViewAddImgAdapter;
     private File file;
@@ -115,7 +118,7 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
         map.put("user_id", SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
         map.put("pro_id",pro_id);
-        map.put("order_id",order_id);
+        map.put("repair_id",repair_id);
         map.put("comment_type","3");
         map.put("content",warantu_edtext.getText().toString());
         map.put("service_score",furatingbar.getSetbar()+"");
@@ -130,6 +133,9 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(Resultbean result, String tag) {
                 if(result.getCode()==200){
                     ToastUtils.showShort(MaintenanceActivity.this,"提交成功");
+                    //发送eventbus刷新数据
+                    EventMessage eventMessage = new EventMessage("tijiao");
+                    EventBus.getDefault().postSticky(eventMessage);
                     finish();
                 }
             }
@@ -329,7 +335,7 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
         //得到数据
         Intent intent = getIntent();
         pro_id = intent.getStringExtra("pro_id");
-        order_id = intent.getStringExtra("order_id");
+        repair_id = intent.getStringExtra("repair_id");
         weixiu_img = intent.getStringExtra("weixiu_img");
         //加载图片
         RequestOptions options = new RequestOptions()

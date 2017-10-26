@@ -71,7 +71,7 @@ public class WalletActivity extends BaseActivity {
 
             @Override
             public void onFailed(int code) {
-                Toast.makeText(WalletActivity.this,"失败",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(WalletActivity.this,"失败",Toast.LENGTH_SHORT).show();
             }
         });
     }
