@@ -9,6 +9,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.transition.TransitionSet;
 import android.view.Gravity;
 import android.view.View;
@@ -66,7 +67,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private CommentAdapter mCommentAdapter;
     private NestedScrollView nestView;
     private int mDistanceY;
-    private ImageView iv_msg, iv_changxiao_big;
+    private ImageView iv_msg, iv_changxiao_big, iv_point;
     private MiddleAdapter mMiddleAdapter;
     private SpringView springview;
     private CustomProgressDialog mDialog;
@@ -107,6 +108,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rl_top = (RelativeLayout) view.findViewById(R.id.rl_top);
         nestView = (NestedScrollView) view.findViewById(R.id.nestView);
         iv_msg = (ImageView) view.findViewById(R.id.iv_msg);
+        iv_point = (ImageView) view.findViewById(R.id.iv_point);
         iv_changxiao_big = (ImageView) view.findViewById(R.id.iv_changxiao_big);
         recycler_class = (RecyclerView) view.findViewById(R.id.recycler_class);
         springview = (SpringView) view.findViewById(R.id.springview);
@@ -129,8 +131,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         mDialog = new CustomProgressDialog(mContext, R.style.myprogressdialog);
         mDialog.show();
         initToolbar();
-
-        tv_msg_number.setText("11");
         initListener();
     }
 
@@ -183,7 +183,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                         }
                     });
                     RequestOptions options = new RequestOptions()
-//                            .centerCrop()
+                            //                            .centerCrop()
                             .error(R.drawable.default_banner)
                             .priority(Priority.NORMAL)
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -253,6 +253,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             EventBus.getDefault().postSticky(eventMessage2);
                         }
                     });
+                    if (TextUtils.isEmpty(result.getDatas().getUnread())||
+                            result.getDatas().getUnread().equals("0")) {
+                        iv_point.setVisibility(View.GONE);
+                        tv_msg_number.setVisibility(View.GONE);
+                        EventMessage eventMessage = new EventMessage("mymsg","0");
+                        EventBus.getDefault().postSticky(eventMessage);
+                    }else {
+                        iv_point.setVisibility(View.VISIBLE);
+                        tv_msg_number.setVisibility(View.VISIBLE);
+                        tv_msg_number.setText(result.getDatas().getUnread());
+                        EventMessage eventMessage = new EventMessage("mymsg",result.getDatas().getUnread());
+                        EventBus.getDefault().postSticky(eventMessage);
+                    }
                     mDialog.dismiss();
                 }
             }
@@ -341,7 +354,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             helper.setText(R.id.tv_main_title, item.getMain_title())
                     .setText(R.id.tv_sub_title, item.getSub_title());
             RequestOptions options = new RequestOptions()
-//                    .centerCrop()
+                    //                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -362,7 +375,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             helper.setText(R.id.tv_main_title, item.getMain_title())
                     .setText(R.id.tv_sub_title, item.getSub_title());
             RequestOptions options = new RequestOptions()
-//                    .centerCrop()
+                    //                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -386,7 +399,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     .setText(R.id.tv_sub_title, item.getSub_title())
                     .setText(R.id.tv_price, "￥" + item.getPro_price());
             RequestOptions options = new RequestOptions()
-//                    .centerCrop()
+                    //                    .centerCrop()
                     .error(R.drawable.default_square)
                     .priority(Priority.NORMAL)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

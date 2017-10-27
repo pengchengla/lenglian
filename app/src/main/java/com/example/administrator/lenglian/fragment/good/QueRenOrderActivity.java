@@ -64,7 +64,6 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_que_ren_order);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_back.setOnClickListener(this);
         tv_tijiao = (TextView) findViewById(R.id.tv_tijiao);
@@ -171,7 +170,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     protected void onRestart() {
         super.onRestart();
         tv_tijiao.setClickable(true);
-        isHaveAddress=false;//每次回来都刷新一下
+        isHaveAddress = false;//每次回来都刷新一下
         initAddress();
     }
 
@@ -241,7 +240,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void pushOrder() {
-        if (!isHaveAddress){
+        if (!isHaveAddress) {
             Toast.makeText(this, "请先设置收货地址~", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -257,6 +256,12 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                 arrayMap2.put("duration", duration);
                 arrayMap2.put("express_id", express_id);
                 arrayMap2.put("order_note", edt_liuyan.getText().toString());
+                if (fapiao == 1) {
+                    arrayMap2.put("personal_name", edt_fapiao1.getText().toString());
+                } else if (fapiao == 2) {
+                    arrayMap2.put("company_name", edt_fapiao1.getText().toString());
+                    arrayMap2.put("identifier", edt_fapiao2.getText().toString());
+                }
                 //        Toast.makeText(this, "id::" + mId + "   时长::" + duration, Toast.LENGTH_SHORT).show();
                 RetrofitManager.post(MyContants.BASEURL + "s=Order/newOrder", arrayMap2, new BaseObserver1<OrderPushBean>("") {
                     @Override
