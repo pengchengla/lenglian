@@ -37,6 +37,7 @@
                                 android:layout_height="20dp"
                                 android:src="@drawable/mesagess"/>
                             <ImageView
+                                android:id="@+id/iv_point"
                                 android:layout_width="11dp"
                                 android:layout_height="11dp"
                                 android:layout_gravity="right"

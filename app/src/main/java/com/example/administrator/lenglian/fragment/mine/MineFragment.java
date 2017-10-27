@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_back;
     private TextView mine_login;
     private List<Personbean.DatasBean> datas;
+    private ImageView iv_point;
 
     @Override
     protected void lazyLoad() {
@@ -86,6 +88,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         mine_manual = (RelativeLayout) rootView.findViewById(R.id.eight);
         mine_kefu = (RelativeLayout) rootView.findViewById(R.id.nine);
         mine_login = (TextView) rootView.findViewById(R.id.mine_login);
+        iv_point = (ImageView) rootView.findViewById(R.id.iv_point);
         //设置监听
         mine_Warranty.setOnClickListener(this);
         mine_wallet.setOnClickListener(this);
@@ -105,10 +108,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mine_login.setVisibility(View.GONE);
             mine_name.setVisibility(View.VISIBLE);
             mine_phone.setVisibility(View.VISIBLE);
-          //  network();
+            //  network();
         }
-
-
 
 
         return rootView;
@@ -154,27 +155,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mine_login.setVisibility(View.GONE);
             mine_name.setVisibility(View.VISIBLE);
             mine_phone.setVisibility(View.VISIBLE);
-//            //取头像
-//            String photo = SpUtils.getString(getActivity(), "photos", "");
-//            //加载数据
-//            RequestOptions options = new RequestOptions()
-//                    .centerCrop()
-//                    .error(R.drawable.default_square)
-//                    .priority(Priority.NORMAL)
-//                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-//            Glide.with(mContext).load(photo)
-//                    .apply(options)
-//                    .into(mine_head);
-//            if (!TextUtils.isEmpty(SpUtils.getString(getActivity(), "nick_name", ""))) {
-//                mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
-//
-//            }
+            //            //取头像
+            //            String photo = SpUtils.getString(getActivity(), "photos", "");
+            //            //加载数据
+            //            RequestOptions options = new RequestOptions()
+            //                    .centerCrop()
+            //                    .error(R.drawable.default_square)
+            //                    .priority(Priority.NORMAL)
+            //                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+            //            Glide.with(mContext).load(photo)
+            //                    .apply(options)
+            //                    .into(mine_head);
+            //            if (!TextUtils.isEmpty(SpUtils.getString(getActivity(), "nick_name", ""))) {
+            //                mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
+            //
+            //            }
             network();
-          //  initData();
+            //  initData();
         }
     }
 
-    private void xxx(){
+    private void xxx() {
         if (!TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
             mine_login.setVisibility(View.GONE);
             Map<String, String> map = new HashMap<>();
@@ -213,7 +214,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
                 }
             });
-        }else {
+        } else {
             mine_head.setImageResource(R.drawable.default_circle);
             mine_login.setVisibility(View.VISIBLE);
             mine_name.setVisibility(View.GONE);
@@ -232,16 +233,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void myEvent(EventMessage eventMessage) {
         if (eventMessage.getMsg().equals("xxx")) {
             xxx();
+        } else if (eventMessage.getMsg().equals("ppp")) {
+            ppp();
+        }else if (eventMessage.getMsg().equals("mymsg")) {
+            if (eventMessage.getMsg2().equals("0")) {
+                iv_point.setVisibility(View.GONE);
+                tv_msg_number.setVisibility(View.GONE);
+            }else {
+                iv_point.setVisibility(View.VISIBLE);
+                tv_msg_number.setVisibility(View.VISIBLE);
+                tv_msg_number.setText(eventMessage.getMsg2());
+            }
         }
-        else  if(eventMessage.getMsg().equals("ppp")){
-           ppp();
-                }
     }
 
     @Override
     protected void initData() {
-
-        tv_msg_number.setText("11");
         //网络请求
         Map<String, String> map = new HashMap<>();
         map.put("user_id", SpUtils.getString(getActivity(), "user_id", ""));
@@ -283,7 +290,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.three://我的保修
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 } else {
                     Intent it = new Intent(getActivity(), WarrantyActivity.class);
@@ -292,7 +299,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.one://我的钱包
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 } else {
                     Intent it1 = new Intent(getActivity(), WalletActivity.class);
@@ -302,9 +309,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.two://我的银行卡
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
-                }else {
+                } else {
                     Intent it2 = new Intent(getActivity(), CardActivity.class);
 
                     startActivity(it2);
@@ -312,7 +319,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.four://我的退还
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 } else {
                     Intent it3 = new Intent(getActivity(), AlterationActivity.class);
@@ -322,7 +329,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.five://我的收藏
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 } else {
                     Intent it4 = new Intent(getActivity(), CollectionActivity.class);
@@ -332,18 +339,18 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.six://我的评价
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
-                }else {
+                } else {
                     Intent it5 = new Intent(getActivity(), EvaluateActivity.class);
                     startActivity(it5);
                 }
                 break;
             case R.id.seven://我的地址
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
-                }else {
+                } else {
                     Intent it6 = new Intent(getActivity(), AddressActivity.class);
 
                     startActivity(it6);
@@ -351,9 +358,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.eight://用户指南
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
-                }else {
+                } else {
                     Intent it7 = new Intent(getActivity(), ManualActivity.class);
                     startActivity(it7);
                 }
@@ -363,9 +370,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.mine_set:
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
-                }else {
+                } else {
                     Intent set = new Intent(getActivity(), SetActivity.class);
                     startActivity(set);
                 }
@@ -373,16 +380,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.mine_head:
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
-                }else {
+                } else {
                     Intent head = new Intent(getActivity(), PersoninforActivity.class);
                     startActivity(head);
                 }
                 break;
             case R.id.ll_msg://消息
                 if (!MyUtils.islogin(mContext)) {
-                    MyUtils.showloginDialog(mContext,Gravity.CENTER, R.style.Alpah_aniamtion);
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
                     return;
                 } else {
                     startActivity(new Intent(mContext, MessageActivity.class));

@@ -55,6 +55,15 @@ public class HomeBean {
         private List<ProClassEntity> pro_class;
         private List<BestEntity> best;
         private List<RecommendEntity> recommend;
+        private String unread;
+
+        public String getUnread() {
+            return unread;
+        }
+
+        public void setUnread(String unread) {
+            this.unread = unread;
+        }
 
         public void setSale(List<SaleEntity> sale) {
             this.sale = sale;
