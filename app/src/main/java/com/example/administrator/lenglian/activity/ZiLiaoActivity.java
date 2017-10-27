@@ -90,6 +90,7 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
         tv_yes.setOnClickListener(this);
         edt_detail_address = (EditText) findViewById(R.id.edt_detail_address);
         mUserid = getIntent().getStringExtra("userid");
+//        Toast.makeText(this, "id是" + mUserid, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -123,11 +124,11 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                 showAddressDialog();
                 break;
             case R.id.tv_yes:
-                startActivity(new Intent(this, MainActivity.class));
                 goMain();
                 break;
             case R.id.tv_tiaoguo:
                 SpUtils.putString(ZiLiaoActivity.this, "user_id", mUserid);
+                removeAllActivitys();
                 startActivity(new Intent(this, MainActivity.class));
                 break;
         }
@@ -216,7 +217,6 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                         ToastUtils.showShort(this, "设备没有SD卡！");
                     }
                 } else {
-
                     ToastUtils.showShort(this, "请允许打开相机！！");
                 }
                 break;
@@ -265,7 +265,7 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                     KLog.a(cropImageUri);
                     //将URl上传到服务器
                     photowork();
-                    ToastUtils.showShort(ZiLiaoActivity.this, cropImageUri.toString());
+                    //                    ToastUtils.showShort(ZiLiaoActivity.this, cropImageUri.toString());
                     if (bitmap != null) {
                         showImages(bitmap);
                     }
@@ -292,13 +292,11 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
                 upphotobean = gson.fromJson(s, Upphotobean.class);
                 List<Upphotobean.DatasBean> datas = upphotobean.getDatas();
                 imgUrl = datas.get(0).getUrl();
-                goMain();
-
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         KLog.a("Tag", s);
-                        ToastUtils.showShort(ZiLiaoActivity.this, s);
+                        //                        ToastUtils.showShort(ZiLiaoActivity.this, s);
                     }
                 });
 
@@ -336,12 +334,15 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
         arrayMap.put("sex", tv_xingbie.getText().toString().equals("男") ? "1" : "2");
         arrayMap.put("birth", tv_birthday.getText().toString());
         arrayMap.put("user_address", tv_address.getText().toString());
-        arrayMap.put("head", imgUrl);
+        if (!TextUtils.isEmpty(imgUrl)) {
+            arrayMap.put("head", imgUrl);
+        }
         arrayMap.put("address_detail", edt_detail_address.getText().toString());
         RetrofitManager.get(MyContants.BASEURL + "s=User/editProfile", arrayMap, new BaseObserver1<EasyBean>("") {
             @Override
             public void onSuccess(EasyBean result, String tag) {
                 if (result.getCode() == 200) {
+                    removeAllActivitys();
                     Intent intent1 = new Intent(ZiLiaoActivity.this, MainActivity.class);
                     startActivity(intent1);
                     SpUtils.putString(ZiLiaoActivity.this, "user_id", mUserid);

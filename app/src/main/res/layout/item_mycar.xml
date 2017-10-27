@@ -6,17 +6,25 @@
               android:layout_marginTop="10dp"
               android:background="@color/white"
               android:orientation="horizontal">
-    <CheckBox
-        android:id="@+id/cb_car"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/cb_selector"
-        android:button="@null"
-        android:clickable="false"
-        android:gravity="center"/>
+    <LinearLayout
+        android:id="@+id/ll_check"
+        android:layout_width="40dp"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <CheckBox
+            android:id="@+id/cb_car"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/cb_selector"
+            android:button="@null"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:gravity="center"/>
+    </LinearLayout>
     <ImageView
         android:id="@+id/iv_tupian"
         android:layout_width="90dp"
@@ -35,8 +43,8 @@
             android:layout_marginTop="10dp"
             android:ellipsize="end"
             android:lines="2"
-            android:text="都是撒大家看撒谎大手机客户端哈撒打算看电话卡四大皆空撒"
-            android:textSize="16sp"
+            android:text=""
+            android:textSize="15sp"
             android:visibility="gone"/>
         <RelativeLayout
             android:layout_width="match_parent"

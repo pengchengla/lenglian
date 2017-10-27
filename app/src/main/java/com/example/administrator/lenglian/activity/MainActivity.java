@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initListener1();
 
 //        startActivity(new Intent(this, MyBlueActivity.class));
+//        startActivity(new Intent(this, ZiLiaoActivity.class));
     }
 
     private void initListener1() {

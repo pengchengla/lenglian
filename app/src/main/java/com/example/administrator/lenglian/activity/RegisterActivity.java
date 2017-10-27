@@ -55,6 +55,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_back:
+                finish();
                 break;
             case R.id.tv_getcode:
                 getCode();
@@ -149,6 +150,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     Intent intent1 = new Intent(RegisterActivity.this, ZiLiaoActivity.class);
                     intent1.putExtra("userid",result.getDatas().getUser_id());
                     startActivity(intent1);
+                    finish();
                 }else {
                     Toast.makeText(RegisterActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
                 }

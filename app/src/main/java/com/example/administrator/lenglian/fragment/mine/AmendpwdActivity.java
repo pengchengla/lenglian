@@ -1,7 +1,6 @@
 package com.example.administrator.lenglian.fragment.mine;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -49,17 +48,16 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initnetwork() {
-        Map<String,String> map=new HashMap<>();
-        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(this, "user_id", ""));
         map.put("token", MyUtils.getToken());
         map.put("password", set_initialpwd.getText().toString());
         map.put("new_password", set_loginpwd.getText().toString());
         RetrofitManager.post(MyContants.BASEURL + "s=User/addComment", map, new BaseObserver1<Resultbean>("") {
             @Override
             public void onSuccess(Resultbean result, String tag) {
-                if(result.getCode()==200){
-                    ToastUtils.showShort(AmendpwdActivity.this,"修改成功");
-
+                if (result.getCode() == 200) {
+                    ToastUtils.showShort(AmendpwdActivity.this, "修改成功");
                     finish();
                 }
             }
@@ -78,7 +76,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
         set_replacepwd = (EditText) findViewById(R.id.set_replacepwd);
         set_btn = (Button) findViewById(R.id.set_btn);
         set_btn.setOnClickListener(this);
-        tv_back .setOnClickListener(this);
+        tv_back.setOnClickListener(this);
         set_initialpwd.setOnClickListener(this);
         set_replacepwd.setOnClickListener(this);
 
@@ -88,7 +86,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.set_btn:
-              //修改密码提交
+                //修改密码提交
                 submit();
 
                 break;
@@ -98,6 +96,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
+
     private void showDialog(int grary, int animationStyle) {
         BaseDialog.Builder builder = new BaseDialog.Builder(this);
         final BaseDialog dialog = builder.setViewId(R.layout.daglog_pwd)
@@ -125,6 +124,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
+
     private void submit() {
         // validate
         String initialpwd = set_initialpwd.getText().toString().trim();
@@ -137,8 +137,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
         if (TextUtils.isEmpty(loginpwd)) {
             Toast.makeText(this, "请输入新密码", Toast.LENGTH_SHORT).show();
             return;
-        }
-         else   if (set_loginpwd.getText().toString().length() < 5 || set_loginpwd.getText().toString().length() > 20) {
+        } else if (set_loginpwd.getText().toString().length() < 5 || set_loginpwd.getText().toString().length() > 20) {
             Toast.makeText(this, "请输入6-20位密码", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -147,23 +146,14 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
         if (TextUtils.isEmpty(replacepwd)) {
             Toast.makeText(this, "请再次输入新密码", Toast.LENGTH_SHORT).show();
             return;
-        }else  if (set_loginpwd.getText().toString().trim().equals(set_replacepwd.getText().toString().trim())){
+        } else if (set_initialpwd.getText().toString().trim().equals(set_loginpwd.getText().toString().trim())) {
             Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
-              //返回数据
-
+            //返回数据
             return;
-        }
-        else   if (set_loginpwd.getText().toString().length() < 5 || set_loginpwd.getText().toString().length() > 20) {
-            Toast.makeText(this, "请输入6-20位密码", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else {
+        } else if (!set_loginpwd.getText().toString().equals(set_replacepwd.getText().toString())) {
             Toast.makeText(this, "两次密码不一致,请重新输入", Toast.LENGTH_SHORT).show();
+            return;
         }
-
-
         initnetwork();
-
-
     }
 }

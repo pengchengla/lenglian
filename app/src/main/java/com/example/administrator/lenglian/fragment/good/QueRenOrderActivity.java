@@ -57,6 +57,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     private ImageView iv_fapiao_no;
     private LinearLayout ll_root_view;
     private boolean isOpen;
+    private boolean isHaveAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +171,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     protected void onRestart() {
         super.onRestart();
         tv_tijiao.setClickable(true);
+        isHaveAddress=false;//每次回来都刷新一下
         initAddress();
     }
 
@@ -191,10 +193,12 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
                     tv_address.setText(result.getDatas().get(0).getArea_id()
                             + result.getDatas().get(0).getAddress_detail());
                     express_id = result.getDatas().get(0).getExpress_id();
+                    isHaveAddress = true;
                 } else {
                     //101是没有数据
                     ll_hasAddress.setVisibility(View.GONE);
                     rl_noaddress.setVisibility(View.VISIBLE);
+                    isHaveAddress = false;
                 }
                 mDialog.dismiss();
             }
@@ -202,6 +206,7 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailed(int code) {
                 mDialog.dismiss();
+                isHaveAddress = false;
             }
         });
     }
@@ -236,6 +241,10 @@ public class QueRenOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void pushOrder() {
+        if (!isHaveAddress){
+            Toast.makeText(this, "请先设置收货地址~", Toast.LENGTH_SHORT).show();
+            return;
+        }
         tv_tijiao.setClickable(false);
         mDialog.show();
         new Handler().postDelayed(new Runnable() {

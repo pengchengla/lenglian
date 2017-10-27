@@ -10,11 +10,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.lenglian.R;
@@ -22,6 +27,7 @@ import com.example.administrator.lenglian.activity.LoginActivity;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.db.LitePalHelper;
 import com.example.administrator.lenglian.db.ShopCarBean;
+import com.example.administrator.lenglian.fragment.good.GoodDetailActivity;
 import com.example.administrator.lenglian.fragment.good.QueRenOrderActivity;
 import com.example.administrator.lenglian.listener.SnappingStepperValueChangeListener;
 import com.example.administrator.lenglian.utils.SpUtils;
@@ -155,6 +161,8 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                 } else {
                     if (noOneChecked()) {
                         Toast.makeText(this, "请先选中产品", Toast.LENGTH_SHORT).show();
+                    } else if (getCheckedItemCount() > 1) {
+                        Toast.makeText(this, "每次只能选中一款产品进行结算", Toast.LENGTH_SHORT).show();
                     } else {
                         Intent intent = new Intent(this, QueRenOrderActivity.class);
                         intent.putExtra("id", mGoodId);
@@ -192,15 +200,15 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btn_login:
-                Intent intent=new Intent(this, LoginActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 intent.putExtra("gologin", "gologin");
                 startActivity(intent);
                 break;
             case R.id.btn_go:
-//                EventMessage eventMessage = new EventMessage("allgoods");
-//                EventBus.getDefault().postSticky(eventMessage);
-//                finish();
-                Intent intent2=new Intent(MyShopCarActivity.this,CuXiaoActivity.class);
+                //                EventMessage eventMessage = new EventMessage("allgoods");
+                //                EventBus.getDefault().postSticky(eventMessage);
+                //                finish();
+                Intent intent2 = new Intent(MyShopCarActivity.this, CuXiaoActivity.class);
                 startActivity(intent2);
                 break;
         }
@@ -231,6 +239,14 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                         .setVisible(R.id.tv_size, true)
                         .setVisible(R.id.tv_xxxxxx, true);
             }
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.default_square)
+                    .priority(Priority.NORMAL)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+            Glide.with(mContext).load(item.getImgUrl())
+                    .apply(options)
+                    .into((ImageView) helper.getView(R.id.iv_tupian));
             helper.setText(R.id.tv_title, item.getName())
                     .setChecked(R.id.cb_car, item.isChecked())
                     .addOnClickListener(R.id.tv_delete);
@@ -238,10 +254,9 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
             final TextView tv_price = helper.getView(R.id.tv_price_pro);
             tv_size.setText(item.getDuration() + "");
             tv_price.setText(Float.parseFloat(item.getPrice()) * item.getDuration() + "");
-            helper.getView(R.id.ll_root_view).setOnClickListener(new View.OnClickListener() {
+            helper.getView(R.id.ll_check).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //直接在外层用adapter的点击事件就不管用，真是邪门
                     for (int i = 0; i < mData.size(); i++) {
                         if (helper.getAdapterPosition() == i) {
                             mData.get(i).setChecked(!mData.get(i).isChecked());
@@ -261,6 +276,14 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                     mCarAdapter.notifyDataSetChanged();
                 }
             });
+            helper.getView(R.id.ll_root_view).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MyShopCarActivity.this, GoodDetailActivity.class);
+                    intent.putExtra("id", item.getGoodId());
+                    startActivity(intent);
+                }
+            });
             final SnappingStepper stepper = helper.getView(R.id.stepper);
             stepper.setText(item.getDuration() + "");
             stepper.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
@@ -271,9 +294,10 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                         tv_price.setText(Float.parseFloat(item.getPrice()) * value + "");
                         tv_total_count.setText(value + "");
                         tv_total_price.setText(Float.parseFloat(item.getPrice()) * value + "");
-                        LitePalHelper.updateCount(item.getGoodId(), value);
-                        mData = LitePalHelper.search();
+                        mData.get(helper.getAdapterPosition()).setDuration(value);
                         notifyDataSetChanged();
+                        LitePalHelper.updateCount(item.getGoodId(), value);//不立即更新
+//                        mData = LitePalHelper.search();
                     } else {
                         stepper.setText(item.getDuration() + "");
                         Toast.makeText(MyShopCarActivity.this, "请先选中一款产品", Toast.LENGTH_SHORT).show();
@@ -303,5 +327,15 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
             }
         }
         return true;
+    }
+
+    private int getCheckedItemCount() {
+        int count = 0;
+        for (int i = 0; i < mData.size(); i++) {
+            if (mData.get(i).isChecked() == true) {
+                count++;
+            }
+        }
+        return count;
     }
 }

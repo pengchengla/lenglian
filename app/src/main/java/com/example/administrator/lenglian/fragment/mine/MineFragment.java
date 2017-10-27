@@ -25,7 +25,6 @@ import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
-import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.view.CircleImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -106,7 +105,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mine_login.setVisibility(View.GONE);
             mine_name.setVisibility(View.VISIBLE);
             mine_phone.setVisibility(View.VISIBLE);
-            network();
+          //  network();
         }
 
 
@@ -155,21 +154,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mine_login.setVisibility(View.GONE);
             mine_name.setVisibility(View.VISIBLE);
             mine_phone.setVisibility(View.VISIBLE);
-            //取头像
-            String photo = SpUtils.getString(getActivity(), "photos", "");
-            //加载数据
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .error(R.drawable.default_square)
-                    .priority(Priority.NORMAL)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-            Glide.with(mContext).load(photo)
-                    .apply(options)
-                    .into(mine_head);
-            if (!TextUtils.isEmpty(SpUtils.getString(getActivity(), "nick_name", ""))) {
-                mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
-
-            }
+//            //取头像
+//            String photo = SpUtils.getString(getActivity(), "photos", "");
+//            //加载数据
+//            RequestOptions options = new RequestOptions()
+//                    .centerCrop()
+//                    .error(R.drawable.default_square)
+//                    .priority(Priority.NORMAL)
+//                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+//            Glide.with(mContext).load(photo)
+//                    .apply(options)
+//                    .into(mine_head);
+//            if (!TextUtils.isEmpty(SpUtils.getString(getActivity(), "nick_name", ""))) {
+//                mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
+//
+//            }
+            network();
           //  initData();
         }
     }

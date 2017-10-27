@@ -118,14 +118,16 @@
                 <RelativeLayout
                     android:id="@+id/rl_noaddress"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:padding="10dp"
+                    android:gravity="center"
                     android:visibility="gone">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="您还没有设置地址，快去设置吧"
+                        android:textSize="15sp"
                         android:textColor="@color/textblack"/>
                     <ImageView
                         android:layout_width="wrap_content"
