@@ -248,7 +248,7 @@ public class BlankFragment extends BaseFragment {
                     list_recying.setAdapter(evaluateadapyer);
                 }
                 else if (result.getCode() == 101) {
-                    ToastUtils.showShort(getActivity(),"hahah");
+//                    ToastUtils.showShort(getActivity(),"hahah");
                     relativeLayout.setVisibility(View.VISIBLE);
                     list_recying.setVisibility(View.GONE);
                     textView.setVisibility(View.GONE);
@@ -317,7 +317,7 @@ public class BlankFragment extends BaseFragment {
 
                 }
                     else if (result.getCode() == 101) {
-                        ToastUtils.showShort(getActivity(),"hahah");
+                       // ToastUtils.showShort(getActivity(),"hahah");
                         relativeLayout.setVisibility(View.VISIBLE);
                         list_recying.setVisibility(View.GONE);
                         textView.setVisibility(View.GONE);
@@ -406,7 +406,7 @@ public class BlankFragment extends BaseFragment {
                  Zhifu();
         }
         else if(eventMessage.getMsg().equals("dingshouhuo")){
-            ToastUtils.showShort(getActivity(),"lllll");
+         //   ToastUtils.showShort(getActivity(),"lllll");
               ininjson();
               delivery();
 
