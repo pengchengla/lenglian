@@ -53,7 +53,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
         map.put("token", MyUtils.getToken());
         map.put("password", set_initialpwd.getText().toString());
         map.put("new_password", set_loginpwd.getText().toString());
-        RetrofitManager.post(MyContants.BASEURL + "s=User/addComment", map, new BaseObserver1<Resultbean>("") {
+        RetrofitManager.get(MyContants.BASEURL + "s=User/changePassword", map, new BaseObserver1<Resultbean>("") {
             @Override
             public void onSuccess(Resultbean result, String tag) {
                 if (result.getCode() == 200) {

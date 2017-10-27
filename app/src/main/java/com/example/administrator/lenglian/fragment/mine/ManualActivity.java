@@ -40,7 +40,7 @@ public class ManualActivity extends BaseActivity {
         setContentView(R.layout.mine_guideline);
         initView();
         network();
-         data();
+        data();
     }
     /*
       listview点击事件
@@ -48,27 +48,26 @@ public class ManualActivity extends BaseActivity {
      */
 
     private void data() {
-         list_user.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-             @Override
-             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 Intent it=new Intent(ManualActivity.this,UserDetailActivity.class);
-                 it.putExtra("guide_id",datas.get(position).getGuide_id());
-                 startActivity(it);
-             }
-         });
+        list_user.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent it = new Intent(ManualActivity.this, UserDetailActivity.class);
+                it.putExtra("guide_id", datas.get(position).getGuide_id());
+                it.putExtra("title", datas.get(position).getTitle());
+                startActivity(it);
+            }
+        });
 
     }
 
     private void network() {
-        RetrofitManager.get(MyContants.BASEURL +"s=Guide/listGuide", new BaseObserver1<Userbean>("") {
+        RetrofitManager.get(MyContants.BASEURL + "s=Guide/listGuide", new BaseObserver1<Userbean>("") {
             @Override
             public void onSuccess(Userbean result, String tag) {
-                if(result.getCode()==200){
+                if (result.getCode() == 200) {
                     datas = result.getDatas();
                     useradapter = new Useradapter(ManualActivity.this, datas);
                     list_user.setAdapter(useradapter);
-
-
                 }
             }
 
