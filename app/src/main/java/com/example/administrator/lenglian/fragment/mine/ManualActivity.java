@@ -56,12 +56,7 @@ public class ManualActivity extends BaseActivity {
                  startActivity(it);
              }
          });
-   tv_back.setOnClickListener(new View.OnClickListener() {
-       @Override
-       public void onClick(View v) {
-           finish();
-       }
-   });
+
     }
 
     private void network() {
@@ -87,6 +82,12 @@ public class ManualActivity extends BaseActivity {
     private void initView() {
         list_user = (ListView) findViewById(R.id.list_user);
         tv_back1 = (TextView) findViewById(R.id.tv_back);
+        tv_back1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
