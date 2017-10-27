@@ -13,7 +13,7 @@ public class Xiangqingbean {
     /**
      * code : 200
      * success : success
-     * datas : {"order_id":"140","order_num":"20171011172335","order_price":"5051.000000","order_status":"1","vendor_id":"0","user_id":"74","exp_time":"0000-00-00 00:00:00","order_time":"2017-10-11 17:23:35","ok_time":"0000-00-00 00:00:00","express_id":"22","receive_time":"0000-00-00 00:00:00","note":"","pro_id":"1","duration":"1","start_time":"0000-00-00 00:00:00","end_time":"0000-00-00 00:00:00","is_comment":"0","receive_name":"测试版","mobile":"18863894005","area_id":"北京市北京市崇文区","address_detail":"北京市北京市崇文区中关村孵化器","is_default":"1","is_del":"0","pro_pic":[{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}],"main_title":"啊啊啊啊啊","pro_price":"1","sub_title":"广泛的是第三方","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_deposit":"5000.00","express_money":"50.00","expired_time":0,"rent_again":[{"pro_id":"1","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"3","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"平面操作台","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"6","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"7","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"8","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"9","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]}
+     * datas : {"order_id":"321","order_num":"201710271649462043","order_price":"7620.00","order_status":"2","vendor_id":"0","user_id":"108","exp_time":"0000-00-00 00:00:00","order_time":"2017-10-27 16:49:46","ok_time":"0000-00-00 00:00:00","express_id":"171","receive_time":"2017-10-27 17:16:24","note":"","pro_id":"43","duration":"1","start_time":"0000-00-00 00:00:00","end_time":"0000-00-00 00:00:00","is_comment":"1","vendor_note":"","pay_type":"1","company_name":"","identifier":"","personal_name":"","receive_name":"km","mobile":"15501029707","area_id":"北京市北京市朝阳区","address_detail":"北京市北京市朝阳区啦啦啦","is_default":"1","is_del":"0","pro_pic":[{"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02b5b41522.jpg"}],"main_title":"CFC多媒体展示柜系列","pro_price":"140","sub_title":"多媒体展示柜","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02b5b41522.jpg","pro_deposit":"4000.00","express_money":"120.00","expired_time":12954752,"rent_again":[{"pro_id":"30","url":"/cfc/uploads/file1/20171023/59ed84407962d.jpg","pro_name":"1","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171023/59ed84407962d.jpg"},{"pro_id":"40","url":"/cfc/uploads/file1/20171025/59f0298a7b75b.jpg","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0298a7b75b.jpg"},{"pro_id":"41","url":"/cfc/uploads/file1/20171025/59f02a824f633.jpg","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02a824f633.jpg"},{"pro_id":"42","url":"/cfc/uploads/file1/20171025/59f02ae5548e5.jpg","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02ae5548e5.jpg"},{"pro_id":"43","url":"/cfc/uploads/file1/20171025/59f02b5b41522.jpg","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02b5b41522.jpg"},{"pro_id":"44","url":"/cfc/uploads/file1/20171025/59f02be0b15b9.jpg","pro_name":"豪华立式展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02be0b15b9.jpg"}]}
      */
 
     private int code;
@@ -46,39 +46,44 @@ public class Xiangqingbean {
 
     public static class DatasBean {
         /**
-         * order_id : 140
-         * order_num : 20171011172335
-         * order_price : 5051.000000
-         * order_status : 1
+         * order_id : 321
+         * order_num : 201710271649462043
+         * order_price : 7620.00
+         * order_status : 2
          * vendor_id : 0
-         * user_id : 74
+         * user_id : 108
          * exp_time : 0000-00-00 00:00:00
-         * order_time : 2017-10-11 17:23:35
+         * order_time : 2017-10-27 16:49:46
          * ok_time : 0000-00-00 00:00:00
-         * express_id : 22
-         * receive_time : 0000-00-00 00:00:00
+         * express_id : 171
+         * receive_time : 2017-10-27 17:16:24
          * note :
-         * pro_id : 1
+         * pro_id : 43
          * duration : 1
          * start_time : 0000-00-00 00:00:00
          * end_time : 0000-00-00 00:00:00
-         * is_comment : 0
-         * receive_name : 测试版
-         * mobile : 18863894005
-         * area_id : 北京市北京市崇文区
-         * address_detail : 北京市北京市崇文区中关村孵化器
+         * is_comment : 1
+         * vendor_note :
+         * pay_type : 1
+         * company_name :
+         * identifier :
+         * personal_name :
+         * receive_name : km
+         * mobile : 15501029707
+         * area_id : 北京市北京市朝阳区
+         * address_detail : 北京市北京市朝阳区啦啦啦
          * is_default : 1
          * is_del : 0
-         * pro_pic : [{"url":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
-         * main_title : 啊啊啊啊啊
-         * pro_price : 1
-         * sub_title : 广泛的是第三方
-         * pro_name : fdsafdg
-         * single_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
-         * pro_deposit : 5000.00
-         * express_money : 50.00
-         * expired_time : 0
-         * rent_again : [{"pro_id":"1","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"3","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"平面操作台","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"6","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"7","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"8","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"},{"pro_id":"9","url":"/cfc/uploads/file1/20170912/59b78365b13b4.png","pro_name":"fdsafdg","single_pic":"http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png"}]
+         * pro_pic : [{"url":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02b5b41522.jpg"}]
+         * main_title : CFC多媒体展示柜系列
+         * pro_price : 140
+         * sub_title : 多媒体展示柜
+         * pro_name : 多媒体展示柜
+         * single_pic : http://59.110.213.63/cfc/uploads/file1/20171025/59f02b5b41522.jpg
+         * pro_deposit : 4000.00
+         * express_money : 120.00
+         * expired_time : 12954752
+         * rent_again : [{"pro_id":"30","url":"/cfc/uploads/file1/20171023/59ed84407962d.jpg","pro_name":"1","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171023/59ed84407962d.jpg"},{"pro_id":"40","url":"/cfc/uploads/file1/20171025/59f0298a7b75b.jpg","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f0298a7b75b.jpg"},{"pro_id":"41","url":"/cfc/uploads/file1/20171025/59f02a824f633.jpg","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02a824f633.jpg"},{"pro_id":"42","url":"/cfc/uploads/file1/20171025/59f02ae5548e5.jpg","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02ae5548e5.jpg"},{"pro_id":"43","url":"/cfc/uploads/file1/20171025/59f02b5b41522.jpg","pro_name":"多媒体展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02b5b41522.jpg"},{"pro_id":"44","url":"/cfc/uploads/file1/20171025/59f02be0b15b9.jpg","pro_name":"豪华立式展示柜","single_pic":"http://59.110.213.63/cfc/uploads/file1/20171025/59f02be0b15b9.jpg"}]
          */
 
         private String order_id;
@@ -98,6 +103,11 @@ public class Xiangqingbean {
         private String start_time;
         private String end_time;
         private String is_comment;
+        private String vendor_note;
+        private String pay_type;
+        private String company_name;
+        private String identifier;
+        private String personal_name;
         private String receive_name;
         private String mobile;
         private String area_id;
@@ -251,6 +261,46 @@ public class Xiangqingbean {
             this.is_comment = is_comment;
         }
 
+        public String getVendor_note() {
+            return vendor_note;
+        }
+
+        public void setVendor_note(String vendor_note) {
+            this.vendor_note = vendor_note;
+        }
+
+        public String getPay_type() {
+            return pay_type;
+        }
+
+        public void setPay_type(String pay_type) {
+            this.pay_type = pay_type;
+        }
+
+        public String getCompany_name() {
+            return company_name;
+        }
+
+        public void setCompany_name(String company_name) {
+            this.company_name = company_name;
+        }
+
+        public String getIdentifier() {
+            return identifier;
+        }
+
+        public void setIdentifier(String identifier) {
+            this.identifier = identifier;
+        }
+
+        public String getPersonal_name() {
+            return personal_name;
+        }
+
+        public void setPersonal_name(String personal_name) {
+            this.personal_name = personal_name;
+        }
+
         public String getReceive_name() {
             return receive_name;
         }
@@ -381,7 +431,7 @@ public class Xiangqingbean {
 
         public static class ProPicBean {
             /**
-             * url : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+             * url : http://59.110.213.63/cfc/uploads/file1/20171025/59f02b5b41522.jpg
              */
 
             private String url;
@@ -397,10 +447,10 @@ public class Xiangqingbean {
 
         public static class RentAgainBean {
             /**
-             * pro_id : 1
-             * url : /cfc/uploads/file1/20170912/59b78365b13b4.png
-             * pro_name : fdsafdg
-             * single_pic : http://114.215.83.139/cfc/uploads/file1/20170912/59b78365b13b4.png
+             * pro_id : 30
+             * url : /cfc/uploads/file1/20171023/59ed84407962d.jpg
+             * pro_name : 1
+             * single_pic : http://59.110.213.63/cfc/uploads/file1/20171023/59ed84407962d.jpg
              */
 
             private String pro_id;

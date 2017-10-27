@@ -369,7 +369,7 @@
             android:layout_margin="5dp"
             android:padding="10dp"
             android:textSize="16sp"
-            android:text="北京险峰科技有限公司"
+            android:text=""
             android:layout_weight="2"
             android:gravity="right"
             android:layout_width="wrap_content"

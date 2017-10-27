@@ -49,6 +49,8 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
     private TextView renew_total;
     private TextView renew_btn;
     private String order_id;
+    private String price;
+    private String title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,6 +108,12 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
         Intent intent = getIntent();
         order_id = intent.getStringExtra("order_id");
         String xiu_img = intent.getStringExtra("xiu_img");
+        price = intent.getStringExtra("price");
+        title = intent.getStringExtra("title");
+        renew_count.setText(title);
+        renew_price.setText(price+"");
+        renew_money.setText("¥"+ price+"");
+        renew_total.setText("¥"+ price+"");
           /*
           加载图片
          */
@@ -123,6 +131,7 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
                 float v = Float.parseFloat(renew_price.getText().toString()) * value;
                 renew_money.setText("¥" +v+"0");
                 renew_total.setText("¥" +v+"0");
+                renew_geshu.setText("合计x"+value);
             }
         });
     }

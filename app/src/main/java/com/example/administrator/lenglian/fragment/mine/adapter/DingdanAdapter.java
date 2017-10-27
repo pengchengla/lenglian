@@ -156,6 +156,8 @@ public class DingdanAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, RenewActivity.class);
                     intent.putExtra("order_id", list.get(position).getOrder_id());
                     intent.putExtra("xiu_img",list.get(position).getPro_pic().get(0).getUrl());
+                    intent.putExtra("price",list.get(position).getPro_price());
+                    intent.putExtra("title",list.get(position).getMain_title());
                     context.startActivity(intent);
                 }
             });
@@ -231,6 +233,8 @@ public class DingdanAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, RenewActivity.class);
                     intent.putExtra("order_id", list.get(position).getOrder_id());
                     intent.putExtra("xiu_img",list.get(position).getPro_pic().get(0).getUrl());
+                    intent.putExtra("price",list.get(position).getPro_price());
+                    intent.putExtra("title",list.get(position).getMain_title());
                     context.startActivity(intent);
                 }
             });
@@ -250,6 +254,8 @@ public class DingdanAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, RenewActivity.class);
                     intent.putExtra("order_id", list.get(position).getOrder_id());
                     intent.putExtra("xiu_img",list.get(position).getPro_pic().get(0).getUrl());
+                    intent.putExtra("price",list.get(position).getPro_price());
+                    intent.putExtra("title",list.get(position).getMain_title());
                     context.startActivity(intent);
                 }
             });

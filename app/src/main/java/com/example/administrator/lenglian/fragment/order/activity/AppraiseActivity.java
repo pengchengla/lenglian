@@ -3,6 +3,7 @@ package com.example.administrator.lenglian.fragment.order.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -102,6 +103,16 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
                 details_zprice.setText("¥ "+datas.getOrder_price());
                 //发票
                 details_invoice.setText("");
+                //发票
+                if(TextUtils.isEmpty(datas.getPersonal_name())&&TextUtils.isEmpty(datas.getCompany_name())&&TextUtils.isEmpty(datas.getIdentifier())){
+                    details_invoice.setText("无发票");
+                }
+                else if(!TextUtils.isEmpty(datas.getPersonal_name())){
+                    details_invoice.setText(datas.getPersonal_name());
+                }
+                else if(!TextUtils.isEmpty(datas.getCompany_name())){
+                    details_invoice.setText(datas.getCompany_name());
+                }
                 //下单时间
                 details_data.setText(datas.getOrder_time());
                 details_songdadata.setText("¥ "+datas.getExpress_money());

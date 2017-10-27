@@ -380,11 +380,10 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
         // validate
         String edtext = warantu_edtext.getText().toString().trim();
         if (TextUtils.isEmpty(edtext)) {
-            Toast.makeText(this, "分享你的租赁心的  ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入你的租赁心的  ", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // TODO validate success, do something
 
 
     }
@@ -399,6 +398,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                 warantu_edtext.setCursorVisible(true);
                 break;
             case R.id.shop_tijiao:
+                if(mPicList.size()>0){
                 Thread thred=new Thread(new Runnable() {
 
                     private File f;
@@ -438,10 +438,14 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
 
 
 
-
-
+                }
+                else {
+                    ToastUtils.showShort(ShopdetailActivity.this,"请分享你的照片");
+                }
 
                 break;
-        }
+
+
+    }
     }
 }

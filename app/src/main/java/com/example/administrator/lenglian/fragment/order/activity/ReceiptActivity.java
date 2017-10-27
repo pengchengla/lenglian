@@ -3,6 +3,7 @@ package com.example.administrator.lenglian.fragment.order.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -106,7 +107,16 @@ public class ReceiptActivity extends BaseActivity implements View.OnClickListene
                     //合计
                     distribution_zprice.setText("¥ "+datas.getOrder_price());
                     //发票
-                    ususally_invoice.setText("");
+
+                    if(TextUtils.isEmpty(datas.getPersonal_name())&&TextUtils.isEmpty(datas.getCompany_name())&&TextUtils.isEmpty(datas.getIdentifier())){
+                        ususally_invoice.setText("无发票");
+                    }
+                    else if(!TextUtils.isEmpty(datas.getPersonal_name())){
+                        ususally_invoice.setText(datas.getPersonal_name());
+                    }
+                    else if(!TextUtils.isEmpty(datas.getCompany_name())){
+                        ususally_invoice.setText(datas.getCompany_name());
+                    }
                     //xiadanshijian
                     //下单时间
                     distribution_data.setText(datas.getOrder_time());

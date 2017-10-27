@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -123,7 +124,17 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                     //合计
                     total_price.setText("¥ "+ datas.getOrder_price());
                     //发票
-                    ususally_invoice.setText("");
+                    if(TextUtils.isEmpty(datas.getPersonal_name())&&TextUtils.isEmpty(datas.getCompany_name())&&TextUtils.isEmpty(datas.getIdentifier())){
+                        ususally_invoice.setText("无发票");
+                    }
+                    else if(!TextUtils.isEmpty(datas.getPersonal_name())){
+                        ususally_invoice.setText(datas.getPersonal_name());
+                    }
+                    else if(!TextUtils.isEmpty(datas.getCompany_name())){
+                        ususally_invoice.setText(datas.getCompany_name());
+                    }
+
+
                     //收货人
                     detail_name.setText(datas.getReceive_name());
                     //下单时间
