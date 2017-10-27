@@ -76,7 +76,7 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
                             warranty_list.setAdapter(warrantyadapter);
 
                         }
-                else if(result.getCode()==200){
+                else if(result.getCode()==101){
                             linearLayout.setVisibility(View.VISIBLE);
                             warranty_list.setVisibility(View.GONE);
                             textView.setText("我的报修    空空如也~");

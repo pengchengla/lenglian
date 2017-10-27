@@ -93,7 +93,7 @@
                 android:id="@+id/balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.00"
+                android:text="0.00"
                 android:textSize="18sp"
                 android:textColor="@color/textblack"
                />
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:padding="5dp"
-            android:text="2017-01-01 08:00:00至2017-01-01 08:00:00"
+            android:text="0000-00-00 00:00:00至0000-00-00 00:00:00"
             android:textSize="16dp"
             android:textColor="@color/textblack"/>
         </RelativeLayout>
@@ -168,7 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dip"
             android:padding="5dp"
-            android:text="¥5000.00"
+            android:text="¥0.00"
             android:textSize="16dp"
             android:layout_alignParentRight="true"
             android:textColor="@color/textblack"/>

@@ -65,14 +65,10 @@ public class ManualActivity extends BaseActivity {
     }
 
     private void network() {
-        RetrofitManager.get(MyContants.BASEURL + "s=Guide/listGuide", new BaseObserver1<Userbean>("") {
-
-
-
+        RetrofitManager.get(MyContants.BASEURL +"s=Guide/listGuide", new BaseObserver1<Userbean>("") {
             @Override
             public void onSuccess(Userbean result, String tag) {
                 if(result.getCode()==200){
-
                     datas = result.getDatas();
                     useradapter = new Useradapter(ManualActivity.this, datas);
                     list_user.setAdapter(useradapter);
