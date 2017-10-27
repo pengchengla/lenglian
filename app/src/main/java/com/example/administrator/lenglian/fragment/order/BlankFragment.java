@@ -191,9 +191,7 @@ public class BlankFragment extends BaseFragment {
                     @Override
                     public void run() {
                         if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
-                            if (datas != null) {
-                                dindanadapter.notifyDataSetChanged();
-                            }
+                            ininjson();
 
                         } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
                             //待支付

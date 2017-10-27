@@ -92,6 +92,8 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
     private Uri cropImageUri;
     private Handler handler=new Handler();
     private Upphotobean upphotobean;
+    private BaseDialog dialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,7 +221,7 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
                             .into(person_pho);
 
                 }
-                
+
             }
 
             @Override
@@ -448,13 +450,22 @@ public class PersoninforActivity extends BaseActivity implements View.OnClickLis
 
                 //设置监听事件
                 .builder();
+
         ed = (EditText) dialog.getView(R.id.person_nicheng).findViewById(R.id.person_nicheng);
+      TextView showtitle=(TextView)dialog.getView(R.id.showtitle).findViewById(R.id.showtitle);
         SoftKeyboardTool.showSoftKeyboard(ed);
+        if(type==1){
+showtitle.setText("请输入姓名");
+        }
+        else if(type==2){
+            showtitle.setText("请输入昵称");
+        }
         dialog.getView(R.id.btn_sure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(type==1){
                  person_name.setText(ed.getText().toString());
+
                     ininamend();}
                 else  if(type==2){
                     person_nick.setText(ed.getText().toString());

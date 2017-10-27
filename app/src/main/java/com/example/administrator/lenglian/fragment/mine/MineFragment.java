@@ -106,6 +106,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mine_login.setVisibility(View.GONE);
             mine_name.setVisibility(View.VISIBLE);
             mine_phone.setVisibility(View.VISIBLE);
+            network();
         }
 
 
@@ -113,6 +114,42 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         return rootView;
     }
+
+    private void network() {
+        Map<String, String> map = new HashMap<>();
+        map.put("user_id", SpUtils.getString(getActivity(), "user_id", ""));
+        map.put("token", MyUtils.getToken());
+        RetrofitManager.get(MyContants.BASEURL + "s=User/viewProfile", map, new BaseObserver1<Personbean>("") {
+
+            @Override
+            public void onSuccess(Personbean result, String tag) {
+
+                if (result.getCode() == 200) {
+                    datas = result.getDatas();
+                    //加载数据
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .error(R.drawable.default_square)
+                            .priority(Priority.NORMAL)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                    Glide.with(mContext).load(datas.get(0).getHead())
+                            .apply(options)
+                            .into(mine_head);
+                    //昵称
+                    mine_name.setText(datas.get(0).getNick_name());
+                    mine_phone.setText(datas.get(0).getMobile());
+
+
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+    }
+
     private void ppp() {
         if (!TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
             mine_login.setVisibility(View.GONE);
@@ -133,7 +170,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 mine_name.setText(SpUtils.getString(getActivity(), "nick_name", ""));
 
             }
-            initData();
+          //  initData();
         }
     }
 
@@ -160,7 +197,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                                 .apply(options)
                                 .into(mine_head);
                         //昵称
-                        mine_name.setText(datas.get(0).getUser_name());
+                        mine_name.setText(datas.get(0).getNick_name());
                         //手机号
                         String phone = SpUtils.getString(getActivity(), "phone", "");
                         mine_phone.setText(phone);
@@ -226,10 +263,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                             .apply(options)
                             .into(mine_head);
                     //昵称
-                    mine_name.setText(datas.get(0).getUser_name());
-                    //手机号
-                    String phone = SpUtils.getString(getActivity(), "phone", "");
-                    mine_phone.setText(phone);
+                    mine_name.setText(datas.get(0).getNick_name());
+                    mine_phone.setText(datas.get(0).getMobile());
 
 
                 }

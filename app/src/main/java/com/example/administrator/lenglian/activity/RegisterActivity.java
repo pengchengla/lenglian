@@ -20,6 +20,7 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SendSmsTimerUtils;
+import com.example.administrator.lenglian.utils.SpUtils;
 
 /**
  * Created by Administrator on 2017/8/24.
@@ -138,6 +139,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         arrayMap.put("mobile", edt_phone.getText().toString().trim());
         arrayMap.put("password", edt_mima.getText().toString().trim());
         arrayMap.put("code", edt_code.getText().toString().trim());
+        SpUtils.getString(this,"phone",edt_phone.getText().toString().trim());
         RetrofitManager.get(MyContants.BASEURL + "s=User/register", arrayMap, new BaseObserver1<RegisterBean>("") {
             @Override
             public void onSuccess(RegisterBean result, String tag) {

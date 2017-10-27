@@ -13,7 +13,7 @@ public class Personbean {
     /**
      * code : 200
      * success : success
-     * datas : [{"head":"","nick_name":"","sign":"","user_name":"","sex":"0","birth":"0000-00-00 00:00:00"}]
+     * datas : [{"head":"http://59.110.213.63/cfc/uploads/file1/20171019/59e846bcf170f.jpg","nick_name":"胡","sign":"股份返回韩国发生大","user_name":"看看","sex":"2017","birth":"2017年10月30日","mobile":"18310482720"}]
      */
 
     private int code;
@@ -46,12 +46,13 @@ public class Personbean {
 
     public static class DatasBean {
         /**
-         * head :
-         * nick_name :
-         * sign :
-         * user_name :
-         * sex : 0
-         * birth : 0000-00-00 00:00:00
+         * head : http://59.110.213.63/cfc/uploads/file1/20171019/59e846bcf170f.jpg
+         * nick_name : 胡
+         * sign : 股份返回韩国发生大
+         * user_name : 看看
+         * sex : 2017
+         * birth : 2017年10月30日
+         * mobile : 18310482720
          */
 
         private String head;
@@ -60,6 +61,7 @@ public class Personbean {
         private String user_name;
         private String sex;
         private String birth;
+        private String mobile;
 
         public String getHead() {
             return head;
@@ -107,6 +109,14 @@ public class Personbean {
 
         public void setBirth(String birth) {
             this.birth = birth;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
         }
     }
 }
