@@ -220,7 +220,6 @@ public class DingdanAdapter extends BaseAdapter {
 
             }
             else {
-                holder.order_evaluation.setFocusable(true);
 
                 finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
 
@@ -295,7 +294,6 @@ public class DingdanAdapter extends BaseAdapter {
 
             }
             else {
-                holder.order_evaluation.setFocusable(true);
 
                 finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
 
