@@ -112,7 +112,6 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
                 }
                 else if(!TextUtils.isEmpty(datas.getCompany_name())){
                     details_invoice.setText(datas.getCompany_name());
-
                 }
                 //下单时间
                 details_data.setText(datas.getOrder_time());
