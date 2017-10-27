@@ -53,6 +53,7 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
     private TextView distribution_paymentmethod;
     private TextView distribution_sum;
     private String order_id;
+    private TextView distribution_state;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,6 +110,33 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
                     /*
                       合计=押金+配送费+商品价格
                      */
+                String order_status = datas.getOrder_status();
+                if("5".equals(order_status)){
+                    distribution_state.setText("待激活");
+                }
+                else if("6".equals(order_status)){
+                    distribution_state.setText("已激活");
+                }
+                else if("7".equals(order_status)){
+                    distribution_state.setText("待维修");
+                }
+                else if("8".equals(order_status)){
+                    distribution_state.setText("维修中");
+                }
+                else if("9".equals(order_status)){
+                    distribution_state.setText("待取回");
+                }
+                else if("10".equals(order_status)){
+                    distribution_state.setText("取回中");
+                }
+                else if("11".equals(order_status)){
+                    distribution_state.setText("已取消");
+                }
+                else if("12".equals(order_status)){
+                    distribution_state.setText("已完成");
+                }
+
+
             }
             }
 
@@ -137,6 +165,7 @@ public class AppraiseActivity extends BaseActivity implements View.OnClickListen
         details_songdadata = (TextView) findViewById(R.id.details_songdadata);
         distribution_paymentmethod = (TextView) findViewById(R.id.distribution_paymentmethod);
         distribution_sum = (TextView) findViewById(R.id.distribution_sum);
+        distribution_state = (TextView) findViewById(R.id.distribution_state);
         tv_back.setOnClickListener(this);
         //得到数据
         Intent intent = getIntent();

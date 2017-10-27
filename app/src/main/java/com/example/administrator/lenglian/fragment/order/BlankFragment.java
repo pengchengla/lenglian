@@ -195,29 +195,13 @@ public class BlankFragment extends BaseFragment {
 
                         } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
                             //待支付
-//                            if(datasf!=null){
-//                                payadapter.notifyDataSetChanged();
-//                            }
                             Zhifu();
-
-
                         } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=2,3,4")) {
-
-//                            //待收货
-//                            if(datash!=null){
-//                                deliveryadapter.notifyDataSetChanged();
-//                            }
+                           //待收货
                             delivery();
-
-
                         } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/is_comment=5,6,7,8,9,10")) {
 //                            //待评价
-//                            if(datasp!=null){
-//                                evaluateadapyer.notifyDataSetChanged();
-//                            }
                             evaluate();
-
-
                         }
                         springview.onFinishFreshAndLoad();
                     }
@@ -404,14 +388,24 @@ public class BlankFragment extends BaseFragment {
          }
         else if(eventMessage.getMsg().equals("xufei")){
             evaluate();
+            ininjson();
 
         }
         else if(eventMessage.getMsg().equals("ping")){
             evaluate();
+            ininjson();
         }
         else if(eventMessage.getMsg().equals("pay")){
                 ininjson();
                  Zhifu();
+        }
+        else if(eventMessage.getMsg().equals("dingshouhuo")){
+              ininjson();
+              delivery();
+
+        }
+        else if(eventMessage.getMsg().equals("tuihuan")){
+            ininjson();
         }
     }
     public void fff(){

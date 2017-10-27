@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.MyApplication;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.bean.Xiangqingbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -23,6 +24,9 @@ import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -172,7 +176,7 @@ public class ReceiptActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_receiving:
-
+                recycing();
 
                 break;
             case R.id. tv_back:
@@ -180,8 +184,31 @@ public class ReceiptActivity extends BaseActivity implements View.OnClickListene
                 break;
         }
     }
-      private void recycing(){
+    //确认收货
+    private void recycing(){
+        //网络请求
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id", SpUtils.getString(ReceiptActivity.this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("order_id",order_id);
+        RetrofitManager.post(MyContants.BASEURL +"s=User/commitOrder", map, new BaseObserver1<Resultbean>("") {
+            @Override
+            public void onSuccess(Resultbean result, String tag) {
+                if(result.getCode()==200){
+                    ToastUtils.showShort(ReceiptActivity.this,"确认收货");
+                      finish();
+                    //发送eventbus通知刷新界面数据修改状态
+                    EventMessage eventMessage = new EventMessage("dingshouhuo");
+                    EventBus.getDefault().postSticky(eventMessage);
+                }
 
+            }
 
-      }
+            @Override
+            public void onFailed(int code) {
+
+            }
+        });
+
+    }
 }

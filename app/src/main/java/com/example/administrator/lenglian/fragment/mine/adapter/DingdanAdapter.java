@@ -17,6 +17,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
@@ -31,6 +32,8 @@ import com.example.administrator.lenglian.utils.PayUtil;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.socks.library.KLog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -96,13 +99,6 @@ public class DingdanAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         //加载数据
-//        holder.order_evaluation.setFocusable(false);
-//        holder.order_zhifi.setFocusable(false);
-//        holder.order_pause.setFocusable(false);
-//        holder.order_tuihuan.setFocusable(false);
-//        holder.order_repairs.setFocusable(false);
-//        holder.order_renew.setFocusable(false);
-//        holder.receving.setFocusable(false);
         holder.order_count.setText(list.get(position).getMain_title());
         holder.order_price.setText(list.get(position).getPro_price());
         /*
@@ -153,6 +149,16 @@ public class DingdanAdapter extends BaseAdapter {
                     context.startActivity(inten);
                 }
             });
+            //续费
+            holder.order_renew.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RenewActivity.class);
+                    intent.putExtra("order_id", list.get(position).getOrder_id());
+                    intent.putExtra("xiu_img",list.get(position).getPro_pic().get(0).getUrl());
+                    context.startActivity(intent);
+                }
+            });
             //评价
             final ViewHolder finalHolder = holder;
             final int positions= (int) holder.order_evaluation.getTag();
@@ -175,20 +181,76 @@ public class DingdanAdapter extends BaseAdapter {
 
             }
             else {
-              //  holder.order_evaluation.setFocusable(true);
-
                 finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
 
             }
         }
+        else if("7".equals(list.get(position).getOrder_status())||"8".equals(list.get(position).getOrder_status()
+        )||"9".equals(list.get(position).getOrder_status())||"10".equals(list.get(position).getOrder_status())
+                ||"11".equals(list.get(position).getOrder_status())||"12".equals(list.get(position).getOrder_status())){
+            holder.pay.setVisibility(View.GONE);
+            holder.evaluate.setVisibility(View.VISIBLE);
+            holder.receving.setVisibility(View.GONE);
+            //报修
+            holder.order_repairs.setTextColor(context.getResources().getColor(R.color.font_black_6));
+            //退换
+            holder.order_tuihuan.setTextColor(context.getResources().getColor(R.color.font_black_6));
+            //激活
+            holder.order_activate.setTextColor(context.getResources().getColor(R.color.font_black_6) );
+            holder.order_activate.setBackground(context.getResources().getDrawable(R.drawable.shape_line));
+            //评价
+            final ViewHolder finalHolder = holder;
+            final  int positions= (int) holder.order_evaluation.getTag();
+            KLog.d("tag",positions);
+            if("0".equals(list.get(positions).getIs_comment())) {
 
-       else if ("6".equals(list.get(position).getOrder_status()) || "7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status())) {
+                holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //判断评价是否评价
+                        Intent inte = new Intent(context, ShopdetailActivity.class);
+                        inte.putExtra("pro_id", list.get(positions).getPro_id());
+                        inte.putExtra("order_id", list.get(positions).getOrder_id());
+                        inte.putExtra("pin_img",list.get(position).getPro_pic().get(0).getUrl());
+                        context.startActivity(inte);
+                    }
+
+
+                });
+
+            }
+            else {
+                holder.order_evaluation.setFocusable(true);
+
+                finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+
+            }
             //续费
             holder.order_renew.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, RenewActivity.class);
                     intent.putExtra("order_id", list.get(position).getOrder_id());
+                    intent.putExtra("xiu_img",list.get(position).getPro_pic().get(0).getUrl());
+                    context.startActivity(intent);
+                }
+            });
+
+        }
+       else if ("6".equals(list.get(position).getOrder_status())) {
+            holder.pay.setVisibility(View.GONE);
+            holder.evaluate.setVisibility(View.VISIBLE);
+            holder.receving.setVisibility(View.GONE);
+            //激活
+            holder.order_activate.setTextColor(context.getResources().getColor(R.color.font_black_6) );
+            holder.order_activate.setBackground(context.getResources().getDrawable(R.drawable.shape_line));
+            //续费
+            holder.order_renew.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RenewActivity.class);
+                    intent.putExtra("order_id", list.get(position).getOrder_id());
+                    intent.putExtra("xiu_img",list.get(position).getPro_pic().get(0).getUrl());
                     context.startActivity(intent);
                 }
             });
@@ -213,7 +275,7 @@ public class DingdanAdapter extends BaseAdapter {
             });
             //评价
             final ViewHolder finalHolder = holder;
-            final    int positions= (int) holder.order_evaluation.getTag();
+            final  int positions= (int) holder.order_evaluation.getTag();
             KLog.d("tag",positions);
             if("0".equals(list.get(positions).getIs_comment())) {
 
@@ -240,9 +302,10 @@ public class DingdanAdapter extends BaseAdapter {
             }
         }
         //收货
-        else if ("2".equals(list.get(position).getOrder_status()) || "3".equals(list.get(position).getOrder_status()) || "4".equals(list.get(position).getOrder_status())
-                || "9".equals(list.get(position).getOrder_status()) || "10".equals(list.get(position).getOrder_status())
-                || "7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status())) {
+        else if ("2".equals(list.get(position).getOrder_status()) ||
+                "3".equals(list.get(position).getOrder_status()) ||
+                "4".equals(list.get(position).getOrder_status())
+                ) {
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.GONE);
             holder.receving.setVisibility(View.VISIBLE);
@@ -294,6 +357,9 @@ public class DingdanAdapter extends BaseAdapter {
                      ToastUtils.showShort(context,"确认收货");
                      list.remove(position);
                      notifyDataSetChanged();
+                     //发送eventbus刷新数据
+                     EventMessage eventMessage = new EventMessage("dingshouhuo");
+                     EventBus.getDefault().postSticky(eventMessage);
 
                  }
                }

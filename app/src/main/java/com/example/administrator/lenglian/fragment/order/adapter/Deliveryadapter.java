@@ -15,6 +15,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
@@ -25,6 +26,8 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +136,9 @@ public class Deliveryadapter extends BaseAdapter {
                           ToastUtils.showShort(context,"确认收货");
                           list.remove(position);
                           notifyDataSetChanged();
+                          //发送eventbus通知刷新界面数据修改状态
+                          EventMessage eventMessage = new EventMessage("dingshouhuo");
+                          EventBus.getDefault().postSticky(eventMessage);
                       }
 
               }

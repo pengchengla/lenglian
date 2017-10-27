@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -22,6 +23,8 @@ import com.example.administrator.lenglian.utils.SoftKeyboardTool;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.utils.provice.AddressUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -140,6 +143,8 @@ public class BaoxiuActivity extends BaseActivity implements View.OnClickListener
                  if(result.getCode()==200){
                      ToastUtils.showShort(BaoxiuActivity.this,"提交成功");
                      finish();
+                     EventMessage eventMessage = new EventMessage("tuihuan");
+                     EventBus.getDefault().postSticky(eventMessage);
                  }
             }
 
