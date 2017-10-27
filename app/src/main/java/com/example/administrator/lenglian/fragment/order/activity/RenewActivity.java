@@ -121,8 +121,8 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onValueChange(View view, int value) {
                 float v = Float.parseFloat(renew_price.getText().toString()) * value;
-                renew_money.setText("¥"+v+"0");
-                renew_total.setText("¥"+v+"0");
+                renew_money.setText("¥" +v+"0");
+                renew_total.setText("¥" +v+"0");
             }
         });
     }
