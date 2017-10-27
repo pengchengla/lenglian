@@ -17,6 +17,7 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.listener.SnappingStepperValueChangeListener;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
@@ -116,6 +117,14 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
         Glide.with(this).load( xiu_img)
                 .apply(options)
                 .into( renew_tupian);
+        renew_num.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
+            @Override
+            public void onValueChange(View view, int value) {
+                float v = Float.parseFloat(renew_price.getText().toString()) * value;
+                renew_money.setText("¥"+v+"0");
+                renew_total.setText("¥"+v+"0");
+            }
+        });
     }
 
     @Override
