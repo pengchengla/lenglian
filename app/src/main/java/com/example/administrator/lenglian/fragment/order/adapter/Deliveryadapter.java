@@ -134,10 +134,9 @@ public class Deliveryadapter extends BaseAdapter {
               public void onSuccess(Resultbean result, String tag) {
                       if(result.getCode()==200){
                           ToastUtils.showShort(context,"确认收货");
-                          list.remove(position);
                           notifyDataSetChanged();
                           //发送eventbus通知刷新界面数据修改状态
-                          EventMessage eventMessage = new EventMessage("dingshouhuo");
+                          EventMessage eventMessage = new EventMessage("shouhuo");
                           EventBus.getDefault().postSticky(eventMessage);
                       }
 

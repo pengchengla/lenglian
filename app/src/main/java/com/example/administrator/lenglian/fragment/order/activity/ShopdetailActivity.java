@@ -154,6 +154,9 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                        ToastUtils.showShort(ShopdetailActivity.this,"提交成功");
                      list.clear();
                      finish();
+                     //法送Eventbus刷新数据
+                     EventMessage eventMessage = new EventMessage("pings");
+                     EventBus.getDefault().postSticky(eventMessage);
 
                  }
             }
@@ -432,9 +435,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                     }
                 });
                 thred.start();
-                //法送Eventbus刷新数据
-                EventMessage eventMessage = new EventMessage("ping");
-                EventBus.getDefault().postSticky(eventMessage);
+
 
 
 

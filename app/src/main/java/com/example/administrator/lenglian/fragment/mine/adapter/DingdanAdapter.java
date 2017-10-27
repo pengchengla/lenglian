@@ -47,8 +47,7 @@ import java.util.Map;
 public class DingdanAdapter extends BaseAdapter {
     private Context context;
     private List<Dingdanbean.DatasBean> list;
-    // 用来记录按钮状态的Map
-    public static Map<Integer, Boolean> isChecked;
+
 
     public DingdanAdapter(Context context, List<Dingdanbean.DatasBean> list) {
         this.context = context;
@@ -105,7 +104,6 @@ public class DingdanAdapter extends BaseAdapter {
          photo
          */
         RequestOptions options = new RequestOptions()
-                .centerCrop()
                 .error(R.drawable.default_square)
                 .priority(Priority.NORMAL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -306,9 +304,8 @@ public class DingdanAdapter extends BaseAdapter {
             }
         }
         //收货
-        else if ("2".equals(list.get(position).getOrder_status()) ||
-                "3".equals(list.get(position).getOrder_status()) ||
-                "4".equals(list.get(position).getOrder_status())
+        else if ("2".equals(list.get(position).getOrder_status()) ||"3".equals(list.get(position).getOrder_status()) ||
+                 "4".equals(list.get(position).getOrder_status())
                 ) {
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.GONE);
@@ -359,7 +356,6 @@ public class DingdanAdapter extends BaseAdapter {
                public void onSuccess(Resultbean result, String tag) {
                  if(result.getCode()==200) {
                      ToastUtils.showShort(context,"确认收货");
-                     list.remove(position);
                      notifyDataSetChanged();
                      //发送eventbus刷新数据
                      EventMessage eventMessage = new EventMessage("dingshouhuo");

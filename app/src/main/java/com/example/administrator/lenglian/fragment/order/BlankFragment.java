@@ -119,8 +119,11 @@ public class BlankFragment extends BaseFragment {
 
 
             api = getArguments().getString("api");
-            if (api.equals(MyContants.BASEURL + "s=Order/listOrder")) {
+            if (api.equals(MyContants.BASEURL+"s=Order/listOrder")) {
                 //网络请求
+                if(api==null){
+                    return;
+                }
                 ininjson();
 
             } else if (api.equals(MyContants.BASEURL + "s=Order/listOrder/order_status=1")) {
@@ -245,6 +248,7 @@ public class BlankFragment extends BaseFragment {
                     list_recying.setAdapter(evaluateadapyer);
                 }
                 else if (result.getCode() == 101) {
+                    ToastUtils.showShort(getActivity(),"hahah");
                     relativeLayout.setVisibility(View.VISIBLE);
                     list_recying.setVisibility(View.GONE);
                     textView.setVisibility(View.GONE);
@@ -301,10 +305,7 @@ public class BlankFragment extends BaseFragment {
         Map<String,String> map=new HashMap<>();
           map.put("user_id",SpUtils.getString(mContext,"user_id",""));
           map.put("token", MyUtils.getToken());
-        RetrofitManager.get(api, map, new BaseObserver1<Dingdanbean>("") {
-
-
-
+        RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                     if (result.getCode() == 200) {
@@ -316,6 +317,7 @@ public class BlankFragment extends BaseFragment {
 
                 }
                     else if (result.getCode() == 101) {
+                        ToastUtils.showShort(getActivity(),"hahah");
                         relativeLayout.setVisibility(View.VISIBLE);
                         list_recying.setVisibility(View.GONE);
                         textView.setVisibility(View.GONE);
@@ -395,17 +397,27 @@ public class BlankFragment extends BaseFragment {
             evaluate();
             ininjson();
         }
+        else if(eventMessage.getMsg().equals("pings")){
+            evaluate();
+            ininjson();
+        }
         else if(eventMessage.getMsg().equals("pay")){
                 ininjson();
                  Zhifu();
         }
         else if(eventMessage.getMsg().equals("dingshouhuo")){
+            ToastUtils.showShort(getActivity(),"lllll");
               ininjson();
               delivery();
 
         }
         else if(eventMessage.getMsg().equals("tuihuan")){
             ininjson();
+        }
+        else if(eventMessage.getMsg().equals("shouhuo")){
+            ininjson();
+            delivery();
+
         }
     }
     public void fff(){
