@@ -408,14 +408,13 @@ public class BlankFragment extends BaseFragment {
         else if(eventMessage.getMsg().equals("dingshouhuo")){
          //   ToastUtils.showShort(getActivity(),"lllll");
               ininjson();
-              delivery();
+           //   delivery();
 
         }
         else if(eventMessage.getMsg().equals("tuihuan")){
             ininjson();
         }
         else if(eventMessage.getMsg().equals("shouhuo")){
-            ininjson();
             delivery();
 
         }

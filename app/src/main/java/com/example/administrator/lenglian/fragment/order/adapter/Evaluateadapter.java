@@ -85,7 +85,6 @@ public class Evaluateadapter extends BaseAdapter {
           加载图片
          */
         RequestOptions options = new RequestOptions()
-                .centerCrop()
                 .error(R.drawable.default_square)
                 .priority(Priority.NORMAL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -103,6 +102,8 @@ public class Evaluateadapter extends BaseAdapter {
                 Intent intent=new Intent(context,RenewActivity.class);
                 intent.putExtra("xiu_img",list.get(position).getPro_pic().get(0).getUrl());
                 intent.putExtra("order_id",list.get(position).getOrder_id());
+                intent.putExtra("price",list.get(position).getPro_price());
+                intent.putExtra("title",list.get(position).getMain_title());
                 context.startActivity(intent);
             }
         });
@@ -115,6 +116,7 @@ public class Evaluateadapter extends BaseAdapter {
                       Intent inte=new Intent(context,ShopdetailActivity.class);
                       inte.putExtra("pro_id",list.get(position).getPro_id());
                       inte.putExtra("order_id",list.get(position).getOrder_id());
+                      inte.putExtra("pin_img",list.get(position).getPro_pic().get(0).getUrl());
                       context.startActivity(inte);
                   }
                 else {

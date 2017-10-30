@@ -68,7 +68,6 @@ public class Evaiuateadapter extends BaseAdapter {
           加载图片
          */
         RequestOptions options=new RequestOptions()
-                .centerCrop()
                 .error(R.drawable.default_square)
                 .priority(Priority.NORMAL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

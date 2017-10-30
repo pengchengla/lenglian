@@ -89,7 +89,7 @@
                 android:textColor="@color/textblack"
                 android:layout_margin="5dp"
                 android:padding="10dp"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:text="1345678"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -99,7 +99,7 @@
                 android:textColor="@color/redd"
                 android:layout_margin="5dp"
                 android:padding="10dp"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:text=""
                 android:id="@+id/distribution_state"
                 android:layout_width="wrap_content"

@@ -35,8 +35,156 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
-   <RelativeLayout
 
+    <LinearLayout
+        android:id="@+id/liner_tab"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:weightSum="4"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="45dp">
+            <TextView
+                android:id="@+id/alldingdan"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="全部订单"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            </LinearLayout>
+            <View
+                android:background="#80c0c0c0"
+                android:layout_width="1dp"
+                android:layout_height="45dp"></View>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="45dp">
+            <TextView
+                android:id="@+id/ding_zhifu"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="待支付"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+                </LinearLayout>
+            <View
+                android:background="#80c0c0c0"
+                android:layout_width="1dp"
+                android:layout_height="45dp"></View>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="45dp">
+            <TextView
+                android:id="@+id/ding_shuohuo"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="待收货"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+                </LinearLayout>
+            <View
+                android:background="#80c0c0c0"
+                android:layout_width="1dp"
+                android:layout_height="45dp"></View>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="45dp">
+            <TextView
+                android:id="@+id/ding_pinjia"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="待评价"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+                </LinearLayout>
+            <View
+                android:background="#80c0c0c0"
+                android:layout_width="1dp"
+                android:layout_height="45dp"></View>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:orientation="horizontal">
+            <View
+                android:id="@+id/v1"
+                android:background="@color/blue"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"></View>
+            <View
+                android:visibility="invisible"
+                android:id="@+id/v2"
+                android:background="@color/blue"
+                android:layout_width="90dp"
+                android:layout_height="2dp"
+                ></View>
+            <View
+                android:visibility="invisible"
+            android:background="@color/blue"
+                android:layout_width="90dp"
+            android:layout_height="2dp"
+            android:id="@+id/v3"></View>
+            <View
+                android:visibility="invisible"
+                android:background="@color/blue"
+                android:layout_width="90dp"
+                android:layout_height="2dp"
+                android:id="@+id/v4"></View>
+
+        </LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/tab"
+        app:tabMode="fixed"
+        android:paddingTop="5dp"
+        app:tabIndicatorColor="@color/blue"
+        />
+    <View
+        android:background="@color/hui"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"/>
+
+        <FrameLayout
+            android:background="@color/white"
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <RelativeLayout
+      android:visibility="gone"
        android:id="@+id/real_login"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
@@ -76,28 +224,4 @@
        </LinearLayout>
    </RelativeLayout>
 
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/liner_tab"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/tab"
-        app:tabMode="fixed"
-        android:paddingTop="5dp"
-        app:tabIndicatorColor="@color/blue"
-        />
-    <View
-        android:background="@color/hui"
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"/>
-    <FrameLayout
-        android:background="@color/white"
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    </LinearLayout>
 </LinearLayout>

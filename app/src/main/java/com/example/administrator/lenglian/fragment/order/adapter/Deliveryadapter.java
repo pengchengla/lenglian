@@ -89,7 +89,6 @@ public class Deliveryadapter extends BaseAdapter {
          */
 
              RequestOptions options = new RequestOptions()
-                     .centerCrop()
                      .error(R.drawable.default_square)
                      .priority(Priority.NORMAL)
                      .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -105,7 +104,8 @@ public class Deliveryadapter extends BaseAdapter {
                      int i = (int) finalHolder.reying_btn.getTag();
                      //确认收货
                      recycing(i);
-
+                     EventMessage eventMessage = new EventMessage("dingshouhuo");
+                     EventBus.getDefault().postSticky(eventMessage);
 
                  }
              });

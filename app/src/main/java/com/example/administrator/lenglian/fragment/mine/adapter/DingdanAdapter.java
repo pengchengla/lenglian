@@ -387,7 +387,8 @@ public class DingdanAdapter extends BaseAdapter {
             public void onSuccess(Resultbean result, String tag) {
                 if(result.getCode()==200)  {
                     ToastUtils.showShort(context,"订单已取消");
-                    list.remove(position);
+                   // list.remove(position);
+
                     notifyDataSetChanged();
                 }
             }

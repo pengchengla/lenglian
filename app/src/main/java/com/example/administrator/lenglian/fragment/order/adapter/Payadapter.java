@@ -15,6 +15,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
@@ -26,6 +27,8 @@ import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.PayUtil;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +96,6 @@ public class Payadapter extends BaseAdapter {
 
 
                  RequestOptions options = new RequestOptions()
-                         .centerCrop()
                          .error(R.drawable.default_square)
                          .priority(Priority.NORMAL)
                          .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -113,6 +115,8 @@ public class Payadapter extends BaseAdapter {
                      //取消
                     int i=(int) finalHolder.order_pause.getTag();
                      pausevoid(i);
+                     EventMessage eventMessage = new EventMessage("qu");
+                     EventBus.getDefault().postSticky(eventMessage);
 
 
                  }
@@ -156,7 +160,8 @@ public class Payadapter extends BaseAdapter {
               public void onSuccess(Resultbean result, String tag) {
                   if(result.getCode()==200)  {
                       ToastUtils.showShort(context,"订单已取消");
-                      list.remove(position);
+                      EventMessage eventMessage = new EventMessage("quxiao");
+                      EventBus.getDefault().postSticky(eventMessage);
                       notifyDataSetChanged();
                   }
               }
