@@ -59,12 +59,14 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
                 if (result.getCode() == 200) {
                     ToastUtils.showShort(AmendpwdActivity.this, "修改成功");
                     finish();
+                } else {
+                    ToastUtils.showShort(AmendpwdActivity.this, result.getError());
                 }
             }
 
             @Override
             public void onFailed(int code) {
-
+                ToastUtils.showShort(AmendpwdActivity.this, "请检查网络或重试" + code);
             }
         });
     }

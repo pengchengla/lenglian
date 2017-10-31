@@ -14,6 +14,15 @@ public class Resultbean {
 
     private int code;
     private String msg;
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 
     public int getCode() {
         return code;

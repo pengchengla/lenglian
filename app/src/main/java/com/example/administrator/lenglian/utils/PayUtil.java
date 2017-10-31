@@ -14,10 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
-import com.bumptech.glide.load.data.ExifOrientationStream;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.bean.EventMessage;
-import com.example.administrator.lenglian.fragment.mine.GoPayActivity;
 import com.example.administrator.lenglian.fragment.order.adapter.Diagpaydapter;
 import com.example.administrator.lenglian.fragment.order.bean.Bank;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -189,7 +187,7 @@ public class PayUtil {
                         msg.what = SDK_PAY_FLAG;
                         msg.obj = result;
                         mHandler.sendMessage(msg);
-                         ((Activity) context).finish();
+//                         ((Activity) context).finish();
                         EventMessage eventMessage = new EventMessage("pay");
                         EventBus.getDefault().postSticky(eventMessage);
 
