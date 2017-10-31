@@ -11,6 +11,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.vise.baseble.ViseBluetooth;
 
 import org.litepal.LitePalApplication;
 
@@ -27,6 +28,8 @@ public class MyApplication extends LitePalApplication {
         initUMShare();
         initUMPush();
         application=this;
+        //蓝牙信息初始化，全局唯一，必须在应用初始化时调用
+        ViseBluetooth.getInstance().init(getApplicationContext());
     }
 
     @Override

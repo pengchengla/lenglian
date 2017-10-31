@@ -50,7 +50,7 @@ public class BlueActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blue);
-        img_loading = (ImageView) findViewById(R.id.img_loading);
+//        img_loading = (ImageView) findViewById(R.id.img_loading);
         txt = (TextView) findViewById(R.id.txt);
         operatingAnim = AnimationUtils.loadAnimation(this, R.anim.rotate);
         operatingAnim.setInterpolator(new LinearInterpolator());

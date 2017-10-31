@@ -6,14 +6,6 @@
               android:orientation="vertical"
               android:padding="20dp"
 >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:text="提示"
-        android:textColor="@color/textblack"
-        android:textSize="16sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,14 +16,14 @@
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/textblack"/>
-        <ImageView
-            android:id="@+id/img_loading"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="30dp"
-            android:src="@mipmap/ic_loading"/>
+            android:text="设备激活中..."
+            android:textSize="16sp"
+            android:textColor="@color/blue"/>
+        <ProgressBar
+            android:id="@+id/pb_load"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

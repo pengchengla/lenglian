@@ -219,7 +219,8 @@
 
         <service android:name=".blue.BluetoothService"/>
 
-        <activity android:name=".blue.MyBlueActivity">
+        <activity android:name=".blue.MyBlueActivity"
+                  android:theme="@style/TipDialog">
         </activity>
         <activity android:name=".activity.BindMobileActivity">
         </activity>

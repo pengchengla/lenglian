@@ -421,7 +421,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 .builder();
         dialog.show();
         TextView tv_content = dialog.getView(R.id.tv_content);
-        tv_content.setText("确认拨打010-12345674？");
+        tv_content.setText("确认拨打4006020069？");
         TextView tv_canel = dialog.getView(R.id.tv_canel);
         tv_canel.setOnClickListener(new View.OnClickListener() {
             @Override

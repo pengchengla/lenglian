@@ -61,6 +61,16 @@ public class Dingdanbean {
          * express_money : 120.00
          */
 
+        private String mac;
+
+        public String getMac() {
+            return mac;
+        }
+
+        public void setMac(String mac) {
+            this.mac = mac;
+        }
+
         private String order_id;
         private String order_num;
         private String order_status;
