@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -92,6 +93,7 @@ public class DingdanAdapter extends BaseAdapter {
             holder.pay = (LinearLayout) convertView.findViewById(R.id.pay);
             holder.recying_btn = (TextView) convertView.findViewById(R.id.recying_btn);
             holder.receving = (TextView) convertView.findViewById(R.id.receving);
+           holder.liner_receving= (RelativeLayout) convertView.findViewById(R.id.liner_receving);
             convertView.setTag(holder);
             holder.order_evaluation.setTag(position);
         } else {
@@ -118,7 +120,7 @@ public class DingdanAdapter extends BaseAdapter {
 
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.VISIBLE);
-            holder.receving.setVisibility(View.GONE);
+            holder.liner_receving.setVisibility(View.GONE);
 
             //激活
             holder.order_activate.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +162,7 @@ public class DingdanAdapter extends BaseAdapter {
                     intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
                     intent.putExtra("price", list.get(position).getPro_price());
                     intent.putExtra("title", list.get(position).getMain_title());
+                    intent.putExtra("order_num",list.get(position).getOrder_num());
                     context.startActivity(intent);
                 }
             });
@@ -189,10 +192,10 @@ public class DingdanAdapter extends BaseAdapter {
             }
         } else if ("7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status()
         ) || "9".equals(list.get(position).getOrder_status()) || "10".equals(list.get(position).getOrder_status())
-                || "11".equals(list.get(position).getOrder_status()) || "12".equals(list.get(position).getOrder_status())) {
+                || "11".equals(list.get(position).getOrder_status())) {
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.VISIBLE);
-            holder.receving.setVisibility(View.GONE);
+            holder.liner_receving.setVisibility(View.GONE);
             //报修
             holder.order_repairs.setTextColor(context.getResources().getColor(R.color.font_black_6));
             //退换
@@ -234,22 +237,23 @@ public class DingdanAdapter extends BaseAdapter {
                     intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
                     intent.putExtra("price", list.get(position).getPro_price());
                     intent.putExtra("title", list.get(position).getMain_title());
+                    intent.putExtra("order_num",list.get(position).getOrder_num());
                     context.startActivity(intent);
                 }
             });
 
-        } else if ("6".equals(list.get(position).getOrder_status())) {
         }
+
          else if("12".equals(list.get(position).getOrder_status())){
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.GONE);
-            holder.receving.setVisibility(View.GONE);
+            holder.liner_receving.setVisibility(View.GONE);
 
         }
        else if ("6".equals(list.get(position).getOrder_status())) {
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.VISIBLE);
-            holder.receving.setVisibility(View.GONE);
+            holder.liner_receving.setVisibility(View.GONE);
             //激活
             holder.order_activate.setTextColor(context.getResources().getColor(R.color.font_black_6));
             holder.order_activate.setBackground(context.getResources().getDrawable(R.drawable.shape_line));
@@ -262,6 +266,7 @@ public class DingdanAdapter extends BaseAdapter {
                     intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
                     intent.putExtra("price", list.get(position).getPro_price());
                     intent.putExtra("title", list.get(position).getMain_title());
+                    intent.putExtra("order_num",list.get(position).getOrder_num());
                     context.startActivity(intent);
                 }
             });
@@ -316,7 +321,7 @@ public class DingdanAdapter extends BaseAdapter {
                 ) {
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.GONE);
-            holder.receving.setVisibility(View.VISIBLE);
+            holder.liner_receving.setVisibility(View.VISIBLE);
             //收货按钮
             holder.receving.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -328,12 +333,12 @@ public class DingdanAdapter extends BaseAdapter {
 
             holder.evaluate.setVisibility(View.GONE);
             holder.pay.setVisibility(View.VISIBLE);
-            holder.receving.setVisibility(View.GONE);
+            holder.liner_receving.setVisibility(View.GONE);
             //支付
             holder.order_zhifi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PayUtil payUtil = new PayUtil(context, list.get(position).getOrder_num());
+                    PayUtil payUtil = new PayUtil(context, list.get(position).getOrder_num(),1);
                     payUtil.showGenderDialog(Gravity.BOTTOM, R.style.Bottom_Top_aniamtion, context);
                 }
             });
@@ -424,6 +429,7 @@ public class DingdanAdapter extends BaseAdapter {
         public LinearLayout pay;
         public TextView recying_btn;
         public TextView receving;
+        public RelativeLayout liner_receving;
     }
 
 

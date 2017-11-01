@@ -60,7 +60,7 @@ public class AmendpwdActivity extends BaseActivity implements View.OnClickListen
                     ToastUtils.showShort(AmendpwdActivity.this, "修改成功");
                     finish();
                 } else {
-                    ToastUtils.showShort(AmendpwdActivity.this, result.getError());
+
                 }
             }
 

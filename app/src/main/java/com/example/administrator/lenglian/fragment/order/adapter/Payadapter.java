@@ -124,7 +124,7 @@ public class Payadapter extends BaseAdapter {
              holder.order_zhifi.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-                     PayUtil payUtil=new PayUtil(context,list.get(position).getOrder_num());
+                     PayUtil payUtil=new PayUtil(context,list.get(position).getOrder_num(),1);
 
                      payUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,context);
 

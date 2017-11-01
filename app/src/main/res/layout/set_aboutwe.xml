@@ -49,21 +49,44 @@
 
     </LinearLayout>
       <LinearLayout
-          android:layout_margin="10dp"
           android:background="@drawable/shape_radu"
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
-          <EditText
-              android:cursorVisible="false"
-              android:background="@null"
-              android:layout_margin="10dp"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+          <TextView
+              android:layout_marginTop="10dp"
+              android:layout_marginLeft="20dp"
+              android:text="adaaa"
               android:id="@+id/set_edwe"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:hint="关于我们的内容"
-              android:textSize="14sp"
-              android:padding="20dp"></EditText>
-
+              android:textSize="16sp"
+              ></TextView>
+          <TextView
+              android:layout_marginLeft="10dp"
+              android:text="sdsdada"
+              android:id="@+id/text_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="16sp"
+            ></TextView>
+          <TextView
+              android:layout_marginTop="5dp"
+              android:layout_marginLeft="20dp"
+              android:text="sdsdada"
+              android:id="@+id/text_count1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="16sp"
+              ></TextView>
+          <TextView
+              android:layout_marginLeft="10dp"
+              android:text="sdsdada"
+              android:id="@+id/text_count2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="16sp"
+              ></TextView>
 
       </LinearLayout>
 </LinearLayout>

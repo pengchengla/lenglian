@@ -9,20 +9,13 @@ public class Resultbean {
 
     /**
      * code : 200
-     * msg : success
+     * success : success
+     * datas : 20171101172613403
      */
 
     private int code;
-    private String msg;
-    private String error;
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
+    private String success;
+    private String datas;
 
     public int getCode() {
         return code;
@@ -32,11 +25,19 @@ public class Resultbean {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getSuccess() {
+        return success;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setSuccess(String success) {
+        this.success = success;
+    }
+
+    public String getDatas() {
+        return datas;
+    }
+
+    public void setDatas(String datas) {
+        this.datas = datas;
     }
 }

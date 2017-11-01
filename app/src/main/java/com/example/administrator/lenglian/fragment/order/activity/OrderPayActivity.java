@@ -216,7 +216,7 @@ public class OrderPayActivity extends BaseActivity implements View.OnClickListen
                   break;
               case R.id.order_zhifi:
                   //支付
-                  PayUtil payUtil=new PayUtil(this,datas.getOrder_num());
+                  PayUtil payUtil=new PayUtil(this,datas.getOrder_num(),1);
                   payUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,this);
                   break;
               case R.id. order_pause:

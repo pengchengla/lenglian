@@ -44,12 +44,14 @@ public class PayUtil {
      private String order_num;
     private String payPrice;
     private static final int SDK_PAY_FLAG = 1;
+    private int num;
     // IWXAPI 是第三方app和微信通信的openapi接口
     private IWXAPI api;
     private String WX_APPID = "wx76c60c8c929e5061";// 微信appid
-    public PayUtil(Context context,String order_num) {
+    public PayUtil(Context context,String order_num,int num) {
         this.context = context;
         this.order_num=order_num;
+        this.num=num;
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
         api = WXAPIFactory.createWXAPI(context, WX_APPID, false);
         // 将该app注册到微信
@@ -169,8 +171,14 @@ public class PayUtil {
     private void goAliPay() {
         //        Toast.makeText(this, mOrder_num + "", Toast.LENGTH_SHORT).show();
         ArrayMap arrayMap = new ArrayMap<String, String>();
+          if(num==1){
+              arrayMap.put("order_num", order_num);
+          }
+        else if(num==2){
+              arrayMap.put("renewal_num", order_num);
+          }
         arrayMap.put("type", "ali");
-        arrayMap.put("order_num", order_num);
+
         RetrofitManager.get(MyContants.BASEURL + "s=Payment/pay", arrayMap, new BaseObserver1<AliPayBean>("") {
             @Override
             public void onSuccess(AliPayBean result, String tag) {
@@ -189,6 +197,8 @@ public class PayUtil {
                         mHandler.sendMessage(msg);
 //                         ((Activity) context).finish();
                         EventMessage eventMessage = new EventMessage("pay");
+                        EventBus.getDefault().postSticky(eventMessage);
+                        EventMessage eventMessages = new EventMessage("renew");
                         EventBus.getDefault().postSticky(eventMessage);
 
                     }
@@ -211,7 +221,12 @@ public class PayUtil {
     private void weixinPay() {
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("type", "wx");
-        arrayMap.put("order_num", order_num);
+        if(num==1){
+            arrayMap.put("order_num", order_num);
+        }
+        else if(num==2){
+            arrayMap.put("renewal_num", order_num);
+        }
         RetrofitManager.get(MyContants.BASEURL + "s=Payment/pay", arrayMap, new BaseObserver1<WXPayBean>("") {
             @Override
             public void onSuccess(WXPayBean result, String tag) {
@@ -231,6 +246,8 @@ public class PayUtil {
                 SpUtils.putString(context,"wxprice",datas.getPay_price());
                 ((Activity) context).finish();
                 EventMessage eventMessage = new EventMessage("pay");
+                EventBus.getDefault().postSticky(eventMessage);
+                EventMessage eventMessages = new EventMessage("renew");
                 EventBus.getDefault().postSticky(eventMessage);
             }
             @Override

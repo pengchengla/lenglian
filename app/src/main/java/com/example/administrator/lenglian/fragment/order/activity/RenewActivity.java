@@ -28,6 +28,8 @@ import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.view.SnappingStepper;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,11 +53,13 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
     private String order_id;
     private String price;
     private String title;
+    private String order_num;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_renew);
+        EventBus.getDefault().register(this);
         initView();
         //加载网络请求
     }
@@ -71,12 +75,12 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
             public void onSuccess(Resultbean result, String tag) {
 
                     if(result.getCode()==200) {
-
-                        ToastUtils.showShort(RenewActivity.this,"续费成功");
+                        String datas = result.getDatas();
                         //Eventbus刷新数据
                         EventMessage eventMessage = new EventMessage("xufei");
                         EventBus.getDefault().postSticky(eventMessage);
-                        finish();
+                        PayUtil payUtil=new PayUtil(RenewActivity.this, datas,2);
+                        payUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,RenewActivity.this);
                     }
 
             }
@@ -110,6 +114,7 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
         String xiu_img = intent.getStringExtra("xiu_img");
         price = intent.getStringExtra("price");
         title = intent.getStringExtra("title");
+        order_num = intent.getStringExtra("order_num");
         renew_count.setText(title);
         renew_price.setText(price+"");
         renew_money.setText("¥"+ price+"");
@@ -137,12 +142,25 @@ public class RenewActivity extends BaseActivity implements View.OnClickListener 
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void myEvent(EventMessage eventMessages) {
+        if (eventMessages.getMsg().equals("fff")) {
+            network();
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_back:
                 finish();
                 break;
             case R.id.renew_btn:
+
             //    PayUtil.showGenderDialog(Gravity.BOTTOM,R.style.Bottom_Top_aniamtion,this);
                 network();
                 break;

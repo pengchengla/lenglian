@@ -104,6 +104,7 @@ public class Evaluateadapter extends BaseAdapter {
                 intent.putExtra("order_id",list.get(position).getOrder_id());
                 intent.putExtra("price",list.get(position).getPro_price());
                 intent.putExtra("title",list.get(position).getMain_title());
+                intent.putExtra("order_num",list.get(position).getOrder_num());
                 context.startActivity(intent);
             }
         });
