@@ -22,12 +22,14 @@ import com.example.administrator.lenglian.utils.SpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import util.UpdateAppUtils;
+
 /**
  * date : ${Date}
  * author:衣鹏宇(ypu)
  */
 
-public class SetActivity extends BaseActivity implements View.OnClickListener {
+public class  SetActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back;
     private RelativeLayout set_zhanhao;
     private RelativeLayout set_update;
@@ -102,7 +104,8 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.set_update:
-                showDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
+                update();
+//                showDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
                 break;
             case R.id.set_clean:
                 cleanDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
@@ -117,6 +120,18 @@ public class SetActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+       private void update(){
+           UpdateAppUtils.from(this)
+                   .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE) //更新检测方式，默认为VersionCode
+                   .serverVersionCode(1) //服务器穿过来的
+                   .serverVersionName("2.0")//服务器传过来的
+                   .apkPath("http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk")//更新的连接
+                   .showNotification(true) //是否显示下载进度到通知栏，默认为true
+                  // .updateInfo()  //更新日志信息 String
+                   .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP) //下载方式：app下载、手机浏览器下载。默认app下载
+                   .isForce(false) //是否强制更新，默认false 强制更新情况下用户不同意更新则不能使用app
+                   .update();
+       }
     private void showDialog(int grary, int animationStyle) {
         BaseDialog.Builder builder = new BaseDialog.Builder(this);
         final BaseDialog dialog = builder.setViewId(R.layout.dialog_phone)

@@ -69,12 +69,11 @@
         android:background="@color/hui" />
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/evaluate"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="18dp"
-        android:layout_marginRight="10dp"
-        android:layout_width="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
@@ -185,6 +184,7 @@
             />
     </LinearLayout>
     <RelativeLayout
+        android:visibility="gone"
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -195,7 +195,7 @@
             android:layout_height="35dp"
             android:textSize="14sp"
             android:gravity="center"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/shape_redline"
             android:id="@+id/receving"
             android:textColor="@color/redd"

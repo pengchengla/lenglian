@@ -239,6 +239,14 @@ public class DingdanAdapter extends BaseAdapter {
             });
 
         } else if ("6".equals(list.get(position).getOrder_status())) {
+        }
+         else if("12".equals(list.get(position).getOrder_status())){
+            holder.pay.setVisibility(View.GONE);
+            holder.evaluate.setVisibility(View.GONE);
+            holder.receving.setVisibility(View.GONE);
+
+        }
+       else if ("6".equals(list.get(position).getOrder_status())) {
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.VISIBLE);
             holder.receving.setVisibility(View.GONE);

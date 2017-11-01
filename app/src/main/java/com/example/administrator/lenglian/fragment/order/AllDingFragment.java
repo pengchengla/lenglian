@@ -87,7 +87,11 @@ public class AllDingFragment extends BaseFragment {
                     Intent it = new Intent(getActivity(), ReceiptActivity.class);
                     it.putExtra("order_id", datas.get(position).getOrder_id());
                     startActivity(it);
-                } else {
+                }
+                else if("12".equals(datas.get(position).getOrder_status())){
+                       return;
+                }
+                else {
                     Intent intent = new Intent(getActivity(), AppraiseActivity.class);
                     intent.putExtra("order_id", datas.get(position).getOrder_id());
                     startActivity(intent);
