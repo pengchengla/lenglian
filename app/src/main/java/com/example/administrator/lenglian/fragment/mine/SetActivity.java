@@ -122,7 +122,7 @@ public class  SetActivity extends BaseActivity implements View.OnClickListener {
     }
        private void update(){
 
-           UpdateAppUtils.from(this)
+           UpdateAppUtils.from(SetActivity.this)
                    .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE) //更新检测方式，默认为VersionCode
                    .serverVersionCode(1) //服务器穿过来的
                    .serverVersionName("2.0")//服务器传过来的

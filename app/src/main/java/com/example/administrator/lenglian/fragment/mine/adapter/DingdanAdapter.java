@@ -48,7 +48,8 @@ import java.util.Map;
 public class DingdanAdapter extends BaseAdapter {
     private Context context;
     private List<Dingdanbean.DatasBean> list;
-
+    //定义hashMap 用来存放之前创建的每一项item
+    HashMap<Integer, View> lmap = new HashMap<Integer, View>();
 
     public DingdanAdapter(Context context, List<Dingdanbean.DatasBean> list) {
         this.context = context;
@@ -75,28 +76,15 @@ public class DingdanAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         ViewHolder holder = null;
-        if (convertView == null) {
-            holder = new ViewHolder();
+        if (lmap.get(position) == null) {
             //填充布局
             convertView = LayoutInflater.from(context).inflate(R.layout.ding_order, null);
-            holder.order_tupian = (ImageView) convertView.findViewById(R.id.order_tupian);
-            holder.order_count = (TextView) convertView.findViewById(R.id.order_count);
-            holder.order_price = (TextView) convertView.findViewById(R.id.order_price);
-            holder.order_activate = (TextView) convertView.findViewById(R.id.order_activate);
-            holder.order_renew = (TextView) convertView.findViewById(R.id.order_renew);
-            holder.order_tuihuan = (TextView) convertView.findViewById(R.id.order_tuihuan);
-            holder.order_repairs = (TextView) convertView.findViewById(R.id.order_repairs);
-            holder.order_evaluation = (TextView) convertView.findViewById(R.id.order_evaluation);
-            holder.evaluate = (LinearLayout) convertView.findViewById(R.id.evaluate);
-            holder.order_pause = (TextView) convertView.findViewById(R.id.order_pause);
-            holder.order_zhifi = (TextView) convertView.findViewById(R.id.order_zhifi);
-            holder.pay = (LinearLayout) convertView.findViewById(R.id.pay);
-            holder.recying_btn = (TextView) convertView.findViewById(R.id.recying_btn);
-            holder.receving = (TextView) convertView.findViewById(R.id.receving);
-           holder.liner_receving= (RelativeLayout) convertView.findViewById(R.id.liner_receving);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
             holder.order_evaluation.setTag(position);
+            lmap.put(position,convertView);
         } else {
+            convertView=lmap.get(position);
             holder = (ViewHolder) convertView.getTag();
         }
         //加载数据
@@ -170,15 +158,15 @@ public class DingdanAdapter extends BaseAdapter {
             final ViewHolder finalHolder = holder;
             final int positions = (int) holder.order_evaluation.getTag();
             KLog.d("tag", positions);
-            if ("0".equals(list.get(positions).getIs_comment())) {
+            if ("0".equals(list.get(position).getIs_comment())) {
 
                 holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //判断评价是否评价
                         Intent inte = new Intent(context, ShopdetailActivity.class);
-                        inte.putExtra("pro_id", list.get(positions).getPro_id());
-                        inte.putExtra("order_id", list.get(positions).getOrder_id());
+                        inte.putExtra("pro_id", list.get(position).getPro_id());
+                        inte.putExtra("order_id", list.get(position).getOrder_id());
                         inte.putExtra("pin_img", list.get(position).getPro_pic().get(0).getUrl());
                         context.startActivity(inte);
                     }
@@ -207,15 +195,15 @@ public class DingdanAdapter extends BaseAdapter {
             final ViewHolder finalHolder = holder;
             final int positions = (int) holder.order_evaluation.getTag();
             KLog.d("tag", positions);
-            if ("0".equals(list.get(positions).getIs_comment())) {
+            if ("0".equals(list.get(position).getIs_comment())) {
 
                 holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //判断评价是否评价
                         Intent inte = new Intent(context, ShopdetailActivity.class);
-                        inte.putExtra("pro_id", list.get(positions).getPro_id());
-                        inte.putExtra("order_id", list.get(positions).getOrder_id());
+                        inte.putExtra("pro_id", list.get(position).getPro_id());
+                        inte.putExtra("order_id", list.get(position).getOrder_id());
                         inte.putExtra("pin_img", list.get(position).getPro_pic().get(0).getUrl());
                         context.startActivity(inte);
                     }
@@ -293,15 +281,15 @@ public class DingdanAdapter extends BaseAdapter {
             final ViewHolder finalHolder = holder;
             final int positions = (int) holder.order_evaluation.getTag();
             KLog.d("tag", positions);
-            if ("0".equals(list.get(positions).getIs_comment())) {
+            if ("0".equals(list.get(position).getIs_comment())) {
 
                 holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //判断评价是否评价
                         Intent inte = new Intent(context, ShopdetailActivity.class);
-                        inte.putExtra("pro_id", list.get(positions).getPro_id());
-                        inte.putExtra("order_id", list.get(positions).getOrder_id());
+                        inte.putExtra("pro_id", list.get(position).getPro_id());
+                        inte.putExtra("order_id", list.get(position).getOrder_id());
                         inte.putExtra("pin_img", list.get(position).getPro_pic().get(0).getUrl());
                         context.startActivity(inte);
                     }
@@ -430,6 +418,24 @@ public class DingdanAdapter extends BaseAdapter {
         public TextView recying_btn;
         public TextView receving;
         public RelativeLayout liner_receving;
+
+        public ViewHolder(View convertView) {
+            order_tupian = (ImageView) convertView.findViewById(R.id.order_tupian);
+          order_count = (TextView) convertView.findViewById(R.id.order_count);
+           order_price = (TextView) convertView.findViewById(R.id.order_price);
+           order_activate = (TextView) convertView.findViewById(R.id.order_activate);
+           order_renew = (TextView) convertView.findViewById(R.id.order_renew);
+           order_tuihuan = (TextView) convertView.findViewById(R.id.order_tuihuan);
+           order_repairs = (TextView) convertView.findViewById(R.id.order_repairs);
+            order_evaluation = (TextView) convertView.findViewById(R.id.order_evaluation);
+            evaluate = (LinearLayout) convertView.findViewById(R.id.evaluate);
+            order_pause = (TextView) convertView.findViewById(R.id.order_pause);
+           order_zhifi = (TextView) convertView.findViewById(R.id.order_zhifi);
+            pay = (LinearLayout) convertView.findViewById(R.id.pay);
+            recying_btn = (TextView) convertView.findViewById(R.id.recying_btn);
+            receving = (TextView) convertView.findViewById(R.id.receving);
+            liner_receving= (RelativeLayout) convertView.findViewById(R.id.liner_receving);
+        }
     }
 
 
