@@ -45,7 +45,7 @@ import java.util.Queue;
 
 public class MyBlueActivity extends Activity {
     //让当前这个activity继承自Activity，而不是AppCompatActivity，否则会报主题的错误。
-    private String mac = "FF:FF:50:00:00:91";
+    private String mac = "";//起得名字是mac,但是服务器那边获取的是广播名
     private String order_id;
     private String serviceUUID;
     private String characteristicUUID;
@@ -152,7 +152,7 @@ public class MyBlueActivity extends Activity {
                     mReturn_current_time = result.getDatas().getReturn_current_time();
                     mReturn_end_time = result.getDatas().getReturn_end_time();
                     if (TextUtils.isEmpty(mac)) {
-                        Toast.makeText(MyBlueActivity.this, "设备Mac地址不存在", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyBlueActivity.this, "设备不存在", Toast.LENGTH_SHORT).show();
                         finish();
                     } else if (TextUtils.isEmpty(order_id)) {
                         Toast.makeText(MyBlueActivity.this, "订单号不存在", Toast.LENGTH_SHORT).show();
@@ -345,8 +345,8 @@ public class MyBlueActivity extends Activity {
         * 连接指定Mac地址的设备，该方式使用前不需要进行扫描，该方式直接将扫描和连接放到一起，
         * 在扫描到指定设备后自动进行连接，使用方式如下：
         * */
-
-        ViseBluetooth.getInstance().connectByMac(mac, true, new IConnectCallback() {
+        //其实是广播名字
+        ViseBluetooth.getInstance().connectByName(mac, true, new IConnectCallback() {
             @Override
             public void onConnectSuccess(BluetoothGatt gatt, int status) {
                 //                Toast.makeText(MyBlueActivity.this, "连接成功", Toast.LENGTH_SHORT).show();
