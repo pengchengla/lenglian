@@ -19,6 +19,10 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.bean.EasyBean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -37,6 +41,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
 
 
 public class MyBlueActivity extends Activity {
@@ -63,13 +68,40 @@ public class MyBlueActivity extends Activity {
     };
     private String mCurrent_time;
     private String mEnd_time;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    //可在其中解析amapLocation获取相应内容。
+                    //获取纬度
+                    mLatitude = amapLocation.getLatitude();
+                    //获取经度
+                    mLongitude = amapLocation.getLongitude();
+//                    Toast.makeText(MyBlueActivity.this, "纬度："+latitude+"  经度："+longitude, Toast.LENGTH_SHORT).show();
+                } else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+//                    Log.e("AmapError", "location Error, ErrCode:"
+//                            + amapLocation.getErrorCode() + ", errInfo:"
+//                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+    private double mLatitude;
+    private double mLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_blue);
         tv = (TextView) findViewById(R.id.tv);
-        mac = getIntent().getStringExtra("mac");
+        //        mac = getIntent().getStringExtra("mac");
         order_id = getIntent().getStringExtra("order_id");
         //        Toast.makeText(this, " " + mac, Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(mac) || TextUtils.isEmpty(order_id)) {
@@ -77,6 +109,33 @@ public class MyBlueActivity extends Activity {
             finish();
         }
         initData();
+        initLocation();
+    }
+
+    private void initLocation() {
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+        mLocationOption.setInterval(2000);
+        //获取最近3s内精度最高的一次定位结果：
+        //设置setOnceLocationLatest(boolean b)接口为true，
+        // 启动定位时SDK会返回最近3s内精度最高的一次定位结果。
+        // 如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+        mLocationOption.setOnceLocationLatest(true);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+        mLocationOption.setHttpTimeOut(20000);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
     }
 
     private void initData() {
@@ -143,6 +202,9 @@ public class MyBlueActivity extends Activity {
         arrayMap.put("token", MyUtils.getToken());
         arrayMap.put("current_time", mCurrent_time);
         arrayMap.put("end_time", mEnd_time);
+        arrayMap.put("longitude", mLongitude+"");
+        arrayMap.put("latitude", mLatitude+"");
+//        Toast.makeText(MyBlueActivity.this, "纬度："+mLatitude+"  经度："+mLongitude, Toast.LENGTH_SHORT).show();
         RetrofitManager.get(MyContants.BASEURL + "s=User/alivePro", arrayMap, new BaseObserver1<EasyBean>("") {
             @Override
             public void onSuccess(EasyBean result, String tag) {
@@ -269,6 +331,7 @@ public class MyBlueActivity extends Activity {
     }
 
     private void connectAndWrite() {
+//        showDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
          /*
         * 连接指定Mac地址的设备，该方式使用前不需要进行扫描，该方式直接将扫描和连接放到一起，
         * 在扫描到指定设备后自动进行连接，使用方式如下：

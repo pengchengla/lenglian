@@ -32,10 +32,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="5dp"
+        android:layout_marginTop="5dp"
         android:text="常温柜"
         android:textColor="#54c7fc"
         android:textSize="14sp"/>
