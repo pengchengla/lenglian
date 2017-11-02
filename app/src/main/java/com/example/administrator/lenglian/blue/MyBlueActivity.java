@@ -95,6 +95,7 @@ public class MyBlueActivity extends Activity {
     public AMapLocationClientOption mLocationOption = null;
     private double mLatitude;
     private double mLongitude;
+    private boolean isSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -357,6 +358,12 @@ public class MyBlueActivity extends Activity {
                 //                Toast.makeText(MyBlueActivity.this, "连接断开", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ViseBluetooth.getInstance().clear();
     }
 
     private void writePswData(String gattCharacteristic) {

@@ -64,6 +64,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             fragmentTransaction.show(mBaseFragments[2]);
             fragmentTransaction.hide(mBaseFragments[0]).hide(mBaseFragments[1]).hide(mBaseFragments[3]);
             fragmentTransaction.commitAllowingStateLoss();
+            EventMessage eventMessages = new EventMessage("pay");
+            EventBus.getDefault().postSticky(eventMessages);
         }
     }
 
