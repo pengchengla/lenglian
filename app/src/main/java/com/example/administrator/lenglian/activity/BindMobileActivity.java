@@ -84,15 +84,15 @@ public class BindMobileActivity extends BaseActivity implements View.OnClickList
     }
 
     private void goInputPsw() {
-        if (TextUtils.isEmpty(edt_code.getText().toString())){
+        if (TextUtils.isEmpty(edt_code.getText().toString())) {
             Toast.makeText(BindMobileActivity.this, "验证码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        Intent intent = new Intent(this,InputPswActivity.class);
-        intent.putExtra("type",getIntent().getStringExtra("type"));
-        intent.putExtra("openid",getIntent().getStringExtra("openid"));
-        intent.putExtra("code",edt_code.getText().toString());
-        intent.putExtra("phone",edt_phone.getText().toString());
+        Intent intent = new Intent(this, InputPswActivity.class);
+        intent.putExtra("type", getIntent().getStringExtra("type"));
+        intent.putExtra("openid", getIntent().getStringExtra("openid"));
+        intent.putExtra("code", edt_code.getText().toString());
+        intent.putExtra("phone", edt_phone.getText().toString());
         startActivity(intent);
         finish();
     }

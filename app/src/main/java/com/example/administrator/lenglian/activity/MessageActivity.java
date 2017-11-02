@@ -102,7 +102,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         protected void convert(BaseViewHolder helper, MsgBean.DatasEntity item) {
-            helper.setText(R.id.tv_msg_type, item.getNews_type().equals("1") ? "订单通知" : "保修通知")
+            helper.setText(R.id.tv_msg_type, item.getNews_type().equals("1") ? "订单通知" : "报修通知")
                     .setText(R.id.tv_date, item.getSend_time())
                     .setText(R.id.tv_msg_content, item.getNews());
         }
