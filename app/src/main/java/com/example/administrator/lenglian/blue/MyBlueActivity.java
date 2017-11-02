@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Queue;
 
 
-
 public class MyBlueActivity extends Activity {
     //让当前这个activity继承自Activity，而不是AppCompatActivity，否则会报主题的错误。
     private String mac = "FF:FF:50:00:00:91";
@@ -81,12 +80,12 @@ public class MyBlueActivity extends Activity {
                     mLatitude = amapLocation.getLatitude();
                     //获取经度
                     mLongitude = amapLocation.getLongitude();
-//                    Toast.makeText(MyBlueActivity.this, "纬度："+latitude+"  经度："+longitude, Toast.LENGTH_SHORT).show();
+                    //                    Toast.makeText(MyBlueActivity.this, "纬度："+latitude+"  经度："+longitude, Toast.LENGTH_SHORT).show();
                 } else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-//                    Log.e("AmapError", "location Error, ErrCode:"
-//                            + amapLocation.getErrorCode() + ", errInfo:"
-//                            + amapLocation.getErrorInfo());
+                    //                    Log.e("AmapError", "location Error, ErrCode:"
+                    //                            + amapLocation.getErrorCode() + ", errInfo:"
+                    //                            + amapLocation.getErrorInfo());
                 }
             }
         }
@@ -96,6 +95,8 @@ public class MyBlueActivity extends Activity {
     private double mLatitude;
     private double mLongitude;
     private boolean isSuccess;
+    private String mReturn_current_time;
+    private String mReturn_end_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +106,6 @@ public class MyBlueActivity extends Activity {
         //        mac = getIntent().getStringExtra("mac");
         order_id = getIntent().getStringExtra("order_id");
         //        Toast.makeText(this, " " + mac, Toast.LENGTH_SHORT).show();
-        if (TextUtils.isEmpty(mac) || TextUtils.isEmpty(order_id)) {
-            Toast.makeText(this, "设备Mac地址不存在", Toast.LENGTH_SHORT).show();
-            finish();
-        }
         initData();
         initLocation();
     }
@@ -151,7 +148,18 @@ public class MyBlueActivity extends Activity {
                 if (result.getCode() == 200) {
                     mCurrent_time = result.getDatas().getCurrent_time();
                     mEnd_time = result.getDatas().getEnd_time();
-                    checkBluetoothPermission();
+                    mac = result.getDatas().getMac();
+                    mReturn_current_time = result.getDatas().getReturn_current_time();
+                    mReturn_end_time = result.getDatas().getReturn_end_time();
+                    if (TextUtils.isEmpty(mac)) {
+                        Toast.makeText(MyBlueActivity.this, "设备Mac地址不存在", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else if (TextUtils.isEmpty(order_id)) {
+                        Toast.makeText(MyBlueActivity.this, "订单号不存在", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        checkBluetoothPermission();
+                    }
                 }
             }
 
@@ -201,11 +209,11 @@ public class MyBlueActivity extends Activity {
         arrayMap.put("user_id", SpUtils.getString(this, "user_id", ""));
         arrayMap.put("order_id", order_id);
         arrayMap.put("token", MyUtils.getToken());
-        arrayMap.put("current_time", mCurrent_time);
-        arrayMap.put("end_time", mEnd_time);
-        arrayMap.put("longitude", mLongitude+"");
-        arrayMap.put("latitude", mLatitude+"");
-//        Toast.makeText(MyBlueActivity.this, "纬度："+mLatitude+"  经度："+mLongitude, Toast.LENGTH_SHORT).show();
+        arrayMap.put("current_time", mReturn_current_time);
+        arrayMap.put("end_time", mReturn_end_time);
+        arrayMap.put("longitude", mLongitude + "");
+        arrayMap.put("latitude", mLatitude + "");
+        //        Toast.makeText(MyBlueActivity.this, "纬度："+mLatitude+"  经度："+mLongitude, Toast.LENGTH_SHORT).show();
         RetrofitManager.get(MyContants.BASEURL + "s=User/alivePro", arrayMap, new BaseObserver1<EasyBean>("") {
             @Override
             public void onSuccess(EasyBean result, String tag) {
@@ -332,7 +340,7 @@ public class MyBlueActivity extends Activity {
     }
 
     private void connectAndWrite() {
-//        showDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
+        //        showDialog(Gravity.CENTER,R.style.Alpah_aniamtion);
          /*
         * 连接指定Mac地址的设备，该方式使用前不需要进行扫描，该方式直接将扫描和连接放到一起，
         * 在扫描到指定设备后自动进行连接，使用方式如下：

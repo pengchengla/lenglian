@@ -116,7 +116,7 @@ public class DingdanAdapter extends BaseAdapter {
                 public void onClick(View v) {
 //                    ToastUtils.showShort(context, "激活设备");
                     Intent intent=new Intent(context, MyBlueActivity.class);
-                    intent.putExtra("mac",list.get(position).getMac());
+//                    intent.putExtra("mac",list.get(position).getMac());
                     intent.putExtra("order_id",list.get(position).getOrder_id());
                     context.startActivity(intent);
                 }

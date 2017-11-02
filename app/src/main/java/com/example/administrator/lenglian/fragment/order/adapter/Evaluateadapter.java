@@ -18,8 +18,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
-import com.example.administrator.lenglian.fragment.mine.adapter.DingdanAdapter;
-import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
 import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
 import com.example.administrator.lenglian.fragment.order.activity.ShopdetailActivity;
@@ -150,7 +148,6 @@ public class Evaluateadapter extends BaseAdapter {
         });
         return convertView;
     }
-
 
     }
 
