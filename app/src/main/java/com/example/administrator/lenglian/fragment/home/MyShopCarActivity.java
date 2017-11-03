@@ -297,7 +297,7 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                         mData.get(helper.getAdapterPosition()).setDuration(value);
                         notifyDataSetChanged();
                         LitePalHelper.updateCount(item.getGoodId(), value);//不立即更新
-//                        mData = LitePalHelper.search();
+                        //                        mData = LitePalHelper.search();
                     } else {
                         stepper.setText(item.getDuration() + "");
                         Toast.makeText(MyShopCarActivity.this, "请先选中一款产品", Toast.LENGTH_SHORT).show();
