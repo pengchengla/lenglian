@@ -2,6 +2,8 @@ package com.example.administrator.lenglian.fragment.order;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -13,7 +15,9 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.order.activity.ReceiptActivity;
+import com.example.administrator.lenglian.fragment.order.adapter.Deliveadapters;
 import com.example.administrator.lenglian.fragment.order.adapter.Deliveryadapter;
+import com.example.administrator.lenglian.fragment.order.adapter.Dingadapter;
 import com.example.administrator.lenglian.fragment.order.adapter.Payadapter;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -45,7 +49,7 @@ public class ShouhuoFragment extends BaseFragment {
     private SpringView springview;
     Payadapter payadapter;
     Deliveryadapter deliveryadapter;
-    private ListView list_recying;
+    private RecyclerView list_recying;
     private TextView textView;
     private RelativeLayout relativeLayout;
     private ImageView imageView;
@@ -59,7 +63,7 @@ public class ShouhuoFragment extends BaseFragment {
         //注册
         EventBus.getDefault().register(this);
         View view = View.inflate(mContext, R.layout.order_recying, null);
-        list_recying = (ListView) view.findViewById(R.id.list_recying);
+        list_recying = (RecyclerView) view.findViewById(R.id.list_recying);
         springview = (SpringView) view.findViewById(R.id.springview);
         //设置类型
         springview.setType(SpringView.Type.FOLLOW);
@@ -72,15 +76,6 @@ public class ShouhuoFragment extends BaseFragment {
     @Override
     protected void initData() {
         delivery();
-        list_recying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent it = new Intent(getActivity(), ReceiptActivity.class);
-                it.putExtra("order_id", datash.get(position).getOrder_id());
-                startActivity(it);
-            }
-        });
-
         springview.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
@@ -140,8 +135,18 @@ public class ShouhuoFragment extends BaseFragment {
                     relativeLayout.setVisibility(View.GONE);
                     list_recying.setVisibility(View.VISIBLE);
                     datash = result.getDatas();
-                    deliveryadapter = new Deliveryadapter(getActivity(), datash);
-                    list_recying.setAdapter(deliveryadapter);
+                    Deliveadapters deliveadapters=new Deliveadapters(getActivity(),datash);
+                    list_recying.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    list_recying.setAdapter(deliveadapters);
+                    deliveadapters.setOnItemClickListener(new Dingadapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Intent it = new Intent(getActivity(), ReceiptActivity.class);
+                            it.putExtra("order_id", datash.get(position).getOrder_id());
+                            startActivity(it);
+                        }
+                    });
+
                 } else if (result.getCode() == 101) {
                     relativeLayout.setVisibility(View.VISIBLE);
                     list_recying.setVisibility(View.GONE);

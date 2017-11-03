@@ -2,6 +2,8 @@ package com.example.administrator.lenglian.fragment.order;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import com.example.administrator.lenglian.fragment.mine.adapter.DingdanAdapter;
 import com.example.administrator.lenglian.fragment.order.activity.AppraiseActivity;
 import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
 import com.example.administrator.lenglian.fragment.order.activity.ReceiptActivity;
+import com.example.administrator.lenglian.fragment.order.adapter.Dingadapter;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -42,13 +45,14 @@ import java.util.Map;
 
 public class AllDingFragment extends BaseFragment {
 
-    private ListView list_recying;
+    private RecyclerView list_recying;
     private TextView textView;
     private RelativeLayout relativeLayout;
     private ImageView imageView;
     private SpringView springview;
     private List<Dingdanbean.DatasBean> datas;//总
     private DingdanAdapter dindanadapter;
+    private Dingadapter dingadapter;
     @Override
     protected void lazyLoad() {
 
@@ -59,7 +63,7 @@ public class AllDingFragment extends BaseFragment {
         //注册
         EventBus.getDefault().register(this);
         View view=View.inflate(mContext, R.layout.order_recying,null);
-        list_recying = (ListView) view.findViewById(R.id.list_recying);
+        list_recying = (RecyclerView) view.findViewById(R.id.list_recying);
         springview = (SpringView) view.findViewById(R.id.springview);
         //设置类型
         springview.setType(SpringView.Type.FOLLOW);
@@ -73,31 +77,14 @@ public class AllDingFragment extends BaseFragment {
     protected void initData() {
         ininjson();
 
-        //条目跳转
-        list_recying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if ("1".equals(datas.get(position).getOrder_status())) {
-                    Intent intent = new Intent(getActivity(), OrderPayActivity.class);
-                    intent.putExtra("order_id", datas.get(position).getOrder_id());
-                    String order_id = datas.get(position).getOrder_id();
-                    KLog.a(order_id);
-                    startActivity(intent);
-                } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status()) || "4".equals(datas.get(position).getOrder_status())) {
-                    Intent it = new Intent(getActivity(), ReceiptActivity.class);
-                    it.putExtra("order_id", datas.get(position).getOrder_id());
-                    startActivity(it);
-                }
-                else if("12".equals(datas.get(position).getOrder_status())){
-                       return;
-                }
-                else {
-                    Intent intent = new Intent(getActivity(), AppraiseActivity.class);
-                    intent.putExtra("order_id", datas.get(position).getOrder_id());
-                    startActivity(intent);
-                }
-            }
-        });
+
+//        //条目跳转
+//        list_recying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
         /*
           刷新
          */
@@ -165,6 +152,9 @@ public class AllDingFragment extends BaseFragment {
         else if(eventMessage.getMsg().equals("qu")){
                ininjson();
            }
+        else if(eventMessage.getMsg().equals("blue")){
+               ininjson();
+           }
     }
     //全部订单
     private void ininjson() {
@@ -172,14 +162,43 @@ public class AllDingFragment extends BaseFragment {
         map.put("user_id", SpUtils.getString(mContext,"user_id",""));
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL+"s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
+
+
+
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                 if (result.getCode() == 200) {
                     relativeLayout.setVisibility(View.GONE);
                     list_recying.setVisibility(View.VISIBLE);
                     datas = result.getDatas();
-                    dindanadapter = new DingdanAdapter(getActivity(), datas);
-                    list_recying.setAdapter(dindanadapter);
+                    dingadapter = new Dingadapter(getActivity(),datas);
+                    list_recying.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    list_recying.setAdapter(dingadapter);
+                    dingadapter.setOnItemClickListener(new Dingadapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            if ("1".equals(datas.get(position).getOrder_status())) {
+                                Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                                intent.putExtra("order_id", datas.get(position).getOrder_id());
+                                String order_id = datas.get(position).getOrder_id();
+                                KLog.a(order_id);
+                                startActivity(intent);
+                            } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status()) || "4".equals(datas.get(position).getOrder_status())) {
+                                Intent it = new Intent(getActivity(), ReceiptActivity.class);
+                                it.putExtra("order_id", datas.get(position).getOrder_id());
+                                startActivity(it);
+                            }
+                            else if("12".equals(datas.get(position).getOrder_status())){
+                                return;
+                            }
+                            else {
+                                Intent intent = new Intent(getActivity(), AppraiseActivity.class);
+                                intent.putExtra("order_id", datas.get(position).getOrder_id());
+                                startActivity(intent);
+                            }
+                        }
+                    });
+
 
                 }
                 else if (result.getCode() == 101) {
