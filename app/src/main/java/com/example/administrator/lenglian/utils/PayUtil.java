@@ -195,7 +195,6 @@ public class PayUtil {
                         msg.what = SDK_PAY_FLAG;
                         msg.obj = result;
                         mHandler.sendMessage(msg);
-//                         ((Activity) context).finish();
                         EventMessage eventMessage = new EventMessage("pay");
                         EventBus.getDefault().postSticky(eventMessage);
                         EventMessage eventMessages = new EventMessage("renew");
@@ -244,11 +243,10 @@ public class PayUtil {
                 api.sendReq(req);//调起支付
                 //微信支付的金额我用sp存的，之前用eventbus不管用
                 SpUtils.putString(context,"wxprice",datas.getPay_price());
-                ((Activity) context).finish();
                 EventMessage eventMessage = new EventMessage("pay");
                 EventBus.getDefault().postSticky(eventMessage);
                 EventMessage eventMessages = new EventMessage("renew");
-                EventBus.getDefault().postSticky(eventMessage);
+                EventBus.getDefault().postSticky(eventMessages);
             }
             @Override
             public void onFailed(int code) {

@@ -3,6 +3,8 @@ package com.example.administrator.lenglian.fragment.order;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -14,7 +16,9 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.order.activity.OrderPayActivity;
+import com.example.administrator.lenglian.fragment.order.adapter.Dingadapter;
 import com.example.administrator.lenglian.fragment.order.adapter.Payadapter;
+import com.example.administrator.lenglian.fragment.order.adapter.Zhifuadapter;
 import com.example.administrator.lenglian.fragment.order.bean.Zhifubean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
@@ -44,7 +48,7 @@ public class ZhifuFragment extends BaseFragment {
     private TextView textView;
     private RelativeLayout relativeLayout;
     private ImageView imageView;
-    private ListView list_recying;
+    private RecyclerView list_recying;
     @Override
 
     protected void lazyLoad() {
@@ -56,7 +60,7 @@ public class ZhifuFragment extends BaseFragment {
         //注册
         EventBus.getDefault().register(this);
         View view = View.inflate(mContext, R.layout.order_recying, null);
-        list_recying = (ListView) view.findViewById(R.id.list_recying);
+        list_recying = (RecyclerView) view.findViewById(R.id.list_recying);
         springview = (SpringView) view.findViewById(R.id.springview);
         //设置类型
         springview.setType(SpringView.Type.FOLLOW);
@@ -69,14 +73,6 @@ public class ZhifuFragment extends BaseFragment {
     @Override
     protected void initData() {
         Zhifu();
-        list_recying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), OrderPayActivity.class);
-                intent.putExtra("order_id", datasf.get(position).getOrder_id());
-                startActivity(intent);
-            }
-        });
 
         springview.setListener(new SpringView.OnFreshListener() {
             @Override
@@ -138,8 +134,17 @@ public class ZhifuFragment extends BaseFragment {
 
                     if (tag.equals("zhifu")) {
                         datasf = result.getDatas();
-                        payadapter = new Payadapter(getActivity(), datasf);
-                        list_recying.setAdapter(payadapter);
+                        Zhifuadapter zhifuadapter=new Zhifuadapter(getActivity(),datasf);
+                        list_recying.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        list_recying.setAdapter(zhifuadapter);
+                        zhifuadapter.setOnItemClickListener(new Dingadapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                                intent.putExtra("order_id", datasf.get(position).getOrder_id());
+                                startActivity(intent);
+                            }
+                        });
                     }
                 }
                 else if (result.getCode() == 101) {

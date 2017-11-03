@@ -25,6 +25,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.bean.EasyBean;
+import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
@@ -36,6 +37,8 @@ import com.vise.baseble.callback.data.ICharacteristicCallback;
 import com.vise.baseble.exception.BleException;
 import com.vise.baseble.utils.BleUtil;
 import com.vise.baseble.utils.HexUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -192,6 +195,9 @@ public class MyBlueActivity extends Activity {
                 tv.setText("设备激活失败");
             }
             //            Toast.makeText(MyBlueActivity.this, "notify成功" + HexUtil.encodeHexStr(value), Toast.LENGTH_SHORT).show();
+             //EventBus刷新界面
+            EventMessage eventMessage = new EventMessage("blue");
+            EventBus.getDefault().postSticky(eventMessage);
         }
 
         @Override

@@ -1,12 +1,12 @@
-package com.example.administrator.lenglian.fragment.mine.adapter;
+package com.example.administrator.lenglian.fragment.order.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,6 +20,7 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.blue.MyBlueActivity;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
+import com.example.administrator.lenglian.fragment.mine.adapter.DingdanAdapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
 import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
@@ -45,50 +46,41 @@ import java.util.Map;
  * author:衣鹏宇(ypu)
  */
 
-public class DingdanAdapter extends BaseAdapter {
+public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> {
+
     private Context context;
     private List<Dingdanbean.DatasBean> list;
-    //定义hashMap 用来存放之前创建的每一项item
-    HashMap<Integer, View> lmap = new HashMap<Integer, View>();
-    public DingdanAdapter(Context context, List<Dingdanbean.DatasBean> list) {
+    private OnItemClickListener mOnItemClickListener = null;
+    public Dingadapter(Context context, List<Dingdanbean.DatasBean> list) {
         this.context = context;
         this.list = list;
-
-
     }
 
     @Override
-    public int getCount() {
-        return list != null ? list.size() : 0;
+    public MyViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+         View view=LayoutInflater.from(context).inflate(R.layout.ding_order,parent,false);
+         MyViewholder myViewholder=new MyViewholder(view);
+
+        return myViewholder;
     }
 
     @Override
-    public Object getItem(int position) {
-        return list.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(final int position, View convertView, final ViewGroup parent) {
-        ViewHolder holder = null;
-        if (lmap.get(position) == null) {
-            //填充布局
-            convertView = LayoutInflater.from(context).inflate(R.layout.ding_order, null);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-            holder.order_evaluation.setTag(position);
-            lmap.put(position,convertView);
-        } else {
-            convertView=lmap.get(position);
-            holder = (ViewHolder) convertView.getTag();
-        }
+    public void onBindViewHolder(final MyViewholder holder, final int position) {
+        holder.setIsRecyclable(false);
         //加载数据
         holder.order_count.setText(list.get(position).getMain_title());
         holder.order_price.setText(list.get(position).getPro_price());
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取position
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int layoutPosition = holder.getLayoutPosition();
+                    mOnItemClickListener.onItemClick(holder.itemView,layoutPosition);
+                }
+            });
+        }
+
         /*
          photo
          */
@@ -115,7 +107,7 @@ public class DingdanAdapter extends BaseAdapter {
                 public void onClick(View v) {
 //                    ToastUtils.showShort(context, "激活设备");
                     Intent intent=new Intent(context, MyBlueActivity.class);
-//                    intent.putExtra("mac",list.get(position).getMac());
+                    intent.putExtra("mac",list.get(position).getMac());
                     intent.putExtra("order_id",list.get(position).getOrder_id());
                     context.startActivity(intent);
                 }
@@ -140,23 +132,23 @@ public class DingdanAdapter extends BaseAdapter {
                     context.startActivity(inten);
                 }
             });
-            //续费
-            holder.order_renew.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, RenewActivity.class);
-                    intent.putExtra("order_id", list.get(position).getOrder_id());
-                    intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
-                    intent.putExtra("price", list.get(position).getPro_price());
-                    intent.putExtra("title", list.get(position).getMain_title());
-                    intent.putExtra("order_num",list.get(position).getOrder_num());
-                    context.startActivity(intent);
-                }
-            });
+//            //续费
+//            holder.order_renew.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(context, RenewActivity.class);
+//                    intent.putExtra("order_id", list.get(position).getOrder_id());
+//                    intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
+//                    intent.putExtra("price", list.get(position).getPro_price());
+//                    intent.putExtra("title", list.get(position).getMain_title());
+//                    intent.putExtra("order_num",list.get(position).getOrder_num());
+//                    context.startActivity(intent);
+//                }
+//            });
             //评价
-            final ViewHolder finalHolder = holder;
-            final int positions = (int) holder.order_evaluation.getTag();
-            KLog.d("tag", positions);
+//            final DingdanAdapter.ViewHolder finalHolder = holder;
+//            final int positions = (int) holder.order_evaluation.getTag();
+      //      KLog.d("tag", positions);
             if ("0".equals(list.get(position).getIs_comment())) {
 
                 holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +166,7 @@ public class DingdanAdapter extends BaseAdapter {
                 });
 
             } else {
-                finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+                holder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
 
             }
         } else if ("7".equals(list.get(position).getOrder_status()) || "8".equals(list.get(position).getOrder_status()
@@ -183,6 +175,8 @@ public class DingdanAdapter extends BaseAdapter {
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.VISIBLE);
             holder.liner_receving.setVisibility(View.GONE);
+            //续费
+            holder.order_renew.setTextColor(context.getResources().getColor(R.color.font_black_6));
             //报修
             holder.order_repairs.setTextColor(context.getResources().getColor(R.color.font_black_6));
             //退换
@@ -191,9 +185,9 @@ public class DingdanAdapter extends BaseAdapter {
             holder.order_activate.setTextColor(context.getResources().getColor(R.color.font_black_6));
             holder.order_activate.setBackground(context.getResources().getDrawable(R.drawable.shape_line));
             //评价
-            final ViewHolder finalHolder = holder;
-            final int positions = (int) holder.order_evaluation.getTag();
-            KLog.d("tag", positions);
+          //  final DingdanAdapter.ViewHolder finalHolder = holder;
+//            final int positions = (int) holder.order_evaluation.getTag();
+//            KLog.d("tag", positions);
             if ("0".equals(list.get(position).getIs_comment())) {
 
                 holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
@@ -209,35 +203,36 @@ public class DingdanAdapter extends BaseAdapter {
 
 
                 });
-
-            } else {
-
-                finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
-
             }
-            //续费
-            holder.order_renew.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, RenewActivity.class);
-                    intent.putExtra("order_id", list.get(position).getOrder_id());
-                    intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
-                    intent.putExtra("price", list.get(position).getPro_price());
-                    intent.putExtra("title", list.get(position).getMain_title());
-                    intent.putExtra("order_num",list.get(position).getOrder_num());
-                    context.startActivity(intent);
-                }
-            });
+//
+//            } else {
+//
+//                holder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+//
+//            }
+//            //续费
+//            holder.order_renew.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(context, RenewActivity.class);
+//                    intent.putExtra("order_id", list.get(position).getOrder_id());
+//                    intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
+//                    intent.putExtra("price", list.get(position).getPro_price());
+//                    intent.putExtra("title", list.get(position).getMain_title());
+//                    intent.putExtra("order_num",list.get(position).getOrder_num());
+//                    context.startActivity(intent);
+//                }
+//            });
 
         }
 
-         else if("12".equals(list.get(position).getOrder_status())){
+        else if("12".equals(list.get(position).getOrder_status())){
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.GONE);
             holder.liner_receving.setVisibility(View.GONE);
 
         }
-       else if ("6".equals(list.get(position).getOrder_status())) {
+        else if ("6".equals(list.get(position).getOrder_status())) {
             holder.pay.setVisibility(View.GONE);
             holder.evaluate.setVisibility(View.VISIBLE);
             holder.liner_receving.setVisibility(View.GONE);
@@ -276,10 +271,10 @@ public class DingdanAdapter extends BaseAdapter {
                     context.startActivity(inten);
                 }
             });
-            //评价
-            final ViewHolder finalHolder = holder;
-            final int positions = (int) holder.order_evaluation.getTag();
-            KLog.d("tag", positions);
+//            //评价
+//            final DingdanAdapter.ViewHolder finalHolder = holder;
+//            final int positions = (int) holder.order_evaluation.getTag();
+//            KLog.d("tag", positions);
             if ("0".equals(list.get(position).getIs_comment())) {
 
                 holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
@@ -298,7 +293,7 @@ public class DingdanAdapter extends BaseAdapter {
 
             } else {
 
-                finalHolder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+                holder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
 
             }
         }
@@ -339,7 +334,7 @@ public class DingdanAdapter extends BaseAdapter {
                 }
             });
         }
-        return convertView;
+
 
     }
 
@@ -399,9 +394,17 @@ public class DingdanAdapter extends BaseAdapter {
             }
         });
 
+
     }
 
-    class ViewHolder {
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+
+
+    public class MyViewholder extends RecyclerView.ViewHolder {
         public ImageView order_tupian;
         public TextView order_count;
         public TextView order_price;
@@ -417,25 +420,31 @@ public class DingdanAdapter extends BaseAdapter {
         public TextView recying_btn;
         public TextView receving;
         public RelativeLayout liner_receving;
-
-        public ViewHolder(View convertView) {
+        public MyViewholder(View convertView) {
+            super(convertView);
             order_tupian = (ImageView) convertView.findViewById(R.id.order_tupian);
-          order_count = (TextView) convertView.findViewById(R.id.order_count);
-           order_price = (TextView) convertView.findViewById(R.id.order_price);
-           order_activate = (TextView) convertView.findViewById(R.id.order_activate);
-           order_renew = (TextView) convertView.findViewById(R.id.order_renew);
-           order_tuihuan = (TextView) convertView.findViewById(R.id.order_tuihuan);
-           order_repairs = (TextView) convertView.findViewById(R.id.order_repairs);
+            order_count = (TextView) convertView.findViewById(R.id.order_count);
+            order_price = (TextView) convertView.findViewById(R.id.order_price);
+            order_activate = (TextView) convertView.findViewById(R.id.order_activate);
+            order_renew = (TextView) convertView.findViewById(R.id.order_renew);
+            order_tuihuan = (TextView) convertView.findViewById(R.id.order_tuihuan);
+            order_repairs = (TextView) convertView.findViewById(R.id.order_repairs);
             order_evaluation = (TextView) convertView.findViewById(R.id.order_evaluation);
             evaluate = (LinearLayout) convertView.findViewById(R.id.evaluate);
             order_pause = (TextView) convertView.findViewById(R.id.order_pause);
-           order_zhifi = (TextView) convertView.findViewById(R.id.order_zhifi);
+            order_zhifi = (TextView) convertView.findViewById(R.id.order_zhifi);
             pay = (LinearLayout) convertView.findViewById(R.id.pay);
             recying_btn = (TextView) convertView.findViewById(R.id.recying_btn);
             receving = (TextView) convertView.findViewById(R.id.receving);
             liner_receving= (RelativeLayout) convertView.findViewById(R.id.liner_receving);
+
         }
     }
-
+    public interface OnItemClickListener {
+        void onItemClick(View view , int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
 
 }

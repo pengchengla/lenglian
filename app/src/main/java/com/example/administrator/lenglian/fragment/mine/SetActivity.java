@@ -15,12 +15,19 @@ import android.widget.Toast;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.EventMessage;
+import com.example.administrator.lenglian.fragment.mine.bean.Gengxinbean;
+import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
+import com.example.administrator.lenglian.network.BaseObserver1;
+import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.CacheDataManager;
+import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.SpUtils;
+import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import util.UpdateAppUtils;
 
 
 /**
@@ -120,17 +127,36 @@ public class  SetActivity extends BaseActivity implements View.OnClickListener {
         }
     }
        private void update(){
+           RetrofitManager.get(MyContants.BASEURL + "s=Home/version", new BaseObserver1<Gengxinbean>("") {
+               @Override
+               public void onSuccess(Gengxinbean result, String tag) {
 
-           UpdateAppUtils.from(this)
-                   .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE) //更新检测方式，默认为VersionCode
-                   .serverVersionCode(1) //服务器穿过来的
-                   .serverVersionName("2.0")//服务器传过来的
-                   .apkPath("http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk")//更新的连接
-                   .showNotification(true) //是否显示下载进度到通知栏，默认为true
-                  // .updateInfo()  //更新日志信息 String
-                   .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP) //下载方式：app下载、手机浏览器下载。默认app下载
-                   .isForce(false) //是否强制更新，默认false 强制更新情况下用户不同意更新则不能使用app
-                   .update();
+                   int code = result.getCode();
+                   if(code==200){
+                       Gengxinbean.DatasBean datas = result.getDatas();
+                       String android = datas.getAndroid();
+                       int i = Integer.parseInt(android);
+                       System.out.print(i);
+                       UpdateAppUtils.from(SetActivity.this)
+                               .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE) //更新检测方式，默认为VersionCode
+                               .serverVersionCode(i) //服务器穿过来的
+                               .serverVersionName("2.0")//服务器传过来的
+                               .apkPath("http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk")//更新的连接
+                               .showNotification(true) //是否显示下载进度到通知栏，默认为true
+                               // .updateInfo()  //更新日志信息 String
+                               .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP) //下载方式：app下载、手机浏览器下载。默认app下载
+                               .isForce(false) //是否强制更新，默认false 强制更新情况下用户不同意更新则不能使用app
+                               .update();
+                   }
+               }
+
+               @Override
+               public void onFailed(int code) {
+
+               }
+           });
+
+
        }
     private void showDialog(int grary, int animationStyle) {
         BaseDialog.Builder builder = new BaseDialog.Builder(this);

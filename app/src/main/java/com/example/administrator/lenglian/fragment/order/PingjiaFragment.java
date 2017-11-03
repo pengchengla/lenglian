@@ -2,6 +2,8 @@ package com.example.administrator.lenglian.fragment.order;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -13,6 +15,8 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseFragment;
 import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.order.activity.AppraiseActivity;
+import com.example.administrator.lenglian.fragment.order.adapter.Dingadapter;
+import com.example.administrator.lenglian.fragment.order.adapter.Evaluateadaoters;
 import com.example.administrator.lenglian.fragment.order.adapter.Evaluateadapter;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
@@ -40,7 +44,7 @@ import java.util.Map;
 public class PingjiaFragment extends BaseFragment {
     private List<Dingdanbean.DatasBean> datasp;//评价
     private SpringView springview;
-    private ListView list_recying;
+    private RecyclerView list_recying;
     private Evaluateadapter evaluateadapyer;
     private TextView textView;
     private RelativeLayout relativeLayout;
@@ -55,7 +59,7 @@ public class PingjiaFragment extends BaseFragment {
         //注册
         EventBus.getDefault().register(this);
         View view = View.inflate(mContext, R.layout.order_recying, null);
-       list_recying = (ListView) view.findViewById(R.id.list_recying);
+       list_recying = (RecyclerView) view.findViewById(R.id.list_recying);
         springview = (SpringView) view.findViewById(R.id.springview);
         //设置类型
         springview.setType(SpringView.Type.FOLLOW);
@@ -69,14 +73,7 @@ public class PingjiaFragment extends BaseFragment {
     @Override
     protected void initData() {
         evaluate();
-        list_recying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), AppraiseActivity.class);
-                intent.putExtra("order_id", datasp.get(position).getOrder_id());
-                startActivity(intent);
-            }
-        });
+
         springview.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
@@ -134,16 +131,23 @@ public class PingjiaFragment extends BaseFragment {
         map.put("order_status", "5,6,7,8,9,10");
         map.put("is_comment", "0");
         RetrofitManager.get(MyContants.BASEURL + "s=Order/listOrder", map, new BaseObserver1<Dingdanbean>("") {
-
-
             @Override
             public void onSuccess(Dingdanbean result, String tag) {
                 if (result.getCode() == 200) {
                     relativeLayout.setVisibility(View.GONE);
                     list_recying.setVisibility(View.VISIBLE);
                     datasp = result.getDatas();
-                    evaluateadapyer = new Evaluateadapter(getActivity(), datasp);
-                    list_recying.setAdapter(evaluateadapyer);
+                    Evaluateadaoters evaluateadaoters=new Evaluateadaoters(getActivity(),datasp);
+                    list_recying.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    list_recying.setAdapter(evaluateadaoters);
+                    evaluateadaoters.setOnItemClickListener(new Dingadapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Intent intent = new Intent(getActivity(), AppraiseActivity.class);
+                            intent.putExtra("order_id", datasp.get(position).getOrder_id());
+                            startActivity(intent);
+                        }
+                    });
                 }
                 else if (result.getCode() == 101) {
 //                    ToastUtils.showShort(getActivity(),"hahah");
