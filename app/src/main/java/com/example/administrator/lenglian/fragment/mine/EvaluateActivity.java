@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -100,6 +99,8 @@ public class EvaluateActivity extends BaseActivity {
                   it.putExtra("comment_id",datas.get(position).getComment_id());
                   String pro_pic = datas.get(position).getPro_pic();
                   it.putExtra("image", pro_pic);
+                  it.putExtra("order_id",datas.get(position).getOrder_id());
+                  it.putExtra("tag",2);
                   startActivity(it);
               }
           });

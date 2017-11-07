@@ -421,7 +421,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 .builder();
         dialog.show();
         TextView tv_content = dialog.getView(R.id.tv_content);
-        tv_content.setText("确认拨打4006020069？");
+        tv_content.setText("确认拨打4006020069 ？");
         TextView tv_canel = dialog.getView(R.id.tv_canel);
         tv_canel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -436,7 +436,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View v) {
                 //关闭dialog
                 dialog.close();
-                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "010-12345674"));
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "4006020069"));
                 //跳转到拨号界面，同时传递电话号码
                 startActivity(dialIntent);
             }

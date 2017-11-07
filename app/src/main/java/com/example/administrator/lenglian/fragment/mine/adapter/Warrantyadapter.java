@@ -2,14 +2,12 @@ package com.example.administrator.lenglian.fragment.mine.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -19,7 +17,6 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.fragment.mine.MaintenanceActivity;
 import com.example.administrator.lenglian.fragment.mine.ZhijiaActivity;
 import com.example.administrator.lenglian.fragment.mine.bean.Baoxiubean;
-import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.socks.library.KLog;
 
@@ -126,6 +123,7 @@ public class Warrantyadapter extends BaseAdapter {
                       Intent intent=new Intent(context, ZhijiaActivity.class);
                         intent.putExtra("comment_id",list.get(position).getComment_id());
                      intent.putExtra("repair_id",list.get(position).getRepair_id());
+                     intent.putExtra("tag","1");
                        context.startActivity(intent);
 
                  }

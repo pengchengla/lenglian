@@ -2,10 +2,12 @@ package com.example.administrator.lenglian.fragment.order.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +20,7 @@ import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
@@ -67,8 +70,9 @@ public class Deliveadapters extends RecyclerView.Adapter<Deliveadapters.MyViewHo
         holder.reying_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //确认收货
-                recycing(position);
+
+                showDialog(Gravity.CENTER,R.style.Alpah_aniamtion,position);
+
                 EventMessage eventMessage = new EventMessage("dingshouhuo");
                 EventBus.getDefault().postSticky(eventMessage);
 
@@ -128,5 +132,43 @@ public class Deliveadapters extends RecyclerView.Adapter<Deliveadapters.MyViewHo
     }
     public void setOnItemClickListener(Dingadapter.OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
+    }
+    private void showDialog(int grary, int animationStyle, final int position) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(context);
+        final BaseDialog dialog = builder.setViewId(R.layout.dialog_phone)
+                //设置dialogpadding
+                .setPaddingdp(10, 0, 10, 0)
+                //设置显示位置
+                .setGravity(grary)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.show();
+        TextView tv_content = dialog.getView(R.id.tv_content);
+        tv_content.setText("   是否确认收货？   ");
+        TextView tv_canel = dialog.getView(R.id.tv_canel);
+        tv_canel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //关闭dialog
+                dialog.close();
+            }
+        });
+        TextView tv_yes = dialog.getView(R.id.tv_yes);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //关闭dialog
+                dialog.close();
+                //确认收货
+                recycing(position);
+            }
+        });
     }
 }

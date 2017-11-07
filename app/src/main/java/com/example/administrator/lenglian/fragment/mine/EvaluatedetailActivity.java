@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,7 +28,6 @@ import com.example.administrator.lenglian.utils.MyGradeview;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
-import com.example.administrator.lenglian.view.MyGridView;
 import com.example.administrator.lenglian.view.MyRatingBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,6 +59,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
     private LinearLayout liner_zhuijia;
     private View liner_zhui;
     private Evaluatedetailbean.DatasBean datas;
+    private String order_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,6 +159,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         Intent intent = getIntent();
         comment_id = intent.getStringExtra("comment_id");
         image = intent.getStringExtra("image");
+        order_id = intent.getStringExtra("order_id");
         Intent s= getIntent();
         String count = s.getStringExtra("count");
         evate_zhuip.setText(count);
@@ -173,7 +173,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void myEvent(EventMessage eventMessage) {
-        if (eventMessage.getMsg().equals("zzz")) {
+        if (eventMessage.getMsg().equals("zhuijia")) {
             zzz();
         }
     }
@@ -184,11 +184,11 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         liner_zhuijia.setVisibility(View.VISIBLE);
         liner_zhui.setVisibility(View.VISIBLE);
         evate_zhuip.setText(count);
-        //跳转
-        if(!TextUtils.isEmpty(evate_zhuip.getText().toString())){
-            ToastUtils.showShort(this,"您已追加评论，不能在评论");
-
-        }
+//        //跳转
+//        if(!TextUtils.isEmpty(evate_zhuip.getText().toString())){
+//            ToastUtils.showShort(this,"您已追加评论，不能在评论");
+//
+//        }
     }
 
     @Override
@@ -202,6 +202,8 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
                 if("1".equals(datas.getAdd_status())){
                     Intent intent = new Intent(EvaluatedetailActivity.this, ZhijiaActivity.class);
                     intent.putExtra("comment_id", comment_id);
+                    intent.putExtra("order_id",order_id);
+                    intent.putExtra("tag","2");
                     startActivity(intent);
 
 

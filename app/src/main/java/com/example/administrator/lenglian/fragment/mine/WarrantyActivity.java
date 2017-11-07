@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,7 +14,6 @@ import com.example.administrator.lenglian.base.BaseActivity;
 import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.fragment.mine.adapter.Warrantyadapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Baoxiubean;
-import com.example.administrator.lenglian.fragment.mine.bean.Indexbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
 import com.example.administrator.lenglian.utils.MyContants;
@@ -26,9 +24,7 @@ import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,7 +125,7 @@ public class WarrantyActivity extends BaseActivity implements View.OnClickListen
         if (eventMessage.getMsg().equals("tijiao")) {
             network();
         }
-        else if(eventMessage.getMsg().equals("zzz")){
+        else if(eventMessage.getMsg().equals("zhuijia")){
             network();
         }
     }

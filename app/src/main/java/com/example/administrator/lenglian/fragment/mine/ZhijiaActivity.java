@@ -3,11 +3,9 @@ package com.example.administrator.lenglian.fragment.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.base.BaseActivity;
@@ -35,6 +33,8 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
     private EditText edt_pin;
     private String comment_id;
     private String repair_id;
+    private String tag;
+    private String order_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,16 +50,22 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
         map.put("user_id", SpUtils.getString(this,"user_id",""));
         map.put("token", MyUtils.getToken());
         map.put("comment_id",comment_id);
-        map.put("repair_id",repair_id);
+        if("1".equals(tag)){
+            map.put("repair_id",repair_id);
+        }
+        else if("2".equals(tag)){
+            map.put("order_id",order_id);
+        }
         map.put("add_content",  edt_pin.getText().toString());
         RetrofitManager.post(MyContants.BASEURL+"s=User/addComment",map,new BaseObserver1<Resultbean>("") {
             @Override
             public void onSuccess(Resultbean result, String tag) {
                 if(result.getCode()==200){
                       SpUtils.putString(ZhijiaActivity.this,"count",edt_pin.getText().toString());
-                    EventMessage eventMessage = new EventMessage("zzz");
+                     finish();
+                    EventMessage eventMessage = new EventMessage("zhuijia");
                     EventBus.getDefault().postSticky(eventMessage);
-                    finish();
+
 
 
                 }
@@ -88,6 +94,8 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
         Intent intent = getIntent();
         comment_id = intent.getStringExtra("comment_id");
         repair_id = intent.getStringExtra("repair_id");
+        tag = intent.getStringExtra("tag");
+        order_id = intent.getStringExtra("order_id");
     }
 
 

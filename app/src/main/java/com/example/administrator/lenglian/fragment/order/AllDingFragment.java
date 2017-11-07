@@ -5,9 +5,7 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,6 +32,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +49,8 @@ public class AllDingFragment extends BaseFragment {
     private RelativeLayout relativeLayout;
     private ImageView imageView;
     private SpringView springview;
-    private List<Dingdanbean.DatasBean> datas;//总
+    private List<Dingdanbean.DatasBean> datas=new ArrayList<>();//总
+
     private DingdanAdapter dindanadapter;
     private Dingadapter dingadapter;
     @Override
@@ -170,30 +170,31 @@ public class AllDingFragment extends BaseFragment {
                 if (result.getCode() == 200) {
                     relativeLayout.setVisibility(View.GONE);
                     list_recying.setVisibility(View.VISIBLE);
-                    datas = result.getDatas();
-                    dingadapter = new Dingadapter(getActivity(),datas);
+                    datas.clear();
+                    datas= result.getDatas();
+                    dingadapter=new Dingadapter(getActivity(),datas);
                     list_recying.setLayoutManager(new LinearLayoutManager(getActivity()));
                     list_recying.setAdapter(dingadapter);
                     dingadapter.setOnItemClickListener(new Dingadapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
-                            if ("1".equals(datas.get(position).getOrder_status())) {
+                            if ("1".equals(AllDingFragment.this.datas.get(position).getOrder_status())) {
                                 Intent intent = new Intent(getActivity(), OrderPayActivity.class);
-                                intent.putExtra("order_id", datas.get(position).getOrder_id());
-                                String order_id = datas.get(position).getOrder_id();
+                                intent.putExtra("order_id", AllDingFragment.this.datas.get(position).getOrder_id());
+                                String order_id = AllDingFragment.this.datas.get(position).getOrder_id();
                                 KLog.a(order_id);
                                 startActivity(intent);
-                            } else if ("2".equals(datas.get(position).getOrder_status()) || "3".equals(datas.get(position).getOrder_status()) || "4".equals(datas.get(position).getOrder_status())) {
+                            } else if ("2".equals(AllDingFragment.this.datas.get(position).getOrder_status()) || "3".equals(AllDingFragment.this.datas.get(position).getOrder_status()) || "4".equals(AllDingFragment.this.datas.get(position).getOrder_status())) {
                                 Intent it = new Intent(getActivity(), ReceiptActivity.class);
-                                it.putExtra("order_id", datas.get(position).getOrder_id());
+                                it.putExtra("order_id", AllDingFragment.this.datas.get(position).getOrder_id());
                                 startActivity(it);
                             }
-                            else if("12".equals(datas.get(position).getOrder_status())){
+                            else if("12".equals(AllDingFragment.this.datas.get(position).getOrder_status())){
                                 return;
                             }
                             else {
                                 Intent intent = new Intent(getActivity(), AppraiseActivity.class);
-                                intent.putExtra("order_id", datas.get(position).getOrder_id());
+                                intent.putExtra("order_id", AllDingFragment.this.datas.get(position).getOrder_id());
                                 startActivity(intent);
                             }
                         }

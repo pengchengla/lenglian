@@ -19,11 +19,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.blue.MyBlueActivity;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
-import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
 import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
 import com.example.administrator.lenglian.fragment.order.activity.ShopdetailActivity;
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -76,6 +74,20 @@ public class Evaluateadaoters extends RecyclerView.Adapter<Evaluateadaoters.MyVi
 
         holder.order_renew.setFocusable(false);
         if ("5".equals(list.get(position).getOrder_status())) {
+            //续费
+            holder.order_renew.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RenewActivity.class);
+                    intent.putExtra("order_id", list.get(position).getOrder_id());
+                    intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
+                    intent.putExtra("price", list.get(position).getPro_price());
+                    intent.putExtra("title", list.get(position).getMain_title());
+                    intent.putExtra("order_num", list.get(position).getOrder_num());
+                    context.startActivity(intent);
+                }
+            });
+
 
             //激活
             holder.order_activate.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +95,7 @@ public class Evaluateadaoters extends RecyclerView.Adapter<Evaluateadaoters.MyVi
                 public void onClick(View v) {
 //                    ToastUtils.showShort(context, "激活设备");
                     Intent intent = new Intent(context, MyBlueActivity.class);
-                    intent.putExtra("mac", list.get(position).getMac());
+                //    intent.putExtra("mac", list.get(position).getMac());
                     intent.putExtra("order_id", list.get(position).getOrder_id());
                     context.startActivity(intent);
                 }
@@ -164,6 +176,24 @@ public class Evaluateadaoters extends RecyclerView.Adapter<Evaluateadaoters.MyVi
             //激活
             holder.order_activate.setTextColor(context.getResources().getColor(R.color.font_black_6));
             holder.order_activate.setBackground(context.getResources().getDrawable(R.drawable.shape_line));
+
+            //评价
+            holder.order_evaluation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ("0".equals(list.get(position).getIs_comment())) {
+                        Intent inte = new Intent(context, ShopdetailActivity.class);
+                        inte.putExtra("pro_id", list.get(position).getPro_id());
+                        inte.putExtra("order_id", list.get(position).getOrder_id());
+                        inte.putExtra("pin_img", list.get(position).getPro_pic().get(0).getUrl());
+                        context.startActivity(inte);
+                    } else {
+                        holder.order_evaluation.setBackgroundResource(R.drawable.shape_line);
+                        holder.order_evaluation.setTextColor(Color.BLACK);
+                    }
+
+                }
+            });
         }
         else {
             //评价

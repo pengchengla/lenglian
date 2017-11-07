@@ -20,7 +20,6 @@ import com.example.administrator.lenglian.R;
 import com.example.administrator.lenglian.bean.EventMessage;
 import com.example.administrator.lenglian.blue.MyBlueActivity;
 import com.example.administrator.lenglian.fragment.mine.ReturnActivity;
-import com.example.administrator.lenglian.fragment.mine.adapter.DingdanAdapter;
 import com.example.administrator.lenglian.fragment.mine.bean.Resultbean;
 import com.example.administrator.lenglian.fragment.order.activity.BaoxiuActivity;
 import com.example.administrator.lenglian.fragment.order.activity.RenewActivity;
@@ -28,12 +27,12 @@ import com.example.administrator.lenglian.fragment.order.activity.ShopdetailActi
 import com.example.administrator.lenglian.fragment.order.bean.Dingdanbean;
 import com.example.administrator.lenglian.network.BaseObserver1;
 import com.example.administrator.lenglian.network.RetrofitManager;
+import com.example.administrator.lenglian.utils.BaseDialog;
 import com.example.administrator.lenglian.utils.MyContants;
 import com.example.administrator.lenglian.utils.MyUtils;
 import com.example.administrator.lenglian.utils.PayUtil;
 import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
-import com.socks.library.KLog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -107,7 +106,7 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
                 public void onClick(View v) {
 //                    ToastUtils.showShort(context, "激活设备");
                     Intent intent=new Intent(context, MyBlueActivity.class);
-                    intent.putExtra("mac",list.get(position).getMac());
+                  //  intent.putExtra("mac",list.get(position).getMac());
                     intent.putExtra("order_id",list.get(position).getOrder_id());
                     context.startActivity(intent);
                 }
@@ -133,18 +132,18 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
                 }
             });
 //            //续费
-//            holder.order_renew.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(context, RenewActivity.class);
-//                    intent.putExtra("order_id", list.get(position).getOrder_id());
-//                    intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
-//                    intent.putExtra("price", list.get(position).getPro_price());
-//                    intent.putExtra("title", list.get(position).getMain_title());
-//                    intent.putExtra("order_num",list.get(position).getOrder_num());
-//                    context.startActivity(intent);
-//                }
-//            });
+            holder.order_renew.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RenewActivity.class);
+                    intent.putExtra("order_id", list.get(position).getOrder_id());
+                    intent.putExtra("xiu_img", list.get(position).getPro_pic().get(0).getUrl());
+                    intent.putExtra("price", list.get(position).getPro_price());
+                    intent.putExtra("title", list.get(position).getMain_title());
+                    intent.putExtra("order_num",list.get(position).getOrder_num());
+                    context.startActivity(intent);
+                }
+            });
             //评价
 //            final DingdanAdapter.ViewHolder finalHolder = holder;
 //            final int positions = (int) holder.order_evaluation.getTag();
@@ -204,12 +203,12 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
 
                 });
             }
-//
-//            } else {
-//
-//                holder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
-//
-//            }
+
+             else {
+
+                holder.order_evaluation.setTextColor(context.getResources().getColor(R.color.font_black_6));
+
+            }
 //            //续费
 //            holder.order_renew.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -308,7 +307,8 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
             holder.receving.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recycing(position);
+                    showDialog(Gravity.CENTER,R.style.Alpah_aniamtion,position);
+
                 }
             });
         } else if ("1".equals(list.get(position).getOrder_status())) {
@@ -352,6 +352,7 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
                 if (result.getCode() == 200) {
                     ToastUtils.showShort(context, "确认收货");
                     notifyDataSetChanged();
+                    list.remove(position);
                     //发送eventbus刷新数据
                     EventMessage eventMessage = new EventMessage("dingshouhuo");
                     EventBus.getDefault().postSticky(eventMessage);
@@ -445,6 +446,44 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
     }
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
+    }
+    private void showDialog(int grary, int animationStyle, final int position) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(context);
+        final BaseDialog dialog = builder.setViewId(R.layout.dialog_phone)
+                //设置dialogpadding
+                .setPaddingdp(10, 0, 10, 0)
+                //设置显示位置
+                .setGravity(grary)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.show();
+        TextView tv_content = dialog.getView(R.id.tv_content);
+        tv_content.setText("   是否确认收货？   ");
+        TextView tv_canel = dialog.getView(R.id.tv_canel);
+        tv_canel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //关闭dialog
+                dialog.close();
+            }
+        });
+        TextView tv_yes = dialog.getView(R.id.tv_yes);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //确认收货
+                recycing(position);
+                //关闭dialog
+                dialog.close();
+            }
+        });
     }
 
 }
