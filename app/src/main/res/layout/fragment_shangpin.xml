@@ -7,10 +7,10 @@
         android:layout_height="match_parent"
         android:paddingBottom="50dp">
         <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
             <com.youth.banner.Banner
                 android:id="@+id/banner"
@@ -25,11 +25,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:padding="10dp"
                     android:layout_weight="5"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:lines="2"
+                    android:padding="10dp"
                     android:text=""
                     android:textSize="16sp"
                 />
@@ -45,16 +45,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:padding="10dp"
                     android:layout_weight="1"
                     android:drawablePadding="5dp"
                     android:drawableTop="@drawable/icon_share"
                     android:gravity="center"
-                    android:textSize="12sp"
-                    android:text="分享"/>
+                    android:padding="10dp"
+                    android:text="分享"
+                    android:textSize="12sp"/>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
@@ -63,7 +63,7 @@
                     android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:text=""
@@ -74,9 +74,17 @@
                     android:id="@+id/iv_isSale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/icon_cuxiao"/>
+                <TextView
+                    android:id="@+id/tv_zuidizuqi"
+                    android:textColor="@color/text_red_dark2"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_yuanjia"

@@ -57,7 +57,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     private RecyclerView recycler_canshu, recycler_pingjia, recycler_tuijian;
     private Banner banner;
     private TextView tv_title, tv_share, tv_price, tv_pingjia_count,
-            tv_yuanjia, tv_collect, tv_lijizulin, tv_jiaruzulin;
+            tv_yuanjia, tv_collect, tv_lijizulin, tv_jiaruzulin,tv_zuidizuqi;
     private CanshuAdapter mCanshuAdapter;
     private List<String> picList = new ArrayList<>();
     private List<String> canshunameList = new ArrayList<>();
@@ -71,6 +71,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
     private GoodDetailBean.DatasEntity mDatas;
     private int duration = 1;
     private CustomProgressDialog mDialog;
+    private String mShortest;
 
     @Override
     protected void lazyLoad() {
@@ -99,6 +100,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
         tv_jiaruzulin.setOnClickListener(this);
         iv_isSale = (ImageView) view.findViewById(R.id.iv_isSale);
         tv_title = (TextView) view.findViewById(R.id.tv_title);
+        tv_zuidizuqi= (TextView) view.findViewById(R.id.tv_zuidizuqi);
         return view;
     }
 
@@ -162,7 +164,8 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     }
                     mCanshuAdapter = new CanshuAdapter(R.layout.item_canshu, canshuvalueList);
                     recycler_canshu.setAdapter(mCanshuAdapter);
-
+                    mShortest = mDatas.getShortest();
+                    tv_zuidizuqi.setText("最短租期"+mShortest+"个月");
                     if (picList.size() == 0) {
                         for (int i = 0; i < mDatas.getPro_pic().size(); i++) {
                             picList.add(mDatas.getPro_pic().get(i).getUrl());
@@ -410,6 +413,8 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     .apply(options)
                     .into(iv_tipian);
             final SnappingStepper stepper = dialog.getView(R.id.stepper);
+            stepper.setMinValue(Integer.parseInt(mShortest));
+            stepper.setValue(Integer.parseInt(mShortest));
             SnappingStepper ssp = dialog.getView(R.id.stepper);
             ssp.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
                 @Override

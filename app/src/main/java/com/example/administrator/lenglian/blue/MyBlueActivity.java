@@ -110,7 +110,7 @@ public class MyBlueActivity extends Activity {
         order_id = getIntent().getStringExtra("order_id");
         //        Toast.makeText(this, " " + mac, Toast.LENGTH_SHORT).show();
         initData();
-        initLocation();
+//        initLocation();
     }
 
     private void initLocation() {
@@ -217,8 +217,8 @@ public class MyBlueActivity extends Activity {
         arrayMap.put("token", MyUtils.getToken());
         arrayMap.put("current_time", mReturn_current_time);
         arrayMap.put("end_time", mReturn_end_time);
-        arrayMap.put("longitude", mLongitude + "");
-        arrayMap.put("latitude", mLatitude + "");
+//        arrayMap.put("longitude", mLongitude + "");
+//        arrayMap.put("latitude", mLatitude + "");
         //        Toast.makeText(MyBlueActivity.this, "纬度："+mLatitude+"  经度："+mLongitude, Toast.LENGTH_SHORT).show();
         RetrofitManager.get(MyContants.BASEURL + "s=User/alivePro", arrayMap, new BaseObserver1<EasyBean>("") {
             @Override

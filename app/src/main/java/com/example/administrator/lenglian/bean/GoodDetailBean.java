@@ -84,6 +84,16 @@ public class GoodDetailBean {
          * pro_name : 深底前透明推拉门岛柜
          * pro_status : 1
          */
+        private String shortest;
+
+        public String getShortest() {
+            return shortest;
+        }
+
+        public void setShortest(String shortest) {
+            this.shortest = shortest;
+        }
+
         private String repair_fee;
         private String express_fee;
         private String pro_temperature;
