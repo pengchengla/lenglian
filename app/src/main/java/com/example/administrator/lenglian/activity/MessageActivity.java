@@ -108,7 +108,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
             } else if (item.getNews_type().equals("2")) {
                 msgType = "报修通知";
             } else {
-                msgType = "亲，想你了";
+                msgType = "亲.想你了";
             }
             helper.setText(R.id.tv_msg_type, msgType)
                     .setText(R.id.tv_date, item.getSend_time())
