@@ -90,7 +90,7 @@ public class ZiLiaoActivity extends BaseActivity implements View.OnClickListener
         tv_yes.setOnClickListener(this);
         edt_detail_address = (EditText) findViewById(R.id.edt_detail_address);
         mUserid = getIntent().getStringExtra("userid");
-//        Toast.makeText(this, "id是" + mUserid, Toast.LENGTH_SHORT).show();
+        //        Toast.makeText(this, "id是" + mUserid, Toast.LENGTH_SHORT).show();
     }
 
     @Override
