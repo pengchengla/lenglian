@@ -40,7 +40,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         tv_back.setOnClickListener(this);
         recycler_msg = (RecyclerView) findViewById(R.id.recycler_msg);
         recycler_msg.setLayoutManager(new LinearLayoutManager(this));
-        kong= (LinearLayout) findViewById(R.id.kong);
+        kong = (LinearLayout) findViewById(R.id.kong);
         initData();
     }
 
@@ -56,8 +56,8 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
                 if (result.getCode() == 200) {
                     mMsgAdapter = new MsgAdapter(R.layout.item_msg, result.getDatas());
                     recycler_msg.setAdapter(mMsgAdapter);
-                }else {
-//                    Toast.makeText(MessageActivity.this, "暂时没有消息", Toast.LENGTH_SHORT).show();
+                } else {
+                    //                    Toast.makeText(MessageActivity.this, "暂时没有消息", Toast.LENGTH_SHORT).show();
                     kong.setVisibility(View.VISIBLE);
                 }
             }
@@ -102,7 +102,15 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         protected void convert(BaseViewHolder helper, MsgBean.DatasEntity item) {
-            helper.setText(R.id.tv_msg_type, item.getNews_type().equals("1") ? "订单通知" : "报修通知")
+            String msgType = "";
+            if (item.getNews_type().equals("1")) {
+                msgType = "订单通知";
+            } else if (item.getNews_type().equals("2")) {
+                msgType = "报修通知";
+            } else {
+                msgType = "亲，想你了";
+            }
+            helper.setText(R.id.tv_msg_type, msgType)
                     .setText(R.id.tv_date, item.getSend_time())
                     .setText(R.id.tv_msg_content, item.getNews());
         }
