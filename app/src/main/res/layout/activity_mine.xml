@@ -440,6 +440,36 @@
 
 
                     </RelativeLayout>
+                    <View
+                        android:background="@color/hui"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <RelativeLayout
+                        android:id="@+id/rl_fankui"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dip"
+                            android:padding="5dp"
+                            android:text="用户反馈"
+                            android:textSize="16dp"
+                            android:textColor="@color/textblack"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/callback"
+                            android:layout_gravity="center_vertical"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="15dp"
+                            android:padding="10dp"
+                        />
+
+                    </RelativeLayout>
                 </LinearLayout>
 
 

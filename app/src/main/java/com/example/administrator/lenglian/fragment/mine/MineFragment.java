@@ -61,6 +61,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView mine_login;
     private List<Personbean.DatasBean> datas;
     private ImageView iv_point;
+    private RelativeLayout rl_fankui;
 
     @Override
     protected void lazyLoad() {
@@ -89,6 +90,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         mine_kefu = (RelativeLayout) rootView.findViewById(R.id.nine);
         mine_login = (TextView) rootView.findViewById(R.id.mine_login);
         iv_point = (ImageView) rootView.findViewById(R.id.iv_point);
+        rl_fankui= (RelativeLayout) rootView.findViewById(R.id.rl_fankui);
         //设置监听
         mine_Warranty.setOnClickListener(this);
         mine_wallet.setOnClickListener(this);
@@ -102,6 +104,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         mine_kefu.setOnClickListener(this);
         mine_set.setOnClickListener(this);
         mine_head.setOnClickListener(this);
+        rl_fankui.setOnClickListener(this);
         ll_msg.setOnClickListener(this);
         mine_login.setOnClickListener(this);
         if (!TextUtils.isEmpty(SpUtils.getString(mContext, "user_id", ""))) {
@@ -393,6 +396,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     return;
                 } else {
                     startActivity(new Intent(mContext, MessageActivity.class));
+                }
+                break;
+            case R.id.rl_fankui://用户反馈
+                if (!MyUtils.islogin(mContext)) {
+                    MyUtils.showloginDialog(mContext, Gravity.CENTER, R.style.Alpah_aniamtion);
+                    return;
+                } else {
+                    startActivity(new Intent(mContext, FanKuiActivity.class));
                 }
                 break;
             case R.id.mine_login:
