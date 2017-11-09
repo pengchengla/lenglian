@@ -14,15 +14,17 @@ public class ShopCarBean extends DataSupport {
     private String peisongfei;
     private String imgUrl;
     private int duration;
+    private int minduration;
     private boolean isChecked;
 
-    public ShopCarBean(String goodId, String name, String price, String imgUrl, int duration
+    public ShopCarBean(String goodId, String name, String price, String imgUrl, int minduration,int duration
             , String yajin, String peisongfei) {
         this.goodId = goodId;
         this.name = name;
         this.price = price;
         this.imgUrl = imgUrl;
         this.duration = duration;
+        this.minduration = minduration;
         this.yajin = yajin;
         this.peisongfei = peisongfei;
     }
@@ -89,5 +91,13 @@ public class ShopCarBean extends DataSupport {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    public int getMinduration() {
+        return minduration;
+    }
+
+    public void setMinduration(int minduration) {
+        this.minduration = minduration;
     }
 }

@@ -416,6 +416,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
             stepper.setMinValue(Integer.parseInt(mShortest));
             stepper.setValue(Integer.parseInt(mShortest));
             SnappingStepper ssp = dialog.getView(R.id.stepper);
+            duration=Integer.parseInt(mShortest);//默认值，因为不点击加减号的话是不会走监听回调的
             ssp.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
                 @Override
                 public void onValueChange(View view, int value) {
@@ -466,7 +467,7 @@ public class ShangPinFragment extends BaseFragment implements View.OnClickListen
                     mDatas.getMain_title(),
                     mDatas.getSale_price().equals("0") ? mDatas.getPro_price() : mDatas.getSale_price(),
                     mDatas.getPro_pic().get(0).getUrl(),
-                    duration, mDatas.getPro_deposit(), mDatas.getExpress_money()
+                    Integer.parseInt(mShortest),duration, mDatas.getPro_deposit(), mDatas.getExpress_money()
             ));
         }
     }

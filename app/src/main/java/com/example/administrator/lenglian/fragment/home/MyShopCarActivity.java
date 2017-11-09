@@ -286,6 +286,8 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
             });
             final SnappingStepper stepper = helper.getView(R.id.stepper);
             stepper.setText(item.getDuration() + "");
+            stepper.setMinValue(item.getMinduration());
+            stepper.setValue(item.getDuration());
             stepper.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
                 @Override
                 public void onValueChange(View view, int value) {
@@ -294,6 +296,7 @@ public class MyShopCarActivity extends BaseActivity implements View.OnClickListe
                         tv_price.setText(Float.parseFloat(item.getPrice()) * value + "");
                         tv_total_count.setText(value + "");
                         tv_total_price.setText(Float.parseFloat(item.getPrice()) * value + "");
+                        mDuration=value+"";
                         mData.get(helper.getAdapterPosition()).setDuration(value);
                         notifyDataSetChanged();
                         LitePalHelper.updateCount(item.getGoodId(), value);//不立即更新
