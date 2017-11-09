@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable;
 import retrofit2.HttpException;
 
 /**
- * Created by muhanxi on 17/6/19.
+ *
  */
 
 public abstract class BaseObserver1<T> implements Observer<String> {

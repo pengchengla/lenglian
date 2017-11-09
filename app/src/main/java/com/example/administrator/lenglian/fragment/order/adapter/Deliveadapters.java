@@ -60,7 +60,18 @@ public class Deliveadapters extends RecyclerView.Adapter<Deliveadapters.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取position
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int layoutPosition = holder.getLayoutPosition();
+                    mOnItemClickListener.onItemClick(holder.itemView,layoutPosition);
+                }
+            });
+        }
  /*
           加载图片
          */
