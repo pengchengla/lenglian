@@ -66,7 +66,7 @@ public class Walletadapter extends BaseAdapter {
         holder.wallet_text.setText(list.get(position).getPro_name());
         holder.wallet_num.setText("订单号："+list.get(position).getOrder_num()+"");
         holder.wallet_time.setText("起始时间："+list.get(position).getStart_time()+"至"+list.get(position).getEnd_time());
-        holder.wallet_money.setText("余额："+"¥ "+list.get(position).getOrder_price()+"");
+        holder.wallet_money.setText("余额："+"¥ "+list.get(position).getBalance()+"");
         holder.wallet_yajin.setText("我的押金:"+"¥ "+list.get(position).getPro_deposit()+"");
         //加载图片
         RequestOptions options = new RequestOptions()
