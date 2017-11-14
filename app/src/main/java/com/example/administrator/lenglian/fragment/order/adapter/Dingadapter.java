@@ -123,9 +123,7 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
             holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ReturnActivity.class);
-                    intent.putExtra("order_id", list.get(position).getOrder_id());
-                    context.startActivity(intent);
+                    showDialogtuihuan(Gravity.CENTER,R.style.Alpah_aniamtion,position);
                 }
             });
             //报修
@@ -262,9 +260,7 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
             holder.order_tuihuan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ReturnActivity.class);
-                    intent.putExtra("order_id", list.get(position).getOrder_id());
-                    context.startActivity(intent);
+                    showDialogtuihuan(Gravity.CENTER,R.style.Alpah_aniamtion,position);
                 }
             });
             //报修
@@ -543,6 +539,45 @@ public class Dingadapter extends RecyclerView.Adapter<Dingadapter.MyViewholder> 
             public void onClick(View v) {
                 //确认收货
                 recycing(position);
+                //关闭dialog
+                dialog.close();
+            }
+        });
+    }
+    private void showDialogtuihuan(int grary, int animationStyle, final int position) {
+        BaseDialog.Builder builder = new BaseDialog.Builder(context);
+        final BaseDialog dialog = builder.setViewId(R.layout.dialog_phone)
+                //设置dialogpadding
+                .setPaddingdp(10, 0, 10, 0)
+                //设置显示位置
+                .setGravity(grary)
+                //设置动画
+                .setAnimation(animationStyle)
+                //设置dialog的宽高
+                .setWidthHeightpx(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                //设置触摸dialog外围是否关闭
+                .isOnTouchCanceled(true)
+                //设置监听事件
+                .builder();
+        dialog.show();
+        TextView tv_content = dialog.getView(R.id.tv_content);
+        tv_content.setText("您未到退还期，如果退还你的余额将变为0。   ");
+        TextView tv_canel = dialog.getView(R.id.tv_canel);
+        tv_canel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //关闭dialog
+                dialog.close();
+            }
+        });
+        TextView tv_yes = dialog.getView(R.id.tv_yes);
+        tv_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ReturnActivity.class);
+                intent.putExtra("order_id", list.get(position).getOrder_id());
+                context.startActivity(intent);
                 //关闭dialog
                 dialog.close();
             }
