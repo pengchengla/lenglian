@@ -183,9 +183,14 @@ public class MyUtils {
 
     //手机号判断逻辑
     public static boolean isMobileNO(String mobiles) {
-        Pattern p = Pattern.compile("^(13[0-9]|14[57]|15[0-35-9]|17[6-8]|18[0-9])[0-9]{8}$");
-        Matcher m = p.matcher(mobiles);
-        return m.matches();
+//        Pattern p = Pattern.compile("^(13[0-9]|14[57]|15[0-35-9]|17[6-8]|18[0-9])[0-9]{8}$");
+//        Matcher m = p.matcher(mobiles);
+//        return m.matches();
+        //上面的验证会有些问题，手机号码格式不是固定的，所以就弄简单点
+        if (mobiles.length()==11){
+            return true;
+        }
+        return false;
     }
 
     //正则6-16位数字或字母

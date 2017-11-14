@@ -207,7 +207,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="订单完成后，押金自动退还到支付宝账户"
+                            android:text="退还订单完成后，押金自动退还到付款账户"
                             android:textSize="12sp"/>
                     </LinearLayout>
                     <TextView

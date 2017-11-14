@@ -59,7 +59,7 @@ public class FanKuiActivity extends BaseActivity implements View.OnClickListener
         ArrayMap arrayMap = new ArrayMap<String, String>();
         arrayMap.put("user_id", SpUtils.getString(this, "user_id", ""));
         arrayMap.put("token", MyUtils.getToken());
-        arrayMap.put("content", "标题：" + edt_title + "  内容：" + edt_content);
+        arrayMap.put("content", "标题：" + title + "  内容：" + content);
         RetrofitManager.get(MyContants.BASEURL + "s=User/feedback", arrayMap, new BaseObserver1<EasyBean>("") {
             @Override
             public void onSuccess(EasyBean result, String tag) {
