@@ -138,6 +138,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     Glide.with(mContext).load(datas.get(0).getHead())
                             .apply(options)
                             .into(mine_head);
+
                     //昵称
                     mine_name.setText(datas.get(0).getNick_name());
                     mine_phone.setText(datas.get(0).getMobile());

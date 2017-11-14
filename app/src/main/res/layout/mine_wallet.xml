@@ -50,127 +50,149 @@
             android:textSize="18sp" />
 
     </LinearLayout>
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/recl_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="180dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:layout_below="@+id/include_title"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true">-->
+        <!--<ImageView-->
+            <!--android:id="@+id/img_yu"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/yue2x"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="30dp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/yue"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="我的余额"-->
+            <!--android:textSize="14sp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_below="@id/img_yu"-->
+            <!--/>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_below="@id/yue"-->
+            <!--android:orientation="horizontal"-->
+            <!--&gt;-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="¥"-->
+                <!--android:textSize="18sp"-->
+                <!--android:textColor="@color/textblack"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/balance"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="0.00"-->
+                <!--android:textSize="18sp"-->
+                <!--android:textColor="@color/textblack"-->
+               <!--/>-->
+
+        <!--</LinearLayout>-->
+
+
+
+    <!--</RelativeLayout>-->
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/wallet_time"-->
+        <!--android:background="@color/white"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_below="@id/recl_title"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--&gt;-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dip"-->
+            <!--android:layout_marginRight="10dip"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="使用时间："-->
+            <!--android:textSize="16dp"-->
+            <!--android:textColor="@color/textblack"/>-->
+
+<!--</RelativeLayout>-->
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/wallet_dates"-->
+        <!--android:background="@color/white"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_marginTop="0.5dp"-->
+        <!--android:layout_below="@id/wallet_time"-->
+        <!--&gt;-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/wallet_date"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dip"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="0000-00-00 00:00:00至0000-00-00 00:00:00"-->
+            <!--android:textSize="16dp"-->
+            <!--android:textColor="@color/textblack"/>-->
+        <!--</RelativeLayout>-->
+    <!--<RelativeLayout-->
+        <!--android:background="@color/white"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_below="@id/wallet_dates"-->
+        <!--&gt;-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/wallet_cash"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="10dip"-->
+        <!--android:layout_marginRight="10dip"-->
+        <!--android:padding="5dp"-->
+        <!--android:text="我的押金："-->
+        <!--android:textSize="16dp"-->
+        <!--android:textColor="@color/textblack"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/cash_num"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="10dip"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="¥0.00"-->
+            <!--android:textSize="16dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:textColor="@color/textblack"/>-->
+    <!--</RelativeLayout>-->
+      <ListView
+          android:background="@color/white"
+          android:dividerHeight="1dp"
+          android:divider="@color/hui"
+          android:id="@+id/wallet_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"></ListView>
     <RelativeLayout
-        android:id="@+id/recl_title"
+        android:visibility="gone"
+        android:id="@+id/kong"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/white"
-        android:layout_below="@+id/include_title"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <ImageView
-            android:id="@+id/img_yu"
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/inculde_kong"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/yue2x"
+            layout="@layout/inculde_kong"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp" />
-
-        <TextView
-            android:id="@+id/yue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我的余额"
-            android:textSize="14sp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/img_yu"
-            />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/yue"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¥"
-                android:textSize="18sp"
-                android:textColor="@color/textblack"/>
-            <TextView
-                android:id="@+id/balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0.00"
-                android:textSize="18sp"
-                android:textColor="@color/textblack"
-               />
-
-        </LinearLayout>
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/wallet_time"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_below="@id/recl_title"
-        android:layout_marginTop="10dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:padding="5dp"
-            android:text="使用时间："
-            android:textSize="16dp"
-            android:textColor="@color/textblack"/>
-
-</RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/wallet_dates"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_marginTop="0.5dp"
-        android:layout_below="@id/wallet_time"
-        >
-
-        <TextView
-            android:id="@+id/wallet_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:padding="5dp"
-            android:text="0000-00-00 00:00:00至0000-00-00 00:00:00"
-            android:textSize="16dp"
-            android:textColor="@color/textblack"/>
-        </RelativeLayout>
-    <RelativeLayout
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/wallet_dates"
-        >
-
-        <TextView
-        android:id="@+id/wallet_cash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
-        android:padding="5dp"
-        android:text="我的押金："
-        android:textSize="16dp"
-        android:textColor="@color/textblack"/>
-        <TextView
-            android:id="@+id/cash_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dip"
-            android:padding="5dp"
-            android:text="¥0.00"
-            android:textSize="16dp"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/textblack"/>
+            android:layout_marginTop="130dp"></include>
     </RelativeLayout>
 </LinearLayout>

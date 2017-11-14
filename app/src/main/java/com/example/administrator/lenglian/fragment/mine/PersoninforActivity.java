@@ -3,14 +3,12 @@ package com.example.administrator.lenglian.fragment.mine;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -20,7 +18,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Base64;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -587,6 +584,9 @@ showtitle.setText("请输入姓名");
             public void run() {
                 Map<String,File> files=new HashMap<>();
                 files.put("sfile",fileCropUri);
+                /*
+                  图片上传
+                 */
                 s = UploadUtil.uploadFile(files, MyContants.BASEURL + "s=Upload/upload");
                 Gson gson=new Gson();
                 upphotobean = gson.fromJson(s, Upphotobean.class);
