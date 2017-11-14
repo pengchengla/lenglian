@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.transition.TransitionSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -112,6 +113,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         iv_changxiao_big = (ImageView) view.findViewById(R.id.iv_changxiao_big);
         recycler_class = (RecyclerView) view.findViewById(R.id.recycler_class);
         springview = (SpringView) view.findViewById(R.id.springview);
+        //动态设置banner的高度
+        ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
+        layoutParams.height=MyUtils.getScreenWidth(mContext)*7/15;
+        banner.setLayoutParams(layoutParams);
         return view;
     }
 
