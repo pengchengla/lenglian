@@ -30,7 +30,6 @@ import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -86,7 +85,7 @@ public class ReceiptActivity extends BaseActivity implements View.OnClickListene
                     distribution_state.setText("");//订单状态
                     consignee_person.setText(datas.getReceive_name());//收货人
                     //联系电话
-                    peisong_number.setText(datas.getMobile());
+                    consign_num.setText(datas.getMobile());
                     consignee_address.setText(datas.getAddress_detail());
                   /*
                   加载图片

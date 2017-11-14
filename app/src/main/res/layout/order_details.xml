@@ -258,7 +258,7 @@
                 <TextView
                     android:textSize="12sp"
                     android:layout_marginLeft="5dp"
-                    android:text="产品使用完成并退还以后，押金退还到支付宝账户中"
+                    android:text="产品使用完成并退还以后，押金退还到付款账户中"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
