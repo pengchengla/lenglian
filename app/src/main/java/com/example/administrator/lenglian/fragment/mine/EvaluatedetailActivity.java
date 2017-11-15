@@ -78,7 +78,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
 
     private void ininnetwork() {
         Map<String,String> map=new HashMap<>();
-        map.put("user_id", SpUtils.getString(this,"user_id",""));//传过来的--------
+        map.put("user_id",SpUtils.getString(this,"user_id",""));//传过来的--------
         map.put("token", MyUtils.getToken());
         map.put("comment_id",comment_id);
         RetrofitManager.get(MyContants.BASEURL + "s=User/profileComment", map,new BaseObserver1<Evaluatedetailbean>("") {
@@ -123,6 +123,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
                      }
                      ratingbar.setStar(i);//设置显示的星星个数
                      evate_zhuip.setText(datas.getAdd_content());
+                     evate_ping.setText(datas.getContent());
                      List<Evaluatedetailbean.DatasBean.PicBean> pic = datas.getPic();
                     Gradeadapter gradeadapter=new Gradeadapter(EvaluatedetailActivity.this,pic);
                   evate_grade.setAdapter(gradeadapter);
@@ -184,6 +185,7 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
         liner_zhuijia.setVisibility(View.VISIBLE);
         liner_zhui.setVisibility(View.VISIBLE);
         evate_zhuip.setText(count);
+        ininnetwork();
 //        //跳转
 //        if(!TextUtils.isEmpty(evate_zhuip.getText().toString())){
 //            ToastUtils.showShort(this,"您已追加评论，不能在评论");
@@ -205,8 +207,6 @@ public class EvaluatedetailActivity extends BaseActivity implements View.OnClick
                     intent.putExtra("order_id",order_id);
                     intent.putExtra("tag","2");
                     startActivity(intent);
-
-
                 }
                   else if("2".equals(datas.getAdd_status())){
                     liner_zhuijia.setVisibility(View.VISIBLE);

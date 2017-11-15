@@ -146,7 +146,7 @@
             android:id="@+id/evate_ping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="功能强啊阿达打的"
+            android:text=""
             android:textSize="14sp"
             android:textColor="@color/textblack"/>
     </LinearLayout>

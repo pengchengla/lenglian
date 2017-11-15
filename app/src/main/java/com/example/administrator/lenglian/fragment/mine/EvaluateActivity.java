@@ -59,7 +59,8 @@ public class EvaluateActivity extends BaseActivity {
 
     private void inintwork() {
         Map<String,String> map=new HashMap<>();
-        map.put("user_id", SpUtils.getString(this,"user_id",""));//接口传过来
+//       SpUtils.getString(this,"user_id","")
+        map.put("user_id",SpUtils.getString(this,"user_id",""));//接口传过来
         map.put("token", MyUtils.getToken());
         RetrofitManager.get(MyContants.BASEURL + "s=User/listComment",map,new BaseObserver1<Evaluatebean>("") {
 
@@ -100,7 +101,6 @@ public class EvaluateActivity extends BaseActivity {
                   String pro_pic = datas.get(position).getPro_pic();
                   it.putExtra("image", pro_pic);
                   it.putExtra("order_id",datas.get(position).getOrder_id());
-                  it.putExtra("tag",2);
                   startActivity(it);
               }
           });

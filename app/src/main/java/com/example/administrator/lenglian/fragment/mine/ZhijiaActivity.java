@@ -62,10 +62,9 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
             public void onSuccess(Resultbean result, String tag) {
                 if(result.getCode()==200){
                       SpUtils.putString(ZhijiaActivity.this,"count",edt_pin.getText().toString());
-                     finish();
                     EventMessage eventMessage = new EventMessage("zhuijia");
                     EventBus.getDefault().postSticky(eventMessage);
-
+                    finish();
 
 
                 }
@@ -80,7 +79,6 @@ public class ZhijiaActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void onDestroy() {
-        finish();
         super.onDestroy();
     }
 
