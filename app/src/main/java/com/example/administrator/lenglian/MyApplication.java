@@ -40,11 +40,10 @@ public class MyApplication extends LitePalApplication {
 
     public static MyApplication  getApplication(){
         if(application == null){
-            application = getApplication() ;
+            application = getApplication();
         }
         return application;
     }
-
 
     private void initTongJi() {
         //友盟统计
