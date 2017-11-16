@@ -123,8 +123,28 @@ public class MaintenanceActivity extends BaseActivity implements View.OnClickLis
         map.put("content",warantu_edtext.getText().toString());
         map.put("service_score",furatingbar.getSetbar()+"");
         map.put("repair_score",ratingbar.getSetbar()+"");
+         /*
+         图片------------------------------
+         */
+        String photo="";
+        for (int i = 0; i <list.size() ; i++) {
+            photo+= list.get(i)+",";
+        }
+        String substring = photo.substring(0, photo.length() - 1);
+        map.put("pic_url",substring);
         /*
            维修打分
+            int setbar = shop_ratingbar.getSetbar();
+        Map<String,String> map=new HashMap<>();
+        map.put("user_id", SpUtils.getString(this,"user_id",""));
+        map.put("token", MyUtils.getToken());
+        map.put("pro_id",   pro_id);             //商品id
+        map.put("pro_score", setbar+"");//商品评分
+        map.put("express_score",peisongatingbar.getSetbar()+"");
+        map.put("service_score",shopfuratingbar.getSetbar()+"");
+        map.put("content",warantu_edtext.getText().toString());
+        map.put("order_id",oder_id);
+        map.put("comment_type","1");
 
          */
       //  map.put("service_score")

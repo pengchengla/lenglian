@@ -47,7 +47,6 @@ import com.example.administrator.lenglian.utils.SpUtils;
 import com.example.administrator.lenglian.utils.pictureutils.GridViewAdapter;
 import com.example.administrator.lenglian.utils.pictureutils.MainConstant;
 import com.example.administrator.lenglian.utils.pictureutils.PictureSelectorConfig;
-import com.example.administrator.lenglian.utils.pictureutils.PlusImageActivity;
 import com.example.administrator.lenglian.utils.pictureutils.ToastUtils;
 import com.example.administrator.lenglian.utils.pictureutils.UploadUtil;
 import com.example.administrator.lenglian.view.MyRatingBar;
@@ -65,10 +64,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 import static com.luck.picture.lib.config.PictureConfig.REQUEST_CAMERA;
 
@@ -94,6 +89,8 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
     private Bitmap photo;
     private File file;
     Boolean bool =false;
+    private String url;
+
      ArrayList<String>  list=new ArrayList<>();
     Handler handler=new Handler(){
         @Override
@@ -107,6 +104,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
     private String pro_id;
     private String oder_id;
     private String pin_img;
+    String pic;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -404,6 +402,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                 if(mPicList.size()>0){
                 Thread thred=new Thread(new Runnable() {
 
+
                     private File f;
 
                     @Override
@@ -418,8 +417,7 @@ public class ShopdetailActivity extends BaseActivity implements View.OnClickList
                             if(upphotobean.getCode()==200) {
                                 List<Upphotobean.DatasBean> datas = upphotobean.getDatas();
 
-                                list.add(datas.get(0).getUrl());
-                                KLog.a("aaa",list.toString());
+                              list.add(datas.get(0).getUrl());
 
                             }
 
