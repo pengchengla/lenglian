@@ -47,13 +47,13 @@ public class FanKuiActivity extends BaseActivity implements View.OnClickListener
         // validate
         String title = edt_title.getText().toString().trim();
         if (TextUtils.isEmpty(title)) {
-            Toast.makeText(this, "title不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "标题不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String content = edt_content.getText().toString().trim();
         if (TextUtils.isEmpty(content)) {
-            Toast.makeText(this, "content不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "内容不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
         ArrayMap arrayMap = new ArrayMap<String, String>();

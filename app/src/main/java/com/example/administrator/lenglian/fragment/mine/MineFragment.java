@@ -223,7 +223,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mine_login.setVisibility(View.VISIBLE);
             mine_name.setVisibility(View.GONE);
             mine_phone.setVisibility(View.GONE);
-
         }
     }
 
@@ -356,7 +355,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     return;
                 } else {
                     Intent it6 = new Intent(getActivity(), AddressActivity.class);
-
                     startActivity(it6);
                 }
                 break;
@@ -410,10 +408,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.mine_login:
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
-
                 break;
         }
-
     }
 
     private void showDialog(int grary, int animationStyle) {
